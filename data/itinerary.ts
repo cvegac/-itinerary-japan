@@ -50,11 +50,21 @@ export const NIGHT_BUS_SUMMARY = {
   ],
 };
 
+export type TransportSegment = {
+  mode: string;
+  line?: string;
+  from: string;
+  to: string;
+  duration?: string;
+  cost?: string;
+  note?: string;
+};
+
 export const ITINERARY: DayEntry[] = [
-  // ── DÍA 1 ──
+  // ── DÍA 1 -──
   {
     date: "2026-11-01",
-    label: "Haneda → Onsen Izumi Tenku + Ota-ku",
+    label: "Llegada HND 19:35",
     location: "Tokio",
     category: "Logística",
     notes: "Descanso post-vuelo",
@@ -86,18 +96,18 @@ export const ITINERARY: DayEntry[] = [
       "Descanso total post-vuelo",
     ],
   },
-  // ── DÍA 2 ──
+  // ── DÍA 2 -──
   {
     date: "2026-11-02",
-    label: "Shinjuku Gyoen + Meiji Jingu + Compra cámara",
+    label: "Shinjuku Gyoen + Meiji Jingu",
     location: "Tokio",
     category: "Naturaleza",
-    notes: "Bosque + jardín otoñal. Comprar cámara de segunda en Map Camera o Kitamura (Shinjuku).",
+    notes: "Bosque + jardín otoñal",
     weekday: "Lun",
     food: "Picnic en parque",
     transport: [
       { mode: "tren", line: "JR Yamanote", from: "Hotel Ota-ku", to: "Shinjuku", duration: "~25min" },
-      { mode: "metro", line: "Metro Tokyo (libre durante el día)", from: "Shinjuku", to: "Meiji Jingu / Harajuku", duration: "~5min" },
+      { mode: "metro", line: "Metro Tokyo", from: "Shinjuku", to: "Meiji Jingu / Harajuku", duration: "~5min" },
     ],
     accommodation: "Shinjuku",
     zona: "Shinjuku Station área, Kabukicho o Nishi-Shinjuku",
@@ -110,7 +120,7 @@ export const ITINERARY: DayEntry[] = [
       "Parque Yoyogi",
       "Tokyo Met. Building",
       "Jardín Gyoen",
-      "📷 Compra cámara: Map Camera / Kitamura Camera (Shinjuku)",
+      "Tienda Nature de Montaña",
     ],
     activitiesNight: [
       "Golden Gai (Bares)",
@@ -121,10 +131,10 @@ export const ITINERARY: DayEntry[] = [
       "Karaoke en vivo",
     ],
   },
-  // ── DÍA 3 ──
+  // ── DÍA 3 -──
   {
     date: "2026-11-03",
-    label: "Monte Takao — Hiking + Onsen",
+    label: "Monte Takao (Hiking)",
     location: "Hachioji",
     category: "Naturaleza",
     notes: "Senderismo + onsen base",
@@ -132,7 +142,7 @@ export const ITINERARY: DayEntry[] = [
     food: "Soba de montaña",
     transport: [
       { mode: "tren", line: "Keio Line (express)", from: "Shinjuku", to: "Takaosanguchi", duration: "~50min", cost: "¥390" },
-      { mode: "tren", line: "Keio Line", from: "Takaosanguchi", to: "Shinjuku", duration: "~50min", note: "Regreso nocturno" },
+      { mode: "tren", line: "Keio Line", from: "Takaosanguchi", to: "Shinjuku", duration: "~50min", note: "Regreso" },
     ],
     accommodation: "Shinjuku",
     zona: "Mismo hotel Shinjuku",
@@ -156,10 +166,10 @@ export const ITINERARY: DayEntry[] = [
       "Masaje de pies (Ashiyu)",
     ],
   },
-  // ── DÍA 4 — 🚌 BUS NOCTURNO #1 ──
+  // ── DÍA 4 — 🚌 BUS NOCTURNO #1 ────────────────────
   {
     date: "2026-11-04",
-    label: "Valle Todoroki + Templo Gotokuji (Gatos)",
+    label: "Valle Todoroki + Gotokuji",
     location: "Tokio",
     category: "Naturaleza",
     notes: "Todoroki de día → cena → bus a Utsunomiya",
@@ -168,7 +178,7 @@ export const ITINERARY: DayEntry[] = [
     transport: [
       { mode: "tren", line: "Tokyu Oimachi Line", from: "Shinjuku (vía Shibuya)", to: "Todoroki", duration: "~30min" },
       { mode: "tren", line: "Tokyu / Odakyu", from: "Todoroki", to: "Gotokuji", duration: "~20min" },
-      { mode: "metro", from: "Gotokuji", to: "Shinjuku Busta", duration: "~20min", note: "Regreso para tomar bus nocturno" },
+      { mode: "metro", from: "Gotokuji", to: "Shinjuku Busta", duration: "~20min", note: "Para tomar bus nocturno" },
       { mode: "bus-nocturno", line: "JR Bus / Tochigi Bus", from: "Shinjuku Busta", to: "Utsunomiya", duration: "~3h", cost: "~¥3,500", note: "Sale ~23:30. Llega ~5:30am" },
     ],
     accommodation: "🚌 BUS NOCTURNO",
@@ -198,17 +208,17 @@ export const ITINERARY: DayEntry[] = [
       "🚌 Bus nocturno ~23:30 desde Shinjuku Busta",
     ],
   },
-  // ── DÍA 5 — Desde Bus #1 ──
+  // ── DÍA 5 — Llegada desde Bus #1 ──────────────────
   {
     date: "2026-11-05",
-    label: "Santuarios de Nikko + Puente Shinkyo",
+    label: "Llegada Nikko (vía Utsunomiya)",
     location: "Nikko",
     category: "Naturaleza",
     notes: "Utsunomiya ~5:30 → tren Nikko ~6:30 → sento",
     weekday: "Jue",
     food: "Especialidad Yuba",
     transport: [
-      { mode: "bus-nocturno", line: "Llegada desde Bus #1", from: "Bus nocturno", to: "Utsunomiya Station", duration: "Llegas ~5:30am" },
+      { mode: "bus-nocturno", line: "Llegada Bus #1", from: "Bus nocturno", to: "Utsunomiya Station", duration: "Llegas ~5:30am" },
       { mode: "tren", line: "JR Nikko Line", from: "Utsunomiya", to: "Nikko", duration: "~45min", cost: "¥770", note: "Primer tren ~6:30am" },
       { mode: "bus", line: "Tobu Bus", from: "Nikko Station", to: "Zona santuarios", duration: "~10min" },
     ],
@@ -235,10 +245,10 @@ export const ITINERARY: DayEntry[] = [
       "Té en casa histórica",
     ],
   },
-  // ── DÍA 6 ──
+  // ── DÍA 6 -──
   {
     date: "2026-11-06",
-    label: "Lago Chuzenji + Cascada Kegon + Senjogahara",
+    label: "Lago Chuzenji + Kegon",
     location: "Nikko",
     category: "Naturaleza",
     notes: "Cascadas + Senjogahara",
@@ -246,7 +256,7 @@ export const ITINERARY: DayEntry[] = [
     food: "Pescado de lago",
     transport: [
       { mode: "bus", line: "Tobu Bus (Nikko Pass)", from: "Nikko centro", to: "Lago Chuzenji / Kegon", duration: "~45min" },
-      { mode: "bus", line: "Tobu Bus", from: "Lago Chuzenji", to: "Ryuzu Falls / Senjogahara", duration: "~20min" },
+      { mode: "bus", line: "Tobu Bus", from: "Lago Chuzenji", to: "Senjogahara", duration: "~20min" },
       { mode: "bus", line: "Tobu Bus", from: "Senjogahara", to: "Nikko centro", duration: "~50min", note: "Regreso" },
     ],
     accommodation: "Ryokan Nikko",
@@ -271,10 +281,10 @@ export const ITINERARY: DayEntry[] = [
       "Cena Kaiseki tradicional",
     ],
   },
-  // ── DÍA 7 ──
+  // ── DÍA 7 -──
   {
     date: "2026-11-07",
-    label: "Takayama — Mercado Miyagawa + Sanmachi Suji",
+    label: "Traslado a Takayama",
     location: "Alpes",
     category: "Naturaleza",
     notes: "Pueblo alpino",
@@ -283,7 +293,7 @@ export const ITINERARY: DayEntry[] = [
     transport: [
       { mode: "tren", line: "JR Nikko Line", from: "Nikko", to: "Utsunomiya", duration: "~45min" },
       { mode: "tren", line: "Shinkansen Tohoku", from: "Utsunomiya", to: "Tokyo", duration: "~50min" },
-      { mode: "tren", line: "Shinkansen Hokuriku → JR Hida Ltd Express", from: "Tokyo", to: "Takayama", duration: "~4h", cost: "~¥15,000", note: "Ruta más directa vía Nagoya o Toyama" },
+      { mode: "tren", line: "Shinkansen → JR Hida Ltd Express", from: "Tokyo", to: "Takayama", duration: "~4h", cost: "~¥15,000", note: "Vía Nagoya o Toyama" },
     ],
     accommodation: "Takayama",
     zona: "Centro Takayama, cerca Sanmachi Suji",
@@ -307,10 +317,10 @@ export const ITINERARY: DayEntry[] = [
       "Paseo río Miyagawa",
     ],
   },
-  // ── DÍA 8 ──
+  // ── DÍA 8 -──
   {
     date: "2026-11-08",
-    label: "Kamikochi — Valle Alpino Prístino ⭐",
+    label: "Kamikochi (Valle)",
     location: "Alpes",
     category: "Naturaleza",
     notes: "⭐ Valle prístino imperdible",
@@ -318,8 +328,8 @@ export const ITINERARY: DayEntry[] = [
     food: "Bento alpino",
     transport: [
       { mode: "bus", line: "Nohi Bus", from: "Takayama Bus Terminal", to: "Hirayu Onsen", duration: "~1h", cost: "~¥1,600" },
-      { mode: "bus", line: "Nohi/Alpico Bus", from: "Hirayu Onsen", to: "Kamikochi Bus Terminal", duration: "~30min", cost: "~¥1,200", note: "No se puede ir en carro privado a Kamikochi" },
-      { mode: "bus", line: "Nohi Bus (regreso)", from: "Kamikochi", to: "Takayama", duration: "~1.5h", note: "Último bus ~16:00, verificar horario" },
+      { mode: "bus", line: "Nohi/Alpico Bus", from: "Hirayu Onsen", to: "Kamikochi", duration: "~30min", cost: "~¥1,200" },
+      { mode: "bus", line: "Nohi Bus", from: "Kamikochi", to: "Takayama", duration: "~1.5h", note: "Último bus ~16:00" },
     ],
     accommodation: "Takayama",
     zona: "Mismo hotel Takayama",
@@ -343,18 +353,18 @@ export const ITINERARY: DayEntry[] = [
       "Baño de agua de manantial",
     ],
   },
-  // ── DÍA 9 ──
+  // ── DÍA 9 -──
   {
     date: "2026-11-09",
-    label: "Shirakawa-go (UNESCO) → Kanazawa",
+    label: "Shirakawa-go → Kanazawa",
     location: "Gifu",
     category: "Paisaje",
     notes: "Aldea UNESCO",
     weekday: "Lun",
     food: "Comida regional",
     transport: [
-      { mode: "bus", line: "Nohi Bus", from: "Takayama Bus Terminal", to: "Shirakawa-go", duration: "~50min", cost: "~¥2,600" },
-      { mode: "bus", line: "Nohi Bus / Hokutetsu Bus", from: "Shirakawa-go", to: "Kanazawa Station", duration: "~1h15min", cost: "~¥2,000", note: "Reservar con anticipación" },
+      { mode: "bus", line: "Nohi Bus", from: "Takayama", to: "Shirakawa-go", duration: "~50min", cost: "~¥2,600" },
+      { mode: "bus", line: "Nohi / Hokutetsu Bus", from: "Shirakawa-go", to: "Kanazawa Station", duration: "~1h15min", cost: "~¥2,000", note: "Reservar anticipación" },
     ],
     accommodation: "Kanazawa",
     zona: "Centro Kanazawa, cerca estación o Katamachi",
@@ -378,17 +388,17 @@ export const ITINERARY: DayEntry[] = [
       "Luces del Jardín Gyokusen",
     ],
   },
-  // ── DÍA 10 — 🚌 BUS NOCTURNO #2 ──
+  // ── DÍA 10 — 🚌 BUS NOCTURNO #2 ───────────────────
   {
     date: "2026-11-10",
-    label: "Kenroku-en + Kanazawa completo — Pan de Oro",
+    label: "Kenroku-en + Kanazawa",
     location: "Kanazawa",
     category: "Naturaleza",
     notes: "Día completo Kanazawa → cena Omicho → bus",
     weekday: "Mar",
     food: "Mercado Omicho",
     transport: [
-      { mode: "bus", line: "Kanazawa Loop Bus", from: "Hotel Kanazawa", to: "Kenroku-en / Museos", duration: "Libre durante el día", cost: "¥600 (day pass)" },
+      { mode: "bus", line: "Kanazawa Loop Bus", from: "Hotel", to: "Kenroku-en / Museos", duration: "Libre durante el día", cost: "¥600 (day pass)" },
       { mode: "bus-nocturno", line: "JR Bus / Hokutetsu", from: "Kanazawa Station", to: "Kyoto Station", duration: "~6h", cost: "~¥4,800", note: "Sale ~23:00. Llega ~05:00" },
     ],
     accommodation: "🚌 BUS NOCTURNO",
@@ -418,18 +428,18 @@ export const ITINERARY: DayEntry[] = [
       "🚌 Bus nocturno ~23:00 desde Kanazawa Sta.",
     ],
   },
-  // ── DÍA 11 — Desde Bus #2 ──
+  // ── DÍA 11 — Llegada desde Bus #2 ─────────────────
   {
     date: "2026-11-11",
-    label: "Mercado Nishiki + Gion + Río Kamo",
+    label: "Llegada Kioto (temprano)",
     location: "Kioto",
     category: "Naturaleza",
     notes: "Sento matutino → café → Nishiki → Gion",
     weekday: "Mié",
     food: "Obento tren",
     transport: [
-      { mode: "bus-nocturno", line: "Llegada desde Bus #2", from: "Bus nocturno", to: "Kyoto Station", duration: "Llegas ~5:00am" },
-      { mode: "caminar", from: "Kyoto Station", to: "Sento cercano", duration: "~10min", note: "Baño matutino para refrescarse" },
+      { mode: "bus-nocturno", line: "Llegada Bus #2", from: "Bus nocturno", to: "Kyoto Station", duration: "Llegas ~5:00am" },
+      { mode: "caminar", from: "Kyoto Station", to: "Sento cercano", duration: "~10min", note: "Baño matutino" },
       { mode: "bus", line: "Kyoto City Bus", from: "Kyoto Station", to: "Shijo-Karasuma / Gion", duration: "~15min" },
     ],
     accommodation: "Kioto",
@@ -455,10 +465,10 @@ export const ITINERARY: DayEntry[] = [
       "Paseo nocturno Yasaka",
     ],
   },
-  // ── DÍA 12 ──
+  // ── DÍA 12 -─
   {
     date: "2026-11-12",
-    label: "Arashiyama — Bosque de Bambú + Momiji",
+    label: "Arashiyama",
     location: "Kioto",
     category: "Naturaleza",
     notes: "Bosque Bambú + momiji",
@@ -490,18 +500,18 @@ export const ITINERARY: DayEntry[] = [
       "Onsen Hanaikada",
     ],
   },
-  // ── DÍA 13 ──
+  // ── DÍA 13 -─
   {
     date: "2026-11-13",
-    label: "Kurama-Kibune Hike — Bosque Místico ⭐",
+    label: "Kurama-Kibune Hike",
     location: "Kioto",
     category: "Naturaleza",
     notes: "⭐ Bosque místico + onsen",
     weekday: "Vie",
     food: "Somen en el río",
     transport: [
-      { mode: "tren", line: "Eizan Railway", from: "Demachiyanagi (Kioto)", to: "Kurama", duration: "~30min", cost: "¥430" },
-      { mode: "caminar", from: "Kurama", to: "Kibune", duration: "~1.5h", note: "Sendero de montaña entre ambos pueblos" },
+      { mode: "tren", line: "Eizan Railway", from: "Demachiyanagi", to: "Kurama", duration: "~30min", cost: "¥430" },
+      { mode: "caminar", from: "Kurama", to: "Kibune", duration: "~1.5h", note: "Sendero montaña" },
       { mode: "tren", line: "Eizan Railway", from: "Kibune-guchi", to: "Demachiyanagi", duration: "~25min" },
     ],
     accommodation: "Kioto",
@@ -526,10 +536,10 @@ export const ITINERARY: DayEntry[] = [
       "Meditación Zen nocturna",
     ],
   },
-  // ── DÍA 14 ──
+  // ── DÍA 14 -─
   {
     date: "2026-11-14",
-    label: "Ohara — Templos de Musgo en Montaña",
+    label: "Ohara (Rural)",
     location: "Kioto",
     category: "Naturaleza",
     notes: "Templos de musgo",
@@ -568,12 +578,12 @@ export const ITINERARY: DayEntry[] = [
     location: "Nara",
     category: "Naturaleza",
     notes: "Nara de día → Kioto cena → bus a Namba",
-    weekday: "Dom",
+    weekday: "Lun",
     food: "Mochi artesanal",
     transport: [
       { mode: "tren", line: "Kintetsu Nara Line", from: "Kyoto Station", to: "Kintetsu Nara", duration: "~35min", cost: "¥640" },
       { mode: "tren", line: "Kintetsu Nara Line", from: "Kintetsu Nara", to: "Kyoto Station", duration: "~35min", note: "Regreso para cena" },
-      { mode: "bus-nocturno", line: "JR Bus", from: "Kyoto Station", to: "Namba (Osaka)", duration: "~4-5h", cost: "~¥4,000", note: "Sale ~23:00. Llega ~03:00. Espera en manga café hasta Nankai ~5:30" },
+      { mode: "bus-nocturno", line: "JR Bus", from: "Kyoto Station", to: "Namba (Osaka)", duration: "~4-5h", cost: "~¥4,000", note: "Sale ~23:00. Llega ~03:00. Espera en manga café hasta ~5:30" },
     ],
     accommodation: "🚌 BUS NOCTURNO",
     zona: "En el bus (sale ~23:00 de Kyoto Sta.)",
@@ -750,190 +760,143 @@ export const ITINERARY: DayEntry[] = [
       "Descanso reparador",
     ],
   },
-  // ── DÍA 20 — 🚌 BUS NOCTURNO #4 ──
+  // ── DÍA 20 — Kumano → Ise ──
   {
     date: "2026-11-20",
-    label: "Kumano → Osaka — Dotonbori + Street Food",
-    location: "Osaka",
-    category: "Logística",
-    notes: "Kumano → Osaka en tren (~3h) → bus nocturno a Hiroshima",
+    label: "Kumano → Ise — Santuario Ise Jingu (Geku + Naiku) ⭐",
+    location: "Ise",
+    category: "Naturaleza",
+    notes: "Viaje costero Kumano → Ise. Ise Jingu: santuario más sagrado de Japón.",
     weekday: "Vie",
-    food: "Bento en tren",
+    food: "Ise Udon + Akafuku mochi",
     transport: [
-      { mode: "bus", line: "Kumano Kotsu Bus", from: "Yunomine/Hongu", to: "Kii-Tanabe / Shingu", duration: "~2h" },
-      { mode: "tren", line: "JR Kinokuni Line (Kuroshio Express)", from: "Kii-Tanabe", to: "Tennoji (Osaka)", duration: "~2.5h", cost: "~¥5,000" },
-      { mode: "metro", line: "Osaka Metro Midosuji", from: "Tennoji", to: "Namba", duration: "~15min" },
-      { mode: "bus-nocturno", line: "Willer Express / JR Chugoku Bus", from: "Namba/Umeda", to: "Hiroshima BC", duration: "~8h", cost: "~¥5,000", note: "Sale ~22:00. Llega ~06:00" },
+      { mode: "bus", line: "Kumano Kotsu Bus", from: "Yunomine/Hongu", to: "Shingu Station", duration: "~1.5h" },
+      { mode: "tren", line: "JR Kisei Line (Nanki Express)", from: "Shingu", to: "Taki", duration: "~2h", cost: "~¥3,500", note: "Costa del Pacífico, paisaje espectacular" },
+      { mode: "tren", line: "JR Sangu Line / Kintetsu", from: "Taki", to: "Iseshi Station", duration: "~30min" },
+      { mode: "bus", line: "Mie Kotsu Bus", from: "Iseshi Station", to: "Naiku (Santuario Interior)", duration: "~20min" },
     ],
-    accommodation: "🚌 BUS NOCTURNO",
-    zona: "En el bus (sale ~22:00 de Namba/Umeda)",
-    accommodationCoords: [34.694, 135.502],
-    budget: "$60",
+    accommodation: "Ise",
+    zona: "Cerca de Ise Station o Futami",
+    accommodationCoords: [34.487, 136.709],
+    budget: "$90",
     isTransit: false,
-    nightBus: "#4",
-    busRoute: "Osaka → Hiroshima",
-    busCost: "~¥5,000 ($33)",
-    hotelSaved: "~$100",
-    timeSaved: "~5h (mañana completa ganada en Hiroshima)",
     activitiesDay: [
-      "Viaje Kumano → Osaka (~3-4h)",
-      "Llegada Namba al mediodía",
-      "Coin locker equipaje",
-      "Dotonbori (paseo rápido)",
-      "Compras Shinsaibashi",
-      "Check-in bus en Namba/Umeda",
+      "Viaje costero Kumano → Ise (~4h, paisaje)",
+      "Ise Jingu Geku (Santuario Exterior)",
+      "Ise Jingu Naiku (Santuario Interior)",
+      "Oharaimachi (calle tradicional)",
+      "Okage Yokocho (tiendas y comida)",
+      "Akafuku mochi (dulce tradicional)",
     ],
     activitiesNight: [
-      "Cena rápida Takoyaki",
-      "Luces Glico Man",
-      "Pubs de Dotonbori",
-      "Última vista de Osaka",
-      "Preparar mochila bus",
-      "🚌 Bus nocturno ~22:00 desde Namba/Umeda",
+      "Cena Ise-ebi (langosta local)",
+      "Paseo por Futami",
+      "Meoto Iwa (Rocas Casadas) al atardecer",
+      "Onsen local",
+      "Noche tranquila en Ise",
+      "Descanso post-viaje largo",
     ],
   },
-  // ── DÍA 21 — Desde Bus #4 ──
+  // ── DÍA 21 — Ise-Shima Ago Bay ──
   {
     date: "2026-11-21",
-    label: "Hiroshima — Parque de la Paz + Museo + Shukkeien",
-    location: "Hiroshima",
-    category: "Logística",
-    notes: "Coin locker → sento → Parque Paz",
+    label: "Ise-Shima — Ago Bay + Mirador Yokoyama + Ama Divers",
+    location: "Toba/Shima",
+    category: "Naturaleza",
+    notes: "Costa ría, kayak en Ago Bay, almuerzo con ama divers",
     weekday: "Sáb",
-    food: "Okonomiyaki Hiroshima",
+    food: "Mariscos frescos con Ama Divers",
     transport: [
-      { mode: "bus-nocturno", line: "Llegada desde Bus #4", from: "Bus nocturno", to: "Hiroshima Bus Center", duration: "Llegas ~6:00am" },
-      { mode: "tranvía", line: "Hiroden Streetcar", from: "Hiroshima BC", to: "Parque de la Paz / Genbaku Dome", duration: "~10min", cost: "¥220" },
+      { mode: "tren", line: "Kintetsu Shima Line", from: "Iseshi", to: "Toba", duration: "~15min", cost: "¥340" },
+      { mode: "tren", line: "Kintetsu Shima Line", from: "Toba", to: "Kashikojima", duration: "~30min", note: "Para Ago Bay" },
+      { mode: "barco", line: "Ago Bay Cruise (Galeón español)", from: "Kashikojima Port", to: "Ago Bay (round trip)", duration: "~50min", cost: "~¥1,800" },
+      { mode: "caminar", from: "Yokoyama trailhead", to: "Yokoyama Viewpoint", duration: "~30min", note: "Sendero suave, vistas panorámicas de Ago Bay" },
     ],
-    accommodation: "Hiroshima",
-    zona: "Centro Hiroshima, cerca Parque de la Paz",
-    accommodationCoords: [34.385, 132.455],
-    budget: "$50",
+    accommodation: "Ryokan Toba",
+    zona: "Toba centro o Osatsu (pueblo ama divers)",
+    accommodationCoords: [34.481, 136.843],
+    budget: "$130",
     isTransit: false,
-    timeSaved: "↑ Mañana completa ganada en Hiroshima",
     activitiesDay: [
-      "Parque de la Paz",
-      "Museo de la Bomba Atómica",
-      "Castillo Hiroshima",
-      "Jardín Shukkeien",
-      "Memorial Hall",
-      "Cúpula Genbaku",
+      "Crucero Ago Bay (galeón español)",
+      "Mirador Yokoyama (hiking suave)",
+      "Sky View Café Terrace",
+      "Almuerzo con Ama Divers (Osatsu Hut)",
+      "Museo de Perlas Mikimoto (Toba)",
+      "Kayak en la costa ría",
     ],
     activitiesNight: [
-      "Okonomimura (Edificio cena)",
-      "Paseo Hondori",
-      "Bares de Sake local",
-      "Paseo río Motoyasu",
-      "Cena de Ostras",
-      "Luces de la ciudad",
+      "Cena mariscos frescos en ryokan",
+      "Onsen con vista al mar",
+      "Paseo costero nocturno",
+      "Observación de estrellas en la bahía",
+      "Sake local de Mie",
+      "Relax en ryokan tradicional",
     ],
   },
-  // ── DÍA 22 ──
+  // ── DÍA 22 — Ise-Shima Monte Asama ──
   {
     date: "2026-11-22",
-    label: "Isla Miyajima — Torii Flotante + Monte Misen ⭐",
-    location: "Hiroshima",
+    label: "Ise-Shima — Monte Asama + Isla Toshijima + Meoto Iwa",
+    location: "Toba",
     category: "Naturaleza",
-    notes: "⭐ Torii + hike Monte Misen",
+    notes: "Hiking Monte Asama (555m, vistas hasta Fuji), isla pesquera",
     weekday: "Dom",
-    food: "Ostras frescas",
+    food: "Mariscos de isla",
     transport: [
-      { mode: "tren", line: "JR Sanyo Line", from: "Hiroshima Station", to: "Miyajimaguchi", duration: "~25min" },
-      { mode: "ferry", line: "JR Ferry / Matsudai", from: "Miyajimaguchi Pier", to: "Miyajima Island", duration: "~10min", cost: "¥180" },
-      { mode: "teleférico", line: "Miyajima Ropeway", from: "Momijidani Park", to: "Mt. Misen Station", duration: "~20min" },
-      { mode: "ferry", line: "JR Ferry", from: "Miyajima Island", to: "Miyajimaguchi", duration: "~10min", note: "Regreso. Último ferry ~21:00" },
-      { mode: "tren", line: "JR Sanyo Line", from: "Miyajimaguchi", to: "Hiroshima", duration: "~25min" },
+      { mode: "bus", line: "Mie Kotsu Bus / Taxi", from: "Ryokan Toba", to: "Monte Asama trailhead", duration: "~20min" },
+      { mode: "caminar", from: "Trailhead", to: "Cumbre Monte Asama (555m)", duration: "~2h", note: "En día despejado se ve el Monte Fuji" },
+      { mode: "ferry", line: "Toba Municipal Ferry", from: "Toba Port", to: "Isla Toshijima", duration: "~15min", cost: "~¥600" },
+      { mode: "ferry", line: "Toba Municipal Ferry", from: "Isla Toshijima", to: "Toba Port", duration: "~15min", note: "Regreso" },
     ],
-    accommodation: "Hiroshima",
-    zona: "Mismo hotel Hiroshima",
-    accommodationCoords: [34.385, 132.455],
-    budget: "$80",
+    accommodation: "Ryokan Toba",
+    zona: "Mismo ryokan Toba",
+    accommodationCoords: [34.481, 136.843],
+    budget: "$100",
     isTransit: false,
     activitiesDay: [
-      "Torii flotante",
-      "Teleférico Mt. Misen",
-      "Templo Daisho-in",
-      "Santuario Itsukushima",
-      "Pagoda de 5 pisos",
-      "Sendero Momijidani",
+      "Hiking Monte Asama (555m) — vistas Fuji",
+      "Templo Kongosho-ji en la cima",
+      "Isla Toshijima (pueblo pesquero)",
+      "Caminata por la isla",
+      "Meoto Iwa (Rocas Casadas sagradas)",
+      "Futamiokitama Shrine",
     ],
     activitiesNight: [
-      "Atardecer frente al mar",
-      "Cena Ostras a la parrilla",
-      "Paseo sin turistas (Noche)",
-      "Dulce Momiji Manju caliente",
-      "Fotografía nocturna Torii",
-      "Relax en Ryokan",
+      "Cena de despedida Ise-ebi (langosta)",
+      "Onsen frente al mar (última noche)",
+      "Paseo costero atardecer",
+      "Preparar equipaje para Hakone",
+      "Sake de Mie",
+      "Descanso en ryokan",
     ],
   },
-  // ── DÍA 23 — 🚌 BUS NOCTURNO #5 ──
+  // ── DÍA 23 — Ise → Hakone (ruta sin backtrack) ──
   {
     date: "2026-11-23",
-    label: "Sandankyo Gorge — Cañón + Botes + Cascadas",
-    location: "Hiroshima",
-    category: "Naturaleza",
-    notes: "Cañón de día → cena → bus a Tokio",
-    weekday: "Lun",
-    food: "Picnic",
-    transport: [
-      { mode: "bus", line: "Hiroshima Bus", from: "Hiroshima BC", to: "Sandankyo Gorge", duration: "~1.5h" },
-      { mode: "bus", line: "Hiroshima Bus", from: "Sandankyo", to: "Hiroshima BC", duration: "~1.5h", note: "Regreso para cenar y tomar bus nocturno" },
-      { mode: "bus-nocturno", line: "Willer Express", from: "Hiroshima Bus Center", to: "Shinjuku Busta (Tokio)", duration: "~12h", cost: "~¥7,500", note: "Sale ~21:00. Llega ~07:00" },
-    ],
-    accommodation: "🚌 BUS NOCTURNO",
-    zona: "En el bus (sale ~21:00 de Hiroshima BC)",
-    accommodationCoords: [34.385, 132.455],
-    budget: "$70",
-    isTransit: false,
-    nightBus: "#5",
-    busRoute: "Hiroshima → Tokio",
-    busCost: "~¥7,500 ($50)",
-    hotelSaved: "~$130",
-    timeSaved: "~5h (pero 2h tren a Hakone)",
-    activitiesDay: [
-      "Bote por el cañón",
-      "Cascadas Ni-dan",
-      "Sendero Kurobuchi",
-      "Puentes colgantes",
-      "Picnic junto al río",
-      "Trekking nivel medio",
-    ],
-    activitiesNight: [
-      "Regreso a Hiroshima BC",
-      "Cena Gyoza Gyo-za",
-      "Pubs de Nagarekawa",
-      "Bares de Whisky",
-      "Descanso post-trekking",
-      "🚌 Bus nocturno ~21:00 desde Hiroshima BC",
-    ],
-  },
-  // ── DÍA 24 — Desde Bus #5 ──
-  {
-    date: "2026-11-24",
-    label: "Hakone — Lago Ashi + Vistas del Fuji + Ryokan",
+    label: "Ise → Hakone — Lago Ashi + Vistas del Fuji + Ryokan",
     location: "Hakone",
     category: "Naturaleza",
-    notes: "Shinjuku 7am → Hakone 9am → Lago Ashi",
-    weekday: "Mar",
+    notes: "Ise → Nagoya → Shinkansen → Odawara → Hakone. Línea recta al este.",
+    weekday: "Lun",
     food: "Cena Kaiseki",
     transport: [
-      { mode: "bus-nocturno", line: "Llegada desde Bus #5", from: "Bus nocturno", to: "Shinjuku Busta", duration: "Llegas ~7:00am" },
-      { mode: "tren", line: "Odakyu Romance Car", from: "Shinjuku", to: "Hakone-Yumoto", duration: "~1h25min", cost: "~¥2,300" },
-      { mode: "bus", line: "Hakone Tozan Bus", from: "Hakone-Yumoto", to: "Lago Ashi / Moto-Hakone", duration: "~30min" },
+      { mode: "tren", line: "Kintetsu Express", from: "Toba", to: "Nagoya", duration: "~1h40min", cost: "~¥2,800" },
+      { mode: "tren", line: "Shinkansen Tokaido (Hikari/Kodama)", from: "Nagoya", to: "Odawara", duration: "~1h20min", cost: "~¥8,000" },
+      { mode: "tren", line: "Hakone Tozan Railway / Bus", from: "Odawara", to: "Hakone-Yumoto / Lago Ashi", duration: "~30min" },
     ],
     accommodation: "Ryokan Hakone",
     zona: "Ryokan zona Hakone-Yumoto o Lago Ashi",
     accommodationCoords: [35.233, 139.107],
     budget: "$220",
     isTransit: false,
-    timeSaved: "↑ Llegas 7am, ~2h hasta Hakone",
     activitiesDay: [
+      "Viaje Ise → Hakone (~4h, vía Nagoya)",
       "Crucero pirata Lago Ashi",
-      "Santuario Hakone (Torii)",
-      "Checkpoint histórico Edo",
-      "Parque Onshi-Hakone",
+      "Santuario Hakone (Torii en el lago)",
       "Bosque de Cedros",
       "Vistas del Monte Fuji",
+      "Check-in Ryokan",
     ],
     activitiesNight: [
       "Cena Kaiseki de lujo",
@@ -944,10 +907,11 @@ export const ITINERARY: DayEntry[] = [
       "Noche de Ryokan",
     ],
   },
-  // ── DÍA 25 ──
+
+  // ── DÍA 25 -─
   {
-    date: "2026-11-25",
-    label: "Hakone Loop — Owakudani + Museo al Aire Libre",
+    date: "2026-11-24",
+    label: "Hakone Loop",
     location: "Hakone",
     category: "Naturaleza",
     notes: "Owakudani + museo",
@@ -955,9 +919,9 @@ export const ITINERARY: DayEntry[] = [
     food: "Huevo negro Owakudani",
     transport: [
       { mode: "tren", line: "Hakone Tozan Railway", from: "Hakone-Yumoto", to: "Gora", duration: "~35min" },
-      { mode: "teleférico", line: "Hakone Tozan Cable Car", from: "Gora", to: "Sounzan", duration: "~10min" },
+      { mode: "teleférico", line: "Hakone Cable Car", from: "Gora", to: "Sounzan", duration: "~10min" },
       { mode: "teleférico", line: "Hakone Ropeway", from: "Sounzan", to: "Owakudani → Togendai", duration: "~25min" },
-      { mode: "barco", line: "Hakone Pirate Ship", from: "Togendai Port", to: "Moto-Hakone", duration: "~30min" },
+      { mode: "barco", line: "Hakone Pirate Ship", from: "Togendai", to: "Moto-Hakone", duration: "~30min" },
       { mode: "bus", line: "Hakone Tozan Bus", from: "Moto-Hakone", to: "Hakone-Yumoto", duration: "~30min" },
     ],
     accommodation: "Ryokan Hakone",
@@ -982,10 +946,10 @@ export const ITINERARY: DayEntry[] = [
       "Relax frente al Fuji",
     ],
   },
-  // ── DÍA 26 ──
+  // ── DÍA 26 -─
   {
-    date: "2026-11-26",
-    label: "Costa Jogasaki — Acantilados Volcánicos + Puente Colgante",
+    date: "2026-11-25",
+    label: "Costa Jogasaki",
     location: "Izu",
     category: "Naturaleza",
     notes: "Acantilados volcánicos",
@@ -994,7 +958,7 @@ export const ITINERARY: DayEntry[] = [
     transport: [
       { mode: "tren", line: "Hakone Tozan → Odakyu", from: "Hakone-Yumoto", to: "Odawara", duration: "~15min" },
       { mode: "tren", line: "JR Tokaido → Izukyu Line", from: "Odawara", to: "Jogasaki-Kaigan", duration: "~1.5h", cost: "~¥2,500" },
-      { mode: "tren", line: "Izukyu → JR", from: "Jogasaki-Kaigan", to: "Atami", duration: "~1h", note: "Regreso al hotel" },
+      { mode: "tren", line: "Izukyu → JR", from: "Jogasaki-Kaigan", to: "Atami", duration: "~1h", note: "Regreso" },
     ],
     accommodation: "Izu/Atami",
     zona: "Atami centro u onsen costero Izu",
@@ -1018,10 +982,10 @@ export const ITINERARY: DayEntry[] = [
       "Baño de arena caliente",
     ],
   },
-  // ── DÍA 27 ──
+  // ── DÍA 27 -─
   {
-    date: "2026-11-27",
-    label: "Monte Omuro + Shuzenji — Volcán + Bambú + Wasabi",
+    date: "2026-11-26",
+    label: "Monte Omuro + Shuzenji",
     location: "Izu",
     category: "Naturaleza",
     notes: "Volcán + bambú + wasabi",
@@ -1029,7 +993,7 @@ export const ITINERARY: DayEntry[] = [
     food: "Tempura de Wasabi",
     transport: [
       { mode: "tren", line: "JR Ito Line", from: "Atami", to: "Ito", duration: "~25min" },
-      { mode: "bus", line: "Tokai Bus", from: "Ito Station", to: "Monte Omuro / Shaboten Park", duration: "~35min" },
+      { mode: "bus", line: "Tokai Bus", from: "Ito Station", to: "Monte Omuro", duration: "~35min" },
       { mode: "bus", line: "Tokai Bus", from: "Monte Omuro", to: "Shuzenji", duration: "~40min" },
       { mode: "tren", line: "Izuhakone Railway → JR", from: "Shuzenji", to: "Atami", duration: "~50min", note: "Regreso" },
     ],
@@ -1055,10 +1019,10 @@ export const ITINERARY: DayEntry[] = [
       "Fuegos artificiales (si hay)",
     ],
   },
-  // ── DÍA 28 ──
+  // ── DÍA 28 -
   {
-    date: "2026-11-28",
-    label: "Izu Sur — Costa Salvaje + Playas de Shimoda",
+    date: "2026-11-27",
+    label: "Profundizando en Izu (Sur)",
     location: "Shimoda",
     category: "Naturaleza",
     notes: "Costa salvaje y playas de arena blanca",
@@ -1066,7 +1030,7 @@ export const ITINERARY: DayEntry[] = [
     food: "Mariscos locales",
     transport: [
       { mode: "tren", line: "JR Ito Line → Izukyu Line", from: "Atami", to: "Shimoda", duration: "~1h40min", cost: "~¥3,000" },
-      { mode: "bus", line: "Tokai Bus local", from: "Shimoda Station", to: "Tsumekizaki / Geoparque", duration: "~15min" },
+      { mode: "bus", line: "Tokai Bus", from: "Shimoda Station", to: "Tsumekizaki / Geoparque", duration: "~15min" },
     ],
     accommodation: "Ryokan Shimoda",
     zona: "Frente al mar en Shimoda / Minami-Izu",
@@ -1090,10 +1054,10 @@ export const ITINERARY: DayEntry[] = [
       "Baño de agua termal nocturno",
     ],
   },
-  // ── DÍA 29 ──
+  // ── DÍA 29 -─
   {
-    date: "2026-11-29",
-    label: "Izu Occidental — Dogashima + Atardecer con Fuji",
+    date: "2026-11-28",
+    label: "Izu Occidental + Vistas Fuji",
     location: "Dogashima",
     category: "Paisaje",
     notes: "Atardeceres con el Fuji de fondo",
@@ -1101,7 +1065,7 @@ export const ITINERARY: DayEntry[] = [
     food: "Sushi de Izu",
     transport: [
       { mode: "bus", line: "Tokai Bus (costa oeste)", from: "Shimoda", to: "Dogashima", duration: "~1h", cost: "~¥1,500" },
-      { mode: "barco", line: "Bote turístico Tenshodo", from: "Dogashima Port", to: "Cueva Tenshodo (round trip)", duration: "~25min", cost: "~¥1,300" },
+      { mode: "barco", line: "Bote Tenshodo", from: "Dogashima Port", to: "Cueva Tenshodo (round trip)", duration: "~25min", cost: "~¥1,300" },
     ],
     accommodation: "Ryokan Dogashima",
     zona: "Dogashima / Nishi-Izu",
@@ -1125,18 +1089,18 @@ export const ITINERARY: DayEntry[] = [
       "Cata de sake local de Izu",
     ],
   },
-  // ── DÍA 30 ──
+  // ── DÍA 30 -─
   {
-    date: "2026-11-30",
-    label: "Shizuoka — Cascadas Shiraito + Campos de Té + Lago Tanuki",
+    date: "2026-11-29",
+    label: "El cinturón verde de Shizuoka",
     location: "Fujinomiya",
     category: "Naturaleza",
     notes: "Cascadas de seda y campos de té",
     weekday: "Lun",
     food: "Yakisoba Fujinomiya",
     transport: [
-      { mode: "bus", line: "Tokai Bus / taxi", from: "Dogashima", to: "Shuzenji Station", duration: "~1h" },
-      { mode: "tren", line: "Izuhakone Railway → JR Tokaido", from: "Shuzenji", to: "Mishima → Fujinomiya", duration: "~1.5h" },
+      { mode: "bus", line: "Tokai Bus", from: "Dogashima", to: "Shuzenji Station", duration: "~1h" },
+      { mode: "tren", line: "Izuhakone → JR Tokaido", from: "Shuzenji", to: "Mishima → Fujinomiya", duration: "~1.5h" },
       { mode: "bus", line: "Fujikyu Bus", from: "Fujinomiya Station", to: "Shiraito Falls / Lago Tanuki", duration: "~30min" },
     ],
     accommodation: "Fujinomiya",
@@ -1161,18 +1125,18 @@ export const ITINERARY: DayEntry[] = [
       "Preparar equipo para Fuji",
     ],
   },
-  // ── DÍA 31 ──
+  // ── DÍA 31 -─
   {
-    date: "2026-12-01",
-    label: "Fuji Five Lakes — Aokigahara + Chureito + Cuevas",
+    date: "2026-11-30",
+    label: "Fuji Five Lakes",
     location: "Kawaguchiko",
     category: "Paisaje",
     notes: "El Fuji a tus pies + cuevas",
     weekday: "Mar",
     food: "Houtou (Fideos locales)",
     transport: [
-      { mode: "bus", line: "Fujikyu Bus", from: "Fujinomiya", to: "Kawaguchiko", duration: "~1.5h", note: "Ruta por la base del Fuji" },
-      { mode: "bus", line: "Retro Bus (Kawaguchiko)", from: "Kawaguchiko Station", to: "Aokigahara / Cuevas / Chureito", duration: "Libre durante el día" },
+      { mode: "bus", line: "Fujikyu Bus", from: "Fujinomiya", to: "Kawaguchiko", duration: "~1.5h", note: "Ruta por base del Fuji" },
+      { mode: "bus", line: "Retro Bus", from: "Kawaguchiko Station", to: "Aokigahara / Cuevas / Chureito", duration: "Libre durante el día" },
     ],
     accommodation: "Kawaguchiko",
     zona: "Lagos con vista directa al volcán",
@@ -1196,10 +1160,10 @@ export const ITINERARY: DayEntry[] = [
       "Cata de Sake Yamanashi",
     ],
   },
-  // ── DÍA 32 ──
+  // ── DÍA 32 -─
   {
-    date: "2026-12-02",
-    label: "Monte Mitsutoge (360°) → Regreso a Tokio",
+    date: "2026-12-01",
+    label: "Mitsutoge + Regreso Tokio",
     location: "Tokio",
     category: "Logística",
     notes: "Trekking matutino → Shinjuku",
@@ -1207,9 +1171,9 @@ export const ITINERARY: DayEntry[] = [
     food: "Bento de estación",
     transport: [
       { mode: "tren", line: "Fujikyu Railway", from: "Kawaguchiko", to: "Mitsutoge Station", duration: "~15min" },
-      { mode: "caminar", from: "Mitsutoge Station", to: "Cumbre Monte Mitsutoge", duration: "~2-3h (ida)", note: "Trekking moderado, vistas 360° del Fuji" },
+      { mode: "caminar", from: "Mitsutoge Station", to: "Cumbre Monte Mitsutoge", duration: "~2-3h", note: "Trekking, vistas 360° Fuji" },
       { mode: "tren", line: "Fujikyu Railway", from: "Mitsutoge Station", to: "Otsuki", duration: "~30min" },
-      { mode: "tren", line: "JR Chuo Line (Express Azusa)", from: "Otsuki", to: "Shinjuku", duration: "~1h15min", cost: "~¥2,500" },
+      { mode: "tren", line: "JR Chuo (Express Azusa)", from: "Otsuki", to: "Shinjuku", duration: "~1h15min", cost: "~¥2,500" },
     ],
     accommodation: "Tokio",
     zona: "Shinjuku / Oeste Tokio",
@@ -1233,10 +1197,10 @@ export const ITINERARY: DayEntry[] = [
       "Descanso post-montaña",
     ],
   },
-  // ── DÍA 33 ──
+  // ── DÍA 33 -─
   {
-    date: "2026-12-03",
-    label: "Koishikawa Korakuen + Santuario Nezu — Momiji Tardío",
+    date: "2026-12-02",
+    label: "Koishikawa + Nezu",
     location: "Tokio",
     category: "Naturaleza",
     notes: "Momiji tardío",
@@ -1245,7 +1209,7 @@ export const ITINERARY: DayEntry[] = [
     transport: [
       { mode: "metro", line: "Marunouchi Line", from: "Shinjuku", to: "Myogadani / Koishikawa", duration: "~20min" },
       { mode: "metro", line: "Chiyoda Line", from: "Koishikawa", to: "Nezu", duration: "~15min" },
-      { mode: "metro", line: "Chiyoda Line", from: "Nezu", to: "Shinjuku (vía transbordo)", duration: "~25min" },
+      { mode: "metro", line: "Chiyoda Line", from: "Nezu", to: "Shinjuku (transbordo)", duration: "~25min" },
     ],
     accommodation: "Tokio",
     zona: "Mismo hotel Tokio",
@@ -1269,13 +1233,47 @@ export const ITINERARY: DayEntry[] = [
       "Sake de despedida Tokio",
     ],
   },
-  // ── DÍA 34 ──
+  // ── DÍA 33 — Día libre ──
+  {
+    date: "2026-12-03",
+    label: "Día Libre — Revisitar favoritos + Compras",
+    location: "Tokio",
+    category: "Libre",
+    notes: "Día buffer para revisitar lo que más te gustó o descansar",
+    weekday: "Jue",
+    food: "Elección libre",
+    transport: [
+      { mode: "metro", line: "Metro Tokyo", from: "Hotel", to: "Libre", duration: "Libre durante el día" },
+    ],
+    accommodation: "Tokio",
+    zona: "Mismo hotel Tokio",
+    accommodationCoords: [35.71, 139.65],
+    budget: "$80",
+    isTransit: false,
+    activitiesDay: [
+      "Revisitar tu lugar favorito del viaje",
+      "Nakano Broadway (Anime/Manga)",
+      "Akihabara (Tecnología/Retro)",
+      "Parque Ueno + Museo Nacional",
+      "Santuario Nezu (si no fuiste)",
+      "Mirador Roppongi Hills",
+    ],
+    activitiesNight: [
+      "Cena Despedida (tu restaurante favorito)",
+      "Robot Cafe / Temático",
+      "Mirador Shibuya Sky",
+      "Karaoke privado",
+      "Bar de Jazz en Shinjuku",
+      "Paseo nocturno final",
+    ],
+  },
+  // ── DÍA 34 -─
   {
     date: "2026-12-04",
-    label: "Último Día — Don Quijote + Onsen + Compras Finales",
+    label: "Preparación — Don Quijote + Onsen + Maleta",
     location: "Tokio",
     category: "Logística",
-    notes: "Don Quijote + último onsen. 🧳 Comprar maleta 23kg en Don Quijote si no la tienes aún.",
+    notes: "Don Quijote + último onsen",
     weekday: "Vie",
     food: "Último Sushi",
     transport: [
@@ -1290,7 +1288,7 @@ export const ITINERARY: DayEntry[] = [
       "Compras Don Quijote",
       "Parque Ueno (Repetir)",
       "Santuario Yushima Tenjin",
-      "🧳 Comprar maleta 23kg si no la tienes (~¥4,000)",
+      "Maletas y logística",
       "Compras snacks aeropuerto",
       "Paseo relajado final",
     ],
@@ -1303,13 +1301,13 @@ export const ITINERARY: DayEntry[] = [
       "Dormir temprano",
     ],
   },
-  // ── DÍA 35 ──
+  // ── DÍA 35 — SALIDA ────────────────────────────────
   {
     date: "2026-12-05",
-    label: "Templo Narita-san + Omotesando + Vuelo",
+    label: "Salida NRT 13:20",
     location: "Narita",
     category: "Logística",
-    notes: "Templo Narita-san si hay tiempo. Vuelo NRT 13:20.",
+    notes: "Templo Narita-san si hay tiempo",
     weekday: "Sáb",
     food: "Aeropuerto",
     transport: [

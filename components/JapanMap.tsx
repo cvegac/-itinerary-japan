@@ -9,6 +9,7 @@ export type MapMode = "day" | "week" | "full";
 type Props = {
   day: DayEntry | null;
   mode: MapMode;
+  onDaySelect?: (day: DayEntry) => void;
 };
 
 // ── Colores por semana ──────────────────────────────────────────────────────
@@ -72,7 +73,7 @@ function circleIcon(L: any, color: string, number: number, selected: boolean) {
   });
 }
 
-export default function JapanMap({ day, mode }: Props) {
+export default function JapanMap({ day, mode, onDaySelect }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const layerGroupRef = useRef<any>(null);
@@ -140,28 +141,41 @@ export default function JapanMap({ day, mode }: Props) {
 
     group.clearLayers();
 
+    let selectedMarker: any = null;
     if (mode === "day" && day) {
-      renderDayMode(L, map, group, day);
+      selectedMarker = renderDayMode(L, map, group, day);
     } else if (mode === "week" && day) {
-      renderWeekMode(L, map, group, day);
+      selectedMarker = renderWeekMode(L, map, group, day);
     } else if (mode === "full") {
-      renderFullMode(L, map, group, day);
+      selectedMarker = renderFullMode(L, map, group, day);
     }
+
+    // Abrir popup del día seleccionado después de que Leaflet renderizó todo
+    if (selectedMarker) {
+      setTimeout(() => selectedMarker.openPopup(), 50);
+    }
+  }
+
+  function addMarker(L: any, group: any, d: DayEntry, icon: any, popup: string, zIndex = 0) {
+    const [lat, lng] = d.accommodationCoords;
+    const marker = L.marker([lat, lng], { icon, zIndexOffset: zIndex })
+      .addTo(group)
+      .bindPopup(popup, { maxWidth: 240 });
+    if (onDaySelect) {
+      marker.on("click", () => onDaySelect(d));
+    }
+    return marker;
   }
 
   // ── Modo DÍA ─────────────────────────────────────────────────────────────
   function renderDayMode(L: any, map: any, group: any, day: DayEntry) {
-    const [lat, lng] = day.accommodationCoords;
     const weekIndex = getWeekIndex(day.date);
     const color = WEEK_COLORS[weekIndex % WEEK_COLORS.length];
     const dayNum = ITINERARY.indexOf(day) + 1;
-
-    L.marker([lat, lng], { icon: circleIcon(L, color, dayNum, true) })
-      .addTo(group)
-      .bindPopup(popupContent(day, true), { maxWidth: 240 })
-      .openPopup();
-
+    const marker = addMarker(L, group, day, circleIcon(L, color, dayNum, true), popupContent(day, true), 1000);
+    const [lat, lng] = day.accommodationCoords;
     map.flyTo([lat, lng], 10, { duration: 0.8 });
+    return marker;
   }
 
   // ── Modo SEMANA ───────────────────────────────────────────────────────────
@@ -173,73 +187,55 @@ export default function JapanMap({ day, mode }: Props) {
     // Polilínea de la semana
     const coords = weekDays.map((d) => d.accommodationCoords as [number, number]);
     if (coords.length > 1) {
-      L.polyline(coords, {
-        color,
-        weight: 3,
-        opacity: 0.85,
-        dashArray: "6, 4",
-      }).addTo(group);
+      L.polyline(coords, { color, weight: 3, opacity: 0.85, dashArray: "6, 4" }).addTo(group);
     }
 
-    // Marcadores de cada día de la semana
+    let selectedMarker: any = null;
     weekDays.forEach((d) => {
-      const [lat, lng] = d.accommodationCoords;
       const isSelected = d.date === selectedDay.date;
       const dayNum = ITINERARY.indexOf(d) + 1;
-
-      L.marker([lat, lng], {
-        icon: circleIcon(L, color, dayNum, isSelected),
-        zIndexOffset: isSelected ? 1000 : 0,
-      })
-        .addTo(group)
-        .bindPopup(popupContent(d, isSelected), { maxWidth: 240 });
+      const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);
+      if (isSelected) selectedMarker = marker;
     });
 
-    // Fitear la semana
     if (coords.length > 0) {
       const bounds = L.latLngBounds(coords);
       map.flyToBounds(bounds.pad(0.3), { duration: 0.8, maxZoom: 11 });
     }
+
+    return selectedMarker;
   }
 
   // ── Modo COMPLETO ─────────────────────────────────────────────────────────
   function renderFullMode(L: any, map: any, group: any, selectedDay: DayEntry | null) {
     const coords = ITINERARY.map((d) => d.accommodationCoords as [number, number]);
 
-    // Polilíneas por semana (cada segmento con su color)
     let prev: [number, number] | null = null;
+    let selectedMarker: any = null;
+
     ITINERARY.forEach((d, i) => {
       const curr = d.accommodationCoords as [number, number];
       if (prev) {
         const wi = getWeekIndex(d.date);
         const color = WEEK_COLORS[wi % WEEK_COLORS.length];
-        L.polyline([prev, curr], {
-          color,
-          weight: 2.5,
-          opacity: 0.7,
-        }).addTo(group);
+        L.polyline([prev, curr], { color, weight: 2.5, opacity: 0.7 }).addTo(group);
       }
       prev = curr;
 
-      // Marcador pequeño por día
       const wi = getWeekIndex(d.date);
       const color = WEEK_COLORS[wi % WEEK_COLORS.length];
       const isSelected = selectedDay?.date === d.date;
       const dayNum = i + 1;
-
-      L.marker(curr, {
-        icon: circleIcon(L, color, dayNum, isSelected),
-        zIndexOffset: isSelected ? 1000 : 0,
-      })
-        .addTo(group)
-        .bindPopup(popupContent(d, isSelected), { maxWidth: 240 });
+      const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);
+      if (isSelected) selectedMarker = marker;
     });
 
-    // Fit completo
     if (coords.length > 0) {
       const bounds = L.latLngBounds(coords);
-      map.flyToBounds(bounds.pad(0.1), { duration: 1, maxZoom: 9 });
+      map.flyToBounds(bounds.pad(-0.1), { duration: 1, maxZoom: 9 });
     }
+
+    return selectedMarker;
   }
 
   return (

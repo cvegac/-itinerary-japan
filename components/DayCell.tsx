@@ -42,14 +42,14 @@ export default function DayCell({ day, isSelected, onClick }: Props) {
     <button
       onClick={onClick}
       className={`
-        relative flex flex-col items-start justify-between
-        w-full h-[72px] p-1.5 rounded-lg border text-left
+        relative flex flex-col items-start justify-start gap-1
+        w-full min-h-[72px] h-full p-1.5 rounded-lg border text-left
         transition-all duration-150 cursor-pointer
         ${colorClass}
         ${isSelected ? "ring-2 ring-offset-1 ring-red-500 shadow-md scale-[1.03]" : ""}
       `}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full shrink-0">
         <span className="text-sm font-bold leading-none">{dayNum}</span>
         <div className="flex gap-0.5">
           {day.nightBus && (
@@ -64,9 +64,9 @@ export default function DayCell({ day, isSelected, onClick }: Props) {
           )}
         </div>
       </div>
-      <div className="flex items-center gap-1 w-full overflow-hidden">
-        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor}`} />
-        <span className="text-[10px] leading-tight truncate opacity-80">
+      <div className="flex items-start gap-1 w-full mt-1">
+        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-[4px] ${dotColor}`} />
+        <span className="text-[11.5px] font-medium leading-[1.25] opacity-90 break-words">
           {day.label}
         </span>
       </div>
