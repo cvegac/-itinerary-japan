@@ -1,6 +1,4 @@
-import { ITINERARY, NIGHT_BUS_SUMMARY } from "@/data/itinerary";
-
-export { NIGHT_BUS_SUMMARY };
+import type { DayEntry } from "@/types/DayEntry";
 
 export const LEGEND = [
   { label: "Naturaleza", color: "bg-emerald-400" },
@@ -13,35 +11,86 @@ export const LEGEND = [
   { label: "Bus Nocturno", color: "bg-orange-400", icon: "🚌" },
 ] as const;
 
-export const WEEK_LABELS = ["1 nov", "8 nov", "15 nov", "22 nov", "29 nov"] as const;
+export const WEEK_COLORS_HEX = [
+  "#ef4444",
+  "#f97316",
+  "#eab308",
+  "#22c55e",
+  "#3b82f6",
+] as const;
 
-export function getWeekLabel(date?: string): string {
-  if (!date) return "";
+export const WEEK_COLORS_CLASS = [
+  "bg-red-500",
+  "bg-orange-500",
+  "bg-yellow-500",
+  "bg-green-500",
+  "bg-blue-500",
+] as const;
+
+export function getWeekIndex(date: string, startDate: string): number {
   const d = new Date(date + "T12:00:00");
-  const start = new Date("2026-11-01T12:00:00");
+  const start = new Date(startDate + "T12:00:00");
   const diffDays = Math.floor((d.getTime() - start.getTime()) / 86400000);
-  const wi = Math.min(Math.floor(diffDays / 7), WEEK_LABELS.length - 1);
-  return `${wi + 1}/5 (${WEEK_LABELS[wi]})`;
+  return Math.floor(diffDays / 7);
 }
 
-export const COST_SUMMARY = (() => {
-  const weeks: { weekNum: number; label: string; days: { date: string; label: string; budget: string; cost: number }[]; total: number }[] = [];
-  let wIndex = -1;
+export function getTotalWeeks(itinerary: DayEntry[], startDate: string): number {
+  if (itinerary.length === 0) return 0;
+  const lastDate = itinerary[itinerary.length - 1].date;
+  return getWeekIndex(lastDate, startDate) + 1;
+}
+
+export function getWeekGroup(itinerary: DayEntry[], selectedDate: string, startDate: string): DayEntry[] {
+  const wi = getWeekIndex(selectedDate, startDate);
+  return itinerary.filter((e) => getWeekIndex(e.date, startDate) === wi);
+}
+
+function weekStartLabel(startDate: string, weekIndex: number): string {
+  const weekStart = new Date(startDate + "T12:00:00");
+  weekStart.setDate(weekStart.getDate() + weekIndex * 7);
+  return weekStart.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+}
+
+export function getWeekLabel(
+  date: string | undefined | null,
+  startDate: string,
+  itinerary: DayEntry[]
+): string {
+  if (!date) return "";
+  const wi = getWeekIndex(date, startDate);
+  const total = getTotalWeeks(itinerary, startDate);
+  return `${wi + 1}/${total} (${weekStartLabel(startDate, wi)})`;
+}
+
+export type CostSummary = {
+  weeks: {
+    weekNum: number;
+    label: string;
+    days: { date: string; label: string; budget: string; cost: number }[];
+    total: number;
+  }[];
+  total: number;
+};
+
+export function computeCostSummary(itinerary: DayEntry[], startDate: string): CostSummary {
+  const weeksMap = new Map<number, CostSummary["weeks"][number]>();
   let gTotal = 0;
 
-  ITINERARY.forEach((day, i) => {
+  itinerary.forEach((day) => {
+    const wi = getWeekIndex(day.date, startDate);
     const budgetRaw = day.budget.replace(/[^0-9]/g, "");
     const cost = budgetRaw ? parseInt(budgetRaw, 10) : 0;
 
-    if (i % 7 === 0) {
-      wIndex++;
-      weeks.push({ weekNum: wIndex + 1, label: WEEK_LABELS[wIndex] ?? `Semana ${wIndex + 1}`, days: [], total: 0 });
+    if (!weeksMap.has(wi)) {
+      weeksMap.set(wi, { weekNum: wi + 1, label: weekStartLabel(startDate, wi), days: [], total: 0 });
     }
 
-    weeks[wIndex].total += cost;
+    const week = weeksMap.get(wi)!;
+    week.total += cost;
     gTotal += cost;
-    weeks[wIndex].days.push({ date: day.date, label: day.label, budget: day.budget, cost });
+    week.days.push({ date: day.date, label: day.label, budget: day.budget, cost });
   });
 
+  const weeks = Array.from(weeksMap.values()).sort((a, b) => a.weekNum - b.weekNum);
   return { weeks, total: gTotal };
-})();
+}

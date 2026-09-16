@@ -1,18 +1,15 @@
 "use client";
 
-import { ITINERARY } from "@/data/itinerary";
 import type { DayEntry } from "@/types/DayEntry";
+import type { TripMonth } from "@/types/Trip";
 import DayCell from "./DayCell";
 
 type Props = {
+  itinerary: DayEntry[];
+  months: TripMonth[];
   selectedDate: string | null;
   onDaySelect: (day: DayEntry) => void;
 };
-
-const MONTHS = [
-  { year: 2026, month: 11, label: "Noviembre 2026" },
-  { year: 2026, month: 12, label: "Diciembre 2026" },
-];
 
 const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
@@ -24,13 +21,13 @@ function getFirstDayOfWeek(year: number, month: number) {
   return new Date(year, month - 1, 1).getDay();
 }
 
-export default function Calendar({ selectedDate, onDaySelect }: Props) {
-  const byDate = Object.fromEntries(ITINERARY.map((d) => [d.date, d]));
+export default function Calendar({ itinerary, months, selectedDate, onDaySelect }: Props) {
+  const byDate = Object.fromEntries(itinerary.map((d) => [d.date, d]));
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-full overflow-x-auto pb-4 hide-scrollbar">
       <div className="min-w-[550px] xl:min-w-0">
-        {MONTHS.map(({ year, month, label }) => {
+        {months.map(({ year, month, label }) => {
           const totalDays = getDaysInMonth(year, month);
           const firstDow = getFirstDayOfWeek(year, month);
           const rawCells: (DayEntry | null)[] = [
@@ -46,7 +43,7 @@ export default function Calendar({ selectedDate, onDaySelect }: Props) {
           while (lastIndex >= 0 && rawCells[lastIndex] === null) {
             lastIndex--;
           }
-          
+
           if (lastIndex < 0) return null; // Mes sin días de viaje
 
           const cells = rawCells.slice(0, lastIndex + 1);

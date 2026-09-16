@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ITINERARY } from "@/data/itinerary";
 import type { DayEntry } from "@/types/DayEntry";
+import { WEEK_COLORS_HEX, getWeekIndex, getWeekGroup } from "@/lib/itinerary-utils";
 
 export type MapMode = "day" | "week" | "full";
 
@@ -10,28 +10,11 @@ type Props = {
   day: DayEntry | null;
   mode: MapMode;
   onDaySelect?: (day: DayEntry) => void;
+  itinerary: DayEntry[];
+  startDate: string;
+  center: [number, number];
+  zoom: number;
 };
-
-// ── Colores por semana ──────────────────────────────────────────────────────
-const WEEK_COLORS = [
-  "#ef4444", // semana 1 — rojo
-  "#f97316", // semana 2 — naranja
-  "#eab308", // semana 3 — amarillo
-  "#22c55e", // semana 4 — verde
-  "#3b82f6", // semana 5 — azul
-];
-
-function getWeekIndex(date: string): number {
-  const d = new Date(date + "T12:00:00");
-  const start = new Date("2026-11-01T12:00:00");
-  const diffDays = Math.floor((d.getTime() - start.getTime()) / 86400000);
-  return Math.floor(diffDays / 7);
-}
-
-function getWeekGroup(selectedDate: string): DayEntry[] {
-  const wi = getWeekIndex(selectedDate);
-  return ITINERARY.filter((e) => getWeekIndex(e.date) === wi);
-}
 
 // ── Helpers Leaflet ─────────────────────────────────────────────────────────
 function popupContent(day: DayEntry, highlight = false): string {
@@ -73,7 +56,7 @@ function circleIcon(L: any, color: string, number: number, selected: boolean) {
   });
 }
 
-export default function JapanMap({ day, mode, onDaySelect }: Props) {
+export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, center, zoom }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const layerGroupRef = useRef<any>(null);
@@ -94,8 +77,8 @@ export default function JapanMap({ day, mode, onDaySelect }: Props) {
 
       if (!mapInstanceRef.current) {
         mapInstanceRef.current = L.map(mapRef.current!, {
-          center: [36.5, 137.0],
-          zoom: 6,
+          center,
+          zoom,
           zoomControl: true,
         });
 
@@ -169,9 +152,9 @@ export default function JapanMap({ day, mode, onDaySelect }: Props) {
 
   // ── Modo DÍA ─────────────────────────────────────────────────────────────
   function renderDayMode(L: any, map: any, group: any, day: DayEntry) {
-    const weekIndex = getWeekIndex(day.date);
-    const color = WEEK_COLORS[weekIndex % WEEK_COLORS.length];
-    const dayNum = ITINERARY.indexOf(day) + 1;
+    const weekIndex = getWeekIndex(day.date, startDate);
+    const color = WEEK_COLORS_HEX[weekIndex % WEEK_COLORS_HEX.length];
+    const dayNum = itinerary.indexOf(day) + 1;
     const marker = addMarker(L, group, day, circleIcon(L, color, dayNum, true), popupContent(day, true), 1000);
     const [lat, lng] = day.accommodationCoords;
     map.flyTo([lat, lng], 10, { duration: 0.8 });
@@ -180,9 +163,9 @@ export default function JapanMap({ day, mode, onDaySelect }: Props) {
 
   // ── Modo SEMANA ───────────────────────────────────────────────────────────
   function renderWeekMode(L: any, map: any, group: any, selectedDay: DayEntry) {
-    const weekDays = getWeekGroup(selectedDay.date);
-    const weekIndex = getWeekIndex(selectedDay.date);
-    const color = WEEK_COLORS[weekIndex % WEEK_COLORS.length];
+    const weekDays = getWeekGroup(itinerary, selectedDay.date, startDate);
+    const weekIndex = getWeekIndex(selectedDay.date, startDate);
+    const color = WEEK_COLORS_HEX[weekIndex % WEEK_COLORS_HEX.length];
 
     // Polilínea de la semana
     const coords = weekDays.map((d) => d.accommodationCoords as [number, number]);
@@ -193,7 +176,7 @@ export default function JapanMap({ day, mode, onDaySelect }: Props) {
     let selectedMarker: any = null;
     weekDays.forEach((d) => {
       const isSelected = d.date === selectedDay.date;
-      const dayNum = ITINERARY.indexOf(d) + 1;
+      const dayNum = itinerary.indexOf(d) + 1;
       const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);
       if (isSelected) selectedMarker = marker;
     });
@@ -208,22 +191,22 @@ export default function JapanMap({ day, mode, onDaySelect }: Props) {
 
   // ── Modo COMPLETO ─────────────────────────────────────────────────────────
   function renderFullMode(L: any, map: any, group: any, selectedDay: DayEntry | null) {
-    const coords = ITINERARY.map((d) => d.accommodationCoords as [number, number]);
+    const coords = itinerary.map((d) => d.accommodationCoords as [number, number]);
 
     let prev: [number, number] | null = null;
     let selectedMarker: any = null;
 
-    ITINERARY.forEach((d, i) => {
+    itinerary.forEach((d, i) => {
       const curr = d.accommodationCoords as [number, number];
       if (prev) {
-        const wi = getWeekIndex(d.date);
-        const color = WEEK_COLORS[wi % WEEK_COLORS.length];
+        const wi = getWeekIndex(d.date, startDate);
+        const color = WEEK_COLORS_HEX[wi % WEEK_COLORS_HEX.length];
         L.polyline([prev, curr], { color, weight: 2.5, opacity: 0.7 }).addTo(group);
       }
       prev = curr;
 
-      const wi = getWeekIndex(d.date);
-      const color = WEEK_COLORS[wi % WEEK_COLORS.length];
+      const wi = getWeekIndex(d.date, startDate);
+      const color = WEEK_COLORS_HEX[wi % WEEK_COLORS_HEX.length];
       const isSelected = selectedDay?.date === d.date;
       const dayNum = i + 1;
       const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);

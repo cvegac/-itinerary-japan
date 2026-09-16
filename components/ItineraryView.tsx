@@ -1,32 +1,43 @@
 "use client";
 
 import { useState, useRef, Suspense, lazy } from "react";
-import { ITINERARY } from "@/data/itinerary";
-import { LEGEND, getWeekLabel } from "@/lib/itinerary-utils";
+import { WEEK_COLORS_CLASS, LEGEND, getWeekLabel, getTotalWeeks } from "@/lib/itinerary-utils";
 import type { DayEntry } from "@/types/DayEntry";
-import type { MapMode } from "@/components/JapanMap";
+import type { MapMode } from "@/components/TripMap";
 import Calendar from "@/components/Calendar";
 import DayDetail from "@/components/DayDetail";
+import type { TripMonth } from "@/types/Trip";
 
-const JapanMap = lazy(() => import("@/components/JapanMap"));
-
-const WEEK_COLORS = [
-  { w: "Semana 1", c: "bg-red-500" },
-  { w: "Semana 2", c: "bg-orange-500" },
-  { w: "Semana 3", c: "bg-yellow-500" },
-  { w: "Semana 4", c: "bg-green-500" },
-  { w: "Semana 5", c: "bg-blue-500" },
-];
+const TripMap = lazy(() => import("@/components/TripMap"));
 
 type Props = {
-  selectedDay: DayEntry;
+  itinerary: DayEntry[];
+  startDate: string;
+  months: TripMonth[];
+  mapCenter: [number, number];
+  mapZoom: number;
+  selectedDay: DayEntry | null;
   onDaySelect: (day: DayEntry) => void;
 };
 
-export default function ItineraryView({ selectedDay, onDaySelect }: Props) {
+export default function ItineraryView({
+  itinerary,
+  startDate,
+  months,
+  mapCenter,
+  mapZoom,
+  selectedDay,
+  onDaySelect,
+}: Props) {
   const [mapMode, setMapMode] = useState<MapMode>("day");
   const [mapSize, setMapSize] = useState<"normal" | "large" | "full">("normal");
   const detailRef = useRef<HTMLDivElement>(null);
+
+  const totalWeeks = getTotalWeeks(itinerary, startDate);
+  const weekLegend = Array.from({ length: totalWeeks }, (_, i) => ({
+    label: `Semana ${i + 1}`,
+    color: WEEK_COLORS_CLASS[i % WEEK_COLORS_CLASS.length],
+  }));
 
   function cycleMapSize() {
     setMapSize((s) => (s === "normal" ? "large" : s === "large" ? "full" : "normal"));
@@ -53,7 +64,12 @@ export default function ItineraryView({ selectedDay, onDaySelect }: Props) {
             </div>
           ))}
         </div>
-        <Calendar selectedDate={selectedDay?.date ?? null} onDaySelect={handleDaySelect} />
+        <Calendar
+          itinerary={itinerary}
+          months={months}
+          selectedDate={selectedDay?.date ?? null}
+          onDaySelect={handleDaySelect}
+        />
       </aside>
 
       {/* Right: Map + Detail */}
@@ -63,16 +79,16 @@ export default function ItineraryView({ selectedDay, onDaySelect }: Props) {
           <div className="flex items-center gap-4">
             <span className="text-xs text-gray-500 font-medium">
               {mapMode === "day" && `📍 ${selectedDay?.location ?? ""}`}
-              {mapMode === "week" && `📅 Semana ${getWeekLabel(selectedDay?.date)}`}
-              {mapMode === "full" && `🗾 Ruta completa (${ITINERARY.length} días)`}
+              {mapMode === "week" && `📅 Semana ${getWeekLabel(selectedDay?.date, startDate, itinerary)}`}
+              {mapMode === "full" && `🗾 Ruta completa (${itinerary.length} días)`}
             </span>
 
-            {(mapMode === "week" || mapMode === "full") && (
+            {(mapMode === "week" || mapMode === "full") && weekLegend.length > 0 && (
               <div className="hidden sm:flex items-center gap-2 border-l border-gray-300 pl-4">
-                {WEEK_COLORS.map((week) => (
-                  <div key={week.w} className="flex items-center gap-1">
-                    <span className={`w-2 h-2 rounded-full ${week.c}`} />
-                    <span className="text-[12px] text-gray-400 font-semibold">{week.w}</span>
+                {weekLegend.map((week) => (
+                  <div key={week.label} className="flex items-center gap-1">
+                    <span className={`w-2 h-2 rounded-full ${week.color}`} />
+                    <span className="text-[12px] text-gray-400 font-semibold">{week.label}</span>
                   </div>
                 ))}
               </div>
@@ -113,7 +129,15 @@ export default function ItineraryView({ selectedDay, onDaySelect }: Props) {
               </div>
             }
           >
-            <JapanMap day={selectedDay} mode={mapMode} onDaySelect={onDaySelect} />
+            <TripMap
+              day={selectedDay}
+              mode={mapMode}
+              onDaySelect={onDaySelect}
+              itinerary={itinerary}
+              startDate={startDate}
+              center={mapCenter}
+              zoom={mapZoom}
+            />
           </Suspense>
         </div>
 

@@ -1,12 +1,13 @@
 "use client";
 
-import { NIGHT_BUS_SUMMARY } from "@/lib/itinerary-utils";
+import type { NightBusSummary } from "@/types/Trip";
 
 type Props = {
+  nightBusSummary: NightBusSummary;
   onClose: () => void;
 };
 
-export default function BusSummaryView({ onClose }: Props) {
+export default function BusSummaryView({ nightBusSummary, onClose }: Props) {
   return (
     <div className="flex-1 bg-gray-50 overflow-y-auto px-4 py-8">
       <div className="max-w-5xl mx-auto">
@@ -26,19 +27,19 @@ export default function BusSummaryView({ onClose }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-lg border border-orange-100 shadow-sm p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Buses usados</span>
-            <span className="text-2xl font-bold text-orange-800">{NIGHT_BUS_SUMMARY.totalBuses}</span>
+            <span className="text-2xl font-bold text-orange-800">{nightBusSummary.totalBuses}</span>
           </div>
           <div className="bg-white rounded-lg border border-orange-100 shadow-sm p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Costo Pass</span>
-            <span className="text-2xl font-bold text-red-600">{NIGHT_BUS_SUMMARY.japanBusPass}</span>
+            <span className="text-2xl font-bold text-red-600">{nightBusSummary.japanBusPass}</span>
           </div>
           <div className="bg-white rounded-lg border border-emerald-100 shadow-sm p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Hoteles ahorrados</span>
-            <span className="text-2xl font-bold text-emerald-700">{NIGHT_BUS_SUMMARY.totalHotelSaved}</span>
+            <span className="text-2xl font-bold text-emerald-700">{nightBusSummary.totalHotelSaved}</span>
           </div>
           <div className="bg-white rounded-lg border border-emerald-100 shadow-sm p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Ahorro neto</span>
-            <span className="text-2xl font-bold text-emerald-700">{NIGHT_BUS_SUMMARY.netSaving}</span>
+            <span className="text-2xl font-bold text-emerald-700">{nightBusSummary.netSaving}</span>
           </div>
         </div>
 
@@ -47,7 +48,7 @@ export default function BusSummaryView({ onClose }: Props) {
           <div className="bg-orange-50 px-4 py-2.5 border-b border-orange-100 flex items-center justify-between">
             <span className="text-sm font-bold text-orange-900">Detalle por bus</span>
             <span className="text-xs text-orange-600 font-medium bg-orange-100 px-2 py-0.5 rounded-full">
-              ⏱ {NIGHT_BUS_SUMMARY.totalTimeSaved} ganados
+              ⏱ {nightBusSummary.totalTimeSaved} ganados
             </span>
           </div>
           <div className="overflow-x-auto">
@@ -63,7 +64,7 @@ export default function BusSummaryView({ onClose }: Props) {
                 </tr>
               </thead>
               <tbody>
-                {NIGHT_BUS_SUMMARY.buses.map((b) => (
+                {nightBusSummary.buses.map((b) => (
                   <tr key={b.number} className="border-b last:border-b-0 border-gray-50 text-gray-700 hover:bg-orange-50 transition-colors">
                     <td className="py-2.5 px-4 font-bold text-orange-700">{b.number}</td>
                     <td className="py-2.5 pr-4">{b.night}</td>
@@ -81,7 +82,7 @@ export default function BusSummaryView({ onClose }: Props) {
         <div className="mt-6 text-sm text-orange-700 font-medium bg-orange-100/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center border border-orange-200 gap-2">
           <span>🌙 Cada bus nocturno reemplaza una noche de hotel y aprovecha horas de viaje mientras dormís.</span>
           <span className="font-bold text-orange-800 bg-white px-3 py-1 rounded-full shadow-sm shadow-orange-200 text-base">
-            Ahorro total: {NIGHT_BUS_SUMMARY.netSaving}
+            Ahorro total: {nightBusSummary.netSaving}
           </span>
         </div>
       </div>

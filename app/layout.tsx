@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Japón 2026 — 35 días",
-  description: "Gestión del viaje a Japón Nov–Dic 2026",
+  title: "Mis Viajes",
+  description: "Gestión de itinerarios de viaje",
 };
 
 export default function RootLayout({

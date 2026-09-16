@@ -1,57 +1,27 @@
-"use client";
+import Link from "next/link";
+import { getAllTrips } from "@/data/trips";
 
-import { useState } from "react";
-import { ITINERARY } from "@/data/itinerary";
-import type { DayEntry } from "@/types/DayEntry";
-import AppHeader from "@/components/AppHeader";
-import CostSummaryView from "@/components/CostSummaryView";
-import BusSummaryView from "@/components/BusSummaryView";
-import ItineraryView from "@/components/ItineraryView";
-
-type ActiveView = "itinerary" | "costs" | "buses";
-
-export default function Page() {
-  const [selectedDay, setSelectedDay] = useState<DayEntry>(ITINERARY[0]);
-  const [activeView, setActiveView] = useState<ActiveView>("itinerary");
-
-  function handleToggleCosts() {
-    setActiveView((v) => (v === "costs" ? "itinerary" : "costs"));
-  }
-
-  function handleToggleBus() {
-    setActiveView((v) => (v === "buses" ? "itinerary" : "buses"));
-  }
-
-  function handleDaySelectFromCosts(day: DayEntry) {
-    setSelectedDay(day);
-    setActiveView("itinerary");
-  }
+export default function HomePage() {
+  const trips = getAllTrips();
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <AppHeader
-        activeView={activeView}
-        onToggleCosts={handleToggleCosts}
-        onToggleBus={handleToggleBus}
-      />
-
-      {activeView === "costs" && (
-        <CostSummaryView
-          onDaySelect={handleDaySelectFromCosts}
-          onClose={() => setActiveView("itinerary")}
-        />
-      )}
-
-      {activeView === "buses" && (
-        <BusSummaryView onClose={() => setActiveView("itinerary")} />
-      )}
-
-      {activeView === "itinerary" && (
-        <ItineraryView
-          selectedDay={selectedDay}
-          onDaySelect={setSelectedDay}
-        />
-      )}
-    </div>
+    <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 bg-gray-100">
+      <h1 className="text-2xl font-bold text-gray-900">Mis Viajes</h1>
+      <div className="flex flex-col gap-3 w-full max-w-sm">
+        {trips.map((trip) => (
+          <Link
+            key={trip.meta.slug}
+            href={`/${trip.meta.slug}`}
+            className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3 hover:border-gray-400 transition-colors"
+          >
+            <span className="text-2xl">{trip.meta.emoji}</span>
+            <div>
+              <div className="font-semibold text-gray-900">{trip.meta.title}</div>
+              <div className="text-xs text-gray-500">{trip.meta.subtitle}</div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
   );
 }

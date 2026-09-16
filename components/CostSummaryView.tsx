@@ -1,21 +1,24 @@
 "use client";
 
-import { ITINERARY } from "@/data/itinerary";
-import { COST_SUMMARY } from "@/lib/itinerary-utils";
+import { computeCostSummary } from "@/lib/itinerary-utils";
 import type { DayEntry } from "@/types/DayEntry";
 
 type Props = {
+  itinerary: DayEntry[];
+  startDate: string;
   onDaySelect: (day: DayEntry) => void;
   onClose: () => void;
 };
 
-export default function CostSummaryView({ onDaySelect, onClose }: Props) {
+export default function CostSummaryView({ itinerary, startDate, onDaySelect, onClose }: Props) {
+  const costSummary = computeCostSummary(itinerary, startDate);
+
   return (
     <div className="flex-1 bg-gray-50 overflow-y-auto px-4 py-8">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-emerald-900 flex items-center gap-2">
-            💰 Detalle de Presupuesto Diario (~${COST_SUMMARY.total} USD)
+            💰 Detalle de Presupuesto Diario (~${costSummary.total} USD)
           </h2>
           <button
             onClick={onClose}
@@ -26,7 +29,7 @@ export default function CostSummaryView({ onDaySelect, onClose }: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {COST_SUMMARY.weeks.map((week) => (
+          {costSummary.weeks.map((week) => (
             <div key={week.weekNum} className="bg-white rounded-lg border border-emerald-100 overflow-hidden shadow-sm flex flex-col">
               <div className="bg-emerald-100/50 px-3 py-2 text-emerald-800 font-bold flex justify-between items-center text-sm">
                 <span>Semana {week.weekNum} ({week.label})</span>
@@ -47,7 +50,8 @@ export default function CostSummaryView({ onDaySelect, onClose }: Props) {
                         key={i}
                         className="border-b last:border-b-0 border-gray-50 text-gray-700 hover:bg-emerald-50 cursor-pointer transition-colors"
                         onClick={() => {
-                          onDaySelect(ITINERARY.find((it) => it.date === d.date) ?? ITINERARY[0]);
+                          const found = itinerary.find((it) => it.date === d.date);
+                          if (found) onDaySelect(found);
                         }}
                       >
                         <td className="py-1.5 px-3 whitespace-nowrap text-gray-500">
@@ -73,7 +77,7 @@ export default function CostSummaryView({ onDaySelect, onClose }: Props) {
         <div className="mt-8 text-sm text-emerald-700 font-medium bg-emerald-100/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center border border-emerald-200 gap-2">
           <span>💡 Podés hacer clic en cualquier día para saltar a él en el itinerario principal.</span>
           <span className="font-bold text-emerald-800 bg-white px-3 py-1 rounded-full shadow-sm shadow-emerald-200 text-base">
-            Total acumulado: ${COST_SUMMARY.total}
+            Total acumulado: ${costSummary.total}
           </span>
         </div>
       </div>
