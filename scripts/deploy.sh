@@ -9,6 +9,17 @@ DISTRIBUTION_ID="E1HVYFBAQASLTV"
 
 cd "$(dirname "$0")/.."
 
+# En Windows, invocar "bash scripts/deploy.sh" directo desde PowerShell a veces
+# no hereda el PATH con la carpeta de instalacion de AWS CLI. Si no lo encuentra,
+# lo agregamos a mano antes de fallar.
+if ! command -v aws >/dev/null 2>&1; then
+  export PATH="$PATH:/c/Program Files/Amazon/AWSCLIV2"
+fi
+if ! command -v aws >/dev/null 2>&1; then
+  echo "ERROR: no se encontro el comando 'aws'. Instala AWS CLI o revisa tu PATH." >&2
+  exit 1
+fi
+
 echo "==> Build estatico"
 npm run build
 
