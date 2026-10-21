@@ -82,13 +82,29 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
           zoomControl: true,
         });
 
-        // OpenStreetMap estándar: gratis, sin API key. CARTO empezó a exigir
-        // API key hasta para su basemap "anónimo" Voyager (las tiles mostraban
-        // el watermark "API KEY REQUIRED"), así que dejamos de depender de eso.
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        // Basemaps gratis y sin API key, con nombres legibles en Japón
+        // (CARTO dejó de servir: exige API key hasta para Voyager, y el OSM
+        // estándar rotula todo en japonés).
+        // - Esri NatGeo: solo alfabeto latino, pero sin datos pasado el zoom 12
+        //   ("Map data not yet available"); más allá se agranda la tile del 12.
+        //   Esri lo dejó en soporte limitado, por eso queda la alternativa.
+        // - OSM Alemania: nombre local + transcripción latina, con detalle de calles.
+        const natGeo = L.tileLayer(
+          "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
+          {
+            attribution: "Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ",
+            maxNativeZoom: 12,
+            maxZoom: 16,
+          }
+        );
+        const osmDe = L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19,
-        }).addTo(mapInstanceRef.current);
+          maxZoom: 18,
+        });
+        natGeo.addTo(mapInstanceRef.current);
+        L.control
+          .layers({ "Mapa (en latino)": natGeo, "Calles (bilingüe)": osmDe })
+          .addTo(mapInstanceRef.current);
 
         layerGroupRef.current = L.layerGroup().addTo(mapInstanceRef.current);
       }
