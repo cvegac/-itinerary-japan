@@ -1,4 +1,4 @@
-import { ITINERARY, NIGHT_BUS_SUMMARY } from "./japan-itinerary";
+import { ITINERARY } from "./japan-itinerary";
 import type { TripData } from "@/types/Trip";
 
 export const japanTrip: TripData = {
@@ -12,9 +12,8 @@ export const japanTrip: TripData = {
       { year: 2026, month: 11, label: "Noviembre 2026" },
       { year: 2026, month: 12, label: "Diciembre 2026" },
     ],
-    mapCenter: [36.5, 137.0],
+    mapCenter: [35.2, 136.5],
     mapZoom: 6,
   },
   itinerary: ITINERARY,
-  nightBusSummary: NIGHT_BUS_SUMMARY,
 };
