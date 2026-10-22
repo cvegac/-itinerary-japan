@@ -94,3 +94,48 @@ export function computeCostSummary(itinerary: DayEntry[], startDate: string): Co
   const weeks = Array.from(weeksMap.values()).sort((a, b) => a.weekNum - b.weekNum);
   return { weeks, total: gTotal };
 }
+
+export type LodgingStay = {
+  /** Fecha de la primera noche (check-in) */
+  checkIn: string;
+  /** Día siguiente a la última noche (check-out) */
+  checkOut: string;
+  nights: number;
+  place: string;
+  recommendation: string;
+};
+
+function addDays(date: string, days: number): string {
+  const d = new Date(date + "T12:00:00");
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Agrupa las noches seguidas en el mismo hospedaje. Salta los días sin cama:
+ *  tránsito, bus nocturno o accommodation "---". */
+export function computeLodgingSummary(itinerary: DayEntry[]): LodgingStay[] {
+  const stays: (LodgingStay & { key: string })[] = [];
+
+  itinerary.forEach((day) => {
+    if (day.isTransit || day.nightBus || day.accommodation === "---") return;
+
+    const key = day.lodgingPlace ?? day.accommodation;
+    const last = stays[stays.length - 1];
+    if (last && last.key === key && last.checkOut === day.date) {
+      last.nights += 1;
+      last.checkOut = addDays(day.date, 1);
+      return;
+    }
+
+    stays.push({
+      key,
+      checkIn: day.date,
+      checkOut: addDays(day.date, 1),
+      nights: 1,
+      place: day.lodgingPlace ?? day.zona,
+      recommendation: day.accommodation,
+    });
+  });
+
+  return stays.map(({ key: _key, ...stay }) => stay);
+}

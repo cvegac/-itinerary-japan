@@ -2,25 +2,29 @@
 
 import type { TripMeta, NightBusSummary } from "@/types/Trip";
 
-type ActiveView = "itinerary" | "costs" | "buses";
+type ActiveView = "itinerary" | "costs" | "lodging" | "buses";
 
 type Props = {
   activeView: ActiveView;
   onToggleCosts: () => void;
+  onToggleLodging: () => void;
   onToggleBus: () => void;
   tripMeta: TripMeta;
   dayCount: number;
   costTotal: number;
+  lodgingNights: number;
   nightBusSummary?: NightBusSummary;
 };
 
 export default function AppHeader({
   activeView,
   onToggleCosts,
+  onToggleLodging,
   onToggleBus,
   tripMeta,
   dayCount,
   costTotal,
+  lodgingNights,
   nightBusSummary,
 }: Props) {
   return (
@@ -46,6 +50,18 @@ export default function AppHeader({
           }`}
         >
           💰 Costos · ~${costTotal} USD
+        </button>
+
+        {/* Lodging pill */}
+        <button
+          onClick={onToggleLodging}
+          className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors border ${
+            activeView === "lodging"
+              ? "bg-indigo-600 text-white border-indigo-700"
+              : "bg-indigo-50 hover:bg-indigo-100 border-indigo-200 text-indigo-800"
+          }`}
+        >
+          🏨 Hospedaje · {lodgingNights} noches
         </button>
 
         {/* Bus pill (solo si el viaje usa buses nocturnos) */}

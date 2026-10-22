@@ -12,6 +12,9 @@ export type DayEntry = {
   /** Array de segmentos de transporte para ese día */
   transport: TransportSegment[];
   accommodation: string;
+  /** Barrio y ciudad donde se duerme esa noche (ej: "Asakusa, Tokio"). Lo usa
+   *  el resumen de hospedaje; si falta, se muestra `zona`. */
+  lodgingPlace?: string;
   zona: string;
   accommodationCoords: [number, number];
   budget: string;
