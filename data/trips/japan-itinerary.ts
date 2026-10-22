@@ -4,7 +4,7 @@ import { DayEntry } from "@/types/DayEntry";
 // Prioridades: 1.º naturaleza, 2.º precio. 14 bases cerca de una estación,
 // 8 días de bici fijos + 1 opcional, sin buses nocturnos.
 // budget = USD por persona y por día (hospedaje + transporte + comida
-// ~$35 + entradas + bici), a ~¥150/USD. Total estimado: ~$3,900.
+// ~$35 + entradas + bici), a ~¥150/USD. Total estimado: ~$3,970.
 // Verificado en línea el 2026-10-21:
 // - Spring Japan IJ621 NRT 07:40 → HIJ 09:10, lun/mié/sáb (26 oct – 30 nov),
 //   según el horario oficial publicado el 21 ago 2026.
@@ -14,6 +14,9 @@ import { DayEntry } from "@/types/DayEntry";
 //   según revendedores (confirmar en shinhotaka-ropeway.jp).
 // - Bus Kawaguchiko → Mishima: ~¥2,500, cada ~2 h (Fujikyu).
 // - Bus Kawaguchiko → inicio de Mitsutoge: ¥840, 9:40 en días laborables.
+// - Kobe (17 nov): funicular de Rokko ¥880 (mayo 2026); estuvo cerrado del 5 ene
+//   al 10 abr 2026 por renovación. Teleférico Rokko-Arima ~¥1,400 ida (sin fecha).
+//   Bus Arima → Kioto ~¥1,850–2,000, pocas salidas al día.
 // Sin confirmar: tarifas de bici en Shimanami (¥2,000–8,000 según el local) y el
 // peaje de los puentes para bicis (la exención terminó el 31 mar 2026), el
 // alquiler de bicis en Sawara y los horarios de invierno del bus Takayama–Matsumoto.
@@ -474,36 +477,38 @@ export const ITINERARY: DayEntry[] = [
       "Dormir temprano: mañana Fushimi Inari al amanecer",
     ],
   },
-  // ── DÍA 15 — Fushimi Inari + Kurama → Kibune ──
+  // ── DÍA 15 — Kurama → Kibune + Ohara ──
   {
     date: "2026-11-15",
-    label: "Fushimi Inari al amanecer + Kurama → Kibune",
+    label: "Kurama → Kibune por la montaña + Ohara",
     location: "Kioto",
     category: "Naturaleza",
-    notes: "Domingo: madrugá a Fushimi Inari (abre las 24 h). Desde ahí el tren Keihan va directo a Demachiyanagi y la línea Eizan sube a Kurama. Por el sendero de montaña se cruza a Kibune en ~2h",
+    notes: "El norte de Kioto está en su punto a mediados de noviembre. Es domingo: salí ~7:30 para empezar en Kurama a las 8:30. Desde Kibune se baja en tren a Demachiyanagi y de ahí el bus 17 sube a Ohara. Oscurece a las ~16:50 y Sanzen-in cierra temprano: no te demores en Kibune",
     weekday: "Dom",
-    food: "Udon junto al río de Kibune",
+    food: "Almuerzo rápido en Kibune; pickles de Ohara (shibazuke)",
     transport: [
-      { mode: "tren", line: "JR Nara Line", from: "Kioto", to: "Inari", duration: "~5min", cost: "¥150" },
-      { mode: "tren", line: "Keihan Main Line", from: "Fushimi-Inari", to: "Demachiyanagi", duration: "~20min", cost: "~¥300" },
+      { mode: "tren", line: "Keihan Main Line", from: "Shichijo", to: "Demachiyanagi", duration: "~15min", cost: "~¥280" },
       { mode: "tren", line: "Eizan Railway", from: "Demachiyanagi", to: "Kurama", duration: "~30min", cost: "~¥470" },
       { mode: "caminar", from: "Kurama-dera", to: "Santuario Kibune", duration: "~2h por la montaña" },
       { mode: "tren", line: "Eizan Railway", from: "Kibuneguchi", to: "Demachiyanagi", duration: "~30min", cost: "~¥470" },
+      { mode: "bus", line: "Kyoto Bus 17", from: "Demachiyanagi", to: "Ohara", duration: "~35min", cost: "~¥500" },
+      { mode: "bus", line: "Kyoto Bus 17", from: "Ohara", to: "Kioto", duration: "~1h", cost: "~¥600" },
     ],
     accommodation: "Piece Hostel Kyoto / K's House Kyoto",
     zona: "Mismo hostal en Kioto",
     accommodationCoords: [34.9858, 135.7588],
-    budget: "$105",
+    budget: "$115",
     isTransit: false,
     activitiesDay: [
-      "Fushimi Inari hasta la cima del monte Inari (~2–3h)",
       "Templo Kurama-dera (~¥500)",
       "Sendero entre raíces de cedros hasta Kibune",
       "Santuario Kibune y su escalinata de faroles rojos",
+      "Templo Sanzen-in y su jardín de musgo (~¥700)",
+      "Hosen-in, con té en el salón (~¥900), y los arrozales de Ohara",
     ],
     activitiesNight: [
-      "Vuelta por Demachiyanagi y el delta del río Kamo",
-      "Cena en Demachi",
+      "Vuelta a Kioto en el bus 17",
+      "Cena cerca de la estación",
       "Sento en Kioto",
       "Preparar la bici de mañana",
     ],
@@ -539,48 +544,54 @@ export const ITINERARY: DayEntry[] = [
       "Descanso",
     ],
   },
-  // ── DÍA 17 — Ohara ──
+  // ── DÍA 17 — Excursión a Kobe ──
   {
     date: "2026-11-17",
-    label: "Ohara rural + Camino del Filósofo",
-    location: "Kioto",
-    category: "Naturaleza",
-    notes: "Ohara son arrozales y templos con musgo en las montañas del norte, en su punto a mediados de noviembre. A la tarde, el este de Kioto",
+    label: "Kobe: Kitano, puerto, monte Rokko y onsen de Arima",
+    location: "Kobe",
+    category: "Vistas",
+    notes: "El transporte del día sale ~¥6,000 (~$40), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º. El bus directo Arima → Kioto tiene pocas salidas: reservalo",
     weekday: "Mar",
-    food: "Pickles de Ohara (shibazuke) y matcha en Hosen-in",
+    food: "Almuerzo de carne de Kobe en Sannomiya",
     transport: [
-      { mode: "bus", line: "Kyoto Bus 17", from: "Kioto", to: "Ohara", duration: "~1h", cost: "~¥600" },
-      { mode: "bus", line: "Kyoto Bus 17", from: "Ohara", to: "Ginkaku-ji (vía Demachiyanagi)", duration: "~45min", cost: "~¥500" },
+      { mode: "tren", line: "JR Kobe Line (rápido especial)", from: "Kioto", to: "Sannomiya", duration: "~50min", cost: "~¥1,110" },
+      { mode: "tren", line: "JR Kobe Line (local)", from: "Sannomiya", to: "Rokkomichi", duration: "~10min", cost: "~¥170" },
+      { mode: "bus", line: "Kobe City Bus 16", from: "Rokkomichi", to: "Rokko Cable Shita", duration: "~20min", cost: "~¥230" },
+      { mode: "teleférico", line: "Funicular de Rokko", from: "Rokko Cable Shita", to: "Rokko Sanjo", duration: "~10min", cost: "¥880" },
+      { mode: "teleférico", line: "Teleférico Rokko-Arima", from: "Cima del Rokko", to: "Arima Onsen", duration: "~12min", cost: "~¥1,400" },
+      { mode: "bus", line: "Bus directo Keihan / Hankyu", from: "Arima Onsen", to: "Kioto", duration: "~1h10", cost: "~¥1,850–2,000", note: "Si lo perdés: tren Shintetsu a Sannomiya + JR a Kioto (~1h30)" },
     ],
     accommodation: "Piece Hostel Kyoto / K's House Kyoto",
     zona: "Mismo hostal en Kioto",
     accommodationCoords: [34.9858, 135.7588],
-    budget: "$115",
+    budget: "$170",
     isTransit: false,
     activitiesDay: [
-      "Templo Sanzen-in y su jardín de musgo (~¥700)",
-      "Hosen-in, con té en el salón (~¥900)",
-      "Paseo por los arrozales de Ohara",
-      "Camino del Filósofo hasta Nanzen-ji",
-      "Opcional: Eikando, el templo del otoño",
+      "Barrio Kitano y sus casas de comerciantes extranjeros",
+      "Puerto de Kobe: parque Meriken y Harborland",
+      "Almuerzo de carne de Kobe",
+      "Vista de la bahía de Osaka desde el monte Rokko (931 m)",
+      "Teleférico bajando entre bosques a Arima",
     ],
     activitiesNight: [
-      "Nanzen-ji al atardecer",
-      "Cena en Gion",
-      "Comprar el billete a Takayama",
-      "Preparar la mochila",
+      "Onsen Kin-no-yu, de aguas rojizas (~¥650–800)",
+      "Callejones de Arima",
+      "Bus de vuelta a Kioto",
+      "Preparar la mochila: mañana te mudás a Takayama",
     ],
   },
   // ── DÍA 18 — Kioto → Takayama ──
   {
     date: "2026-11-18",
-    label: "A los Alpes: Takayama",
+    label: "Fushimi Inari al amanecer → los Alpes: Takayama",
     location: "Takayama",
     category: "Logística",
-    notes: "~3h15. Opción más barata: bus directo Kioto/Osaka → Takayama (~5h, ~¥5,000–6,000). Desde acá empieza el frío: 0–10 °C y puede haber primera nieve",
+    notes: "Fushimi Inari abre las 24 h: subí a las 6:30, volvé a las ~9:30, retirá la mochila y salí en un tren de media mañana. Viaje de ~3h15. Opción más barata: bus directo Kioto/Osaka → Takayama (~5h, ~¥5,000–6,000). Desde acá empieza el frío: 0–10 °C y puede haber primera nieve",
     weekday: "Mié",
     food: "Hida-gyu (carne de Hida) en sushi o en brocheta",
     transport: [
+      { mode: "tren", line: "JR Nara Line", from: "Kioto", to: "Inari (ida y vuelta)", duration: "~5min por tramo", cost: "¥150 por tramo" },
+      { mode: "caminar", from: "Santuario Fushimi Inari", to: "Cima del monte Inari", duration: "~2–3h ida y vuelta" },
       { mode: "tren", line: "Tokaido Shinkansen", from: "Kioto", to: "Nagoya", duration: "~35min" },
       { mode: "tren", line: "Expreso limitado Hida", from: "Nagoya", to: "Takayama", duration: "~2h20", cost: "~¥11,000–12,000 en total", note: "Ventanilla derecha: cañón del río Hida" },
     ],
@@ -590,6 +601,7 @@ export const ITINERARY: DayEntry[] = [
     budget: "$160",
     isTransit: false,
     activitiesDay: [
+      "Fushimi Inari: miles de torii hasta la cima, sin gente",
       "Cañón del río Hida desde el tren",
       "Casco viejo de Sanmachi Suji",
       "Puente rojo Nakabashi",
