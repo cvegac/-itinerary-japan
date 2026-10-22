@@ -4,7 +4,7 @@ import { DayEntry } from "@/types/DayEntry";
 // Prioridades: 1.º naturaleza, 2.º precio. 14 bases cerca de una estación,
 // 8 días de bici fijos + 1 opcional, sin buses nocturnos.
 // budget = USD por persona y por día (hospedaje + transporte + comida
-// ~$35 + entradas + bici), a ~¥150/USD. Total estimado: ~$3,970.
+// ~$35 + entradas + bici), a ~¥150/USD. Total estimado: ~$3,975.
 // Verificado en línea el 2026-10-21:
 // - Spring Japan IJ621 NRT 07:40 → HIJ 09:10, lun/mié/sáb (26 oct – 30 nov),
 //   según el horario oficial publicado el 21 ago 2026.
@@ -17,6 +17,8 @@ import { DayEntry } from "@/types/DayEntry";
 // - Kobe (17 nov): funicular de Rokko ¥880 (mayo 2026); estuvo cerrado del 5 ene
 //   al 10 abr 2026 por renovación. Teleférico Rokko-Arima ~¥1,400 ida (sin fecha).
 //   Bus Arima → Kioto ~¥1,850–2,000, pocas salidas al día.
+// - Koyasan sin lugar (8–10 nov): base en Kudoyama Ryokan Tamagawatei, a ~4 min
+//   a pie de la estación Kudoyama (Jalan). Precio sin confirmar.
 // Sin confirmar: tarifas de bici en Shimanami (¥2,000–8,000 según el local) y el
 // peaje de los puentes para bicis (la exención terminó el 31 mar 2026), el
 // alquiler de bicis en Sawara y los horarios de invierno del bus Takayama–Matsumoto.
@@ -254,98 +256,102 @@ export const ITINERARY: DayEntry[] = [
       "Preparar la mochila para Koyasan",
     ],
   },
-  // ── DÍA 8 — Onomichi → Koyasan ──
+  // ── DÍA 8 — Onomichi → Kudoyama ──
   {
     date: "2026-11-08",
-    label: "Hacia Koyasan + Okunoin de noche",
-    location: "Koyasan",
+    label: "Hacia Kudoyama, al pie de Koyasan",
+    location: "Kudoyama",
     category: "Logística",
-    notes: "~4h30 de viaje. Salí temprano para llegar con luz: en noviembre oscurece a las ~17:00. El cementerio Okunoin de noche es gratis y no tiene horario. Hay recorridos nocturnos guiados en inglés",
+    notes: "En Koyasan no quedaba lugar, así que la base es Kudoyama, al pie de la montaña, sobre la misma línea Nankai. ~3h45 de viaje: llegás para almorzar. Horas aproximadas, sin chequear contra los horarios reales: confirmalas en Google Maps o Navitime. Cuidado al reservar: hay un anexo, \"Tamagawatei Choishimichi Bekkan\", que algunos sitios ubican a ~6 km; el bueno es el de al lado de la estación",
     weekday: "Dom",
-    food: "Cena en el guesthouse o goma-dofu (tofu de sésamo)",
+    food: "Cena en el ryokan o cerca del onsen Yunosato",
     transport: [
-      { mode: "tren", line: "JR Sanyo Line", from: "Onomichi", to: "Fukuyama", duration: "~20min" },
-      { mode: "tren", line: "Sanyo Shinkansen", from: "Fukuyama", to: "Shin-Osaka", duration: "~1h05", cost: "~¥9,000 (con el tramo anterior)" },
-      { mode: "metro", line: "Osaka Metro Midosuji", from: "Shin-Osaka", to: "Namba", duration: "~15min", cost: "¥290" },
-      { mode: "tren", line: "Nankai Koya Line", from: "Namba", to: "Gokurakubashi", duration: "~1h30–1h50", cost: "~¥1,000 (+¥790 en expreso limitado)" },
-      { mode: "teleférico", line: "Funicular de Koyasan", from: "Gokurakubashi", to: "Estación Koyasan", duration: "~5min", cost: "~¥500" },
-      { mode: "bus", line: "Nankai Rinkan Bus", from: "Estación Koyasan", to: "Centro del pueblo", duration: "~10–15min", cost: "~¥300" },
+      { mode: "tren", line: "JR Sanyo Line", from: "Onomichi", to: "Fukuyama", duration: "~20min (8:30 → 8:50)" },
+      { mode: "tren", line: "Sanyo Shinkansen", from: "Fukuyama", to: "Shin-Osaka", duration: "~1h05 (9:10 → 10:15)", cost: "~¥9,000 (con el tramo anterior)" },
+      { mode: "metro", line: "Osaka Metro Midosuji", from: "Shin-Osaka", to: "Namba", duration: "~15min (10:30 → 10:45)", cost: "¥290" },
+      { mode: "tren", line: "Nankai Koya Line", from: "Namba", to: "Kudoyama", duration: "~1h15 (11:00 → 12:15)", cost: "~¥1,000" },
+      { mode: "caminar", from: "Estación Kudoyama", to: "Kudoyama Ryokan Tamagawatei", duration: "~4min" },
+      { mode: "caminar", from: "Ryokan", to: "Templo Jison-in", duration: "~20min (13:30 → 13:50)" },
     ],
-    accommodation: "Koyasan Guest House Kokuu",
-    lodgingPlace: "Pueblo de templos, Koyasan",
-    zona: "Pueblo de Koyasan, cerca de una parada de bus",
-    accommodationCoords: [34.213, 135.585],
+    accommodation: "Kudoyama Ryokan Tamagawatei (くどやま旅館 玉川亭)",
+    lodgingPlace: "Estación Kudoyama, Kudoyama",
+    zona: "A ~4 min a pie de la estación Kudoyama (Nankai), en un edificio de la era Taisho con café abajo",
+    accommodationCoords: [34.296, 135.569],
     budget: "$165",
     isTransit: false,
     activitiesDay: [
-      "Tren por las montañas de Kii en el último tramo",
-      "Funicular a 800 m de altura",
-      "Check-in en el guesthouse",
-      "Primer paseo por el pueblo de templos",
+      "Dejar la mochila y almorzar en Kudoyama",
+      "Templo Jison-in, la puerta de entrada a Koyasan",
+      "Santuario Niukanshofu: ahí empieza el Choishi-michi",
+      "Museo de Sanada y el templo Zenmyosho-in (Sanada-an)",
     ],
     activitiesNight: [
-      "Okunoin de noche: 2 km de faroles entre cedros milenarios",
-      "Recorrido nocturno guiado (opcional)",
-      "Cena vegetariana",
-      "Silencio total de montaña",
+      "Onsen Yunosato de Kudoyama",
+      "Cena tranquila",
+      "Preparar agua, almuerzo y capa de lluvia para mañana",
+      "Dormir temprano: tren a las 7:50",
     ],
   },
-  // ── DÍA 9 — Koyasan completo ──
+  // ── DÍA 9 — Choishi-michi a pie hasta Koyasan ⭐ ──
   {
     date: "2026-11-09",
-    label: "Koyasan: Okunoin, Danjo Garan y shojin ryori",
+    label: "Choishi-michi a pie hasta Koyasan + Okunoin al anochecer",
     location: "Koyasan",
     category: "Naturaleza",
-    notes: "Pico de color en Koyasan. Si te querés dar un gusto, cambiá esta noche por un templo (shukubo, ~$70–130 con cena y desayuno, en shukubo.net) y no te pierdas la meditación de las 6 am",
+    notes: "Camino de peregrinación Patrimonio de la Humanidad, marcado con piedras cada ~109 m. Versión media: entrás por la estación Kamikosawa (~4h hasta Daimon). Versión completa: desde Jison-in a las 7:00, ~22 km y 6–8h, llegando a Daimon a las ~14:00 (sin Kongobu-ji). En noviembre oscurece a las ~16:50. Confirmá el último bus desde Okunoin y el último funicular (las fuentes dicen entre 21:00 y 22:00) y que el desvío desde Kamikosawa esté abierto. Horas aproximadas",
     weekday: "Lun",
-    food: "Shojin ryori al mediodía (~¥3,000–5,000)",
+    food: "Almuerzo de shojin ryori cerca de Danjo Garan (~¥3,000)",
     transport: [
-      { mode: "bus", line: "Nankai Rinkan Bus", from: "Pueblo", to: "Okunoin-mae / Daimon", duration: "~10min", cost: "~¥300 por tramo" },
-      { mode: "caminar", from: "Ichinohashi", to: "Mausoleo de Kobo Daishi", duration: "~2 km" },
+      { mode: "tren", line: "Nankai Koya Line", from: "Kudoyama", to: "Kamikosawa", duration: "~10min (7:50 → 8:00)", cost: "~¥200" },
+      { mode: "caminar", from: "Estación Kamikosawa", to: "Unión con el Choishi-michi", duration: "~1h de subida (8:00 → 9:00)" },
+      { mode: "caminar", line: "Choishi-michi", from: "Unión con el camino", to: "Gran puerta Daimon (Koyasan)", duration: "~3h (9:00 → 12:00)" },
+      { mode: "bus", line: "Nankai Rinkan Bus", from: "Kongobu-ji", to: "Ichinohashi (Okunoin)", duration: "~10min (15:00 → 15:30)", cost: "~¥300", note: "O a pie, ~30 min" },
+      { mode: "bus", line: "Nankai Rinkan Bus", from: "Okunoin-mae", to: "Estación Koyasan", duration: "~20min (17:45 → 18:05)", cost: "~¥450" },
+      { mode: "teleférico", line: "Funicular de Koyasan", from: "Koyasan", to: "Gokurakubashi", duration: "~5min (18:15 → 18:20)", cost: "~¥500" },
+      { mode: "tren", line: "Nankai Koya Line", from: "Gokurakubashi", to: "Kudoyama", duration: "~35min (18:35 → 19:10)", cost: "~¥450" },
     ],
-    accommodation: "Koyasan Guest House Kokuu (o una noche de shukubo)",
-    lodgingPlace: "Pueblo de templos, Koyasan",
-    zona: "Pueblo de Koyasan",
-    accommodationCoords: [34.213, 135.585],
-    budget: "$120",
+    accommodation: "Kudoyama Ryokan Tamagawatei (くどやま旅館 玉川亭)",
+    lodgingPlace: "Estación Kudoyama, Kudoyama",
+    zona: "Mismo ryokan en Kudoyama",
+    accommodationCoords: [34.296, 135.569],
+    budget: "$135",
     isTransit: false,
     activitiesDay: [
-      "Okunoin de día, hasta el mausoleo de Kobo Daishi",
-      "Complejo de Danjo Garan y su pagoda roja",
-      "Templo Kongobu-ji y su jardín de rocas (~¥1,000)",
-      "Sendero de peregrinas Nyonindo (caminata entre picos)",
-      "Gran puerta Daimon al atardecer",
+      "Choishi-michi entre cedros y marcadores de piedra",
+      "Gran puerta Daimon: la entrada de los peregrinos (12:00)",
+      "Complejo de Danjo Garan y su pagoda roja (13:00)",
+      "Templo Kongobu-ji y su jardín de rocas (14:00, ~¥1,000)",
+      "Okunoin: 2 km de faroles hasta el mausoleo de Kobo Daishi (15:30 → 17:30)",
     ],
     activitiesNight: [
-      "Okunoin otra vez, si te gustó",
-      "Cena tranquila",
-      "Comprar el almuerzo de mañana para el tren",
-      "Dormir temprano",
+      "Okunoin al anochecer, con los faroles encendidos",
+      "Bajada en funicular y tren a Kudoyama",
+      "Cena en el ryokan",
+      "Descanso: fue el día más largo a pie",
     ],
   },
-  // ── DÍA 10 — Koyasan → Kii-Tanabe ──
+  // ── DÍA 10 — Kudoyama → Kii-Tanabe ──
   {
     date: "2026-11-10",
     label: "Bajada a la costa: Kii-Tanabe",
     location: "Kii-Tanabe",
     category: "Logística",
-    notes: "~4h de tren. Sacá en la oficina de turismo de Tanabe (abre 9:00, frente a la estación) el bus de mañana a Takijiri y el mapa del Nakahechi. Alternativa: el bus Koyasan–Hongu (temporada, verificar) entra directo a Kumano",
+    notes: "~3h de tren: llegás a Tanabe al mediodía. Sacá en la oficina de turismo de Tanabe (abre 9:00, frente a la estación) el bus de mañana a Takijiri y el mapa del Nakahechi. Horas aproximadas",
     weekday: "Mar",
     food: "Izakaya en el callejón Ajikoji de Tanabe",
     transport: [
-      { mode: "bus + funicular", from: "Pueblo de Koyasan", to: "Gokurakubashi", duration: "~20min", cost: "~¥800" },
-      { mode: "tren", line: "Nankai Koya Line", from: "Gokurakubashi", to: "Hashimoto", duration: "~45min", cost: "~¥500" },
-      { mode: "tren", line: "JR Wakayama Line", from: "Hashimoto", to: "Wakayama", duration: "~1h05" },
-      { mode: "tren", line: "Expreso limitado Kuroshio (o local)", from: "Wakayama", to: "Kii-Tanabe", duration: "~1h", cost: "~¥4,500 desde Hashimoto con expreso" },
+      { mode: "tren", line: "Nankai Koya Line", from: "Kudoyama", to: "Hashimoto", duration: "~10min (8:30 → 8:40)", cost: "~¥200" },
+      { mode: "tren", line: "JR Wakayama Line", from: "Hashimoto", to: "Wakayama", duration: "~1h05 (9:00 → 10:05)" },
+      { mode: "tren", line: "Expreso limitado Kuroshio (o local)", from: "Wakayama", to: "Kii-Tanabe", duration: "~1h (10:30 → 11:30)", cost: "~¥4,000 desde Hashimoto con expreso" },
     ],
     accommodation: "Hotel de negocios frente a la estación Kii-Tanabe",
     lodgingPlace: "Estación Kii-Tanabe, Tanabe",
     zona: "Frente a la estación Kii-Tanabe (de ahí salen los buses a Takijiri)",
     accommodationCoords: [33.737, 135.378],
-    budget: "$130",
+    budget: "$120",
     isTransit: false,
     activitiesDay: [
-      "Último paseo por Koyasan a la mañana",
+      "Último paseo por Kudoyama a la mañana",
       "Tren por el valle del río Kino",
       "Oficina de turismo de Tanabe: bus, mapas y consejos",
       "Santuario Tokei-jinja",
