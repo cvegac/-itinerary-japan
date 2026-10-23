@@ -94,12 +94,14 @@ function lodgingMarkerEl(color: string): HTMLElement {
   return el;
 }
 
-/** Lugar del día: el ícono de lo que es y su letra (la misma de la lista) en un globito */
+/** Lugar del día: el ícono de lo que es y su letra (la misma de la lista) en un globito.
+ *  Sin "position" propio: MapLibre ya lo pone en absolute (y el globito se ubica
+ *  respecto de él); pisarlo apila los marcadores y los corre de su lugar */
 function poiMarkerEl(color: string, letter: string, icon: string, night: boolean): HTMLElement {
   const el = document.createElement("button");
   el.type = "button";
   el.style.cssText = `
-    position:relative;width:30px;height:30px;border-radius:50%;cursor:pointer;
+    width:30px;height:30px;border-radius:50%;cursor:pointer;
     background:${night ? "#1e293b" : "#fff"};border:2px solid ${color};
     display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;
     box-shadow:0 1px 4px rgba(0,0,0,.35);`;

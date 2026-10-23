@@ -223,6 +223,13 @@ describe("TripMap con rutas", () => {
     expect(poiMarkers[0].lngLat).toEqual(toLngLat(pois[2].coords));
   });
 
+  it("no pisa el posicionamiento absoluto de los marcadores de MapLibre", async () => {
+    // Con position inline, los marcadores se apilan en el flujo y quedan corridos
+    // de su lugar real (cada uno más abajo que el anterior)
+    await renderRouted();
+    fake.state.markers.forEach((m) => expect(m.element?.style.position ?? "").toBe(""));
+  });
+
   it("en el modo día marca el hospedaje con una cama", async () => {
     await renderRouted();
     const lodging = fake.state.markers.find((m) => m.element?.getAttribute("aria-label") === "Hospedaje");
