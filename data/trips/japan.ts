@@ -1,5 +1,7 @@
 import { ITINERARY } from "./japan-itinerary";
+import routes from "./japan-routes.json";
 import type { TripData } from "@/types/Trip";
+import type { TripRoutes } from "@/lib/route-plan";
 
 export const japanTrip: TripData = {
   meta: {
@@ -16,4 +18,6 @@ export const japanTrip: TripData = {
     mapZoom: 6,
   },
   itinerary: ITINERARY,
+  // Precalculadas con scripts/fetch-routes.mjs (un test avisa si quedan viejas)
+  routes: routes as unknown as TripRoutes,
 };

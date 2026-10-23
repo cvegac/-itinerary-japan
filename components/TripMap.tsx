@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
-import { boundsOf, dayView, escapeHtml, lineFeature, toLngLat, weekColor } from "@/lib/map-geo";
+import { boundsOf, dayView, escapeHtml, lineFeature, poiLetter, toLngLat, weekColor, type LineProps } from "@/lib/map-geo";
+import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/route-plan";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 import { hasHiResRelief } from "@/lib/map-download";
 
@@ -23,7 +24,18 @@ type Props = {
   padding?: PaddingOptions;
   /** Lugar del día a enfocar; el nonce permite volver a enfocar el mismo */
   focusedPoi?: { index: number; nonce: number } | null;
+  /** Rutas precalculadas del día elegido (orden de visita y trazados) */
+  routes?: DayRoutes;
 };
+
+type RouteFeature = ReturnType<typeof lineFeature>;
+
+/** Línea que ya viene en [lng, lat] (los trazados de OSRM) */
+function lngLatFeature(line: Line, properties: LineProps): RouteFeature {
+  return { type: "Feature", properties, geometry: { type: "LineString", coordinates: line } };
+}
+
+const LODGING_ROUTE_COLOR = "#e11d48";
 
 type MapLibre = typeof import("maplibre-gl");
 
@@ -150,13 +162,18 @@ export default function TripMap({
   zoom,
   padding = DEFAULT_PADDING,
   focusedPoi = null,
+  routes,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const libRef = useRef<MapLibre | null>(null);
   const markersRef = useRef<Marker[]>([]);
   const routeRef = useRef<ReturnType<typeof lineFeature>[]>([]);
-  const poiMarkersRef = useRef<Marker[]>([]);
+  /** Marcadores de los lugares por su índice original */
+  const poiMarkersRef = useRef(new Map<number, Marker>());
+  const dayFeaturesRef = useRef<RouteFeature[]>([]);
+  const routesRef = useRef(routes);
+  routesRef.current = routes;
   const cameraRef = useRef<Camera | null>(null);
   // Listo para dibujar: se activa una vez, al cargar el estilo. No usamos
   // map.isStyleLoaded(), que da false mientras haya tiles cargando (casi
@@ -253,7 +270,7 @@ export default function TripMap({
   useEffect(() => {
     if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [day, mode]);
+  }, [day, mode, routes]);
 
   // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
@@ -276,6 +293,13 @@ export default function TripMap({
       const open = !!m.getPopup()?.isOpen();
       if ((i === focusedPoi!.index) !== open) m.togglePopup();
     });
+    // Si es un lugar cercano, la ruta a pie desde el hospedaje
+    const fromLodging = validRoutes(day!)?.fromLodging[focusedPoi!.index];
+    setRoute(
+      fromLodging
+        ? [...dayFeaturesRef.current, lngLatFeature(fromLodging.line, { color: LODGING_ROUTE_COLOR, dashed: false })]
+        : dayFeaturesRef.current
+    );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusedPoi]);
 
@@ -293,6 +317,12 @@ export default function TripMap({
     } else {
       map.flyTo({ center: camera.center, zoom: camera.zoom, padding: paddingRef.current, duration });
     }
+  }
+
+  /** Las rutas valen solo si los lugares del día no cambiaron desde que se calcularon */
+  function validRoutes(d: DayEntry): DayRoutes | undefined {
+    const r = routesRef.current;
+    return r && r.signature === poiSignature(d) ? r : undefined;
   }
 
   function setRoute(features: ReturnType<typeof lineFeature>[]) {
@@ -325,7 +355,8 @@ export default function TripMap({
 
     markersRef.current.forEach((m) => m.remove());
     markersRef.current = [];
-    poiMarkersRef.current = [];
+    poiMarkersRef.current = new Map();
+    dayFeaturesRef.current = [];
 
     let selected: Marker | null = null;
     if (mode === "day" && day) selected = renderDayMode(map, day);
@@ -347,14 +378,31 @@ export default function TripMap({
     const view = dayView(d);
     const accomMarker = addDayMarker(d, true);
 
-    view.points.forEach((p) => {
-      poiMarkersRef.current.push(
-        addMarker(poiMarkerEl(color, p.letter, p.night), p.lngLat, poiPopupHtml(p.letter, p.name, p.night))
+    const r = validRoutes(d);
+    const pois = d.pois ?? [];
+
+    // Letras en el orden de visita (el óptimo, si hay rutas al día)
+    orderedPois(d, r).forEach(({ poi, index }, position) => {
+      const letter = poiLetter(position);
+      const night = !!poi.night;
+      poiMarkersRef.current.set(
+        index,
+        addMarker(poiMarkerEl(color, letter, night), toLngLat(poi.coords), poiPopupHtml(letter, poi.name, night))
       );
     });
-    setRoute(
-      (d.pois?.length ?? 0) > 1 ? [lineFeature(d.pois!.map((p) => p.coords), { color, dashed: true })] : []
-    );
+
+    // Trazado real a pie o en bici; recta punteada en los tramos de tren o bus
+    const coordsOf = (i: number | "lodging") => (i === "lodging" ? d.accommodationCoords : pois[i].coords);
+    dayFeaturesRef.current = r
+      ? r.legs.map((leg) =>
+          leg.line
+            ? lngLatFeature(leg.line, { color, dashed: false })
+            : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
+        )
+      : pois.length > 1
+        ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
+        : [];
+    setRoute(dayFeaturesRef.current);
 
     if (!view.bounds) {
       moveCamera(map, { center: view.focus, zoom: 11 }, 800);

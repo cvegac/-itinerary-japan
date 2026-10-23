@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { computeLodgingSummary } from "@/lib/itinerary-utils";
+import { poiSignature } from "@/lib/route-plan";
 import { getAllTrips } from "./index";
 
 const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -66,6 +67,14 @@ describe.each(getAllTrips().map((t) => [t.meta.slug, t] as const))("viaje %s", (
 
 describe("viaje japan", () => {
   const japan = getAllTrips().find((t) => t.meta.slug === "japan")!;
+
+  it("tiene las rutas precalculadas al día (si no: node scripts/fetch-routes.mjs japan)", () => {
+    const stale = japan.itinerary
+      .filter((d) => (d.pois?.length ?? 0) > 0)
+      .filter((d) => japan.routes?.[d.date]?.signature !== poiSignature(d))
+      .map((d) => d.date);
+    expect(stale).toEqual([]);
+  });
 
   it("tiene 35 días y 34 noches en 14 bases", () => {
     const stays = computeLodgingSummary(japan.itinerary);

@@ -183,6 +183,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 5 — Miyajima + monte Misen ──
   {
     date: "2026-11-05",
+    hike: true, // monte Misen
+    keepOrder: true, // subir por Daisho-in y bajar por Momijidani
     label: "Miyajima y caminata al monte Misen",
     location: "Miyajima",
     category: "Naturaleza",
@@ -322,7 +324,7 @@ export const ITINERARY: DayEntry[] = [
     accommodationCoords: [34.296, 135.569],
     pois: [
       { name: "Templo Jison-in", coords: [34.29516, 135.54991] },
-      { name: "Santuario Niukanshofu (inicio del Choishi-michi)", coords: [34.25857, 135.515] },
+      { name: "Santuario Niukanshofu (inicio del Choishi-michi)", coords: [34.29508, 135.54977] },
       { name: "Templo Zenmyosho-in (Sanada-an)", coords: [34.2908, 135.55978] },
     ],
     budget: "$165",
@@ -343,6 +345,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 9 — Choishi-michi a pie hasta Koyasan ⭐ ──
   {
     date: "2026-11-09",
+    hike: true, // Choishi-michi
+    keepOrder: true, // Choishi-michi: de Kamikosawa a Daimon y Okunoin al anochecer
     label: "Choishi-michi a pie hasta Koyasan + Okunoin al anochecer",
     location: "Koyasan",
     category: "Naturaleza",
@@ -425,6 +429,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 11 — Kumano Kodo Nakahechi ⭐ ──
   {
     date: "2026-11-11",
+    hike: true, // Kumano Kodo Nakahechi
+    keepOrder: true, // sendero Nakahechi en un solo sentido
     label: "Kumano Kodo: de Takijiri a Chikatsuyu",
     location: "Kumano Kodo",
     category: "Naturaleza",
@@ -464,6 +470,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 12 — Hongu Taisha ⭐ → Kii-Katsuura ──
   {
     date: "2026-11-12",
+    hike: true, // Kumano Kodo de Hosshinmon a Hongu
+    keepOrder: true, // de Hosshinmon a Hongu a pie, después los onsen
     label: "Hosshinmon → Hongu Taisha → Kii-Katsuura",
     location: "Kumano Hongu",
     category: "Naturaleza",
@@ -504,6 +512,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 13 — Nachi ⭐ ──
   {
     date: "2026-11-13",
+    hike: true, // Daimonzaka
+    keepOrder: true, // escalinata de Daimonzaka hasta la cascada
     label: "Daimonzaka → santuario y cascada de Nachi",
     location: "Nachi",
     category: "Naturaleza",
@@ -582,6 +592,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 15 — Kurama → Kibune + Ohara ──
   {
     date: "2026-11-15",
+    keepOrder: true, // Kurama → Kibune por la montaña, después Ohara
     label: "Kurama → Kibune por la montaña + Ohara",
     location: "Kioto",
     category: "Naturaleza",
@@ -626,6 +637,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 16 — Bici río Kamo → Arashiyama 🚲 ──
   {
     date: "2026-11-16",
+    keepOrder: true, // el bosque de bambú temprano, antes de la gente
     label: "Bici: río Kamo → Arashiyama",
     location: "Kioto",
     category: "Naturaleza",
@@ -664,6 +676,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 17 — Excursión a Kobe ──
   {
     date: "2026-11-17",
+    keepOrder: true, // Kitano y el puerto, después el Rokko y Arima
     label: "Kobe: Kitano, puerto, monte Rokko y onsen de Arima",
     location: "Kobe",
     category: "Vistas",
@@ -709,6 +722,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 18 — Kioto → Takayama ──
   {
     date: "2026-11-18",
+    keepOrder: true, // Fushimi Inari al amanecer y después el tren a Takayama
     label: "Fushimi Inari al amanecer → los Alpes: Takayama",
     location: "Takayama",
     category: "Logística",
@@ -787,6 +801,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 20 — Hida-Furukawa en bici 🚲 ──
   {
     date: "2026-11-20",
+    keepOrder: true, // mercado temprano, tour en bici a la mañana en Furukawa
     label: "Bici por el campo de Hida-Furukawa",
     location: "Hida-Furukawa",
     category: "Naturaleza",
@@ -825,6 +840,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 21 — Shin-Hotaka → Matsumoto ──
   {
     date: "2026-11-21",
+    keepOrder: true, // teleférico de camino a Matsumoto
     label: "Teleférico de Shin-Hotaka → Matsumoto",
     location: "Shin-Hotaka",
     category: "Vistas",
@@ -866,6 +882,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 22 — Azumino en bici 🚲 ──
   {
     date: "2026-11-22",
+    keepOrder: true, // la bici se alquila en Hotaka (en tren desde Matsumoto)
     label: "Bici por Azumino: granja de wasabi y Alpes",
     location: "Azumino",
     category: "Naturaleza",
@@ -904,6 +921,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 23 — Valle de Kiso a pie ──
   {
     date: "2026-11-23",
+    hike: true, // Nakasendo
+    keepOrder: true, // Nakasendo de Tsumago a Magome
     label: "Nakasendo a pie: de Tsumago a Magome",
     location: "Valle de Kiso",
     category: "Naturaleza",
@@ -1021,6 +1040,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 26 — Mitsutoge ──
   {
     date: "2026-11-26",
+    hike: true, // Mitsutoge
+    keepOrder: true, // subida a Mitsutoge desde el inicio del sendero
     label: "Caminata a Mitsutoge (1.785 m) con vista al Fuji",
     location: "Kawaguchiko",
     category: "Naturaleza",
@@ -1095,6 +1116,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 28 — Costa de Jogasaki + Omuro ──
   {
     date: "2026-11-28",
+    keepOrder: true, // costa de Jogasaki a pie, después bus al Omuro
     label: "Costa de lava de Jogasaki + monte Omuro",
     location: "Izu",
     category: "Naturaleza",
@@ -1173,6 +1195,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 30 — Ito → Tokio ──
   {
     date: "2026-11-30",
+    keepOrder: true, // llegás en tren a Tokio con la valija
     label: "Vuelta a Tokio + ginkgos de Gaien",
     location: "Tokio",
     category: "Ciudad",
@@ -1253,6 +1276,8 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 32 — Monte Takao ──
   {
     date: "2026-12-02",
+    hike: true, // monte Takao
+    keepOrder: true, // sendero del monte Takao y onsen al final
     label: "Caminata al monte Takao",
     location: "Takao",
     category: "Naturaleza",
@@ -1294,6 +1319,7 @@ export const ITINERARY: DayEntry[] = [
   // ── DÍA 33 — Tokio → Narita ──
   {
     date: "2026-12-03",
+    keepOrder: true, // Rikugien en Tokio, después el tren a Narita
     label: "Jardín Rikugien → Narita-san",
     location: "Narita",
     category: "Logística",

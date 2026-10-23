@@ -14,6 +14,7 @@ const fake = vi.hoisted(() => {
     elements: [] as HTMLElement[],
     toggles: 0,
     controls: [] as unknown[],
+    markers: [] as { lngLat: unknown; element?: HTMLElement }[],
     mapOptions: [] as Record<string, unknown>[],
   };
 
@@ -70,11 +71,16 @@ const fake = vi.hoisted(() => {
 
   class FakeMarker {
     popup: FakePopup | null = null;
+    lngLat: unknown = null;
+    element?: HTMLElement;
     constructor(options?: { element?: HTMLElement }) {
       state.alive++;
+      this.element = options?.element;
       if (options?.element) state.elements.push(options.element);
+      state.markers.push(this);
     }
-    setLngLat() {
+    setLngLat(lngLat: unknown) {
+      this.lngLat = lngLat;
       return this;
     }
     setPopup(popup: FakePopup) {
@@ -123,6 +129,8 @@ const fake = vi.hoisted(() => {
 vi.mock("maplibre-gl", () => fake.module);
 
 import TripMap, { type MapMode } from "@/components/TripMap";
+import { poiSignature, type DayRoutes } from "@/lib/route-plan";
+import { toLngLat } from "@/lib/map-geo";
 
 beforeAll(() => {
   globalThis.ResizeObserver ??= class {
@@ -139,6 +147,7 @@ afterEach(() => {
   fake.state.elements.length = 0;
   fake.state.toggles = 0;
   fake.state.controls.length = 0;
+  fake.state.markers.length = 0;
   fake.state.mapOptions.length = 0;
 });
 
@@ -172,6 +181,56 @@ async function renderLoadedMap(day: DayEntry, mode: MapMode) {
   });
   return { ...view, map };
 }
+
+const routedDay = withPois(fixtureTrip.itinerary[0], 3);
+const pois = routedDay.pois!;
+const dayRoutes: DayRoutes = {
+  signature: poiSignature(routedDay),
+  order: [2, 0, 1],
+  legs: [
+    { from: "lodging", to: 2, mode: "foot", distanceM: 500, durationS: 400, line: [[139.79, 35.71], [138.7, 35.52]] },
+    { from: 2, to: 0, mode: "foot", distanceM: 2200, durationS: 1600, line: [[138.7, 35.52], [138.71, 35.51], [138.7, 35.5]] },
+    { from: 0, to: 1, mode: "transit", distanceM: 9000, durationS: 1800 },
+  ],
+  fromLodging: { 2: { distanceM: 500, durationS: 400, line: [[139.79, 35.71], [139.0, 35.6], [138.7, 35.52]] } },
+};
+
+describe("TripMap con rutas", () => {
+  async function renderRouted(focusedPoi: { index: number; nonce: number } | null = null) {
+    const view = await renderLoadedMap(routedDay, "day");
+    view.rerender(<TripMap {...props(routedDay, "day")} routes={dayRoutes} focusedPoi={focusedPoi} />);
+    return view;
+  }
+
+  it("dibuja el trazado real de cada tramo y una recta punteada en los de tren o bus", async () => {
+    await renderRouted();
+    const features = fake.state.routes.at(-1)!.features as {
+      properties: { dashed: boolean };
+      geometry: { coordinates: unknown };
+    }[];
+    expect(features).toHaveLength(3);
+    expect(features[0].geometry.coordinates).toEqual(dayRoutes.legs[0].line);
+    expect(features[0].properties.dashed).toBe(false);
+    expect(features[2].properties.dashed).toBe(true);
+    expect(features[2].geometry.coordinates).toEqual([toLngLat(pois[0].coords), toLngLat(pois[1].coords)]);
+  });
+
+  it("las letras siguen el orden de visita", async () => {
+    await renderRouted();
+    const poiMarkers = fake.state.markers.slice(-3);
+    expect(poiMarkers.map((m) => m.element?.textContent)).toEqual(["A", "B", "C"]);
+    expect(poiMarkers[0].lngLat).toEqual(toLngLat(pois[2].coords));
+  });
+
+  it("al tocar un lugar cercano dibuja la ruta a pie desde el hospedaje", async () => {
+    const { rerender } = await renderRouted();
+    rerender(<TripMap {...props(routedDay, "day")} routes={dayRoutes} focusedPoi={{ index: 2, nonce: 1 }} />);
+    const features = fake.state.routes.at(-1)!.features as { properties: { color: string }; geometry: { coordinates: unknown } }[];
+    const fromLodging = features.find((f) => f.geometry.coordinates === dayRoutes.fromLodging[2].line);
+    expect(fromLodging).toBeTruthy();
+    expect(fromLodging!.properties.color).toBe("#e11d48");
+  });
+});
 
 describe("TripMap", () => {
   it("tiene el botón de mi ubicación, que sigue al usuario con GPS", async () => {

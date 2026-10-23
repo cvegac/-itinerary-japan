@@ -51,7 +51,7 @@ function useViewportHeight(): number {
 }
 
 export default function TripApp({ tripData }: Props) {
-  const { meta, itinerary, nightBusSummary } = tripData;
+  const { meta, itinerary, nightBusSummary, routes } = tripData;
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const vh = useViewportHeight();
 
@@ -73,6 +73,7 @@ export default function TripApp({ tripData }: Props) {
   const costTotal = computeCostSummary(itinerary, meta.startDate).total;
   const lodgingNights = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);
   const dayNumber = selectedDay ? itinerary.indexOf(selectedDay) + 1 : 0;
+  const dayRoutes = selectedDay ? routes?.[selectedDay.date] : undefined;
 
   function selectDay(day: DayEntry) {
     setSelectedDay(day);
@@ -147,6 +148,7 @@ export default function TripApp({ tripData }: Props) {
       <DayDetail
         day={selectedDay}
         dayNumber={dayNumber}
+        routes={dayRoutes}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
@@ -194,6 +196,7 @@ export default function TripApp({ tripData }: Props) {
             zoom={meta.mapZoom}
             padding={mapPadding}
             focusedPoi={focusedPoi}
+            routes={dayRoutes}
           />
         </Suspense>
         {isDesktop && view === "itinerary" && (

@@ -25,13 +25,33 @@ import type { DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
 import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
+import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
 
 type Props = {
   day: DayEntry;
   dayNumber: number;
-  /** Se tocó un lugar de la lista: el mapa vuela hasta él */
+  /** Se tocó un lugar de la lista (índice original): el mapa vuela hasta él */
   onFocusPoi?: (index: number) => void;
+  /** Rutas precalculadas del día: orden de visita y cómo moverse */
+  routes?: DayRoutes;
 };
+
+function formatDuration(seconds: number): string {
+  const min = Math.max(1, Math.round(seconds / 60));
+  if (min < 60) return `${min} min`;
+  return `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, "0")} min`;
+}
+
+function formatDistance(meters: number): string {
+  if (meters < 1000) return `${Math.round(meters / 10) * 10} m`;
+  return `${(meters / 1000).toLocaleString("es-AR", { maximumFractionDigits: 1 })} km`;
+}
+
+function legText(leg: Leg): string {
+  if (leg.mode === "transit") return `Tren o bus · ~${formatDistance(leg.distanceM)}`;
+  const how = leg.mode === "bike" ? "en bici" : "a pie";
+  return `${formatDuration(leg.durationS)} ${how} · ${formatDistance(leg.distanceM)}`;
+}
 
 const TRANSPORT_ICON: Record<string, LucideIcon> = {
   tren: TrainFront,
@@ -50,14 +70,22 @@ const TRANSPORT_ICON: Record<string, LucideIcon> = {
   taxi: CarTaxiFront,
 };
 
-export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
+export default function DayDetail({ day, dayNumber, onFocusPoi, routes }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
     day: "numeric",
     month: "long",
   });
   const formatted = longDate.charAt(0).toUpperCase() + longDate.slice(1);
-  const pois = day.pois ?? [];
+  const pois = orderedPois(day, routes);
+  // Las rutas valen solo si los lugares del día no cambiaron desde que se calcularon
+  const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
+  const legTo = new Map(validRoutes?.legs.map((l) => [l.to, l]) ?? []);
+  const reordered = validRoutes?.order.some((v, i) => v !== i) ?? false;
+  const savedMin =
+    validRoutes?.originalCostS && validRoutes.bestCostS
+      ? Math.round((validRoutes.originalCostS - validRoutes.bestCostS) / 60)
+      : 0;
 
   return (
     <article className="flex flex-col gap-5 pb-6">
@@ -105,13 +133,26 @@ export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
 
       {/* Lugares del día (los mismos puntos del mapa) */}
       {pois.length > 0 && (
-        <Section title="Lugares">
+        <Section title={validRoutes ? "Lugares, en orden de visita" : "Lugares"}>
+          {reordered && savedMin > 0 && (
+            <p className="-mt-1 text-xs font-medium text-emerald-700">
+              Orden optimizado: ahorra {savedMin} min de traslados respecto del plan original
+            </p>
+          )}
+          {validRoutes && day.hike && (
+            <p className="-mt-1 text-xs text-amber-700">
+              Tiempos a ritmo de llano: en las subidas del sendero calculá bastante más.
+            </p>
+          )}
           <ul aria-label="Lugares del día" className="flex flex-col gap-1.5">
-            {pois.map((poi, i) => (
+            {pois.map(({ poi, index }, position) => {
+              const leg = legTo.get(index);
+              const lodging = validRoutes?.fromLodging[index];
+              return (
               <li key={poi.name}>
                 <button
                   type="button"
-                  onClick={() => onFocusPoi?.(i)}
+                  onClick={() => onFocusPoi?.(index)}
                   className="flex w-full items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5 text-left text-sm transition-colors hover:bg-line active:scale-[0.99]"
                 >
                   <span
@@ -119,9 +160,22 @@ export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
                       poi.night ? "bg-slate-800 text-amber-200" : "bg-fg text-bg"
                     }`}
                   >
-                    {poiLetter(i)}
+                    {poiLetter(position)}
                   </span>
-                  <span className="flex-1 font-medium">{poi.name}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-medium">{poi.name}</span>
+                    {leg && (
+                      <span className="block text-xs text-muted">
+                        {leg.from === "lodging" ? "Desde el hospedaje: " : ""}
+                        {legText(leg)}
+                      </span>
+                    )}
+                    {lodging && leg?.from !== "lodging" && (
+                      <span className="block text-xs text-muted">
+                        Desde el hospedaje: {formatDuration(lodging.durationS)} a pie
+                      </span>
+                    )}
+                  </span>
                   {poi.night ? (
                     <Moon className="size-4 text-muted" aria-label="De noche" />
                   ) : (
@@ -129,7 +183,8 @@ export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
                   )}
                 </button>
               </li>
-            ))}
+              );
+            })}
           </ul>
         </Section>
       )}

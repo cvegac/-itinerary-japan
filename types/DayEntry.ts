@@ -28,6 +28,12 @@ export type DayEntry = {
   /** Puntos de interés del día (coordenadas verificadas con OpenStreetMap).
    *  El mapa los muestra solo en modo "día". */
   pois?: PointOfInterest[];
+  /** El orden de los lugares es intencional (sendero, tren, alquiler de bici,
+   *  horario): las rutas lo respetan en vez de optimizarlo */
+  keepOrder?: boolean;
+  /** Día de sendero (Kumano Kodo, Nakasendo…): los tramos largos a pie se
+   *  trazan por el camino en vez de marcarse como tren o bus */
+  hike?: boolean;
   budget: string;
   activitiesDay: string[];
   activitiesNight: string[];

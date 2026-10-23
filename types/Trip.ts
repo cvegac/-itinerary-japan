@@ -1,4 +1,5 @@
 import type { DayEntry } from "./DayEntry";
+import type { TripRoutes } from "@/lib/route-plan";
 
 export type NightBus = {
   number: string;
@@ -41,4 +42,6 @@ export type TripData = {
   itinerary: DayEntry[];
   /** Opcional: no todos los viajes usan buses nocturnos */
   nightBusSummary?: NightBusSummary;
+  /** Rutas precalculadas por fecha (scripts/fetch-routes.mjs) */
+  routes?: TripRoutes;
 };

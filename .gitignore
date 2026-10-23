@@ -8,3 +8,6 @@ next-env.d.ts
 
 # Copiado desde node_modules en cada build (scripts/copy-maplibre-worker.mjs)
 public/maplibre-gl-worker.js
+
+# Respuestas de OSRM guardadas por scripts/fetch-routes.mjs
+.cache/
