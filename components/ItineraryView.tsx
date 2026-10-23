@@ -55,7 +55,7 @@ export default function ItineraryView({
   return (
     <div className="flex-1 flex flex-col lg:flex-row gap-0 overflow-hidden">
       {/* Left: Calendar */}
-      <aside className="lg:w-[550px] xl:w-[650px] flex-shrink-0 bg-white border-r border-gray-200 overflow-y-auto p-4 flex flex-col gap-4">
+      <aside className="lg:w-[550px] xl:w-[650px] shrink-0 bg-white border-r border-gray-200 overflow-y-auto p-4 flex flex-col gap-4">
         <div className="flex flex-wrap gap-3 justify-center mb-1">
           {LEGEND.slice(0, 7).map((l) => (
             <div key={l.label} className="flex items-center gap-1">
@@ -75,7 +75,7 @@ export default function ItineraryView({
       {/* Right: Map + Detail */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Map toolbar */}
-        <div className="flex items-center justify-between px-3 py-1.5 bg-gray-50 border-b border-gray-200 flex-shrink-0 flex-wrap gap-2">
+        <div className="flex items-center justify-between px-3 py-1.5 bg-gray-50 border-b border-gray-200 shrink-0 flex-wrap gap-2">
           <div className="flex items-center gap-4">
             <span className="text-xs text-gray-500 font-medium">
               {mapMode === "day" && `📍 ${selectedDay?.location ?? ""}`}
@@ -114,7 +114,7 @@ export default function ItineraryView({
 
         {/* Map */}
         <div
-          className={`bg-gray-200 flex-shrink-0 transition-all duration-300 ${
+          className={`bg-gray-200 shrink-0 transition-all duration-300 ${
             mapSize === "normal"
               ? "h-[300px] lg:h-[38%]"
               : mapSize === "large"
@@ -145,7 +145,7 @@ export default function ItineraryView({
         <button
           onClick={cycleMapSize}
           title={mapSize === "full" ? "Mostrar detalle" : "Expandir mapa"}
-          className="flex items-center justify-center gap-2 w-full flex-shrink-0 py-1 bg-gray-100 hover:bg-gray-200 border-y border-gray-200 transition-colors group"
+          className="flex items-center justify-center gap-2 w-full shrink-0 py-1 bg-gray-100 hover:bg-gray-200 border-y border-gray-200 transition-colors group"
         >
           <span className="text-[10px] text-gray-400 group-hover:text-gray-600 font-medium">
             {mapSize === "normal" && "expandir mapa ▼"}

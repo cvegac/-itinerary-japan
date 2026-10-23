@@ -196,7 +196,7 @@ function TransportList({ segments }: { segments: TransportSegment[] }) {
                   : "bg-gray-50 border border-gray-100"
               }`}
             >
-              <span className="text-base flex-shrink-0 mt-0.5">{icon}</span>
+              <span className="text-base shrink-0 mt-0.5">{icon}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className={`font-semibold ${
@@ -255,7 +255,7 @@ function ActivityList({
       <ul className="divide-y divide-gray-100">
         {items.map((item, i) => (
           <li key={i} className="flex items-center gap-2 px-3 py-2">
-            <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotClass}`} />
+            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dotClass}`} />
             <span className="text-sm text-gray-700">{item}</span>
           </li>
         ))}

@@ -36,7 +36,7 @@ export default function LodgingSummaryView({ itinerary, onDaySelect, onClose }: 
           </button>
         </div>
 
-        <div className="bg-white rounded-lg border border-indigo-100 overflow-hidden shadow-sm">
+        <div className="bg-white rounded-lg border border-indigo-100 overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
             <table className="text-sm w-full">
               <thead>

@@ -25,26 +25,26 @@ export default function BusSummaryView({ nightBusSummary, onClose }: Props) {
 
         {/* Resumen de ahorro */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg border border-orange-100 shadow-sm p-4 flex flex-col gap-1">
+          <div className="bg-white rounded-lg border border-orange-100 shadow-xs p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Buses usados</span>
             <span className="text-2xl font-bold text-orange-800">{nightBusSummary.totalBuses}</span>
           </div>
-          <div className="bg-white rounded-lg border border-orange-100 shadow-sm p-4 flex flex-col gap-1">
+          <div className="bg-white rounded-lg border border-orange-100 shadow-xs p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Costo Pass</span>
             <span className="text-2xl font-bold text-red-600">{nightBusSummary.japanBusPass}</span>
           </div>
-          <div className="bg-white rounded-lg border border-emerald-100 shadow-sm p-4 flex flex-col gap-1">
+          <div className="bg-white rounded-lg border border-emerald-100 shadow-xs p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Hoteles ahorrados</span>
             <span className="text-2xl font-bold text-emerald-700">{nightBusSummary.totalHotelSaved}</span>
           </div>
-          <div className="bg-white rounded-lg border border-emerald-100 shadow-sm p-4 flex flex-col gap-1">
+          <div className="bg-white rounded-lg border border-emerald-100 shadow-xs p-4 flex flex-col gap-1">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wide">Ahorro neto</span>
             <span className="text-2xl font-bold text-emerald-700">{nightBusSummary.netSaving}</span>
           </div>
         </div>
 
         {/* Tabla detallada */}
-        <div className="bg-white rounded-lg border border-orange-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-orange-100 shadow-xs overflow-hidden">
           <div className="bg-orange-50 px-4 py-2.5 border-b border-orange-100 flex items-center justify-between">
             <span className="text-sm font-bold text-orange-900">Detalle por bus</span>
             <span className="text-xs text-orange-600 font-medium bg-orange-100 px-2 py-0.5 rounded-full">
@@ -81,7 +81,7 @@ export default function BusSummaryView({ nightBusSummary, onClose }: Props) {
 
         <div className="mt-6 text-sm text-orange-700 font-medium bg-orange-100/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center border border-orange-200 gap-2">
           <span>🌙 Cada bus nocturno reemplaza una noche de hotel y aprovecha horas de viaje mientras dormís.</span>
-          <span className="font-bold text-orange-800 bg-white px-3 py-1 rounded-full shadow-sm shadow-orange-200 text-base">
+          <span className="font-bold text-orange-800 bg-white px-3 py-1 rounded-full shadow-xs shadow-orange-200 text-base">
             Ahorro total: {nightBusSummary.netSaving}
           </span>
         </div>

@@ -30,7 +30,7 @@ export default function CostSummaryView({ itinerary, startDate, onDaySelect, onC
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {costSummary.weeks.map((week) => (
-            <div key={week.weekNum} className="bg-white rounded-lg border border-emerald-100 overflow-hidden shadow-sm flex flex-col">
+            <div key={week.weekNum} className="bg-white rounded-lg border border-emerald-100 overflow-hidden shadow-xs flex flex-col">
               <div className="bg-emerald-100/50 px-3 py-2 text-emerald-800 font-bold flex justify-between items-center text-sm">
                 <span>Semana {week.weekNum} ({week.label})</span>
                 <span className="bg-emerald-200/50 px-2.5 py-0.5 rounded-full">${week.total}</span>
@@ -76,7 +76,7 @@ export default function CostSummaryView({ itinerary, startDate, onDaySelect, onC
 
         <div className="mt-8 text-sm text-emerald-700 font-medium bg-emerald-100/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center border border-emerald-200 gap-2">
           <span>💡 Podés hacer clic en cualquier día para saltar a él en el itinerario principal.</span>
-          <span className="font-bold text-emerald-800 bg-white px-3 py-1 rounded-full shadow-sm shadow-emerald-200 text-base">
+          <span className="font-bold text-emerald-800 bg-white px-3 py-1 rounded-full shadow-xs shadow-emerald-200 text-base">
             Total acumulado: ${costSummary.total}
           </span>
         </div>

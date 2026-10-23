@@ -53,20 +53,20 @@ export default function DayCell({ day, isSelected, onClick }: Props) {
         <span className="text-sm font-bold leading-none">{dayNum}</span>
         <div className="flex gap-0.5">
           {day.nightBus && (
-            <span className="text-[9px] bg-orange-400 text-orange-900 rounded px-1 py-0.5 font-semibold leading-none">
+            <span className="text-[9px] bg-orange-400 text-orange-900 rounded-sm px-1 py-0.5 font-semibold leading-none">
               🚌
             </span>
           )}
           {day.isTransit && (
-            <span className="text-[9px] bg-amber-400 text-amber-900 rounded px-1 py-0.5 font-semibold leading-none">
+            <span className="text-[9px] bg-amber-400 text-amber-900 rounded-sm px-1 py-0.5 font-semibold leading-none">
               🚄
             </span>
           )}
         </div>
       </div>
       <div className="flex items-start gap-1 w-full mt-1">
-        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-[4px] ${dotColor}`} />
-        <span className="text-[11.5px] font-medium leading-[1.25] opacity-90 break-words">
+        <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-[4px] ${dotColor}`} />
+        <span className="text-[11.5px] font-medium leading-tight opacity-90 wrap-break-word">
           {day.label}
         </span>
       </div>
