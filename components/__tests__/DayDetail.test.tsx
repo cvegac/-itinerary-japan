@@ -55,6 +55,34 @@ describe("DayDetail", () => {
     expect(screen.getByLabelText("Atardecer").textContent).toMatch(/^1\d:\d{2}$/);
   });
 
+  it("con conexión y si el día está cerca, muestra el pronóstico", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-10-25T10:00:00"));
+    const fetchMock = vi.fn(async () => ({
+      json: async () => ({
+        daily: { time: ["2026-11-02"], weather_code: [63], temperature_2m_max: [16.6], temperature_2m_min: [9.2], precipitation_probability_max: [70] },
+      }),
+    }));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<DayDetail day={day} dayNumber={2} />);
+    const chip = await screen.findByLabelText("Pronóstico: Lluvia");
+    expect(chip.textContent).toContain("9–17 °C");
+    expect(chip.textContent).toContain("70 %");
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
+  it("si el día está lejos no pide el pronóstico", () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-09-01T10:00:00"));
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
   it("en los días de sendero avisa a qué hora oscurece", () => {
     render(<DayDetail day={{ ...day, hike: true }} dayNumber={2} />);
     expect(screen.getByText(/Oscurece a las 1\d:\d{2}/)).toBeTruthy();

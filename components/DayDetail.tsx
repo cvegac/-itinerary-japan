@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BedDouble,
@@ -30,6 +31,8 @@ import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
+import { localISODate } from "@/lib/trip-time";
+import { useForecast, weatherLabel } from "@/lib/weather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
 
 type Props = {
@@ -102,6 +105,11 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
       ]
     : day.accommodationCoords;
   const sun = sunTimes(day.date, sunPlace);
+  // "Hoy" sale del reloj del dispositivo: se calcula después de montar
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => setToday(localISODate(new Date())), []);
+  const forecast = useForecast(day.date, sunPlace, today);
+  const weather = forecast && weatherLabel(forecast.code);
   const checkOutPrev = morningLodging?.checkOut;
   const checkInToday = (arriving ?? !!morningLodging) && !day.isTransit ? day.checkIn : undefined;
   const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
@@ -151,6 +159,17 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
             <Sunset className="ml-1 size-3.5 text-indigo-600" aria-hidden />
             <span aria-label="Atardecer">{sun.sunset}</span>
           </span>
+          {forecast && weather && (
+            <span
+              aria-label={`Pronóstico: ${weather.text}`}
+              title={weather.text}
+              className="inline-flex items-center gap-1 rounded-full bg-sky-500/10 px-2.5 py-1 text-xs font-medium tabular-nums text-sky-800"
+            >
+              <span aria-hidden>{weather.icon}</span>
+              {forecast.min}–{forecast.max} °C
+              {forecast.rain !== null && <span className="ml-1">💧 {forecast.rain} %</span>}
+            </span>
+          )}
         </div>
         {day.hike && (
           <p className="text-xs font-medium text-amber-700">
