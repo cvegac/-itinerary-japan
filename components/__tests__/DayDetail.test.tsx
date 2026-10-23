@@ -49,6 +49,17 @@ describe("DayDetail", () => {
     expect(screen.getByText("Dormís en")).toBeTruthy();
   });
 
+  it("muestra a qué hora sale y se pone el sol donde está el plan del día", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(screen.getByLabelText("Amanecer").textContent).toMatch(/^\d:\d{2}$/);
+    expect(screen.getByLabelText("Atardecer").textContent).toMatch(/^1\d:\d{2}$/);
+  });
+
+  it("en los días de sendero avisa a qué hora oscurece", () => {
+    render(<DayDetail day={{ ...day, hike: true }} dayNumber={2} />);
+    expect(screen.getByText(/Oscurece a las 1\d:\d{2}/)).toBeTruthy();
+  });
+
   it("tiene la tarjeta para mostrar al taxista, con el teléfono para llamar", () => {
     const withJa = {
       ...day,

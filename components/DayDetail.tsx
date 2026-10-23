@@ -19,6 +19,7 @@ import {
   StickyNote,
   Sun,
   Sunrise,
+  Sunset,
   TrainFront,
   TramFront,
   Utensils,
@@ -28,6 +29,7 @@ import type { TransportSegment } from "@/types/TransportSegment";
 import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
+import { sunTimes } from "@/lib/sun";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
 
 type Props = {
@@ -92,6 +94,14 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
   const formatted = longDate.charAt(0).toUpperCase() + longDate.slice(1);
   const pois = orderedPois(day, routes);
   // Las rutas valen solo si los lugares del día no cambiaron desde que se calcularon
+  // El sol, en el centro de los lugares del día (o en el hospedaje si no hay)
+  const sunPlace: [number, number] = day.pois?.length
+    ? [
+        day.pois.reduce((s, p) => s + p.coords[0], 0) / day.pois.length,
+        day.pois.reduce((s, p) => s + p.coords[1], 0) / day.pois.length,
+      ]
+    : day.accommodationCoords;
+  const sun = sunTimes(day.date, sunPlace);
   const checkOutPrev = morningLodging?.checkOut;
   const checkInToday = (arriving ?? !!morningLodging) && !day.isTransit ? day.checkIn : undefined;
   const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
@@ -135,7 +145,18 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
               Bus nocturno {day.nightBus} esta noche
             </span>
           )}
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium tabular-nums">
+            <Sunrise className="size-3.5 text-amber-600" aria-hidden />
+            <span aria-label="Amanecer">{sun.sunrise}</span>
+            <Sunset className="ml-1 size-3.5 text-indigo-600" aria-hidden />
+            <span aria-label="Atardecer">{sun.sunset}</span>
+          </span>
         </div>
+        {day.hike && (
+          <p className="text-xs font-medium text-amber-700">
+            Oscurece a las {sun.sunset}: calculá terminar el sendero antes.
+          </p>
+        )}
       </header>
 
       {/* Horarios del hospedaje: check-out del de anoche y check-in del de hoy */}
