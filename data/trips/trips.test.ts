@@ -1,0 +1,87 @@
+import { describe, expect, it } from "vitest";
+import { computeLodgingSummary } from "@/lib/itinerary-utils";
+import { getAllTrips } from "./index";
+
+const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+function addDays(date: string, days: number): string {
+  const d = new Date(date + "T12:00:00");
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+function distanceKm([lat1, lng1]: [number, number], [lat2, lng2]: [number, number]): number {
+  const toRad = Math.PI / 180;
+  const a =
+    Math.sin(((lat2 - lat1) * toRad) / 2) ** 2 +
+    Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) * Math.sin(((lng2 - lng1) * toRad) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(a));
+}
+
+describe.each(getAllTrips().map((t) => [t.meta.slug, t] as const))("viaje %s", (_slug, trip) => {
+  const { meta, itinerary } = trip;
+
+  it("empieza en startDate y tiene fechas consecutivas", () => {
+    itinerary.forEach((day, i) => {
+      expect(day.date).toBe(addDays(meta.startDate, i));
+    });
+  });
+
+  it("tiene el día de la semana correcto en cada fecha", () => {
+    itinerary.forEach((day) => {
+      const expected = WEEKDAYS[new Date(day.date + "T12:00:00").getDay()];
+      expect(`${day.date} ${day.weekday}`).toBe(`${day.date} ${expected}`);
+    });
+  });
+
+  it("tiene un presupuesto numérico en cada día", () => {
+    itinerary.forEach((day) => {
+      expect(day.budget, day.date).toMatch(/\$\d+/);
+    });
+  });
+
+  it("tiene coordenadas de hospedaje válidas", () => {
+    itinerary.forEach(({ date, accommodationCoords: [lat, lng] }) => {
+      expect(Math.abs(lat), date).toBeLessThanOrEqual(90);
+      expect(Math.abs(lng), date).toBeLessThanOrEqual(180);
+    });
+  });
+
+  it("ubica los puntos de interés a menos de 250 km del hospedaje del día", () => {
+    itinerary.forEach((day) => {
+      (day.pois ?? []).forEach((poi) => {
+        expect(distanceKm(day.accommodationCoords, poi.coords), `${day.date} ${poi.name}`).toBeLessThan(250);
+      });
+    });
+  });
+
+  it("cuenta en el resumen de hospedaje todas las noches con cama", () => {
+    const nightsWithBed = itinerary.filter(
+      (d) => !d.isTransit && !d.nightBus && d.accommodation !== "---"
+    ).length;
+    const total = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);
+    expect(total).toBe(nightsWithBed);
+  });
+});
+
+describe("viaje japan", () => {
+  const japan = getAllTrips().find((t) => t.meta.slug === "japan")!;
+
+  it("tiene 35 días y 34 noches en 14 bases", () => {
+    const stays = computeLodgingSummary(japan.itinerary);
+    expect(japan.itinerary).toHaveLength(35);
+    expect(stays).toHaveLength(14);
+    expect(stays.reduce((sum, s) => sum + s.nights, 0)).toBe(34);
+  });
+
+  it("tiene todos los puntos de interés dentro de Japón", () => {
+    japan.itinerary.forEach((day) => {
+      (day.pois ?? []).forEach(({ name, coords: [lat, lng] }) => {
+        expect(lat, name).toBeGreaterThan(24);
+        expect(lat, name).toBeLessThan(46);
+        expect(lng, name).toBeGreaterThan(122);
+        expect(lng, name).toBeLessThan(146);
+      });
+    });
+  });
+});
