@@ -5,7 +5,7 @@ import { DayEntry } from "@/types/DayEntry";
 // 8 días de bici fijos + 1 opcional, sin buses nocturnos.
 // budget = USD por persona y por día, calculado con lib/budget.ts: hospedaje real
 // (lodgingCost) + tramos de transporte + entradas + comida ~$35, a ~¥150/USD.
-// Total estimado: ~$3,739, sin los vuelos internacionales. Un test avisa si un día
+// Total estimado: ~$3,742, sin los vuelos internacionales. Un test avisa si un día
 // queda desactualizado.
 // Verificado en línea el 2026-10-21:
 // - Spring Japan IJ621 NRT 07:40 → HIJ 09:10, lun/mié/sáb (26 oct – 30 nov),
@@ -142,7 +142,7 @@ export const ITINERARY: DayEntry[] = [
     ],
     activitiesNight: [
       "Cena cerca de la estación de Narita",
-      "Pesar la mochila: máximo 7 kg en cabina con Spring Japan",
+      "Pesar: 7 kg en cabina (una sola pieza) y 10 kg facturados",
       "Check-in online del vuelo IJ621",
       "Dormir temprano",
     ],
@@ -153,12 +153,12 @@ export const ITINERARY: DayEntry[] = [
     label: "Vuelo a Hiroshima + Parque de la Paz",
     location: "Hiroshima",
     category: "Ciudad",
-    notes: "Salí del hotel a las ~6:00: tren de Narita a la terminal para estar a las 6:40. Spring Japan IJ621: NRT 07:40 → HIJ 09:10 (opera lun, mié y sáb). Máximo 7 kg en cabina sumando todo: con la ropa de invierno para los Alpes casi seguro te pasás, así que agregá la maleta facturada al reservar. Todavía sin comprar: el hotel de Narita de la noche anterior depende de este vuelo",
+    notes: "Salí del hotel a las ~6:00: tren de Narita a la terminal para estar a las 6:40. Spring Japan IJ621: NRT 07:40 → HIJ 09:10 (opera lun, mié y sáb). Comprado el 23 oct (pendiente de confirmación de la aerolínea), COP 209,930. Equipaje: una sola pieza en cabina de 7 kg y 56 × 36 × 23 cm, sin artículo personal aparte (va la small bag de KLM), y 10 kg facturados (va la maleta de cabina de KLM)",
     weekday: "Mié",
     food: "Okonomiyaki estilo Hiroshima en Okonomimura",
     transport: [
       { mode: "tren", line: "JR o Keisei", from: "Narita", to: "Aeropuerto de Narita", duration: "~10min", cost: "~¥200–300", note: "Confirmá el primer tren: el shuttle del hotel (7:00) llega tarde" },
-      { mode: "avión", line: "Spring Japan IJ621", from: "Narita (NRT)", to: "Hiroshima (HIJ)", duration: "1h30", cost: "~$50" },
+      { mode: "avión", line: "Spring Japan IJ621", from: "Narita (NRT)", to: "Hiroshima (HIJ)", duration: "1h30", cost: "~$53", note: "Comprado, con 10 kg facturados" },
       { mode: "bus", line: "Limousine Bus", from: "Aeropuerto de Hiroshima", to: "Estación de Hiroshima (salida Shinkansen)", duration: "~50min", cost: "¥1,450", note: "Se puede pagar con Suica" },
       { mode: "tranvía", line: "Hiroden línea 2", from: "Estación de Hiroshima", to: "Nishi-Kannonmachi", duration: "~25min", cost: "~¥240", note: "Después ~7 min a pie. Check-in desde las 15:00: si llegás antes, preguntá si guardan la mochila" },
       { mode: "bicicleta", line: "Peacecle (bici compartida)", from: "Estación de Hiroshima", to: "Parque de la Paz → castillo → Shukkei-en", duration: "~15 km, llano", cost: "Pase de 1 día ~¥1,100–1,500", note: "Opcional" },
@@ -175,7 +175,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Jardín Shukkei-en", coords: [34.40034, 132.46745] },
       { name: "Okonomimura", coords: [34.3913, 132.46188], night: true },
     ],
-    budget: "$135",
+    budget: "$138",
     isTransit: false,
     activitiesDay: [
       "Parque y Museo de la Paz (~¥200)",
