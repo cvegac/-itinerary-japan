@@ -72,10 +72,11 @@ async function lifecycle(listener: Listener) {
   await pending;
 }
 
-async function request(listener: Listener, url: string, mode: RequestMode = "cors") {
+async function request(listener: Listener, url: string, mode: RequestMode = "cors", cache: RequestCache = "default") {
   let response: Promise<Response> | undefined;
   const req = new Request(new URL(url, ORIGIN).href, { mode: mode === "navigate" ? "same-origin" : mode });
   Object.defineProperty(req, "mode", { value: mode });
+  Object.defineProperty(req, "cache", { value: cache });
   listener({ request: req, respondWith: (p) => (response = p) });
   return response;
 }
@@ -149,6 +150,40 @@ describe("service worker", () => {
       throw new TypeError("sin red");
     });
     expect(await (await request(listeners.fetch, tile))!.text()).toBe(`red ${tile}`);
+  });
+
+  it("sin red usa el mapa descargado por adelantado (otra caché)", async () => {
+    const { listeners, caches } = loadWorker(network);
+    const tile = "https://tiles.openfreemap.org/planet/1/14/1/1.pbf";
+    caches.store.set("viajes-mapa-viaje", new Map([[tile, new Response("descargado")]]));
+    network.mockImplementation(async () => {
+      throw new TypeError("sin red");
+    });
+    expect(await (await request(listeners.fetch, tile))!.text()).toBe("descargado");
+  });
+
+  it("deja pasar la descarga anticipada (cache: reload) para no guardar dos copias", async () => {
+    const { listeners } = loadWorker(network);
+    const tile = "https://tiles.openfreemap.org/planet/1/14/1/1.pbf";
+    expect(await request(listeners.fetch, tile, "cors", "reload")).toBeUndefined();
+  });
+
+  it("el estilo del mapa viene de la red si hay, y si no del guardado", async () => {
+    const { listeners, caches } = loadWorker(network);
+    const style = "https://tiles.openfreemap.org/styles/liberty";
+    caches.store.set("viajes-mapa-viaje", new Map([[style, new Response("estilo viejo")]]));
+    expect(await (await request(listeners.fetch, style))!.text()).toBe(`red ${style}`);
+    network.mockImplementation(async () => {
+      throw new TypeError("sin red");
+    });
+    expect(await (await request(listeners.fetch, style))!.text()).not.toMatch(/^red/);
+  });
+
+  it("al recibir el aviso de desactivar deja de interceptar (y de guardar) en el acto", async () => {
+    const { listeners } = loadWorker(network);
+    (listeners.message as unknown as (e: { data: unknown }) => void)({ data: { type: "disable" } });
+    expect(await request(listeners.fetch, "https://tiles.openfreemap.org/planet/1/10/1/1.pbf")).toBeUndefined();
+    expect(await request(listeners.fetch, "/japan/", "navigate")).toBeUndefined();
   });
 
   it("no intercepta pedidos de otros sitios ni que no sean GET", async () => {

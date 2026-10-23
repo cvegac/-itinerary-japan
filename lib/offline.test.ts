@@ -6,6 +6,7 @@ import { CACHE_PREFIX, disableOffline, enableOffline, isOfflineEnabled } from ".
 type FakeRegistration = { scope: string; unregister: ReturnType<typeof vi.fn> };
 
 let registrations: FakeRegistration[];
+const postMessage = vi.fn();
 let cacheNames: string[];
 const register = vi.fn(async (url: string) => {
   const reg = { scope: "/", url, unregister: vi.fn(async () => true) };
@@ -24,6 +25,7 @@ beforeEach(() => {
       getRegistration: async () => registrations[0],
       getRegistrations: async () => registrations,
       ready: Promise.resolve({}),
+      controller: { postMessage },
     },
   });
   vi.stubGlobal("caches", {
@@ -69,5 +71,11 @@ describe("disableOffline", () => {
     await disableOffline();
     expect(reg.unregister).toHaveBeenCalled();
     expect(cacheNames).toEqual(["otra-app"]);
+  });
+
+  it("avisa al service worker que controla la página que deje de guardar ya", async () => {
+    await enableOffline();
+    await disableOffline();
+    expect(postMessage).toHaveBeenCalledWith({ type: "disable" });
   });
 });

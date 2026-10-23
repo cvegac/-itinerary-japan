@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Cloud, CloudCheck, CloudOff, X } from "lucide-react";
+import type { DayEntry } from "@/types/DayEntry";
+import MapDownload from "@/components/MapDownload";
 import {
   disableOffline,
   enableOffline,
@@ -31,8 +33,8 @@ function formatMB(bytes: number): string {
   return (bytes / 1e6).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + " MB";
 }
 
-/** Botón de la barra superior + panel para activar el uso sin conexión */
-export default function OfflineControl() {
+/** Botón de la barra superior + panel para activar el uso sin conexión y bajar el mapa */
+export default function OfflineControl({ itinerary }: { itinerary?: DayEntry[] }) {
   const online = useOnline();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>("checking");
@@ -55,6 +57,14 @@ export default function OfflineControl() {
       cancelled = true;
     };
   }, []);
+
+  /** El mapa descargado solo sirve con el service worker: se activa si hace falta */
+  async function ensureOffline() {
+    if (status === "on") return;
+    setStatus("saving");
+    await enableOffline();
+    setStatus("on");
+  }
 
   async function toggle() {
     if (status === "on") {
@@ -101,7 +111,7 @@ export default function OfflineControl() {
           <div
             role="dialog"
             aria-label="Uso sin conexión"
-            className="absolute right-0 top-full z-50 mt-3 w-72 rounded-2xl border border-line bg-surface p-4 text-left shadow-xl"
+            className="absolute right-0 top-full z-50 mt-3 max-h-[75dvh] w-80 max-w-[calc(100vw-1.5rem)] overflow-y-auto rounded-2xl border border-line bg-surface p-4 text-left shadow-xl"
           >
             <div className="mb-3 flex items-start justify-between gap-3">
               <div>
@@ -144,10 +154,19 @@ export default function OfflineControl() {
               {status === "off" && "Desactivado: no se guarda nada en este celular."}
               {status === "saving" && "Un momento…"}
               {status === "on" &&
-                `Activado${usage ? ` · ${formatMB(usage)} guardados` : ""}. La app y el itinerario abren sin internet; el mapa muestra las zonas que ya miraste. Al desactivarlo se borra todo.`}
+                `Activado${usage ? ` · ${formatMB(usage)} guardados` : ""}. La app y el itinerario abren sin internet; el mapa muestra lo que descargues abajo y las zonas que ya miraste. Al desactivarlo se borra todo.`}
               {status === "error" && "No se pudo guardar. Probá de nuevo con conexión."}
               {status === "unsupported" && "Este navegador no permite usar la app sin conexión."}
             </p>
+
+            {itinerary && status !== "unsupported" && status !== "checking" && (
+              <MapDownload
+                itinerary={itinerary}
+                online={online}
+                ensureOffline={ensureOffline}
+                onChange={async () => setUsage(await storageUsage())}
+              />
+            )}
           </div>
         </>
       )}

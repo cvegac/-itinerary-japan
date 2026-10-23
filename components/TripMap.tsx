@@ -5,6 +5,7 @@ import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import { boundsOf, dayView, escapeHtml, lineFeature, toLngLat, weekColor } from "@/lib/map-geo";
+import { MAP_STYLE, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 
 export type MapMode = "day" | "week" | "full";
 
@@ -25,11 +26,6 @@ type Props = {
 
 type MapLibre = typeof import("maplibre-gl");
 
-// Tiles vectoriales gratis y sin API key. Las etiquetas ya vienen con el nombre
-// latino + el local ("Tokyo 東京"), como el mapa bilingüe anterior.
-const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
-// Elevación pública de AWS (Terrarium), con CORS abierto
-const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
 const ROUTE_SOURCE = "trip-route";
 const DEFAULT_PADDING: PaddingOptions = { top: 60, bottom: 60, left: 60, right: 60 };
@@ -98,7 +94,7 @@ function ensureOverlay(map: MapLibreMap) {
       tiles: [TERRAIN_TILES],
       encoding: "terrarium",
       tileSize: 256,
-      maxzoom: 15,
+      maxzoom: TERRAIN_MAX_ZOOM,
       attribution: "Elevación: Mapzen / AWS Terrain Tiles",
     });
   }

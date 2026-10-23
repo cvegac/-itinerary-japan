@@ -3,18 +3,21 @@
 import Link from "next/link";
 import { ArrowLeft, LocateFixed } from "lucide-react";
 import type { TripMeta } from "@/types/Trip";
+import type { DayEntry } from "@/types/DayEntry";
 import type { TripStatus } from "@/lib/trip-time";
 import OfflineControl from "@/components/OfflineControl";
 
 type Props = {
   meta: TripMeta;
+  /** Para descargar el mapa del viaje */
+  itinerary?: DayEntry[];
   status: TripStatus | null;
   onToday: () => void;
   /** En el celular flota sobre el mapa */
   floating?: boolean;
 };
 
-export default function TopBar({ meta, status, onToday, floating = false }: Props) {
+export default function TopBar({ meta, itinerary, status, onToday, floating = false }: Props) {
   return (
     <header
       className={
@@ -52,7 +55,7 @@ export default function TopBar({ meta, status, onToday, floating = false }: Prop
           {status.daysUntil === 1 ? "Mañana empieza" : `Faltan ${status.daysUntil} días`}
         </span>
       )}
-      <OfflineControl />
+      <OfflineControl itinerary={itinerary} />
     </header>
   );
 }

@@ -203,7 +203,7 @@ export default function TripApp({ tripData }: Props) {
 
       {isDesktop ? (
         <aside className="relative z-10 order-1 flex h-dvh w-[440px] shrink-0 flex-col border-r border-line bg-surface">
-          <TopBar meta={meta} status={status} onToday={goToday} />
+          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} />
           {tabs("inline")}
           {view === "itinerary" ? (
             <>
@@ -219,7 +219,7 @@ export default function TripApp({ tripData }: Props) {
         </aside>
       ) : (
         <>
-          <TopBar meta={meta} status={status} onToday={goToday} floating />
+          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} floating />
           {view === "itinerary" ? (
             <>
               <MapModeControl

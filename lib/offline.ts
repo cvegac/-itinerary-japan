@@ -24,6 +24,8 @@ export async function enableOffline(): Promise<void> {
 
 /** Desinstala el service worker y borra todo lo que guardó */
 export async function disableOffline(): Promise<void> {
+  // El worker sigue controlando esta página hasta recargar: que deje de guardar ya
+  navigator.serviceWorker.controller?.postMessage({ type: "disable" });
   const registrations = await navigator.serviceWorker.getRegistrations();
   await Promise.all(registrations.map((r) => r.unregister()));
   const names = await caches.keys();
