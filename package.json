@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "country-flag-emoji-polyfill": "^0.1.10",
+    "firebase": "^12.19.0",
     "lucide-react": "^1.61.0",
     "maplibre-gl": "^6.14.0",
     "next": "^16.4.2",

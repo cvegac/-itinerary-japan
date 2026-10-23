@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripNotes, TripTask } from "@/types/Trip";
+import { useDoneTasks } from "@/lib/done-tasks";
 
 type Props = {
   notes: TripNotes;
@@ -13,37 +14,13 @@ type Props = {
   onDaySelect: (day: DayEntry) => void;
 };
 
-// Lo tildado vive solo en este dispositivo y recién se guarda al tildar algo
-const storageKey = (slug: string) => `viajes-tareas-${slug}`;
-
-function readDone(slug: string): string[] {
-  try {
-    const raw = localStorage.getItem(storageKey(slug));
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short" });
 }
 
 export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props) {
-  const [done, setDone] = useState<string[]>([]);
-
-  // Se lee después de montar: el HTML estático no sabe qué tildaste
-  useEffect(() => setDone(readDone(slug)), [slug]);
-
-  function toggle(id: string) {
-    const next = done.includes(id) ? done.filter((d) => d !== id) : [...done, id];
-    setDone(next);
-    try {
-      localStorage.setItem(storageKey(slug), JSON.stringify(next));
-    } catch {
-      // Sin almacenamiento (modo privado): queda tildada hasta recargar
-    }
-  }
+  // Lo tildado se guarda en el dispositivo al tildar algo; con sesión, también en la nube
+  const [done, toggle] = useDoneTasks(slug);
 
   // Las hechas se archivan: salen de la lista pero no se borran
   const pending = notes.tasks.filter((t) => !done.includes(t.id));

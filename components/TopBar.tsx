@@ -6,6 +6,7 @@ import type { TripMeta } from "@/types/Trip";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripStatus } from "@/lib/trip-time";
 import OfflineControl from "@/components/OfflineControl";
+import AccountControl from "@/components/AccountControl";
 
 type Props = {
   meta: TripMeta;
@@ -56,6 +57,7 @@ export default function TopBar({ meta, itinerary, status, onToday, floating = fa
         </span>
       )}
       <OfflineControl itinerary={itinerary} />
+      <AccountControl />
     </header>
   );
 }
