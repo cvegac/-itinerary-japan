@@ -5,3 +5,6 @@ formatos-visa
 # Generados por Next/TypeScript al compilar
 next-env.d.ts
 *.tsbuildinfo
+
+# Copiado desde node_modules en cada build (scripts/copy-maplibre-worker.mjs)
+public/maplibre-gl-worker.js

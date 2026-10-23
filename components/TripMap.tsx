@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { GeoJSONSource, Map as MapLibreMap, Marker } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
-import { WEEK_COLORS_HEX, getWeekIndex, getWeekGroup } from "@/lib/itinerary-utils";
+import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
+import { boundsOf, dayView, escapeHtml, lineFeature, toLngLat, weekColor } from "@/lib/map-geo";
 
 export type MapMode = "day" | "week" | "full";
 
@@ -12,270 +14,301 @@ type Props = {
   onDaySelect?: (day: DayEntry) => void;
   itinerary: DayEntry[];
   startDate: string;
+  /** [lat, lng] */
   center: [number, number];
   zoom: number;
 };
 
-// ── Helpers Leaflet ─────────────────────────────────────────────────────────
-function popupContent(day: DayEntry, highlight = false): string {
-  const busHtml = day.nightBus
-    ? `<div style="color:#ea580c;font-weight:bold;font-size:11px">🚌 Bus Nocturno ${day.nightBus} esta noche</div>`
-    : "";
-  const accomHtml = day.isTransit
-    ? `<span style="color:#e67e22;font-weight:bold">🚄 En tránsito</span>`
-    : `<span style="color:#16a34a;font-weight:bold">🏠 ${day.accommodation}</span>`;
+type MapLibre = typeof import("maplibre-gl");
 
-  const bg = highlight ? "background:#fefce8;border-radius:8px;padding:8px;" : "";
+// Tiles vectoriales gratis y sin API key. Las etiquetas ya vienen con el nombre
+// latino + el local ("Tokyo 東京"), como el mapa bilingüe anterior.
+const STYLE_LIGHT = "https://tiles.openfreemap.org/styles/liberty";
+const STYLE_DARK = "https://tiles.openfreemap.org/styles/dark";
+// Elevación pública de AWS (Terrarium), con CORS abierto
+const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
+const ROUTE_SOURCE = "trip-route";
+const FIT_PADDING = 60;
+
+// ── Marcadores (elementos HTML) ─────────────────────────────────────────────
+function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElement {
+  const size = selected ? 30 : 22;
+  const el = document.createElement("button");
+  el.type = "button";
+  el.setAttribute("aria-label", `Día ${number}`);
+  el.style.cssText = `
+    width:${size}px;height:${size}px;border-radius:50%;cursor:pointer;
+    background:${color};color:#fff;border:${selected ? 3 : 2}px solid #fff;
+    display:flex;align-items:center;justify-content:center;
+    font:bold ${selected ? 12 : 10}px system-ui,sans-serif;
+    box-shadow:0 2px 6px rgba(0,0,0,.35)${selected ? `,0 0 0 3px ${color}` : ""};`;
+  el.textContent = String(number);
+  return el;
+}
+
+function poiMarkerEl(color: string, letter: string, night: boolean): HTMLElement {
+  const el = document.createElement("button");
+  el.type = "button";
+  el.style.cssText = `
+    width:24px;height:24px;border-radius:50%;cursor:pointer;
+    background:${night ? "#1e293b" : "#fff"};color:${night ? "#fde68a" : color};
+    border:2px solid ${color};display:flex;align-items:center;justify-content:center;
+    font:bold 11px system-ui,sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.35);`;
+  el.textContent = letter;
+  return el;
+}
+
+function dayPopupHtml(day: DayEntry): string {
+  const accom = day.isTransit
+    ? `<span style="color:#e67e22;font-weight:600">🚄 En tránsito</span>`
+    : `<span style="color:#16a34a;font-weight:600">🏠 ${escapeHtml(day.accommodation)}</span>`;
   return `
-    <div style="font-family:sans-serif;line-height:1.5;${bg}min-width:160px">
-      <div style="font-weight:bold;font-size:14px;margin-bottom:3px">${day.label}</div>
-      <div style="font-size:11px;color:#555;margin-bottom:3px">📍 ${day.location}</div>
-      ${accomHtml}
-      ${busHtml}
-      <div style="font-size:11px;color:#888;margin-top:3px">${day.budget}</div>
-    </div>
-  `;
+    <div style="font-family:system-ui,sans-serif;line-height:1.45;min-width:170px;color:#111">
+      <div style="font-weight:700;font-size:14px;margin-bottom:2px">${escapeHtml(day.label)}</div>
+      <div style="font-size:11px;color:#555;margin-bottom:3px">📍 ${escapeHtml(day.location)}</div>
+      <div style="font-size:12px">${accom}</div>
+      <div style="font-size:11px;color:#888;margin-top:3px">${escapeHtml(day.budget)}</div>
+    </div>`;
 }
 
-function circleIcon(L: any, color: string, number: number, selected: boolean) {
-  const size = selected ? 28 : 20;
-  const border = selected ? `border: 3px solid #fff; box-shadow: 0 0 0 3px ${color};` : "";
-  return L.divIcon({
-    className: "",
-    html: `<div style="
-      width:${size}px;height:${size}px;border-radius:50%;
-      background:${color};color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-size:${selected ? 11 : 9}px;font-weight:bold;
-      ${border}
-      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-    ">${number}</div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
-}
-
-function poiIcon(L: any, color: string, letter: string, night?: boolean) {
-  const bg = night ? "#1e293b" : "#fff";
-  const fg = night ? "#fde68a" : color;
-  return L.divIcon({
-    className: "",
-    html: `<div style="
-      width:22px;height:22px;border-radius:50%;
-      background:${bg};color:${fg};border:2px solid ${color};
-      display:flex;align-items:center;justify-content:center;
-      font-size:11px;font-weight:bold;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
-    ">${letter}</div>`,
-    iconSize: [22, 22],
-    iconAnchor: [11, 11],
-  });
-}
-
-function poiPopup(name: string, letter: string, night?: boolean): string {
+function poiPopupHtml(letter: string, name: string, night: boolean): string {
   return `
-    <div style="font-family:sans-serif;line-height:1.4;min-width:140px">
-      <div style="font-weight:bold;font-size:13px">${letter}. ${name}</div>
+    <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:140px;color:#111">
+      <div style="font-weight:700;font-size:13px">${letter}. ${escapeHtml(name)}</div>
       <div style="font-size:11px;color:#666;margin-top:2px">${night ? "🌙 De noche" : "☀️ De día"}</div>
-    </div>
-  `;
+    </div>`;
+}
+
+// ── Capas propias (se re-agregan cada vez que cambia el estilo) ─────────────
+function ensureOverlay(map: MapLibreMap) {
+  if (!map.getSource("terrain")) {
+    map.addSource("terrain", {
+      type: "raster-dem",
+      tiles: [TERRAIN_TILES],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 15,
+      attribution: "Elevación: Mapzen / AWS Terrain Tiles",
+    });
+  }
+  if (!map.getLayer("hillshade")) {
+    // Debajo de la primera capa de etiquetas, para no taparlas
+    const firstSymbol = map.getStyle().layers.find((l) => l.type === "symbol")?.id;
+    map.addLayer(
+      { id: "hillshade", type: "hillshade", source: "terrain", paint: { "hillshade-exaggeration": 0.35 } },
+      firstSymbol
+    );
+  }
+  if (!map.getSource(ROUTE_SOURCE)) {
+    map.addSource(ROUTE_SOURCE, { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+    map.addLayer({
+      id: "route-solid",
+      type: "line",
+      source: ROUTE_SOURCE,
+      filter: ["==", ["get", "dashed"], false],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": ["get", "color"], "line-width": 3, "line-opacity": 0.75 },
+    });
+    map.addLayer({
+      id: "route-dashed",
+      type: "line",
+      source: ROUTE_SOURCE,
+      filter: ["==", ["get", "dashed"], true],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": ["get", "color"], "line-width": 2.5, "line-opacity": 0.8, "line-dasharray": [2, 2] },
+    });
+  }
 }
 
 export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, center, zoom }: Props) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-  const layerGroupRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<MapLibreMap | null>(null);
+  const libRef = useRef<MapLibre | null>(null);
+  const markersRef = useRef<Marker[]>([]);
+  const routeRef = useRef<ReturnType<typeof lineFeature>[]>([]);
+  // Para que los handlers de los marcadores usen siempre el último callback
+  const onDaySelectRef = useRef(onDaySelect);
+  onDaySelectRef.current = onDaySelect;
 
   // ── Inicializar mapa ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (typeof window === "undefined" || !mapRef.current) return;
+    if (!containerRef.current) return;
+    let cancelled = false;
+    let cleanup = () => {};
 
-    const initMap = async () => {
-      const L = (await import("leaflet")).default;
+    (async () => {
+      const lib = await import("maplibre-gl");
+      if (cancelled || !containerRef.current) return;
+      libRef.current = lib;
+      lib.setWorkerUrl("/maplibre-gl-worker.js");
 
-      delete (L.Icon.Default.prototype as any)._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-        iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      const dark = window.matchMedia("(prefers-color-scheme: dark)");
+      const map = new lib.Map({
+        container: containerRef.current,
+        style: dark.matches ? STYLE_DARK : STYLE_LIGHT,
+        center: toLngLat(center),
+        zoom: zoom - 1,
+        attributionControl: { compact: true },
+        maxPitch: 75,
       });
+      mapRef.current = map;
 
-      if (!mapInstanceRef.current) {
-        mapInstanceRef.current = L.map(mapRef.current!, {
-          center,
-          zoom,
-          zoomControl: true,
+      map.addControl(new lib.NavigationControl({ visualizePitch: true }), "top-right");
+      map.addControl(new lib.TerrainControl({ source: "terrain", exaggeration: 1.3 }), "top-right");
+
+      // Cada cambio de estilo borra las capas propias: se vuelven a agregar
+      map.on("style.load", () => {
+        ensureOverlay(map);
+        (map.getSource(ROUTE_SOURCE) as GeoJSONSource).setData({
+          type: "FeatureCollection",
+          features: routeRef.current,
         });
-
-        // OSM Alemania: gratis, sin API key, con el nombre local + la
-        // transcripción latina (el OSM estándar rotula Japón solo en japonés;
-        // CARTO exige API key y Esri NatGeo no tiene datos pasado el zoom 12).
-        L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 18,
-        }).addTo(mapInstanceRef.current);
-
-        layerGroupRef.current = L.layerGroup().addTo(mapInstanceRef.current);
-      }
-
-      // ResizeObserver: llama invalidateSize() cuando el div cambia de tamaño
-      const ro = new ResizeObserver(() => {
-        mapInstanceRef.current?.invalidateSize();
       });
-      if (mapRef.current) ro.observe(mapRef.current);
+      map.once("load", () => renderLayer());
 
-      renderLayer(L);
+      const onScheme = (e: MediaQueryListEvent) => map.setStyle(e.matches ? STYLE_DARK : STYLE_LIGHT);
+      dark.addEventListener("change", onScheme);
 
-      return () => ro.disconnect();
+      const ro = new ResizeObserver(() => map.resize());
+      ro.observe(containerRef.current);
+
+      cleanup = () => {
+        dark.removeEventListener("change", onScheme);
+        ro.disconnect();
+        map.remove();
+        mapRef.current = null;
+      };
+    })();
+
+    return () => {
+      cancelled = true;
+      cleanup();
     };
-
-    initMap();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── Re-renderizar cuando cambian day o mode ──────────────────────────────
   useEffect(() => {
-    if (!mapInstanceRef.current) return;
-    const tryRender = async () => {
-      const L = (await import("leaflet")).default;
-      renderLayer(L);
-    };
-    tryRender();
+    const map = mapRef.current;
+    if (map && map.isStyleLoaded()) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [day, mode]);
 
-  function renderLayer(L: any) {
-    const map = mapInstanceRef.current;
-    const group = layerGroupRef.current;
-    if (!map || !group) return;
-
-    group.clearLayers();
-
-    let selectedMarker: any = null;
-    if (mode === "day" && day) {
-      selectedMarker = renderDayMode(L, map, group, day);
-    } else if (mode === "week" && day) {
-      selectedMarker = renderWeekMode(L, map, group, day);
-    } else if (mode === "full") {
-      selectedMarker = renderFullMode(L, map, group, day);
-    }
-
-    // Abrir popup del día seleccionado después de que Leaflet renderizó todo
-    if (selectedMarker) {
-      setTimeout(() => selectedMarker.openPopup(), 50);
-    }
+  function setRoute(features: ReturnType<typeof lineFeature>[]) {
+    routeRef.current = features;
+    const source = mapRef.current?.getSource(ROUTE_SOURCE) as GeoJSONSource | undefined;
+    source?.setData({ type: "FeatureCollection", features });
   }
 
-  function addMarker(L: any, group: any, d: DayEntry, icon: any, popup: string, zIndex = 0) {
-    const [lat, lng] = d.accommodationCoords;
-    const marker = L.marker([lat, lng], { icon, zIndexOffset: zIndex })
-      .addTo(group)
-      .bindPopup(popup, { maxWidth: 240 });
-    if (onDaySelect) {
-      marker.on("click", () => onDaySelect(d));
-    }
+  function addMarker(el: HTMLElement, lngLat: [number, number], popupHtml: string) {
+    const lib = libRef.current!;
+    const marker = new lib.Marker({ element: el })
+      .setLngLat(lngLat)
+      .setPopup(new lib.Popup({ offset: 16, maxWidth: "260px" }).setHTML(popupHtml))
+      .addTo(mapRef.current!);
+    markersRef.current.push(marker);
     return marker;
   }
 
-  // ── Modo DÍA ─────────────────────────────────────────────────────────────
-  function renderDayMode(L: any, map: any, group: any, day: DayEntry) {
-    const weekIndex = getWeekIndex(day.date, startDate);
-    const color = WEEK_COLORS_HEX[weekIndex % WEEK_COLORS_HEX.length];
-    const dayNum = itinerary.indexOf(day) + 1;
-    const marker = addMarker(L, group, day, circleIcon(L, color, dayNum, true), popupContent(day, true), 1000);
-    const [lat, lng] = day.accommodationCoords;
+  function addDayMarker(d: DayEntry, selected: boolean) {
+    const color = weekColor(d.date, startDate, WEEK_COLORS_HEX);
+    const el = dayMarkerEl(color, itinerary.indexOf(d) + 1, selected);
+    const marker = addMarker(el, toLngLat(d.accommodationCoords), dayPopupHtml(d));
+    el.addEventListener("click", () => onDaySelectRef.current?.(d));
+    return marker;
+  }
 
-    const pois = day.pois ?? [];
-    if (pois.length === 0) {
-      map.flyTo([lat, lng], 10, { duration: 0.8 });
-      return marker;
-    }
+  function renderLayer() {
+    const map = mapRef.current;
+    if (!map || !libRef.current) return;
 
-    // Recorrido en el orden de visita, con letras para no confundir con los números de día
-    const poiCoords = pois.map((p) => p.coords);
-    if (poiCoords.length > 1) {
-      L.polyline(poiCoords, { color, weight: 2, opacity: 0.6, dashArray: "4, 6" }).addTo(group);
+    markersRef.current.forEach((m) => m.remove());
+    markersRef.current = [];
+
+    let selected: Marker | null = null;
+    if (mode === "day" && day) selected = renderDayMode(map, day);
+    else if (mode === "week" && day) selected = renderWeekMode(map, day);
+    else if (mode === "full") selected = renderFullMode(map, day);
+
+    if (selected) {
+      const marker = selected;
+      map.once("moveend", () => {
+        if (!marker.getPopup()?.isOpen()) marker.togglePopup();
+      });
     }
-    pois.forEach((p, i) => {
-      L.marker(p.coords, { icon: poiIcon(L, color, String.fromCharCode(65 + i), p.night) })
-        .addTo(group)
-        .bindPopup(poiPopup(p.name, String.fromCharCode(65 + i), p.night), { maxWidth: 220 });
+  }
+
+  // ── Modo DÍA: hospedaje + puntos de interés con letras ───────────────────
+  function renderDayMode(map: MapLibreMap, d: DayEntry): Marker | null {
+    const color = weekColor(d.date, startDate, WEEK_COLORS_HEX);
+    const view = dayView(d);
+    const accomMarker = addDayMarker(d, true);
+
+    view.points.forEach((p) => {
+      addMarker(poiMarkerEl(color, p.letter, p.night), p.lngLat, poiPopupHtml(p.letter, p.name, p.night));
     });
+    setRoute(
+      (d.pois?.length ?? 0) > 1 ? [lineFeature(d.pois!.map((p) => p.coords), { color, dashed: true })] : []
+    );
 
-    // Encuadrar en los puntos; el hospedaje entra solo si está cerca (en las
-    // excursiones, como Nikko desde Tokio, alejaría demasiado el mapa).
-    const bounds = L.latLngBounds(poiCoords);
-    if (map.distance(bounds.getCenter(), [lat, lng]) < 15000) bounds.extend([lat, lng]);
-    map.flyToBounds(bounds.pad(0.2), { duration: 0.8, maxZoom: 16 });
+    if (!view.bounds) {
+      map.flyTo({ center: view.focus, zoom: 11, duration: 800 });
+      return accomMarker;
+    }
+    map.fitBounds(view.bounds, { padding: FIT_PADDING, maxZoom: 16, duration: 800 });
     return null;
   }
 
   // ── Modo SEMANA ───────────────────────────────────────────────────────────
-  function renderWeekMode(L: any, map: any, group: any, selectedDay: DayEntry) {
+  function renderWeekMode(map: MapLibreMap, selectedDay: DayEntry): Marker | null {
     const weekDays = getWeekGroup(itinerary, selectedDay.date, startDate);
-    const weekIndex = getWeekIndex(selectedDay.date, startDate);
-    const color = WEEK_COLORS_HEX[weekIndex % WEEK_COLORS_HEX.length];
+    const color = weekColor(selectedDay.date, startDate, WEEK_COLORS_HEX);
+    const coords = weekDays.map((d) => d.accommodationCoords);
 
-    // Polilínea de la semana
-    const coords = weekDays.map((d) => d.accommodationCoords as [number, number]);
-    if (coords.length > 1) {
-      L.polyline(coords, { color, weight: 3, opacity: 0.85, dashArray: "6, 4" }).addTo(group);
-    }
+    setRoute(coords.length > 1 ? [lineFeature(coords, { color, dashed: true })] : []);
 
-    let selectedMarker: any = null;
+    let selected: Marker | null = null;
     weekDays.forEach((d) => {
       const isSelected = d.date === selectedDay.date;
-      const dayNum = itinerary.indexOf(d) + 1;
-      const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);
-      if (isSelected) selectedMarker = marker;
+      const marker = addDayMarker(d, isSelected);
+      if (isSelected) selected = marker;
     });
 
     if (coords.length > 0) {
-      const bounds = L.latLngBounds(coords);
-      map.flyToBounds(bounds.pad(0.3), { duration: 0.8, maxZoom: 11 });
+      map.fitBounds(boundsOf(coords), { padding: FIT_PADDING, maxZoom: 11, duration: 800 });
     }
-
-    return selectedMarker;
+    return selected;
   }
 
   // ── Modo COMPLETO ─────────────────────────────────────────────────────────
-  function renderFullMode(L: any, map: any, group: any, selectedDay: DayEntry | null) {
-    const coords = itinerary.map((d) => d.accommodationCoords as [number, number]);
+  function renderFullMode(map: MapLibreMap, selectedDay: DayEntry | null): Marker | null {
+    // Un tramo por par de días, con el color de la semana del día de llegada
+    setRoute(
+      itinerary.slice(1).map((d, i) =>
+        lineFeature([itinerary[i].accommodationCoords, d.accommodationCoords], {
+          color: weekColor(d.date, startDate, WEEK_COLORS_HEX),
+          dashed: false,
+        })
+      )
+    );
 
-    let prev: [number, number] | null = null;
-    let selectedMarker: any = null;
-
-    itinerary.forEach((d, i) => {
-      const curr = d.accommodationCoords as [number, number];
-      if (prev) {
-        const wi = getWeekIndex(d.date, startDate);
-        const color = WEEK_COLORS_HEX[wi % WEEK_COLORS_HEX.length];
-        L.polyline([prev, curr], { color, weight: 2.5, opacity: 0.7 }).addTo(group);
-      }
-      prev = curr;
-
-      const wi = getWeekIndex(d.date, startDate);
-      const color = WEEK_COLORS_HEX[wi % WEEK_COLORS_HEX.length];
+    let selected: Marker | null = null;
+    itinerary.forEach((d) => {
       const isSelected = selectedDay?.date === d.date;
-      const dayNum = i + 1;
-      const marker = addMarker(L, group, d, circleIcon(L, color, dayNum, isSelected), popupContent(d, isSelected), isSelected ? 1000 : 0);
-      if (isSelected) selectedMarker = marker;
+      const marker = addDayMarker(d, isSelected);
+      if (isSelected) selected = marker;
     });
 
-    if (coords.length > 0) {
-      const bounds = L.latLngBounds(coords);
-      map.flyToBounds(bounds.pad(-0.1), { duration: 1, maxZoom: 9 });
+    if (itinerary.length > 0) {
+      map.fitBounds(boundsOf(itinerary.map((d) => d.accommodationCoords)), {
+        padding: FIT_PADDING,
+        maxZoom: 9,
+        duration: 1000,
+      });
     }
-
-    return selectedMarker;
+    return selected;
   }
 
-  return (
-    <div
-      ref={mapRef}
-      className="w-full h-full"
-      style={{ minHeight: 320 }}
-    />
-  );
+  return <div ref={containerRef} className="w-full h-full" style={{ minHeight: 320 }} />;
 }
