@@ -40,6 +40,10 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Asakusa, Tokio",
     zona: "Asakusa o Kuramae, a 5–10 min de la estación Asakusa",
     accommodationCoords: [35.7119, 139.7983],
+    pois: [
+      { name: "Templo Senso-ji", coords: [35.7134, 139.79553], night: true },
+      { name: "Puente Azuma (vista de la Skytree)", coords: [35.71011, 139.79893], night: true },
+    ],
     budget: "$65",
     isTransit: false,
     activitiesDay: [
@@ -73,6 +77,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Asakusa, Tokio",
     zona: "Mismo hostal en Asakusa",
     accommodationCoords: [35.7119, 139.7983],
+    pois: [
+      { name: "Puente sagrado Shinkyo", coords: [36.75332, 139.60404] },
+      { name: "Santuario Toshogu", coords: [36.75764, 139.59911] },
+      { name: "Templo Rinno-ji", coords: [36.75472, 139.60076] },
+      { name: "Santuario Futarasan", coords: [36.7584, 139.59666] },
+      { name: "Abismo Kanmangafuchi", coords: [36.74903, 139.58835] },
+    ],
     budget: "$110",
     isTransit: false,
     activitiesDay: [
@@ -106,6 +117,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Aeropuerto de Narita, Narita",
     zona: "Dentro del aeropuerto de Narita, T2 (estacionamiento P2)",
     accommodationCoords: [35.772, 140.3929],
+    pois: [
+      { name: "Parque de Ueno", coords: [35.71402, 139.77393] },
+      { name: "Estanque Shinobazu", coords: [35.71187, 139.77086] },
+      { name: "Cementerio de Yanaka", coords: [35.72437, 139.77114] },
+      { name: "Yanaka Ginza", coords: [35.72767, 139.76532] },
+    ],
     budget: "$100",
     isTransit: false,
     activitiesDay: [
@@ -140,6 +157,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Hiroshima, Hiroshima",
     zona: "A 5–10 min de la estación de Hiroshima",
     accommodationCoords: [34.3978, 132.4753],
+    pois: [
+      { name: "Parque de la Paz", coords: [34.39317, 132.4523] },
+      { name: "Cúpula de la Bomba Atómica", coords: [34.39547, 132.45352] },
+      { name: "Castillo de Hiroshima", coords: [34.40215, 132.45954] },
+      { name: "Jardín Shukkei-en", coords: [34.40034, 132.46745] },
+      { name: "Okonomimura", coords: [34.3913, 132.46188], night: true },
+    ],
     budget: "$145",
     isTransit: false,
     activitiesDay: [
@@ -174,6 +198,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Hiroshima, Hiroshima",
     zona: "Mismo hostal en Hiroshima",
     accommodationCoords: [34.3978, 132.4753],
+    pois: [
+      { name: "Santuario Itsukushima", coords: [34.29653, 132.31901] },
+      { name: "Templo Daisho-in", coords: [34.29173, 132.31858] },
+      { name: "Cima del monte Misen", coords: [34.27959, 132.31961] },
+      { name: "Parque Momijidani", coords: [34.29381, 132.32504] },
+      { name: "Omotesando de Miyajima", coords: [34.29956, 132.32196] },
+    ],
     budget: "$85",
     isTransit: false,
     activitiesDay: [
@@ -207,6 +238,11 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Centro, Onomichi",
     zona: "Calle comercial de Onomichi, o frente a la estación y al puerto de bicis",
     accommodationCoords: [34.4046, 133.195],
+    pois: [
+      { name: "Templo Senko-ji", coords: [34.41036, 133.19868] },
+      { name: "Callejón de los Gatos", coords: [34.41056, 133.20046] },
+      { name: "Onomichi U2", coords: [34.40196, 133.18991], night: true },
+    ],
     budget: "$95",
     isTransit: false,
     activitiesDay: [
@@ -240,6 +276,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Centro, Onomichi",
     zona: "Mismo hospedaje en Onomichi",
     accommodationCoords: [34.4046, 133.195],
+    pois: [
+      { name: "Estación de Onomichi (alquiler de bicis)", coords: [34.40482, 133.19311] },
+      { name: "Puente Innoshima", coords: [34.35635, 133.1783] },
+      { name: "Templo Kosan-ji", coords: [34.30397, 133.09041] },
+      { name: "Colina del Mármol Blanco", coords: [34.3033, 133.08883] },
+      { name: "Puerto de Setoda", coords: [34.3047, 133.08429] },
+    ],
     budget: "$120",
     isTransit: false,
     activitiesDay: [
@@ -277,6 +320,11 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kudoyama, Kudoyama",
     zona: "A ~4 min a pie de la estación Kudoyama (Nankai), en un edificio de la era Taisho con café abajo",
     accommodationCoords: [34.296, 135.569],
+    pois: [
+      { name: "Templo Jison-in", coords: [34.29516, 135.54991] },
+      { name: "Santuario Niukanshofu (inicio del Choishi-michi)", coords: [34.25857, 135.515] },
+      { name: "Templo Zenmyosho-in (Sanada-an)", coords: [34.2908, 135.55978] },
+    ],
     budget: "$165",
     isTransit: false,
     activitiesDay: [
@@ -314,6 +362,14 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kudoyama, Kudoyama",
     zona: "Mismo ryokan en Kudoyama",
     accommodationCoords: [34.296, 135.569],
+    pois: [
+      { name: "Estación Kamikosawa", coords: [34.2575, 135.548] },
+      { name: "Gran puerta Daimon", coords: [34.21315, 135.57286] },
+      { name: "Danjo Garan", coords: [34.21344, 135.57996] },
+      { name: "Templo Kongobu-ji", coords: [34.21388, 135.58369] },
+      { name: "Puente Ichinohashi (Okunoin)", coords: [34.2135, 135.59533] },
+      { name: "Mausoleo de Kobo Daishi (Okunoin)", coords: [34.21878, 135.60537] },
+    ],
     budget: "$135",
     isTransit: false,
     activitiesDay: [
@@ -348,6 +404,9 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kii-Tanabe, Tanabe",
     zona: "Frente a la estación Kii-Tanabe (de ahí salen los buses a Takijiri)",
     accommodationCoords: [33.737, 135.378],
+    pois: [
+      { name: "Santuario Tokei-jinja", coords: [33.72969, 135.38395] },
+    ],
     budget: "$120",
     isTransit: false,
     activitiesDay: [
@@ -381,6 +440,11 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kii-Tanabe, Tanabe",
     zona: "Mismo hotel en Kii-Tanabe",
     accommodationCoords: [33.737, 135.378],
+    pois: [
+      { name: "Takijiri-oji (inicio)", coords: [33.77553, 135.50369] },
+      { name: "Santuario de Takahara", coords: [33.79427, 135.52933] },
+      { name: "Chikatsuyu-oji (llegada)", coords: [33.81436, 135.60572] },
+    ],
     budget: "$105",
     isTransit: false,
     activitiesDay: [
@@ -416,6 +480,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Puerto de Katsuura, Nachikatsuura",
     zona: "A 5 min de la estación Kii-Katsuura",
     accommodationCoords: [33.629, 135.942],
+    pois: [
+      { name: "Hosshinmon-oji (inicio)", coords: [33.86175, 135.7206] },
+      { name: "Kumano Hongu Taisha", coords: [33.84035, 135.77363] },
+      { name: "Gran torii de Oyunohara", coords: [33.83465, 135.77441] },
+      { name: "Onsen Tsuboyu (Yunomine)", coords: [33.82919, 135.75772] },
+    ],
     budget: "$125",
     isTransit: false,
     activitiesDay: [
@@ -449,6 +519,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Puerto de Katsuura, Nachikatsuura",
     zona: "Mismo hospedaje en Kii-Katsuura",
     accommodationCoords: [33.629, 135.942],
+    pois: [
+      { name: "Escalinata de Daimonzaka", coords: [33.67061, 135.8965] },
+      { name: "Kumano Nachi Taisha", coords: [33.66843, 135.89044] },
+      { name: "Templo Seiganto-ji", coords: [33.66931, 135.88992] },
+      { name: "Cascada de Nachi", coords: [33.67528, 135.88763] },
+    ],
     budget: "$105",
     isTransit: false,
     activitiesDay: [
@@ -482,6 +558,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Kioto, Kioto",
     zona: "A 5–10 min de la estación de Kioto",
     accommodationCoords: [34.9858, 135.7588],
+    pois: [
+      { name: "Mercado Nishiki", coords: [35.00502, 135.76557] },
+      { name: "Puente Sanjo (río Kamo)", coords: [35.00904, 135.77172] },
+      { name: "Callejón Pontocho", coords: [35.00425, 135.77121], night: true },
+      { name: "Gion (Hanamikoji)", coords: [35.00265, 135.77487], night: true },
+    ],
     budget: "$160",
     isTransit: false,
     activitiesDay: [
@@ -518,6 +600,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Kioto, Kioto",
     zona: "Mismo hostal en Kioto",
     accommodationCoords: [34.9858, 135.7588],
+    pois: [
+      { name: "Templo Kurama-dera", coords: [35.11787, 135.77065] },
+      { name: "Santuario Kibune", coords: [35.12189, 135.76294] },
+      { name: "Estación Demachiyanagi", coords: [35.03067, 135.77319] },
+      { name: "Templo Sanzen-in", coords: [35.11964, 135.83492] },
+      { name: "Templo Hosen-in", coords: [35.12135, 135.834] },
+    ],
     budget: "$115",
     isTransit: false,
     activitiesDay: [
@@ -550,6 +639,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Kioto, Kioto",
     zona: "Mismo hostal en Kioto",
     accommodationCoords: [34.9858, 135.7588],
+    pois: [
+      { name: "Bosque de bambú de Arashiyama", coords: [35.01762, 135.67444] },
+      { name: "Templo Tenryu-ji", coords: [35.01622, 135.67294] },
+      { name: "Puente Togetsukyo", coords: [35.01287, 135.67776] },
+      { name: "Adashino Nenbutsu-ji", coords: [35.02692, 135.66463] },
+    ],
     budget: "$110",
     isTransit: false,
     activitiesDay: [
@@ -587,6 +682,14 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Kioto, Kioto",
     zona: "Mismo hostal en Kioto",
     accommodationCoords: [34.9858, 135.7588],
+    pois: [
+      { name: "Barrio Kitano (Casa del Gallo Veleta)", coords: [34.70139, 135.18951] },
+      { name: "Parque Meriken", coords: [34.68331, 135.18932] },
+      { name: "Harborland", coords: [34.67851, 135.18031] },
+      { name: "Funicular de Rokko (estación de abajo)", coords: [34.73733, 135.23354] },
+      { name: "Cima del Rokko (Tenrandai)", coords: [34.75196, 135.23689] },
+      { name: "Onsen Kin-no-yu (Arima)", coords: [34.79679, 135.24793], night: true },
+    ],
     budget: "$170",
     isTransit: false,
     activitiesDay: [
@@ -622,6 +725,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Casco viejo, Takayama",
     zona: "A 5–7 min de la estación JR Takayama",
     accommodationCoords: [36.141, 137.251],
+    pois: [
+      { name: "Santuario Fushimi Inari", coords: [34.96752, 135.77971] },
+      { name: "Cima del monte Inari", coords: [34.96701, 135.78553] },
+      { name: "Casco viejo Sanmachi Suji", coords: [36.14236, 137.25925] },
+      { name: "Puente Nakabashi", coords: [36.14001, 137.2592] },
+    ],
     budget: "$160",
     isTransit: false,
     activitiesDay: [
@@ -655,6 +764,11 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Casco viejo, Takayama",
     zona: "Mismo hostal en Takayama",
     accommodationCoords: [36.141, 137.251],
+    pois: [
+      { name: "Mirador de Shiroyama", coords: [36.26295, 136.90796] },
+      { name: "Casa Wada", coords: [36.25992, 136.90763] },
+      { name: "Puente colgante Deai-bashi", coords: [36.25653, 136.90378] },
+    ],
     budget: "$120",
     isTransit: false,
     activitiesDay: [
@@ -687,6 +801,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Casco viejo, Takayama",
     zona: "Mismo hostal en Takayama",
     accommodationCoords: [36.141, 137.251],
+    pois: [
+      { name: "Mercado matutino del Miyagawa", coords: [36.14469, 137.25785] },
+      { name: "Estación Hida-Furukawa", coords: [36.23673, 137.18961] },
+      { name: "Canal de las carpas (Seto-gawa)", coords: [36.23603, 137.18599] },
+      { name: "Sendero de Higashiyama (santuario Hakusan)", coords: [36.14608, 137.26529] },
+    ],
     budget: "$145",
     isTransit: false,
     activitiesDay: [
@@ -721,6 +841,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Matsumoto, Matsumoto",
     zona: "A 5 min de la estación de Matsumoto",
     accommodationCoords: [36.231, 137.964],
+    pois: [
+      { name: "Teleférico de Shin-Hotaka (base)", coords: [36.27524, 137.59129] },
+      { name: "Estación de arriba (2.156 m)", coords: [36.26805, 137.60174] },
+      { name: "Hirayu Onsen", coords: [36.19109, 137.55165] },
+      { name: "Calle Nawate (Matsumoto)", coords: [36.23461, 137.97199], night: true },
+      { name: "Calle Nakamachi", coords: [36.2338, 137.97146], night: true },
+    ],
     budget: "$145",
     isTransit: false,
     activitiesDay: [
@@ -753,6 +880,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Matsumoto, Matsumoto",
     zona: "Mismo hospedaje en Matsumoto",
     accommodationCoords: [36.231, 137.964],
+    pois: [
+      { name: "Estación Hotaka (alquiler de bicis)", coords: [36.33957, 137.88176] },
+      { name: "Granja de wasabi Daio", coords: [36.33863, 137.90994] },
+      { name: "Santuario Hotaka", coords: [36.33862, 137.88431] },
+      { name: "Castillo de Matsumoto", coords: [36.23864, 137.96887] },
+    ],
     budget: "$95",
     isTransit: false,
     activitiesDay: [
@@ -788,6 +921,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación de Matsumoto, Matsumoto",
     zona: "Mismo hospedaje en Matsumoto",
     accommodationCoords: [36.231, 137.964],
+    pois: [
+      { name: "Tsumago", coords: [35.57699, 137.59542] },
+      { name: "Cascadas Odaki y Medaki", coords: [35.55492, 137.58923] },
+      { name: "Casa de té de Tateba (Ichikokutochi)", coords: [35.54544, 137.58617] },
+      { name: "Paso de Magome", coords: [35.53869, 137.58455] },
+      { name: "Magome", coords: [35.52655, 137.56748] },
+    ],
     budget: "$120",
     isTransit: false,
     activitiesDay: [
@@ -821,6 +961,10 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kawaguchiko, Fujikawaguchiko",
     zona: "A ~10 min de la estación Kawaguchiko",
     accommodationCoords: [35.4985, 138.769],
+    pois: [
+      { name: "Pagoda Chureito", coords: [35.50129, 138.80136] },
+      { name: "Corredor de los Arces", coords: [35.52559, 138.76244], night: true },
+    ],
     budget: "$120",
     isTransit: false,
     activitiesDay: [
@@ -852,6 +996,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kawaguchiko, Fujikawaguchiko",
     zona: "Mismo hostal en Kawaguchiko",
     accommodationCoords: [35.4985, 138.769],
+    pois: [
+      { name: "Parque Oishi", coords: [35.52329, 138.74654] },
+      { name: "Corredor de los Arces", coords: [35.52559, 138.76244] },
+      { name: "Saiko Iyashi no Sato Nenba", coords: [35.5045, 138.66143] },
+      { name: "Lago Saiko", coords: [35.49852, 138.68537] },
+    ],
     budget: "$100",
     isTransit: false,
     activitiesDay: [
@@ -886,6 +1036,10 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Estación Kawaguchiko, Fujikawaguchiko",
     zona: "Mismo hostal en Kawaguchiko",
     accommodationCoords: [35.4985, 138.769],
+    pois: [
+      { name: "Inicio de la caminata (Mitsutoge Tozanguchi)", coords: [35.55609, 138.79169] },
+      { name: "Cima de Mitsutoge", coords: [35.54916, 138.80916] },
+    ],
     budget: "$85",
     isTransit: false,
     activitiesDay: [
@@ -919,6 +1073,10 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Río Matsukawa, Ito",
     zona: "A ~10 min a pie de la estación de Ito, junto al río",
     accommodationCoords: [34.975, 139.092],
+    pois: [
+      { name: "Paseo del río Matsukawa", coords: [34.97041, 139.0958] },
+      { name: "Tokaikan (ryokan histórico)", coords: [34.97169, 139.09706] },
+    ],
     budget: "$100",
     isTransit: false,
     activitiesDay: [
@@ -953,6 +1111,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Río Matsukawa, Ito",
     zona: "Mismo hostal en Ito",
     accommodationCoords: [34.975, 139.092],
+    pois: [
+      { name: "Faro de Kadowakizaki", coords: [34.88995, 139.1386] },
+      { name: "Puente colgante de Kadowaki", coords: [34.89053, 139.13875] },
+      { name: "Monte Omuro", coords: [34.90314, 139.09476] },
+      { name: "Lago Ippeki-ko", coords: [34.92889, 139.10585] },
+    ],
     budget: "$95",
     isTransit: false,
     activitiesDay: [
@@ -985,6 +1149,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Río Matsukawa, Ito",
     zona: "Mismo hostal en Ito",
     accommodationCoords: [34.975, 139.092],
+    pois: [
+      { name: "Templo Shuzen-ji", coords: [34.97153, 138.92757] },
+      { name: "Sendero del bosque de bambú", coords: [34.96972, 138.92602] },
+      { name: "Onsen Tokko-no-yu", coords: [34.9702, 138.92778] },
+      { name: "Bosque de arces (Momiji Rinkan)", coords: [34.97795, 138.91303] },
+    ],
     budget: "$100",
     isTransit: false,
     activitiesDay: [
@@ -1017,6 +1187,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Asakusa, Tokio",
     zona: "Asakusa o Kuramae, a 5–10 min de la estación Asakusa",
     accommodationCoords: [35.7119, 139.7983],
+    pois: [
+      { name: "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", coords: [35.67131, 139.72064] },
+      { name: "Ameyoko", coords: [35.71002, 139.77454] },
+      { name: "Calle Kappabashi", coords: [35.71389, 139.78798] },
+      { name: "Calle del monjayaki (Tsukishima)", coords: [35.66428, 139.78246], night: true },
+      { name: "Mirador del ayuntamiento de Tokio", coords: [35.68974, 139.693], night: true },
+    ],
     budget: "$110",
     isTransit: false,
     activitiesDay: [
@@ -1050,6 +1227,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Asakusa, Tokio",
     zona: "Mismo hostal en Asakusa",
     accommodationCoords: [35.7119, 139.7983],
+    pois: [
+      { name: "Templo Engaku-ji", coords: [35.33794, 139.54782] },
+      { name: "Templo Hokoku-ji", coords: [35.31952, 139.5689] },
+      { name: "Gran Buda (Kotoku-in)", coords: [35.3165, 139.53573] },
+      { name: "Templo Hase-dera", coords: [35.31227, 139.53331] },
+      { name: "Isla Enoshima (faro Sea Candle, cuevas al fondo)", coords: [35.29965, 139.47858] },
+    ],
     budget: "$115",
     isTransit: false,
     activitiesDay: [
@@ -1084,6 +1268,13 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Asakusa, Tokio",
     zona: "Mismo hostal en Asakusa",
     accommodationCoords: [35.7119, 139.7983],
+    pois: [
+      { name: "Estación Takaosanguchi", coords: [35.63229, 139.26998] },
+      { name: "Templo Yakuo-in", coords: [35.626, 139.25044] },
+      { name: "Cima del monte Takao", coords: [35.63109, 139.25609] },
+      { name: "Monte Shiro (opcional)", coords: [35.62987, 139.22117] },
+      { name: "Onsen Gokurakuyu", coords: [35.63212, 139.26927] },
+    ],
     budget: "$95",
     isTransit: false,
     activitiesDay: [
@@ -1117,6 +1308,12 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Omotesando, Narita",
     zona: "A 5–10 min de la estación JR/Keisei Narita",
     accommodationCoords: [35.7765, 140.3185],
+    pois: [
+      { name: "Jardín Rikugien", coords: [35.7334, 139.7463] },
+      { name: "Templo Narita-san Shinsho-ji", coords: [35.78633, 140.31722] },
+      { name: "Parque de Narita-san", coords: [35.78657, 140.32078] },
+      { name: "Calle Omotesando de Narita", coords: [35.78242, 140.31564], night: true },
+    ],
     budget: "$90",
     isTransit: false,
     activitiesDay: [
@@ -1150,6 +1347,11 @@ export const ITINERARY: DayEntry[] = [
     lodgingPlace: "Omotesando, Narita",
     zona: "Mismo hospedaje en Narita",
     accommodationCoords: [35.7765, 140.3185],
+    pois: [
+      { name: "Estación de Sawara", coords: [35.89453, 140.49405] },
+      { name: "Museo de Ino Tadataka (canal del río Ono)", coords: [35.88839, 140.49716] },
+      { name: "Estación de ruta Mizu no Sato Sawara (río Tone)", coords: [35.89629, 140.50655] },
+    ],
     budget: "$110",
     isTransit: false,
     activitiesDay: [
@@ -1180,6 +1382,10 @@ export const ITINERARY: DayEntry[] = [
     accommodation: "---",
     zona: "Aeropuerto de Narita",
     accommodationCoords: [35.772, 140.3929],
+    pois: [
+      { name: "Templo Narita-san Shinsho-ji", coords: [35.78633, 140.31722] },
+      { name: "Aeropuerto de Narita", coords: [35.77587, 140.39331] },
+    ],
     budget: "$40",
     isTransit: true,
     activitiesDay: [

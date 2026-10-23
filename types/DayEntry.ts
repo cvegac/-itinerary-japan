@@ -1,5 +1,13 @@
 import type { TransportSegment } from "./TransportSegment";
 
+/** Lugar a visitar ese día, en el orden del recorrido */
+export type PointOfInterest = {
+  name: string;
+  coords: [number, number];
+  /** Se visita de noche */
+  night?: boolean;
+};
+
 export type DayEntry = {
   date: string;
   /** Título descriptivo del día: qué vas a hacer/ver (NO "Llegada" o "Salida") */
@@ -17,6 +25,9 @@ export type DayEntry = {
   lodgingPlace?: string;
   zona: string;
   accommodationCoords: [number, number];
+  /** Puntos de interés del día (coordenadas verificadas con OpenStreetMap).
+   *  El mapa los muestra solo en modo "día". */
+  pois?: PointOfInterest[];
   budget: string;
   activitiesDay: string[];
   activitiesNight: string[];

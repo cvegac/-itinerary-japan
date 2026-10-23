@@ -56,6 +56,32 @@ function circleIcon(L: any, color: string, number: number, selected: boolean) {
   });
 }
 
+function poiIcon(L: any, color: string, letter: string, night?: boolean) {
+  const bg = night ? "#1e293b" : "#fff";
+  const fg = night ? "#fde68a" : color;
+  return L.divIcon({
+    className: "",
+    html: `<div style="
+      width:22px;height:22px;border-radius:50%;
+      background:${bg};color:${fg};border:2px solid ${color};
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;font-weight:bold;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    ">${letter}</div>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+}
+
+function poiPopup(name: string, letter: string, night?: boolean): string {
+  return `
+    <div style="font-family:sans-serif;line-height:1.4;min-width:140px">
+      <div style="font-weight:bold;font-size:13px">${letter}. ${name}</div>
+      <div style="font-size:11px;color:#666;margin-top:2px">${night ? "🌙 De noche" : "☀️ De día"}</div>
+    </div>
+  `;
+}
+
 export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, center, zoom }: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
@@ -175,8 +201,31 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
     const dayNum = itinerary.indexOf(day) + 1;
     const marker = addMarker(L, group, day, circleIcon(L, color, dayNum, true), popupContent(day, true), 1000);
     const [lat, lng] = day.accommodationCoords;
-    map.flyTo([lat, lng], 10, { duration: 0.8 });
-    return marker;
+
+    const pois = day.pois ?? [];
+    if (pois.length === 0) {
+      map.flyTo([lat, lng], 10, { duration: 0.8 });
+      return marker;
+    }
+
+    // Recorrido en el orden de visita, con letras para no confundir con los números de día
+    const poiCoords = pois.map((p) => p.coords);
+    if (poiCoords.length > 1) {
+      L.polyline(poiCoords, { color, weight: 2, opacity: 0.6, dashArray: "4, 6" }).addTo(group);
+    }
+    pois.forEach((p, i) => {
+      L.marker(p.coords, { icon: poiIcon(L, color, String.fromCharCode(65 + i), p.night) })
+        .addTo(group)
+        .bindPopup(poiPopup(p.name, String.fromCharCode(65 + i), p.night), { maxWidth: 220 });
+    });
+
+    // Encuadrar en los puntos; el hospedaje entra solo si está cerca (en las
+    // excursiones, como Nikko desde Tokio, alejaría demasiado el mapa).
+    // maxZoom 13: el basemap NatGeo no tiene datos pasado el 12 y se pixela.
+    const bounds = L.latLngBounds(poiCoords);
+    if (map.distance(bounds.getCenter(), [lat, lng]) < 15000) bounds.extend([lat, lng]);
+    map.flyToBounds(bounds.pad(0.2), { duration: 0.8, maxZoom: 13 });
+    return null;
   }
 
   // ── Modo SEMANA ───────────────────────────────────────────────────────────
