@@ -41,6 +41,19 @@ describe("DayDetail", () => {
     expect(onFocusPoi).toHaveBeenCalledWith(1);
   });
 
+  it("en un día de traslado muestra dónde amanecés y dónde dormís", () => {
+    const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tokyo Ueno New Izu Hotel", zona: "Ueno" });
+    render(<DayDetail day={day} dayNumber={2} morningLodging={yesterday} />);
+    expect(screen.getByText("Amanecés en")).toBeTruthy();
+    expect(screen.getByText("Tokyo Ueno New Izu Hotel")).toBeTruthy();
+    expect(screen.getByText("Dormís en")).toBeTruthy();
+  });
+
+  it("si seguís en la misma cama no repite dónde amanecés", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(screen.queryByText("Amanecés en")).toBeNull();
+  });
+
   it("muestra los tramos de transporte y las actividades", () => {
     render(<DayDetail day={day} dayNumber={2} />);
     const transport = screen.getByRole("list", { name: "Tramos de transporte" });

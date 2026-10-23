@@ -232,9 +232,9 @@ describe("TripMap con rutas", () => {
 
   it("en el modo día marca el hospedaje con una cama", async () => {
     await renderRouted();
-    const lodging = fake.state.markers.find((m) => m.element?.getAttribute("aria-label") === "Hospedaje");
+    const lodging = markerByLabel("Dormís acá");
     expect(lodging).toBeTruthy();
-    expect(lodging!.element!.textContent).toBe("🛏️");
+    expect(lodging!.element!.querySelector("[data-icon]")?.textContent).toBe("🛏️");
     expect(lodging!.lngLat).toEqual(toLngLat(routedDay.accommodationCoords));
   });
 
@@ -245,6 +245,35 @@ describe("TripMap con rutas", () => {
     const fromLodging = features.find((f) => f.geometry.coordinates === dayRoutes.fromLodging[2].line);
     expect(fromLodging).toBeTruthy();
     expect(fromLodging!.properties.color).toBe("#e11d48");
+  });
+});
+
+const markerByLabel = (label: string) => fake.state.markers.find((m) => m.element?.getAttribute("aria-label") === label);
+
+describe("TripMap en días de traslado", () => {
+  it("muestra la cama donde amanecés, la de esta noche y el traslado entre las dos", async () => {
+    const [, yesterday, today] = itinerary;
+    await renderLoadedMap(today, "day");
+    expect(markerByLabel("Amanecés acá")!.lngLat).toEqual(toLngLat(yesterday.accommodationCoords));
+    expect(markerByLabel("Dormís acá")!.lngLat).toEqual(toLngLat(today.accommodationCoords));
+
+    const features = fake.state.routes.at(-1)!.features as { properties: { dashed: boolean }; geometry: { coordinates: unknown } }[];
+    const transfer = features.find(
+      (f) => JSON.stringify(f.geometry.coordinates) ===
+        JSON.stringify([toLngLat(yesterday.accommodationCoords), toLngLat(today.accommodationCoords)])
+    );
+    expect(transfer?.properties.dashed).toBe(true);
+  });
+
+  it("si seguís en la misma cama muestra una sola", async () => {
+    await renderLoadedMap(itinerary[1], "day");
+    expect(markerByLabel("Amanecés acá")).toBeUndefined();
+    expect(markerByLabel("Dormís acá")).toBeTruthy();
+  });
+
+  it("el día que no dormís en ninguna cama no pone la de esta noche", async () => {
+    await renderLoadedMap(makeDay("2026-11-04", "Mié", { accommodation: "---", isTransit: true }), "day");
+    expect(markerByLabel("Dormís acá")).toBeUndefined();
   });
 });
 
@@ -308,7 +337,8 @@ describe("TripMap", () => {
 
   it("dibuja la ruta del día nuevo aunque haya tiles cargando", async () => {
     const { rerender } = await renderLoadedMap(itinerary[2], "day");
-    expect(fake.state.routes.at(-1)?.features).toHaveLength(0);
+    // Sin lugares no hay ruta del día: solo el traslado desde la cama de anoche
+    expect(fake.state.routes.at(-1)?.features).toHaveLength(1);
     rerender(<TripMap {...props(itinerary[1], "day")} />);
     expect(fake.state.alive).toBe(1 + 4);
     expect(fake.state.routes.at(-1)?.features).toHaveLength(1);

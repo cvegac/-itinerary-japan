@@ -64,15 +64,35 @@ export type DayPoint = { letter: string; name: string; night: boolean; lngLat: L
 
 export type DayView = {
   points: DayPoint[];
-  /** Encuadre de los puntos (y del hospedaje si está cerca); null si no hay puntos */
+  /** Encuadre de los puntos (y de las camas que estén cerca); null si no hay puntos */
   bounds: LngLatBounds | null;
   includeAccommodation: boolean;
+  /** La cama donde amanecés entra en el encuadre (solo en días de traslado) */
+  includeMorning: boolean;
   /** Centro a usar cuando no hay puntos: el hospedaje */
   focus: LngLat;
 };
 
-/** Qué mostrar y cómo encuadrar el mapa en modo "día" */
-export function dayView(day: DayEntry): DayView {
+/** Esa noche se duerme en una cama (no en tránsito, bus nocturno ni "---") */
+export function hasBed(day: DayEntry): boolean {
+  return !day.isTransit && !day.nightBus && day.accommodation !== "---";
+}
+
+/** Menos que esto entre las dos camas es el mismo lugar */
+const SAME_LODGING_KM = 0.05;
+
+/** La cama donde amanecés, si es otra que la de esta noche: la del día anterior */
+export function morningLodging(itinerary: DayEntry[], day: DayEntry): DayEntry | null {
+  const i = itinerary.findIndex((d) => d.date === day.date);
+  const prev = i > 0 ? itinerary[i - 1] : undefined;
+  if (!prev || !hasBed(prev)) return null;
+  const sameBed = hasBed(day) && distanceKm(prev.accommodationCoords, day.accommodationCoords) < SAME_LODGING_KM;
+  return sameBed ? null : prev;
+}
+
+/** Qué mostrar y cómo encuadrar el mapa en modo "día". `morning`: la cama donde
+ *  amanecés, en los días de traslado */
+export function dayView(day: DayEntry, morning?: LatLng): DayView {
   const pois = day.pois ?? [];
   const points = pois.map((p, i) => ({
     letter: poiLetter(i),
@@ -83,14 +103,17 @@ export function dayView(day: DayEntry): DayView {
   const focus = toLngLat(day.accommodationCoords);
 
   if (pois.length === 0) {
-    return { points, bounds: null, includeAccommodation: false, focus };
+    return { points, bounds: null, includeAccommodation: false, includeMorning: false, focus };
   }
 
   const [[west, south], [east, north]] = boundsOf(pois.map((p) => p.coords));
   const center: LatLng = [(south + north) / 2, (west + east) / 2];
-  const includeAccommodation = distanceKm(center, day.accommodationCoords) < NEARBY_ACCOMMODATION_KM;
+  const near = (c: LatLng) => distanceKm(center, c) < NEARBY_ACCOMMODATION_KM;
+  const includeAccommodation = hasBed(day) && near(day.accommodationCoords);
+  const includeMorning = !!morning && near(morning);
   const coords = pois.map((p) => p.coords);
   if (includeAccommodation) coords.push(day.accommodationCoords);
+  if (includeMorning) coords.push(morning!);
 
-  return { points, bounds: boundsOf(coords), includeAccommodation, focus };
+  return { points, bounds: boundsOf(coords), includeAccommodation, includeMorning, focus };
 }

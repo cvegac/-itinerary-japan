@@ -4,7 +4,18 @@ import { useEffect, useRef } from "react";
 import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
-import { boundsOf, dayView, escapeHtml, lineFeature, poiLetter, toLngLat, weekColor, type LineProps } from "@/lib/map-geo";
+import {
+  boundsOf,
+  dayView,
+  escapeHtml,
+  hasBed,
+  lineFeature,
+  morningLodging,
+  poiLetter,
+  toLngLat,
+  weekColor,
+  type LineProps,
+} from "@/lib/map-geo";
 import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/route-plan";
 import { poiIcon } from "@/lib/poi-icons";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
@@ -79,20 +90,34 @@ function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElem
   return el;
 }
 
-/** Hospedaje del día (modo día): una cama, para no confundirlo con los lugares */
-function lodgingMarkerEl(color: string): HTMLElement {
+/** Cama del día (modo día): la de esta noche, rellena 🌙, y la de esta mañana en
+ *  los días de traslado, en blanco ☀️. Sin "position" propio (ver poiMarkerEl) */
+function lodgingMarkerEl(color: string, when: "night" | "morning"): HTMLElement {
+  const night = when === "night";
   const el = document.createElement("button");
   el.type = "button";
-  el.setAttribute("aria-label", "Hospedaje");
+  el.setAttribute("aria-label", night ? "Dormís acá" : "Amanecés acá");
   el.style.cssText = `
     width:34px;height:34px;border-radius:50%;cursor:pointer;
-    background:${color};border:3px solid #fff;
+    background:${night ? color : "#fff"};border:3px solid ${night ? "#fff" : color};
     display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;
-    box-shadow:0 2px 6px rgba(0,0,0,.35),0 0 0 3px ${color};`;
-  el.style.zIndex = "10";
-  el.textContent = "🛏️";
+    box-shadow:0 2px 6px rgba(0,0,0,.35)${night ? `,0 0 0 3px ${color}` : ""};`;
+  el.style.zIndex = night ? "10" : "9";
+  const icon = document.createElement("span");
+  icon.dataset.icon = "";
+  icon.textContent = "🛏️";
+  const badge = document.createElement("span");
+  badge.textContent = night ? "🌙" : "☀️";
+  badge.style.cssText = `
+    position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:11px;box-shadow:0 1px 3px rgba(0,0,0,.3);`;
+  el.append(icon, badge);
   return el;
 }
+
+/** Color de la línea del traslado entre la cama de la mañana y la de la noche */
+const TRANSFER_COLOR = "#64748b";
 
 /** Lugar del día: el ícono de lo que es y su letra (la misma de la lista) en un globito.
  *  Sin "position" propio: MapLibre ya lo pone en absolute (y el globito se ubica
@@ -123,13 +148,22 @@ function poiMarkerEl(color: string, letter: string, icon: string, night: boolean
 function dayPopupHtml(day: DayEntry): string {
   const accom = day.isTransit
     ? `<span style="color:#e67e22;font-weight:600">🚄 En tránsito</span>`
-    : `<span style="color:#16a34a;font-weight:600">🏠 ${escapeHtml(day.accommodation)}</span>`;
+    : `<span style="color:#16a34a;font-weight:600">🌙 Dormís en ${escapeHtml(day.accommodation)}</span>`;
   return `
     <div style="font-family:system-ui,sans-serif;line-height:1.45;min-width:170px;color:#111">
       <div style="font-weight:700;font-size:14px;margin-bottom:2px">${escapeHtml(day.label)}</div>
       <div style="font-size:11px;color:#555;margin-bottom:3px">📍 ${escapeHtml(day.location)}</div>
       <div style="font-size:12px">${accom}</div>
       <div style="font-size:11px;color:#888;margin-top:3px">${escapeHtml(day.budget)}</div>
+    </div>`;
+}
+
+function morningPopupHtml(prev: DayEntry): string {
+  return `
+    <div style="font-family:system-ui,sans-serif;line-height:1.45;min-width:170px;color:#111">
+      <div style="font-size:11px;color:#555">☀️ Amanecés en</div>
+      <div style="font-weight:700;font-size:13px">${escapeHtml(prev.accommodation)}</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">${escapeHtml(prev.lodgingPlace ?? prev.zona)}</div>
     </div>`;
 }
 
@@ -405,8 +439,13 @@ export default function TripMap({
   // ── Modo DÍA: hospedaje + puntos de interés con ícono y letra ────────────
   function renderDayMode(map: MapLibreMap, d: DayEntry): Marker | null {
     const color = weekColor(d.date, startDate, WEEK_COLORS_HEX);
-    const view = dayView(d);
-    const accomMarker = addDayMarker(d, true, lodgingMarkerEl(color));
+    const morning = morningLodging(itinerary, d);
+    const view = dayView(d, morning?.accommodationCoords);
+    // El día que no hay cama (vuelo de vuelta) el punto del día queda con su número
+    const accomMarker = addDayMarker(d, true, hasBed(d) ? lodgingMarkerEl(color, "night") : undefined);
+    if (morning) {
+      addMarker(lodgingMarkerEl(color, "morning"), toLngLat(morning.accommodationCoords), morningPopupHtml(morning));
+    }
 
     const r = validRoutes(d);
     const pois = d.pois ?? [];
@@ -428,15 +467,22 @@ export default function TripMap({
 
     // Trazado real a pie o en bici; recta punteada en los tramos de tren o bus
     const coordsOf = (i: number | "lodging") => (i === "lodging" ? d.accommodationCoords : pois[i].coords);
-    dayFeaturesRef.current = r
-      ? r.legs.map((leg) =>
-          leg.line
-            ? lngLatFeature(leg.line, { color, dashed: false })
-            : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
-        )
-      : pois.length > 1
-        ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
-        : [];
+    // El traslado de cama a cama va primero: las rutas del día se dibujan encima
+    const transfer = morning
+      ? [lineFeature([morning.accommodationCoords, d.accommodationCoords], { color: TRANSFER_COLOR, dashed: true })]
+      : [];
+    dayFeaturesRef.current = [
+      ...transfer,
+      ...(r
+        ? r.legs.map((leg) =>
+            leg.line
+              ? lngLatFeature(leg.line, { color, dashed: false })
+              : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
+          )
+        : pois.length > 1
+          ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
+          : []),
+    ];
     setRoute(dayFeaturesRef.current);
 
     if (!view.bounds) {

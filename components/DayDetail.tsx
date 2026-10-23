@@ -17,6 +17,7 @@ import {
   Ship,
   StickyNote,
   Sun,
+  Sunrise,
   TrainFront,
   TramFront,
   Utensils,
@@ -35,6 +36,8 @@ type Props = {
   onFocusPoi?: (index: number) => void;
   /** Rutas precalculadas del día: orden de visita y cómo moverse */
   routes?: DayRoutes;
+  /** En los días de traslado: el día anterior, cuya cama es donde amanecés */
+  morningLodging?: DayEntry | null;
 };
 
 function formatDuration(seconds: number): string {
@@ -71,7 +74,7 @@ const TRANSPORT_ICON: Record<string, LucideIcon> = {
   taxi: CarTaxiFront,
 };
 
-export default function DayDetail({ day, dayNumber, onFocusPoi, routes }: Props) {
+export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningLodging }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
     day: "numeric",
@@ -208,6 +211,14 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes }: Props)
 
       {/* Hospedaje y comida */}
       <div className="grid gap-3 sm:grid-cols-2">
+        {morningLodging && (
+          <InfoCard
+            icon={Sunrise}
+            label="Amanecés en"
+            value={morningLodging.accommodation}
+            detail={morningLodging.lodgingPlace ?? morningLodging.zona}
+          />
+        )}
         {!day.isTransit && (
           <InfoCard icon={BedDouble} label="Dormís en" value={day.accommodation} detail={day.zona} />
         )}

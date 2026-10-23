@@ -5,7 +5,9 @@ import {
   dayView,
   distanceKm,
   escapeHtml,
+  hasBed,
   lineFeature,
+  morningLodging,
   poiLetter,
   toLngLat,
   weekColor,
@@ -119,5 +121,61 @@ describe("dayView", () => {
     expect(view.bounds).toEqual([[139.586, 36.751], [139.599, 36.758]]);
     expect(view.points.map((p) => p.letter)).toEqual(["A", "B"]);
     expect(view.points[0].lngLat).toEqual([139.599, 36.758]);
+  });
+
+  it("incluye la cama donde amanecés si está cerca de los lugares del día", () => {
+    // Amanecés en Ueno, paseás por Yanaka y dormís en Narita (lejos)
+    const view = dayView(
+      makeDay({
+        accommodationCoords: [35.7775, 140.3117],
+        pois: [{ name: "Yanaka Ginza", coords: [35.7277, 139.7653] }],
+      }),
+      [35.7101, 139.7792]
+    );
+    expect(view.includeMorning).toBe(true);
+    expect(view.includeAccommodation).toBe(false);
+    expect(view.bounds).toEqual([[139.7653, 35.7101], [139.7792, 35.7277]]);
+  });
+
+  it("deja afuera la cama donde amanecés si quedó lejos", () => {
+    // Amanecés en Narita y el día es en Hiroshima
+    const view = dayView(
+      makeDay({ accommodationCoords: [34.3915, 132.4415], pois: [{ name: "Parque de la Paz", coords: [34.3932, 132.4523] }] }),
+      [35.7775, 140.3117]
+    );
+    expect(view.includeMorning).toBe(false);
+  });
+});
+
+describe("morningLodging", () => {
+  const days = [
+    makeDay({ date: "2026-11-01", accommodation: "Ueno", accommodationCoords: [35.7101, 139.7792] }),
+    makeDay({ date: "2026-11-02", accommodation: "Ueno", accommodationCoords: [35.7101, 139.7792] }),
+    makeDay({ date: "2026-11-03", accommodation: "Narita", accommodationCoords: [35.7775, 140.3117] }),
+    makeDay({ date: "2026-11-04", accommodation: "---", isTransit: true, accommodationCoords: [35.772, 140.3929] }),
+    makeDay({ date: "2026-11-05", accommodation: "Hiroshima", accommodationCoords: [34.3915, 132.4415] }),
+  ];
+
+  it("devuelve la cama de anoche cuando hoy dormís en otra", () => {
+    expect(morningLodging(days, days[2])).toBe(days[1]);
+    expect(morningLodging(days, days[3])).toBe(days[2]);
+  });
+
+  it("no devuelve nada si seguís en la misma cama o es el primer día", () => {
+    expect(morningLodging(days, days[1])).toBeNull();
+    expect(morningLodging(days, days[0])).toBeNull();
+  });
+
+  it("no devuelve nada si anoche no hubo cama (tránsito, bus nocturno o '---')", () => {
+    expect(morningLodging(days, days[4])).toBeNull();
+  });
+});
+
+describe("hasBed", () => {
+  it("es falso en tránsito, bus nocturno o sin hospedaje", () => {
+    expect(hasBed(makeDay())).toBe(true);
+    expect(hasBed(makeDay({ isTransit: true }))).toBe(false);
+    expect(hasBed(makeDay({ nightBus: "#1" }))).toBe(false);
+    expect(hasBed(makeDay({ accommodation: "---" }))).toBe(false);
   });
 });

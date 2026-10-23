@@ -6,6 +6,7 @@ import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
 import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
 import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
+import { morningLodging } from "@/lib/map-geo";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
 import ViewTabs, { type View } from "@/components/ViewTabs";
@@ -150,6 +151,7 @@ export default function TripApp({ tripData }: Props) {
         day={selectedDay}
         dayNumber={dayNumber}
         routes={dayRoutes}
+        morningLodging={morningLodging(itinerary, selectedDay)}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
