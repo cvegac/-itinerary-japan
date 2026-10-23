@@ -11,6 +11,8 @@ const fake = vi.hoisted(() => {
     maps: [] as FakeMap[],
     alive: 0,
     routes: [] as { features: unknown[] }[],
+    elements: [] as HTMLElement[],
+    toggles: 0,
   };
 
   class FakeMap {
@@ -62,8 +64,9 @@ const fake = vi.hoisted(() => {
 
   class FakeMarker {
     popup: FakePopup | null = null;
-    constructor() {
+    constructor(options?: { element?: HTMLElement }) {
       state.alive++;
+      if (options?.element) state.elements.push(options.element);
     }
     setLngLat() {
       return this;
@@ -75,7 +78,9 @@ const fake = vi.hoisted(() => {
     getPopup() {
       return this.popup;
     }
-    togglePopup() {}
+    togglePopup() {
+      state.toggles++;
+    }
     addTo() {
       return this;
     }
@@ -116,7 +121,12 @@ afterEach(() => {
   fake.state.maps.length = 0;
   fake.state.routes.length = 0;
   fake.state.alive = 0;
+  fake.state.elements.length = 0;
+  fake.state.toggles = 0;
 });
+
+/** Elementos de los marcadores de día que siguen en el mapa (los últimos dibujados) */
+const dayMarkerEls = (count: number) => fake.state.elements.slice(-count);
 
 const withPois = (day: DayEntry, n: number): DayEntry => ({
   ...day,
@@ -165,5 +175,29 @@ describe("TripMap", () => {
     rerender(<TripMap {...props(itinerary[1], "day")} />);
     expect(fake.state.alive).toBe(1 + 4);
     expect(fake.state.routes.at(-1)?.features).toHaveLength(1);
+  });
+
+  it("en modo semana no abre la ficha del día sola", async () => {
+    const { rerender, map } = await renderLoadedMap(itinerary[0], "day");
+    rerender(<TripMap {...props(itinerary[1], "week")} />);
+    act(() => map.emit("moveend"));
+    expect(fake.state.toggles).toBe(0);
+  });
+
+  it("en modo semana y completo deja el día elegido encima de los demás", async () => {
+    const { rerender } = await renderLoadedMap(itinerary[0], "day");
+    for (const mode of ["week", "full"] as const) {
+      rerender(<TripMap {...props(itinerary[1], mode)} />);
+      const els = dayMarkerEls(3);
+      const selected = els.find((el) => el.textContent === "2")!;
+      const others = els.filter((el) => el !== selected);
+      others.forEach((el) => expect(Number(selected.style.zIndex)).toBeGreaterThan(Number(el.style.zIndex || 0)));
+    }
+  });
+
+  it("en modo día sin lugares abre la ficha del hospedaje", async () => {
+    const { map } = await renderLoadedMap(itinerary[2], "day");
+    act(() => map.emit("moveend"));
+    expect(fake.state.toggles).toBe(1);
   });
 });

@@ -52,6 +52,8 @@ function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElem
     font:bold ${selected ? 12 : 10}px system-ui,sans-serif;
     box-shadow:0 2px 6px rgba(0,0,0,.35)${selected ? `,0 0 0 3px ${color}` : ""};`;
   el.textContent = String(number);
+  // Varios días pueden dormir en el mismo lugar: el elegido queda encima
+  if (selected) el.style.zIndex = "10";
   return el;
 }
 
@@ -294,7 +296,8 @@ export default function TripMap({
     else if (mode === "week" && day) selected = renderWeekMode(map, day);
     else if (mode === "full") selected = renderFullMode(map, day);
 
-    if (selected) {
+    // Solo en modo día se abre la ficha sola: en semana y completo taparía el mapa
+    if (selected && mode === "day") {
       const marker = selected;
       map.once("moveend", () => {
         if (!marker.getPopup()?.isOpen()) marker.togglePopup();
