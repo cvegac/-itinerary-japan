@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, LocateFixed } from "lucide-react";
 import type { TripMeta } from "@/types/Trip";
 import type { TripStatus } from "@/lib/trip-time";
+import OfflineControl from "@/components/OfflineControl";
 
 type Props = {
   meta: TripMeta;
@@ -51,6 +52,7 @@ export default function TopBar({ meta, status, onToday, floating = false }: Prop
           {status.daysUntil === 1 ? "Mañana empieza" : `Faltan ${status.daysUntil} días`}
         </span>
       )}
+      <OfflineControl />
     </header>
   );
 }
