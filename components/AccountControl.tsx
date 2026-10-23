@@ -14,7 +14,7 @@ import {
 
 const SERVER_STATE: CloudState = { status: "disabled", user: null, error: null };
 
-/** Botón de la barra superior + panel para iniciar sesión y sincronizar las tareas */
+/** Botón de la barra superior + panel para iniciar sesión y sincronizar tareas y gastos */
 export default function AccountControl() {
   const cloud = useSyncExternalStore(subscribeCloud, getCloudState, () => SERVER_STATE);
   const [open, setOpen] = useState(false);
@@ -81,7 +81,7 @@ export default function AccountControl() {
                 <p className="text-sm font-semibold">{cloud.user!.name}</p>
                 <p className="text-xs text-muted">{cloud.user!.email}</p>
                 <p className="mt-3 text-xs leading-relaxed text-muted">
-                  Tus tareas se sincronizan entre tus dispositivos. Sin conexión se guardan igual y suben cuando
+                  Tus tareas y gastos se sincronizan entre tus dispositivos. Sin conexión se guardan igual y suben cuando
                   vuelve la señal.
                 </p>
                 <button
@@ -97,7 +97,7 @@ export default function AccountControl() {
             ) : (
               <>
                 <p className="text-xs leading-relaxed text-muted">
-                  Iniciá sesión para tener tus tareas en todos tus dispositivos. Sin sesión, todo queda solo en este.
+                  Iniciá sesión para tener tus tareas y gastos respaldados y en todos tus dispositivos. Sin sesión, todo queda solo en este.
                 </p>
                 <button
                   type="button"
