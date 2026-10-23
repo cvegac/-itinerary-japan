@@ -21,7 +21,7 @@ type Props = {
   onChange: () => void;
 };
 
-const NONE: MapLayers = { detail: false, wide: false, relief: false };
+const NONE: MapLayers = { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false };
 const mb = (bytes: number) => `${Math.round(bytes / 1e6)} MB`;
 
 type Phase = { kind: "idle" } | { kind: "downloading"; progress: DownloadProgress } | { kind: "done"; failed: number; bytes: number; cancelled: boolean };
@@ -37,7 +37,15 @@ export default function MapDownload({ itinerary, online, ensureOffline, onChange
     const s = await tripMapStatus(itinerary);
     setStatus(s);
     // Lo ya descargado aparece marcado
-    if (s.downloaded) setLayers((l) => ({ detail: l.detail || s.layers.detail, wide: l.wide || s.layers.wide, relief: l.relief || s.layers.relief }));
+    if (s.downloaded) {
+      setLayers((l) => ({
+        detail: l.detail || s.layers.detail,
+        maxDetail: l.maxDetail || s.layers.maxDetail,
+        wide: l.wide || s.layers.wide,
+        relief: l.relief || s.layers.relief,
+        reliefHigh: l.reliefHigh || s.layers.reliefHigh,
+      }));
+    }
   }
 
   useEffect(() => {
@@ -71,10 +79,14 @@ export default function MapDownload({ itinerary, online, ensureOffline, onChange
   }
 
   const options: { key: keyof MapLayers; label: string; hint: string; size: string }[] = [
-    { key: "detail", label: "Más zoom en cada lugar", hint: "Detalle máximo hasta 2 km de cada punto", size: `+${mb(estimate.detailBytes)}` },
+    { key: "detail", label: "Más zoom en cada lugar", hint: "Calles y edificios con todo el detalle hasta 2 km de cada punto", size: `+${mb(estimate.detailBytes)}` },
+    { key: "maxDetail", label: "Detalle máximo en zona amplia", hint: "Lo mismo, pero hasta 5 km de cada punto", size: `+${mb(estimate.maxDetailBytes)}` },
     { key: "wide", label: "Alrededores de cada base", hint: "Zona de 35 km alrededor de cada hospedaje", size: `+${mb(estimate.wideBytes)}` },
     { key: "relief", label: "Relieve", hint: "Montañas sombreadas en las capas elegidas", size: `+${mb(estimate.reliefBytes)}` },
+    { key: "reliefHigh", label: "Relieve en alta resolución", hint: "Montañas nítidas de cerca alrededor de cada lugar (sin gastar datos)", size: `+${mb(estimate.reliefHighBytes)}` },
   ];
+  // El relieve en alta resolución necesita el relieve normal
+  const forced = (key: keyof MapLayers) => key === "relief" && layers.reliefHigh;
 
   return (
     <section aria-label="Mapa del viaje" className="mt-4 border-t border-line pt-4">
@@ -99,9 +111,15 @@ export default function MapDownload({ itinerary, online, ensureOffline, onChange
             <label className="flex items-start gap-2.5 text-sm">
               <input
                 type="checkbox"
-                checked={layers[key]}
-                disabled={downloading}
-                onChange={(e) => setLayers((l) => ({ ...l, [key]: e.target.checked }))}
+                checked={layers[key] || forced(key)}
+                disabled={downloading || forced(key)}
+                onChange={(e) =>
+                  setLayers((l) => ({
+                    ...l,
+                    [key]: e.target.checked,
+                    ...(key === "reliefHigh" && e.target.checked ? { relief: true } : {}),
+                  }))
+                }
                 className="mt-0.5 size-4 accent-emerald-600"
               />
               <span className="flex-1">

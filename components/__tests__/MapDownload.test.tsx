@@ -4,11 +4,16 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fixtureTrip } from "./fixtures";
 
-const NONE = { detail: false, wide: false, relief: false };
+const NONE = { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false };
+const RELIEF = /^Relieve(?! en alta)/;
 
 const mocks = vi.hoisted(() => ({
   offlineEnabled: true,
-  status: { downloaded: false, layers: { detail: false, wide: false, relief: false }, tiles: 0 },
+  status: {
+    downloaded: false,
+    layers: { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false },
+    tiles: 0,
+  },
 }));
 
 vi.mock("@/lib/offline", () => ({
@@ -25,9 +30,17 @@ vi.mock("@/lib/map-download", () => ({
   estimateTripMap: vi.fn((_it: unknown, layers: typeof NONE) => ({
     baseBytes: 72e6,
     detailBytes: 81e6,
+    maxDetailBytes: 56e6,
     wideBytes: 174e6,
     reliefBytes: 19e6,
-    totalBytes: 72e6 + (layers.detail ? 81e6 : 0) + (layers.wide ? 174e6 : 0) + (layers.relief ? 19e6 : 0),
+    reliefHighBytes: 93e6,
+    totalBytes:
+      72e6 +
+      (layers.detail ? 81e6 : 0) +
+      (layers.maxDetail ? 56e6 : 0) +
+      (layers.wide ? 174e6 : 0) +
+      (layers.relief ? 19e6 : 0) +
+      (layers.reliefHigh ? 93e6 : 0),
   })),
   tripMapStatus: vi.fn(async () => mocks.status),
   downloadTripMap: vi.fn(async (_it: unknown, { onProgress }: { onProgress?: (p: object) => void }) => {
@@ -61,7 +74,11 @@ describe("descarga del mapa", () => {
     await openPanel();
     expect(box(/Mapa base/).checked).toBe(true);
     expect(box(/Mapa base/).disabled).toBe(true);
-    for (const name of [/Más zoom/, /Alrededores/, /Relieve/]) expect(box(name).checked).toBe(false);
+    for (const name of [/Más zoom/, /Detalle máximo/, /Alrededores/, RELIEF, /Relieve en alta/]) {
+      expect(box(name).checked).toBe(false);
+    }
+    expect(screen.getByText(/\+56 MB/)).toBeTruthy();
+    expect(screen.getByText(/\+93 MB/)).toBeTruthy();
     expect(screen.getByText(/\+81 MB/)).toBeTruthy();
     expect(screen.getByText(/\+174 MB/)).toBeTruthy();
     expect(screen.getByRole("button", { name: /Descargar.*72 MB/ })).toBeTruthy();
@@ -69,12 +86,20 @@ describe("descarga del mapa", () => {
 
   it("descarga solo las capas elegidas y suma su peso al total", async () => {
     await openPanel();
-    await act(() => userEvent.click(box(/Relieve/)));
+    await act(() => userEvent.click(box(RELIEF)));
     await act(() => userEvent.click(screen.getByRole("button", { name: /Descargar.*91 MB/ })));
     expect(downloadTripMap).toHaveBeenCalledWith(
       fixtureTrip.itinerary,
-      expect.objectContaining({ layers: { detail: false, wide: false, relief: true } })
+      expect.objectContaining({ layers: { ...NONE, relief: true } })
     );
+  });
+
+  it("el relieve en alta resolución marca también el relieve normal", async () => {
+    await openPanel();
+    await act(() => userEvent.click(box(/Relieve en alta/)));
+    expect(box(RELIEF).checked).toBe(true);
+    expect(box(RELIEF).disabled).toBe(true);
+    expect(screen.getByRole("button", { name: /Descargar.*184 MB/ })).toBeTruthy();
   });
 
   it("si el uso sin conexión está apagado, lo activa antes de descargar", async () => {
@@ -86,10 +111,10 @@ describe("descarga del mapa", () => {
   });
 
   it("marca las capas que ya están descargadas y deja borrarlas", async () => {
-    mocks.status = { downloaded: true, layers: { detail: false, wide: true, relief: true }, tiles: 900 };
+    mocks.status = { downloaded: true, layers: { ...NONE, wide: true, relief: true }, tiles: 900 };
     await openPanel();
     await waitFor(() => expect(box(/Alrededores/).checked).toBe(true));
-    expect(box(/Relieve/).checked).toBe(true);
+    expect(box(RELIEF).checked).toBe(true);
     expect(box(/Más zoom/).checked).toBe(false);
     await act(() => userEvent.click(screen.getByRole("button", { name: /Borrar mapa/ })));
     expect(deleteTripMap).toHaveBeenCalled();

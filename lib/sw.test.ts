@@ -102,6 +102,9 @@ describe("service worker", () => {
     expect(context.strategyFor("https://tiles.openfreemap.org/planet/1/10/909/403.pbf", "cors")).toBe("map");
     expect(context.strategyFor("https://tiles.openfreemap.org/styles/liberty", "cors")).toBe("map-meta");
     expect(context.strategyFor("https://elevation-tiles-prod.s3.amazonaws.com/terrarium/8/227/101.png", "cors")).toBe("map");
+    expect(context.strategyFor("https://elevation-tiles-prod.s3.amazonaws.com/terrarium/12/1/1.png", "cors")).toBe("map");
+    // Relieve de alta resolución: solo si se descargó, nunca de internet
+    expect(context.strategyFor("https://elevation-tiles-prod.s3.amazonaws.com/terrarium/13/1/1.png", "cors")).toBe("map-cache-only");
     expect(context.strategyFor("https://otro-sitio.com/x.js", "cors")).toBe("network");
     // El manifiesto dice qué versión está publicada: siempre de la red
     expect(context.strategyFor(`${ORIGIN}/offline-manifest.json`, "cors")).toBe("network");
@@ -166,6 +169,9 @@ describe("service worker", () => {
     const { listeners } = loadWorker(network);
     const tile = "https://tiles.openfreemap.org/planet/1/14/1/1.pbf";
     expect(await request(listeners.fetch, tile, "cors", "reload")).toBeUndefined();
+    // También el relieve de alta resolución: si no, la descarga nunca podría bajarlo
+    const hires = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/15/1/1.png";
+    expect(await request(listeners.fetch, hires, "cors", "reload")).toBeUndefined();
   });
 
   it("el estilo del mapa viene de la red si hay, y si no del guardado", async () => {
@@ -177,6 +183,16 @@ describe("service worker", () => {
       throw new TypeError("sin red");
     });
     expect(await (await request(listeners.fetch, style))!.text()).not.toMatch(/^red/);
+  });
+
+  it("el relieve de alta resolución sale solo de lo descargado, sin gastar datos", async () => {
+    const { listeners, caches } = loadWorker(network);
+    const saved = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/14/1/1.png";
+    caches.store.set("viajes-mapa-viaje", new Map([[saved, new Response("alta resolución")]]));
+    expect(await (await request(listeners.fetch, saved))!.text()).toBe("alta resolución");
+    const missing = await request(listeners.fetch, "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/14/2/2.png");
+    expect(missing!.ok).toBe(false);
+    expect(network).not.toHaveBeenCalled();
   });
 
   it("al recibir el aviso de desactivar deja de interceptar (y de guardar) en el acto", async () => {

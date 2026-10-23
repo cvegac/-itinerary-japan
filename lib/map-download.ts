@@ -6,6 +6,8 @@ import type { DayEntry } from "@/types/DayEntry";
 import {
   BASE_PLAN,
   DETAIL_PLAN,
+  MAX_DETAIL_PLAN,
+  RELIEF_HIGH_PLAN,
   WIDE_PLAN,
   layerTiles,
   planTiles,
@@ -34,9 +36,12 @@ export type TripMapEstimate = {
   baseBytes: number;
   /** Lo que suma cada capa sobre la base */
   detailBytes: number;
+  maxDetailBytes: number;
   wideBytes: number;
   /** Relieve para las capas elegidas */
   reliefBytes: number;
+  /** Relieve en alta resolución (zoom 13 a 15) alrededor de los lugares */
+  reliefHighBytes: number;
   /** Lo que pesan las capas elegidas */
   totalBytes: number;
 };
@@ -46,14 +51,19 @@ export function estimateTripMap(itinerary: DayEntry[], layers: MapLayers): TripM
   const extra = (plan: TilePlan) => planTiles(itinerary, [BASE_PLAN, plan]).length - base;
   const baseBytes = base * AVG_VECTOR_BYTES + EXTRAS_BYTES;
   const detailBytes = extra(DETAIL_PLAN) * AVG_VECTOR_BYTES;
+  const maxDetailBytes = extra(MAX_DETAIL_PLAN) * AVG_VECTOR_BYTES;
   const wideBytes = extra(WIDE_PLAN) * AVG_VECTOR_BYTES;
-  const reliefBytes = layerTiles(itinerary, { ...layers, relief: true }).dem.length * AVG_DEM_BYTES;
+  const reliefBytes =
+    layerTiles(itinerary, { ...layers, relief: true, reliefHigh: false }).dem.length * AVG_DEM_BYTES;
+  const reliefHighBytes = planTiles(itinerary, RELIEF_HIGH_PLAN).length * AVG_DEM_BYTES;
   const totalBytes =
     baseBytes +
     (layers.detail ? detailBytes : 0) +
+    (layers.maxDetail ? maxDetailBytes : 0) +
     (layers.wide ? wideBytes : 0) +
-    (layers.relief ? reliefBytes : 0);
-  return { baseBytes, detailBytes, wideBytes, reliefBytes, totalBytes };
+    (layers.relief || layers.reliefHigh ? reliefBytes : 0) +
+    (layers.reliefHigh ? reliefHighBytes : 0);
+  return { baseBytes, detailBytes, maxDetailBytes, wideBytes, reliefBytes, reliefHighBytes, totalBytes };
 }
 
 export type DownloadProgress = { done: number; total: number; failed: number; bytes: number };
@@ -140,7 +150,7 @@ export async function downloadTripMap(
 
 export type TripMapStatus = { downloaded: boolean; layers: MapLayers; tiles: number };
 
-const NO_LAYERS: MapLayers = { detail: false, wide: false, relief: false };
+const NO_LAYERS: MapLayers = { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false };
 
 /** "z/x/y" del final de una URL de tile */
 function keyFromUrl(url: string): string | null {
@@ -167,11 +177,20 @@ export async function tripMapStatus(itinerary: DayEntry[]): Promise<TripMapStatu
     downloaded,
     layers: {
       detail: downloaded && covered(exclusive(DETAIL_PLAN), vectorKeys),
+      maxDetail: downloaded && covered(exclusive(MAX_DETAIL_PLAN), vectorKeys),
       wide: downloaded && covered(exclusive(WIDE_PLAN), vectorKeys),
       relief: covered(planTiles(itinerary, BASE_PLAN, TERRAIN_MAX_ZOOM), demKeys),
+      reliefHigh: covered(planTiles(itinerary, RELIEF_HIGH_PLAN), demKeys),
     },
     tiles: vectorKeys.size + demKeys.size,
   };
+}
+
+/** Hay relieve de más de zoom 12 descargado: el mapa puede pedirlo (sale solo de la caché) */
+export async function hasHiResRelief(): Promise<boolean> {
+  if (typeof caches === "undefined" || !(await caches.has(TRIP_MAP_CACHE))) return false;
+  const keys = await (await caches.open(TRIP_MAP_CACHE)).keys();
+  return keys.some((r) => /elevation-tiles-prod.*\/terrarium\/(1[3-9])\//.test(r.url));
 }
 
 export async function deleteTripMap(): Promise<void> {

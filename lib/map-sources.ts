@@ -11,6 +11,9 @@ export const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terr
 /** Hasta qué zoom se pide el relieve; más cerca se amplía (y se ve igual) */
 export const TERRAIN_MAX_ZOOM = 12;
 
+/** Relieve en alta resolución: solo si se descargó (nunca se pide a internet) */
+export const TERRAIN_HIRES_MAX_ZOOM = 15;
+
 /** Fuentes latinas que usa el estilo. El japonés lo dibuja el celular con sus fuentes */
 export const GLYPH_FONTS = ["Noto Sans Regular", "Noto Sans Bold", "Noto Sans Italic"];
 /** Latín básico, latín extendido (ō de Kōya) y puntuación */

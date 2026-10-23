@@ -5,7 +5,8 @@ import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import { boundsOf, dayView, escapeHtml, lineFeature, toLngLat, weekColor } from "@/lib/map-geo";
-import { MAP_STYLE, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
+import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
+import { hasHiResRelief } from "@/lib/map-download";
 
 export type MapMode = "day" | "week" | "full";
 
@@ -87,14 +88,14 @@ function poiPopupHtml(letter: string, name: string, night: boolean): string {
 }
 
 // ── Capas propias (se re-agregan cada vez que cambia el estilo) ─────────────
-function ensureOverlay(map: MapLibreMap) {
+function ensureOverlay(map: MapLibreMap, terrainMaxZoom: number) {
   if (!map.getSource("terrain")) {
     map.addSource("terrain", {
       type: "raster-dem",
       tiles: [TERRAIN_TILES],
       encoding: "terrarium",
       tileSize: 256,
-      maxzoom: TERRAIN_MAX_ZOOM,
+      maxzoom: terrainMaxZoom,
       attribution: "Elevación: Mapzen / AWS Terrain Tiles",
     });
   }
@@ -163,6 +164,9 @@ export default function TripMap({
 
     (async () => {
       const lib = await import("maplibre-gl");
+      // Con relieve de alta resolución descargado se pide hasta zoom 15
+      // (el service worker lo sirve solo desde la caché, nunca de internet)
+      const terrainMaxZoom = (await hasHiResRelief().catch(() => false)) ? TERRAIN_HIRES_MAX_ZOOM : TERRAIN_MAX_ZOOM;
       if (cancelled || !containerRef.current) return;
       libRef.current = lib;
       lib.setWorkerUrl("/maplibre-gl-worker.js");
@@ -183,7 +187,7 @@ export default function TripMap({
 
       // Cada cambio de estilo borra las capas propias: se vuelven a agregar
       map.on("style.load", () => {
-        ensureOverlay(map);
+        ensureOverlay(map, terrainMaxZoom);
         (map.getSource(ROUTE_SOURCE) as GeoJSONSource).setData({
           type: "FeatureCollection",
           features: routeRef.current,

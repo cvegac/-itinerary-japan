@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { makeDay } from "@/components/__tests__/fixtures";
 import { MAP_STYLE } from "./map-sources";
-import { TRIP_MAP_CACHE, deleteTripMap, downloadTripMap, estimateTripMap, tripMapStatus } from "./map-download";
+import { TRIP_MAP_CACHE, deleteTripMap, downloadTripMap, estimateTripMap, hasHiResRelief, tripMapStatus } from "./map-download";
 
 const TILEJSON = "https://tiles.openfreemap.org/planet";
 const VECTOR = "https://tiles.openfreemap.org/planet/v1/{z}/{x}/{y}.pbf";
@@ -54,7 +54,8 @@ beforeEach(() => {
 });
 
 const saved = () => Array.from(store.get(TRIP_MAP_CACHE)?.keys() ?? []);
-const BASE = { detail: false, wide: false, relief: false };
+const BASE = { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false };
+const ALL = { detail: true, maxDetail: true, wide: true, relief: true, reliefHigh: true };
 
 describe("estimateTripMap", () => {
   it("estima el peso de la base y de cada capa opcional", () => {
@@ -63,14 +64,18 @@ describe("estimateTripMap", () => {
     expect(e.detailBytes).toBeGreaterThan(0);
     expect(e.wideBytes).toBeGreaterThan(0);
     expect(e.reliefBytes).toBeGreaterThan(0);
+    expect(e.maxDetailBytes).toBeGreaterThan(0);
+    expect(e.reliefHighBytes).toBeGreaterThan(0);
     expect(e.totalBytes).toBe(e.baseBytes);
   });
 
   it("el total suma las capas elegidas y el relieve crece con ellas", () => {
     const base = estimateTripMap(itinerary, { ...BASE, relief: true });
-    const all = estimateTripMap(itinerary, { detail: true, wide: true, relief: true });
+    const all = estimateTripMap(itinerary, ALL);
     expect(base.totalBytes).toBe(base.baseBytes + base.reliefBytes);
-    expect(all.totalBytes).toBe(all.baseBytes + all.detailBytes + all.wideBytes + all.reliefBytes);
+    expect(all.totalBytes).toBe(
+      all.baseBytes + all.detailBytes + all.maxDetailBytes + all.wideBytes + all.reliefBytes + all.reliefHighBytes
+    );
     expect(all.reliefBytes).toBeGreaterThan(base.reliefBytes);
   });
 });
@@ -92,7 +97,7 @@ describe("downloadTripMap", () => {
   it("las capas opcionales suman tiles a la base", async () => {
     const base = (await downloadTripMap(itinerary, { layers: BASE })).total;
     store.clear();
-    const more = (await downloadTripMap(itinerary, { layers: { detail: true, wide: true, relief: false } })).total;
+    const more = (await downloadTripMap(itinerary, { layers: { ...BASE, detail: true, wide: true } })).total;
     expect(more).toBeGreaterThan(base);
   });
 
@@ -134,7 +139,7 @@ describe("downloadTripMap", () => {
   it("se puede cancelar", async () => {
     const controller = new AbortController();
     const result = await downloadTripMap(itinerary, {
-      layers: { detail: true, wide: false, relief: true },
+      layers: { ...BASE, detail: true, relief: true },
       signal: controller.signal,
       onProgress: (p) => p.done >= 5 && controller.abort(),
     });
@@ -150,11 +155,19 @@ describe("tripMapStatus / deleteTripMap", () => {
   });
 
   it("detecta qué capas están descargadas mirando la caché", async () => {
-    await downloadTripMap(itinerary, { layers: { detail: false, wide: true, relief: true } });
+    await downloadTripMap(itinerary, { layers: { ...BASE, wide: true, relief: true, reliefHigh: true } });
     const status = await tripMapStatus(itinerary);
     expect(status.downloaded).toBe(true);
-    expect(status.layers).toEqual({ detail: false, wide: true, relief: true });
+    expect(status.layers).toEqual({ ...BASE, wide: true, relief: true, reliefHigh: true });
     expect(status.tiles).toBeGreaterThan(0);
+  });
+
+  it("sabe si hay relieve en alta resolución descargado (para que el mapa lo pida)", async () => {
+    expect(await hasHiResRelief()).toBe(false);
+    await downloadTripMap(itinerary, { layers: { ...BASE, relief: true } });
+    expect(await hasHiResRelief()).toBe(false);
+    await downloadTripMap(itinerary, { layers: { ...BASE, relief: true, reliefHigh: true } });
+    expect(await hasHiResRelief()).toBe(true);
   });
 
   it("se puede borrar", async () => {

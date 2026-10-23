@@ -25,6 +25,9 @@ self.addEventListener("message", (event) => {
 function strategyFor(url, mode) {
   const u = new URL(url);
   if (MAP_HOSTS.includes(u.hostname)) {
+    // Relieve en alta resolución (zoom > 12): solo si se descargó, nunca de internet
+    const dem = u.pathname.match(/^\/terrarium\/(\d+)\//);
+    if (dem && Number(dem[1]) > 12) return "map-cache-only";
     // Tiles, fuentes y sprites no cambian; los JSON de estilo sí (apuntan a la versión de los tiles)
     return /\.(pbf|png|webp|jpg)$/.test(u.pathname) ? "map" : "map-meta";
   }
@@ -79,6 +82,9 @@ function handle(request, strategy) {
       return cacheFirst(request, MAP_CACHE, MAP_MAX_ENTRIES, true);
     case "map-meta":
       return networkFirstAnyCache(request, MAP_CACHE);
+    case "map-cache-only":
+      // Sin la copia, el mapa usa el relieve normal ampliado
+      return caches.match(request).then((cached) => cached || Response.error());
     default:
       return staleWhileRevalidate(request, APP_CACHE);
   }

@@ -3,7 +3,7 @@ import { getAllTrips } from "@/data/trips";
 import { makeDay } from "@/components/__tests__/fixtures";
 import { BASE_PLAN, layerTiles, lngLatToTile, planTiles, tileKey, tileUrl, tilesInRadius } from "./map-tiles";
 
-const NONE = { detail: false, wide: false, relief: false };
+const NONE = { detail: false, maxDetail: false, wide: false, relief: false, reliefHigh: false };
 
 describe("lngLatToTile", () => {
   it("convierte coordenadas al tile que las contiene", () => {
@@ -59,12 +59,26 @@ describe("layerTiles", () => {
     const base = count(NONE);
     expect(count({ ...NONE, detail: true })).toBeGreaterThan(base);
     expect(count({ ...NONE, wide: true })).toBeGreaterThan(base);
+    expect(count({ ...NONE, maxDetail: true })).toBeGreaterThan(base);
+  });
+
+  it("detalle máximo en zona amplia: más área en zoom 14 (el máximo de la fuente)", () => {
+    const z14 = (layers: typeof NONE) => layerTiles([day], layers).vector.filter((t) => t.z === 14).length;
+    expect(z14({ ...NONE, maxDetail: true })).toBeGreaterThan(z14({ ...NONE, detail: true }));
+    expect(Math.max(...layerTiles([day], { ...NONE, maxDetail: true }).vector.map((t) => t.z))).toBe(14);
+  });
+
+  it("el relieve en alta resolución suma zoom 13 a 15 alrededor de los lugares", () => {
+    const dem = layerTiles([day], { ...NONE, relief: true, reliefHigh: true }).dem;
+    expect(Math.max(...dem.map((t) => t.z))).toBe(15);
+    expect(dem.some((t) => t.z === 13)).toBe(true);
+    expect(dem.length).toBeGreaterThan(layerTiles([day], { ...NONE, relief: true }).dem.length);
   });
 
   it("el relieve llega hasta zoom 12 y crece con las capas elegidas", () => {
     const dem = layerTiles([day], { ...NONE, relief: true }).dem;
     expect(Math.max(...dem.map((t) => t.z))).toBe(12);
-    expect(layerTiles([day], { detail: true, wide: true, relief: true }).dem.length).toBeGreaterThan(dem.length);
+    expect(layerTiles([day], { ...NONE, detail: true, wide: true, relief: true }).dem.length).toBeGreaterThan(dem.length);
   });
 
   it("para Japón queda en un tamaño razonable de descargar", () => {
@@ -72,8 +86,8 @@ describe("layerTiles", () => {
     const base = layerTiles(japan.itinerary, { ...NONE, relief: true });
     expect(base.vector.length).toBeGreaterThan(300);
     expect(base.vector.length).toBeLessThan(1500);
-    const all = layerTiles(japan.itinerary, { detail: true, wide: true, relief: true });
-    expect(all.vector.length + all.dem.length).toBeLessThan(6000);
+    const all = layerTiles(japan.itinerary, { detail: true, maxDetail: true, wide: true, relief: true, reliefHigh: true });
+    expect(all.vector.length + all.dem.length).toBeLessThan(8000);
   });
 });
 

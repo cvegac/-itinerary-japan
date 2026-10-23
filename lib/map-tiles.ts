@@ -51,7 +51,27 @@ export const WIDE_PLAN: TilePlan = {
   ],
 };
 
-export type MapLayers = { detail: boolean; wide: boolean; relief: boolean };
+/** Detalle máximo en zona amplia: el zoom 14 (el máximo de la fuente) en mucha más área */
+export const MAX_DETAIL_PLAN: TilePlan = {
+  places: [{ z: 14, radiusKm: 5 }],
+};
+
+/** Relieve en alta resolución alrededor de cada lugar: montañas nítidas de cerca */
+export const RELIEF_HIGH_PLAN: TilePlan = {
+  places: [
+    { z: 13, radiusKm: 3 },
+    { z: 14, radiusKm: 1.5 },
+    { z: 15, radiusKm: 0.7 },
+  ],
+};
+
+export type MapLayers = {
+  detail: boolean;
+  maxDetail: boolean;
+  wide: boolean;
+  relief: boolean;
+  reliefHigh: boolean;
+};
 
 export function lngLatToTile(lng: number, lat: number, z: number): { x: number; y: number } {
   const n = 2 ** z;
@@ -98,16 +118,20 @@ export function planTiles(itinerary: DayEntry[], plans: TilePlan | TilePlan[], m
 }
 
 export function selectedPlans(layers: MapLayers): TilePlan[] {
-  return [BASE_PLAN, ...(layers.detail ? [DETAIL_PLAN] : []), ...(layers.wide ? [WIDE_PLAN] : [])];
+  return [
+    BASE_PLAN,
+    ...(layers.detail ? [DETAIL_PLAN] : []),
+    ...(layers.maxDetail ? [MAX_DETAIL_PLAN] : []),
+    ...(layers.wide ? [WIDE_PLAN] : []),
+  ];
 }
 
 /** Tiles del mapa y del relieve para las capas elegidas (el relieve acompaña a las demás) */
 export function layerTiles(itinerary: DayEntry[], layers: MapLayers): { vector: Tile[]; dem: Tile[] } {
   const plans = selectedPlans(layers);
-  return {
-    vector: planTiles(itinerary, plans),
-    dem: layers.relief ? planTiles(itinerary, plans, TERRAIN_MAX_ZOOM) : [],
-  };
+  const dem = layers.relief || layers.reliefHigh ? planTiles(itinerary, plans, TERRAIN_MAX_ZOOM) : [];
+  const hires = layers.reliefHigh ? planTiles(itinerary, RELIEF_HIGH_PLAN) : [];
+  return { vector: planTiles(itinerary, plans), dem: [...dem, ...hires] };
 }
 
 export function tileUrl(template: string, { z, x, y }: Tile): string {
