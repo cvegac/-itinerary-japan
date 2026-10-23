@@ -90,6 +90,13 @@ export function morningLodging(itinerary: DayEntry[], day: DayEntry): DayEntry |
   return sameBed ? null : prev;
 }
 
+/** Desde dónde salen las rutas del día: el hospedaje de esta noche o, si esa
+ *  noche no hay cama (el día del vuelo de vuelta), la cama donde amanecés */
+export function routeStart(itinerary: DayEntry[], day: DayEntry): LatLng {
+  if (hasBed(day)) return day.accommodationCoords;
+  return morningLodging(itinerary, day)?.accommodationCoords ?? day.accommodationCoords;
+}
+
 /** Qué mostrar y cómo encuadrar el mapa en modo "día". `morning`: la cama donde
  *  amanecés, en los días de traslado */
 export function dayView(day: DayEntry, morning?: LatLng): DayView {

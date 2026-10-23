@@ -12,6 +12,7 @@ import {
   lineFeature,
   morningLodging,
   poiLetter,
+  routeStart,
   toLngLat,
   weekColor,
   type LineProps,
@@ -466,7 +467,8 @@ export default function TripMap({
     });
 
     // Trazado real a pie o en bici; recta punteada en los tramos de tren o bus
-    const coordsOf = (i: number | "lodging") => (i === "lodging" ? d.accommodationCoords : pois[i].coords);
+    const start = routeStart(itinerary, d);
+    const coordsOf = (i: number | "lodging") => (i === "lodging" ? start : pois[i].coords);
     // El traslado de cama a cama va primero: las rutas del día se dibujan encima
     const transfer = morning
       ? [lineFeature([morning.accommodationCoords, d.accommodationCoords], { color: TRANSFER_COLOR, dashed: true })]

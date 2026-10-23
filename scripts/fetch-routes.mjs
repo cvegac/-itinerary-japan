@@ -45,7 +45,7 @@ function load(file) {
 
 const { getAllTrips } = load(join(root, "data/trips/index.ts"));
 const plan = load(join(root, "lib/route-plan.ts"));
-const { distanceKm } = load(join(root, "lib/map-geo.ts"));
+const { distanceKm, routeStart } = load(join(root, "lib/map-geo.ts"));
 
 // ── OSRM ────────────────────────────────────────────────────────────────
 const OSRM = "https://routing.openstreetmap.de";
@@ -100,12 +100,13 @@ async function route(mode, from, to) {
   };
 }
 
-async function dayRoutes(day) {
+// start: de dónde salen las rutas (lib/map-geo.ts routeStart)
+async function dayRoutes(day, start) {
   const pois = day.pois ?? [];
   const bike = plan.isBikeDay(day);
   const hike = !!day.hike;
   const excursion = plan.isExcursion(day);
-  const points = [day.accommodationCoords, ...pois.map((p) => p.coords)];
+  const points = [start, ...pois.map((p) => p.coords)];
   const straight = (i, j) => distanceKm(points[i], points[j]);
 
   // Matriz de tiempos reales (a pie o en bici) entre hospedaje y lugares
@@ -144,7 +145,7 @@ async function dayRoutes(day) {
     if (k === 0 && excursion) continue;
     const to = order[k];
     const from = k === 0 ? "lodging" : order[k - 1];
-    const fromCoords = from === "lodging" ? day.accommodationCoords : pois[from].coords;
+    const fromCoords = from === "lodging" ? start : pois[from].coords;
     const km = distanceKm(fromCoords, pois[to].coords);
     const mode = plan.legMode(km, bike, hike && from !== "lodging");
     if (mode === "transit") {
@@ -158,9 +159,9 @@ async function dayRoutes(day) {
   // A pie desde el hospedaje a cada lugar cercano
   const fromLodging = {};
   for (let i = 0; i < pois.length; i++) {
-    if (distanceKm(day.accommodationCoords, pois[i].coords) > plan.NEAR_LODGING_KM) continue;
+    if (distanceKm(start, pois[i].coords) > plan.NEAR_LODGING_KM) continue;
     const reuse = legs.find((l) => l.from === "lodging" && l.to === i && l.mode === "foot" && l.line);
-    const r = reuse ? { distanceM: reuse.distanceM, durationS: reuse.durationS, line: reuse.line } : await route("foot", day.accommodationCoords, pois[i].coords);
+    const r = reuse ? { distanceM: reuse.distanceM, durationS: reuse.durationS, line: reuse.line } : await route("foot", start, pois[i].coords);
     if (r) fromLodging[i] = r;
   }
 
@@ -182,7 +183,7 @@ if (!trip) throw new Error(`no existe el viaje ${slug}`);
 const out = {};
 for (const day of trip.itinerary) {
   if (!day.pois?.length) continue;
-  out[day.date] = await dayRoutes(day);
+  out[day.date] = await dayRoutes(day, routeStart(trip.itinerary, day));
   const r = out[day.date];
   const changed = r.order.some((v, i) => v !== i);
   const saved = Math.round((r.originalCostS - r.bestCostS) / 60);

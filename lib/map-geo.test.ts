@@ -9,6 +9,7 @@ import {
   lineFeature,
   morningLodging,
   poiLetter,
+  routeStart,
   toLngLat,
   weekColor,
 } from "./map-geo";
@@ -168,6 +169,21 @@ describe("morningLodging", () => {
 
   it("no devuelve nada si anoche no hubo cama (tránsito, bus nocturno o '---')", () => {
     expect(morningLodging(days, days[4])).toBeNull();
+  });
+});
+
+describe("routeStart", () => {
+  const days = [
+    makeDay({ date: "2026-12-04", accommodation: "Welco", accommodationCoords: [35.7763, 140.3148] }),
+    makeDay({ date: "2026-12-05", accommodation: "---", isTransit: true, accommodationCoords: [35.772, 140.3929] }),
+  ];
+
+  it("las rutas salen del hospedaje de esta noche", () => {
+    expect(routeStart(days, days[0])).toEqual([35.7763, 140.3148]);
+  });
+
+  it("el día que no hay cama a la noche salen de la cama donde amanecés", () => {
+    expect(routeStart(days, days[1])).toEqual([35.7763, 140.3148]);
   });
 });
 
