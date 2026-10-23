@@ -49,6 +49,32 @@ describe("DayDetail", () => {
     expect(screen.getByText("Dormís en")).toBeTruthy();
   });
 
+  it("tiene la tarjeta para mostrar al taxista, con el teléfono para llamar", () => {
+    const withJa = {
+      ...day,
+      lodgingJa: { name: "東京上野NEW伊豆ホテル", address: "東京都台東区東上野3-13-1", phone: "+81 3-3831-8666" },
+    };
+    render(<DayDetail day={withJa} dayNumber={2} />);
+    const card = screen.getByRole("region", { name: "Mostrar al taxista" });
+    expect(within(card).getByText("東京上野NEW伊豆ホテル")).toBeTruthy();
+    expect(within(card).getByText("東京都台東区東上野3-13-1")).toBeTruthy();
+    expect(within(card).getByRole("link", { name: /3831-8666/ }).getAttribute("href")).toBe("tel:+81338318666");
+  });
+
+  it("el día que llegás a un hospedaje avisa el horario de check-in, y el de check-out del anterior", () => {
+    const arriving = { ...day, accommodation: "KUMANO家-OHGi-", checkIn: "15:00–19:00" };
+    const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tsukasa House", checkOut: "6:00–9:00" });
+    render(<DayDetail day={arriving} dayNumber={2} morningLodging={yesterday} />);
+    const alert = screen.getByRole("note", { name: "Horarios de hoy" });
+    expect(alert.textContent).toContain("Check-out de Tsukasa House: 6:00–9:00");
+    expect(alert.textContent).toContain("Check-in en KUMANO家-OHGi-: 15:00–19:00");
+  });
+
+  it("si seguís en la misma cama no avisa horarios", () => {
+    render(<DayDetail day={{ ...day, checkIn: "15:00–19:00" }} dayNumber={2} />);
+    expect(screen.queryByRole("note", { name: "Horarios de hoy" })).toBeNull();
+  });
+
   it("si seguís en la misma cama no repite dónde amanecés", () => {
     render(<DayDetail day={day} dayNumber={2} />);
     expect(screen.queryByText("Amanecés en")).toBeNull();

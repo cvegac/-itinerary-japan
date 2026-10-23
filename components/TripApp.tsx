@@ -6,7 +6,7 @@ import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
 import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
 import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
-import { morningLodging } from "@/lib/map-geo";
+import { hasBed, morningLodging } from "@/lib/map-geo";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
 import ViewTabs, { type View } from "@/components/ViewTabs";
@@ -76,6 +76,10 @@ export default function TripApp({ tripData }: Props) {
   const lodgingNights = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);
   const dayNumber = selectedDay ? itinerary.indexOf(selectedDay) + 1 : 0;
   const dayRoutes = selectedDay ? routes?.[selectedDay.date] : undefined;
+  // Primera noche en un hospedaje: el día 1 o cuando cambia la cama
+  const morning = selectedDay ? morningLodging(itinerary, selectedDay) : null;
+  const prevDay = dayNumber > 1 ? itinerary[dayNumber - 2] : undefined;
+  const arriving = !!selectedDay && hasBed(selectedDay) && (!prevDay || !hasBed(prevDay) || !!morning);
 
   function selectDay(day: DayEntry) {
     setSelectedDay(day);
@@ -151,7 +155,8 @@ export default function TripApp({ tripData }: Props) {
         day={selectedDay}
         dayNumber={dayNumber}
         routes={dayRoutes}
-        morningLodging={morningLodging(itinerary, selectedDay)}
+        morningLodging={morning}
+        arriving={arriving}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });

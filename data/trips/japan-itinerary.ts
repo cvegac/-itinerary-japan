@@ -44,6 +44,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~5 min a pie de la estación Inaricho (Ginza Line) y ~7 min de la estación de Ueno",
     accommodationCoords: [35.7101, 139.7792],
     lodgingCost: 54,
+    lodgingJa: { name: "東京上野NEW伊豆ホテル", address: "東京都台東区東上野3-13-1", phone: "+81 3-3831-8666" },
+    checkIn: "15:00–23:30",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Templo Senso-ji", coords: [35.7134, 139.79553], night: true },
       { name: "Puente Azuma (vista de la Skytree)", coords: [35.71011, 139.79893], night: true },
@@ -83,6 +86,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hotel en Ueno",
     accommodationCoords: [35.7101, 139.7792],
     lodgingCost: 54,
+    lodgingJa: { name: "東京上野NEW伊豆ホテル", address: "東京都台東区東上野3-13-1", phone: "+81 3-3831-8666" },
+    checkIn: "15:00–23:30",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Puente sagrado Shinkyo", coords: [36.75332, 139.60404] },
       { name: "Santuario Toshogu", coords: [36.75764, 139.59911] },
@@ -125,6 +131,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~5 min a pie de las estaciones JR y Keisei Narita, a ~10 min en tren del aeropuerto. Se paga en el hotel (¥6,480)",
     accommodationCoords: [35.7775, 140.3117],
     lodgingCost: 41,
+    lodgingJa: { name: "成田U-シティホテル", address: "千葉県成田市囲護台1-1-2", phone: "+81 476-24-0101" },
+    checkIn: "15:00–00:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Parque de Ueno", coords: [35.71402, 139.77393] },
       { name: "Estanque Shinobazu", coords: [35.71187, 139.77086] },
@@ -168,6 +177,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~7 min a pie del tranvía Nishi-Kannonmachi (línea 2) y ~20 min del Parque de la Paz. Check-in 15:00–21:00",
     accommodationCoords: [34.3915, 132.4415],
     lodgingCost: 35.5,
+    lodgingJa: { name: "ココステイ ジャルダン", address: "広島県広島市西区東観音町8-12", phone: "+81 82-294-0504" },
+    checkIn: "15:00–21:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Parque de la Paz", coords: [34.39317, 132.4523] },
       { name: "Cúpula de la Bomba Atómica", coords: [34.39547, 132.45352] },
@@ -213,6 +225,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo departamento en Hiroshima",
     accommodationCoords: [34.3915, 132.4415],
     lodgingCost: 35.5,
+    lodgingJa: { name: "ココステイ ジャルダン", address: "広島県広島市西区東観音町8-12", phone: "+81 82-294-0504" },
+    checkIn: "15:00–21:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Santuario Itsukushima", coords: [34.29653, 132.31901] },
       { name: "Templo Daisho-in", coords: [34.29173, 132.31858] },
@@ -255,6 +270,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~8 min a pie al oeste de la estación de Onomichi. Check-in 15:00–21:00 con documento y tarjeta de crédito",
     accommodationCoords: [34.4053, 133.1865],
     lodgingCost: 32,
+    lodgingJa: { name: "Lemonsea Onomichi", address: "広島県尾道市日比崎町1-16", phone: "+81 848-24-8201" },
+    checkIn: "15:00–21:00",
+    checkOut: "6:00–10:00",
     pois: [
       { name: "Templo Senko-ji", coords: [34.41036, 133.19868] },
       { name: "Callejón de los Gatos", coords: [34.41056, 133.20046] },
@@ -294,6 +312,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Onomichi",
     accommodationCoords: [34.4053, 133.1865],
     lodgingCost: 32,
+    lodgingJa: { name: "Lemonsea Onomichi", address: "広島県尾道市日比崎町1-16", phone: "+81 848-24-8201" },
+    checkIn: "15:00–21:00",
+    checkOut: "6:00–10:00",
     pois: [
       { name: "Estación de Onomichi (alquiler de bicis)", coords: [34.40482, 133.19311] },
       { name: "Puente Innoshima", coords: [34.35635, 133.1783] },
@@ -340,6 +361,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~7 min a pie de la estación Kamuro (Nankai), una antes de Kudoyama. Casa con tatami y cocina; check-in 16:00–21:00",
     accommodationCoords: [34.299, 135.5846],
     lodgingCost: 32.5,
+    lodgingJa: { name: "ゲストハウス輪 高野山麓", address: "和歌山県橋本市学文路823-1", phone: "+81 90-4161-6255" },
+    checkIn: "16:00–21:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Templo Jison-in", coords: [34.29516, 135.54991] },
       { name: "Santuario Niukanshofu (inicio del Choishi-michi)", coords: [34.29508, 135.54977] },
@@ -385,6 +409,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo guesthouse en Kamuro",
     accommodationCoords: [34.299, 135.5846],
     lodgingCost: 32.5,
+    lodgingJa: { name: "ゲストハウス輪 高野山麓", address: "和歌山県橋本市学文路823-1", phone: "+81 90-4161-6255" },
+    checkIn: "16:00–21:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Estación Kamikosawa", coords: [34.2575, 135.548] },
       { name: "Gran puerta Daimon", coords: [34.21315, 135.57286] },
@@ -429,6 +456,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~7 min a pie de la estación Kii-Tanabe (de ahí salen los buses a Takijiri). Check-in 13:30–23:00",
     accommodationCoords: [33.7305, 135.3794],
     lodgingCost: 25,
+    lodgingJa: { name: "TSUKASA HOUSE", address: "和歌山県田辺市下屋敷町64-3", phone: "+81 90-4228-4514" },
+    checkIn: "13:30–23:00",
+    checkOut: "6:00–9:00",
     pois: [
       { name: "Santuario Tokei-jinja", coords: [33.72969, 135.38395] },
     ],
@@ -468,6 +498,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Tanabe",
     accommodationCoords: [33.7305, 135.3794],
     lodgingCost: 25,
+    lodgingJa: { name: "TSUKASA HOUSE", address: "和歌山県田辺市下屋敷町64-3", phone: "+81 90-4228-4514" },
+    checkIn: "13:30–23:00",
+    checkOut: "6:00–9:00",
     pois: [
       { name: "Takijiri-oji (inicio)", coords: [33.77553, 135.50369] },
       { name: "Santuario de Takahara", coords: [33.79427, 135.52933] },
@@ -511,6 +544,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Al lado del santuario Kumano Hayatama Taisha, a ~15 min a pie de la estación de Shingu. Check-in solo de 15:00 a 19:00; check-out de 8:30 a 9:30",
     accommodationCoords: [33.7318, 135.9851],
     lodgingCost: 44.5,
+    lodgingJa: { name: "KUMANO家-OHGi-", address: "和歌山県新宮市船町1-1-1", phone: "+81 735-21-2434" },
+    checkIn: "15:00–19:00",
+    checkOut: "8:30–9:30",
     pois: [
       { name: "Hosshinmon-oji (inicio)", coords: [33.86175, 135.7206] },
       { name: "Kumano Hongu Taisha", coords: [33.84035, 135.77363] },
@@ -556,6 +592,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Shingu",
     accommodationCoords: [33.7318, 135.9851],
     lodgingCost: 44.5,
+    lodgingJa: { name: "KUMANO家-OHGi-", address: "和歌山県新宮市船町1-1-1", phone: "+81 735-21-2434" },
+    checkIn: "15:00–19:00",
+    checkOut: "8:30–9:30",
     pois: [
       { name: "Escalinata de Daimonzaka", coords: [33.67061, 135.8965] },
       { name: "Kumano Nachi Taisha", coords: [33.66843, 135.89044] },
@@ -597,6 +636,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~10 min a pie (en subida) de la estación JR Otsu, a 2 paradas de Kioto. Check-in de 15:00 a 22:00",
     accommodationCoords: [34.9987, 135.8676],
     lodgingCost: 50,
+    lodgingJa: { name: "嘉翔の家", address: "滋賀県大津市朝日が丘2-7-33", phone: "+81 70-9510-8085" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Mercado Nishiki", coords: [35.00502, 135.76557] },
       { name: "Puente Sanjo (río Kamo)", coords: [35.00904, 135.77172] },
@@ -643,6 +685,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Otsu",
     accommodationCoords: [34.9987, 135.8676],
     lodgingCost: 50,
+    lodgingJa: { name: "嘉翔の家", address: "滋賀県大津市朝日が丘2-7-33", phone: "+81 70-9510-8085" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Templo Kurama-dera", coords: [35.11787, 135.77065] },
       { name: "Santuario Kibune", coords: [35.12189, 135.76294] },
@@ -686,6 +731,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Otsu",
     accommodationCoords: [34.9987, 135.8676],
     lodgingCost: 50,
+    lodgingJa: { name: "嘉翔の家", address: "滋賀県大津市朝日が丘2-7-33", phone: "+81 70-9510-8085" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Bosque de bambú de Arashiyama", coords: [35.01762, 135.67444] },
       { name: "Templo Tenryu-ji", coords: [35.01622, 135.67294] },
@@ -732,6 +780,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Otsu",
     accommodationCoords: [34.9987, 135.8676],
     lodgingCost: 50,
+    lodgingJa: { name: "嘉翔の家", address: "滋賀県大津市朝日が丘2-7-33", phone: "+81 70-9510-8085" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–10:00",
     pois: [
       { name: "Barrio Kitano (Casa del Gallo Veleta)", coords: [34.70139, 135.18951] },
       { name: "Parque Meriken", coords: [34.68331, 135.18932] },
@@ -778,6 +829,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~5 min a pie de la estación JR Takayama y ~10 min del casco viejo. Check-in 15:00–22:00",
     accommodationCoords: [36.1406, 137.2549],
     lodgingCost: 54,
+    lodgingJa: { name: "KOMOREBI HOSTEL", address: "岐阜県高山市名田町5-52", phone: "+81 80-4098-0470" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–11:00",
     pois: [
       { name: "Santuario Fushimi Inari", coords: [34.96752, 135.77971] },
       { name: "Cima del monte Inari", coords: [34.96701, 135.78553] },
@@ -818,6 +872,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hostal en Takayama",
     accommodationCoords: [36.1406, 137.2549],
     lodgingCost: 54,
+    lodgingJa: { name: "KOMOREBI HOSTEL", address: "岐阜県高山市名田町5-52", phone: "+81 80-4098-0470" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–11:00",
     pois: [
       { name: "Mirador de Shiroyama", coords: [36.26295, 136.90796] },
       { name: "Casa Wada", coords: [36.25992, 136.90763] },
@@ -857,6 +914,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hostal en Takayama",
     accommodationCoords: [36.1406, 137.2549],
     lodgingCost: 54,
+    lodgingJa: { name: "KOMOREBI HOSTEL", address: "岐阜県高山市名田町5-52", phone: "+81 80-4098-0470" },
+    checkIn: "15:00–22:00",
+    checkOut: "7:00–11:00",
     pois: [
       { name: "Mercado matutino del Miyagawa", coords: [36.14469, 137.25785] },
       { name: "Estación Hida-Furukawa", coords: [36.23673, 137.18961] },
@@ -899,6 +959,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~10 min a pie de la estación de Matsumoto, cerca de la calle Nakamachi. Check-in 16:00–22:00",
     accommodationCoords: [36.2309, 137.9724],
     lodgingCost: 29.33,
+    lodgingJa: { name: "ミンカハウス", address: "長野県松本市深志3-1-7", phone: "+81 90-6745-9428" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Teleférico de Shin-Hotaka (base)", coords: [36.27524, 137.59129] },
       { name: "Estación de arriba (2.156 m)", coords: [36.26805, 137.60174] },
@@ -940,6 +1003,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Matsumoto",
     accommodationCoords: [36.2309, 137.9724],
     lodgingCost: 29.33,
+    lodgingJa: { name: "ミンカハウス", address: "長野県松本市深志3-1-7", phone: "+81 90-6745-9428" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Estación Hotaka (alquiler de bicis)", coords: [36.33957, 137.88176] },
       { name: "Granja de wasabi Daio", coords: [36.33863, 137.90994] },
@@ -984,6 +1050,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Matsumoto",
     accommodationCoords: [36.2309, 137.9724],
     lodgingCost: 29.33,
+    lodgingJa: { name: "ミンカハウス", address: "長野県松本市深志3-1-7", phone: "+81 90-6745-9428" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Tsumago", coords: [35.57699, 137.59542] },
       { name: "Cascadas Odaki y Medaki", coords: [35.55492, 137.58923] },
@@ -1025,6 +1094,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Junto a la estación Fujikyu-Highland, una antes de Kawaguchiko (~20 min a pie). Check-in 15:00–00:00; todos los días hay que salir de 10:00 a 15:00 por la limpieza",
     accommodationCoords: [35.4896, 138.782],
     lodgingCost: 34.33,
+    lodgingJa: { name: "Mt.Fuji キャビン&ラウンジ ハイランドステーション イン", address: "山梨県南都留郡富士河口湖町船津6663-11", phone: "+81 555-21-6688" },
+    checkIn: "15:00–00:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Pagoda Chureito", coords: [35.50129, 138.80136] },
       { name: "Corredor de los Arces", coords: [35.52559, 138.76244], night: true },
@@ -1062,6 +1134,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Misma cápsula en Fujikyu-Highland",
     accommodationCoords: [35.4896, 138.782],
     lodgingCost: 34.33,
+    lodgingJa: { name: "Mt.Fuji キャビン&ラウンジ ハイランドステーション イン", address: "山梨県南都留郡富士河口湖町船津6663-11", phone: "+81 555-21-6688" },
+    checkIn: "15:00–00:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Parque Oishi", coords: [35.52329, 138.74654] },
       { name: "Corredor de los Arces", coords: [35.52559, 138.76244] },
@@ -1106,6 +1181,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Misma cápsula en Fujikyu-Highland",
     accommodationCoords: [35.4896, 138.782],
     lodgingCost: 34.33,
+    lodgingJa: { name: "Mt.Fuji キャビン&ラウンジ ハイランドステーション イン", address: "山梨県南都留郡富士河口湖町船津6663-11", phone: "+81 555-21-6688" },
+    checkIn: "15:00–00:00",
+    checkOut: "hasta 10:00",
     pois: [
       { name: "Inicio de la caminata (Mitsutoge Tozanguchi)", coords: [35.55609, 138.79169] },
       { name: "Cima de Mitsutoge", coords: [35.54916, 138.80916] },
@@ -1145,6 +1223,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~7 min a pie de la estación Kawana (Izukyu), dos paradas al sur de Ito. Check-in sin recepción de 16:00 a 22:00",
     accommodationCoords: [34.9517, 139.1302],
     lodgingCost: 41.67,
+    lodgingJa: { name: "Villa FUN Kawana", address: "静岡県伊東市川奈1334-7", phone: "+81 557-52-3222" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Paseo del río Matsukawa", coords: [34.97041, 139.0958] },
       { name: "Tokaikan (ryokan histórico)", coords: [34.97169, 139.09706] },
@@ -1185,6 +1266,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Kawana",
     accommodationCoords: [34.9517, 139.1302],
     lodgingCost: 41.67,
+    lodgingJa: { name: "Villa FUN Kawana", address: "静岡県伊東市川奈1334-7", phone: "+81 557-52-3222" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Faro de Kadowakizaki", coords: [34.88995, 139.1386] },
       { name: "Puente colgante de Kadowaki", coords: [34.89053, 139.13875] },
@@ -1226,6 +1310,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Kawana",
     accommodationCoords: [34.9517, 139.1302],
     lodgingCost: 41.67,
+    lodgingJa: { name: "Villa FUN Kawana", address: "静岡県伊東市川奈1334-7", phone: "+81 557-52-3222" },
+    checkIn: "16:00–22:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Templo Shuzen-ji", coords: [34.97153, 138.92757] },
       { name: "Sendero del bosque de bambú", coords: [34.96972, 138.92602] },
@@ -1267,6 +1354,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "A ~5 min a pie de la estación Hatsudai (Keio New Line, una parada de Shinjuku) y ~6 de Sangubashi (Odakyu). Check-in 16:00–00:00",
     accommodationCoords: [35.6798, 139.6894],
     lodgingCost: 71.33,
+    lodgingJa: { name: "Mi-Hotel Hearts 新宿", address: "東京都渋谷区代々木4-41-12", phone: "+81 3-5990-7909" },
+    checkIn: "16:00–00:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", coords: [35.67131, 139.72064] },
       { name: "Ameyoko", coords: [35.71002, 139.77454] },
@@ -1308,6 +1398,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hotel en Hatsudai",
     accommodationCoords: [35.6798, 139.6894],
     lodgingCost: 71.33,
+    lodgingJa: { name: "Mi-Hotel Hearts 新宿", address: "東京都渋谷区代々木4-41-12", phone: "+81 3-5990-7909" },
+    checkIn: "16:00–00:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Templo Engaku-ji", coords: [35.33794, 139.54782] },
       { name: "Templo Hokoku-ji", coords: [35.31952, 139.5689] },
@@ -1352,6 +1445,9 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hotel en Hatsudai",
     accommodationCoords: [35.6798, 139.6894],
     lodgingCost: 71.33,
+    lodgingJa: { name: "Mi-Hotel Hearts 新宿", address: "東京都渋谷区代々木4-41-12", phone: "+81 3-5990-7909" },
+    checkIn: "16:00–00:00",
+    checkOut: "hasta 11:00",
     pois: [
       { name: "Estación Takaosanguchi", coords: [35.63229, 139.26998] },
       { name: "Templo Yakuo-in", coords: [35.626, 139.25044] },
@@ -1395,6 +1491,7 @@ export const ITINERARY: DayEntry[] = [
     zona: "Junto a la estación Keisei Narita (~2 min a pie) y a ~10 min de la calle Omotesando. Ya está pagado",
     accommodationCoords: [35.7763, 140.3148],
     lodgingCost: 54.28,
+    lodgingJa: { name: "ホテルウェルコ成田", address: "千葉県成田市花崎町818-1", phone: "+81 476-23-7000" },
     pois: [
       { name: "Jardín Rikugien", coords: [35.7334, 139.7463] },
       { name: "Templo Narita-san Shinsho-ji", coords: [35.78633, 140.31722] },
@@ -1435,6 +1532,7 @@ export const ITINERARY: DayEntry[] = [
     zona: "Mismo hospedaje en Narita",
     accommodationCoords: [35.7763, 140.3148],
     lodgingCost: 54.28,
+    lodgingJa: { name: "ホテルウェルコ成田", address: "千葉県成田市花崎町818-1", phone: "+81 476-23-7000" },
     pois: [
       { name: "Estación de Sawara", coords: [35.89453, 140.49405] },
       { name: "Museo de Ino Tadataka (canal del río Ono)", coords: [35.88839, 140.49716] },

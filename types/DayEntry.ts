@@ -30,6 +30,11 @@ export type DayEntry = {
   /** Precio real de esa noche en USD (total de la reserva / noches). Lo usa el
    *  presupuesto del día (lib/budget.ts) */
   lodgingCost?: number;
+  /** Para mostrarle al taxista: nombre y dirección en japonés, y teléfono */
+  lodgingJa?: { name: string; address: string; phone?: string };
+  /** Horarios de la reserva, ej. "15:00–19:00" y "hasta 11:00" */
+  checkIn?: string;
+  checkOut?: string;
   /** Puntos de interés del día (coordenadas verificadas con OpenStreetMap).
    *  El mapa los muestra solo en modo "día". */
   pois?: PointOfInterest[];

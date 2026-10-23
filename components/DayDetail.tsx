@@ -13,6 +13,7 @@ import {
   MapPin,
   MessageSquare,
   Moon,
+  Phone,
   Plane,
   Ship,
   StickyNote,
@@ -38,7 +39,15 @@ type Props = {
   routes?: DayRoutes;
   /** En los días de traslado: el día anterior, cuya cama es donde amanecés */
   morningLodging?: DayEntry | null;
+  /** Hoy es la primera noche en este hospedaje (por defecto: si cambia la cama) */
+  arriving?: boolean;
 };
+
+/** "KUMANO家-OHGi- (individual con tatami…)" → "KUMANO家-OHGi-" */
+const shortName = (accommodation: string) => accommodation.split(" (")[0];
+
+/** "+81 3-3831-8666" → "tel:+81338318666" */
+const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
 function formatDuration(seconds: number): string {
   const min = Math.max(1, Math.round(seconds / 60));
@@ -74,7 +83,7 @@ const TRANSPORT_ICON: Record<string, LucideIcon> = {
   taxi: CarTaxiFront,
 };
 
-export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningLodging }: Props) {
+export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningLodging, arriving }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
     day: "numeric",
@@ -83,6 +92,8 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
   const formatted = longDate.charAt(0).toUpperCase() + longDate.slice(1);
   const pois = orderedPois(day, routes);
   // Las rutas valen solo si los lugares del día no cambiaron desde que se calcularon
+  const checkOutPrev = morningLodging?.checkOut;
+  const checkInToday = (arriving ?? !!morningLodging) && !day.isTransit ? day.checkIn : undefined;
   const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
   const legTo = new Map(validRoutes?.legs.map((l) => [l.to, l]) ?? []);
   const reordered = validRoutes?.order.some((v, i) => v !== i) ?? false;
@@ -126,6 +137,21 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
           )}
         </div>
       </header>
+
+      {/* Horarios del hospedaje: check-out del de anoche y check-in del de hoy */}
+      {(checkOutPrev || checkInToday) && (
+        <div
+          role="note"
+          aria-label="Horarios de hoy"
+          className="flex gap-3 rounded-2xl border border-accent/30 bg-accent/5 p-3.5 text-sm"
+        >
+          <Clock className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+          <div className="flex flex-col gap-0.5">
+            {checkOutPrev && <p>Check-out de {shortName(morningLodging!.accommodation)}: <b>{checkOutPrev}</b></p>}
+            {checkInToday && <p>Check-in en {shortName(day.accommodation)}: <b>{checkInToday}</b></p>}
+          </div>
+        </div>
+      )}
 
       {/* Notas */}
       {day.notes && (
@@ -224,6 +250,34 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
         )}
         {day.food && <InfoCard icon={Utensils} label="Para comer" value={day.food} />}
       </div>
+
+      {/* Para mostrarle al taxista (o a quien le preguntes) cómo llegar */}
+      {!day.isTransit && day.lodgingJa && (
+        <section
+          aria-label="Mostrar al taxista"
+          className="rounded-2xl border-2 border-dashed border-line bg-surface p-4"
+        >
+          <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold text-muted">
+            <CarTaxiFront className="size-4" aria-hidden />
+            Mostrar al taxista
+          </div>
+          <p lang="ja" className="text-lg font-bold leading-snug">
+            {day.lodgingJa.name}
+          </p>
+          <p lang="ja" className="mt-1 text-lg leading-snug">
+            {day.lodgingJa.address}
+          </p>
+          {day.lodgingJa.phone && (
+            <a
+              href={telHref(day.lodgingJa.phone)}
+              className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold"
+            >
+              <Phone className="size-4" aria-hidden />
+              {day.lodgingJa.phone}
+            </a>
+          )}
+        </section>
+      )}
     </article>
   );
 }
