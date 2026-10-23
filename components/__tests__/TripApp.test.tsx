@@ -53,7 +53,7 @@ describe("TripApp", () => {
   it("cambia entre itinerario, costos y hospedaje", async () => {
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
-    expect(screen.getByRole("heading", { name: /Presupuesto/ })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Costos y gastos" })).toBeTruthy();
 
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Hospedaje/ })[0]));
     expect(screen.getByRole("heading", { name: /Hospedaje/ })).toBeTruthy();
@@ -64,14 +64,15 @@ describe("TripApp", () => {
     expect(title()).toBe("Llegada a Asakusa");
   });
 
-  it("en costos muestra lo gastado de verdad contra el presupuesto", async () => {
+  it("en costos muestra lo gastado de verdad (también los gastos guardados en el formato anterior)", async () => {
     localStorage.setItem(
       "viajes-gastos-test",
       JSON.stringify({ e1: { id: "e1", date: "2026-11-02", amountYen: 3000, note: "Nikko", createdAt: 1 } })
     );
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
-    expect(screen.getByText(/Gastaste ¥3,000 \(~\$20\)/)).toBeTruthy();
+    expect(screen.getByLabelText("Gastado").textContent).toContain("≈US$20");
+    expect(screen.getByText("¥3,000")).toBeTruthy();
     localStorage.clear();
   });
 

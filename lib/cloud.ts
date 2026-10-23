@@ -2,7 +2,7 @@ import type { FirebaseApp } from "firebase/app";
 import type { Auth, User } from "firebase/auth";
 import type { Firestore } from "firebase/firestore";
 import { FIREBASE_CONFIG } from "@/lib/firebase-config";
-import type { Expense } from "@/lib/expenses";
+import type { Expense, Withdrawal } from "@/lib/expenses";
 
 // Login con Google y datos en Firestore, opcionales. Firebase se descarga y se
 // inicia recién cuando iniciás sesión (o si ya la habías iniciado antes): sin
@@ -12,7 +12,13 @@ export type CloudUser = { uid: string; name: string | null; email: string | null
 export type CloudStatus = "disabled" | "idle" | "loading" | "signed-in" | "signed-out";
 export type CloudState = { status: CloudStatus; user: CloudUser | null; error: string | null };
 /** Lo que se guarda por viaje en users/{uid}/trips/{slug} */
-export type TripCloudData = { doneTasks?: string[]; expenses?: Record<string, Expense> };
+export type TripCloudData = {
+  doneTasks?: string[];
+  expenses?: Record<string, Expense>;
+  withdrawals?: Record<string, Withdrawal>;
+};
+/** Campos del viaje que son mapas de registros con id */
+export type RecordField = "expenses" | "withdrawals";
 
 /** Marca de "inicié sesión en este dispositivo": solo existe después de un login */
 const SESSION_KEY = "viajes-sesion";
@@ -153,12 +159,13 @@ export function saveTrip(uid: string, slug: string, data: Record<string, unknown
     .catch(() => {});
 }
 
-/** Un gasto es una clave del mapa "expenses": se agregan sin pisar los demás */
-export function saveExpense(uid: string, slug: string, expense: Expense) {
-  saveTrip(uid, slug, { expenses: { [expense.id]: expense } });
+/** Cada registro es una clave de su mapa ("expenses", "withdrawals"): se agregan
+ *  sin pisar los demás */
+export function saveRecord(uid: string, slug: string, field: RecordField, record: { id: string }) {
+  saveTrip(uid, slug, { [field]: { [record.id]: record } });
 }
 
-export function deleteExpense(uid: string, slug: string, id: string) {
+export function deleteRecord(uid: string, slug: string, field: RecordField, id: string) {
   if (!services) return;
-  saveTrip(uid, slug, { expenses: { [id]: services.m.fs.deleteField() } });
+  saveTrip(uid, slug, { [field]: { [id]: services.m.fs.deleteField() } });
 }

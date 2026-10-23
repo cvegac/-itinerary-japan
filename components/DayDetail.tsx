@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
+  Banknote,
   BedDouble,
   Bike,
   Bus,
@@ -10,6 +11,7 @@ import {
   CarTaxiFront,
   Clock,
   Coins,
+  CreditCard,
   Footprints,
   MapPin,
   MessageSquare,
@@ -34,8 +36,9 @@ import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
-import { YEN_PER_USD } from "@/lib/budget";
-import type { Expense } from "@/lib/expenses";
+import type { Expense, Withdrawal } from "@/lib/expenses";
+import { formatMoney, toUsd } from "@/lib/money";
+import ExpenseModal from "@/components/ExpenseModal";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
@@ -53,11 +56,11 @@ type Props = {
   arriving?: boolean;
   /** Gastos reales del día; sin onAddExpense no se muestra la sección */
   expenses?: Expense[];
-  onAddExpense?: (amountYen: number, note: string) => void;
+  onAddExpense?: (expense: Omit<Expense, "id" | "createdAt">) => void;
+  onAddWithdrawal?: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemoveExpense?: (id: string) => void;
 };
 
-const yen = (amount: number) => `¥${amount.toLocaleString("en-US")}`;
 
 /** "KUMANO家-OHGi- (individual con tatami…)" → "KUMANO家-OHGi-" */
 const shortName = (accommodation: string) => accommodation.split(" (")[0];
@@ -108,6 +111,7 @@ export default function DayDetail({
   arriving,
   expenses = [],
   onAddExpense,
+  onAddWithdrawal,
   onRemoveExpense,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
@@ -314,9 +318,12 @@ export default function DayDetail({
 
       {onAddExpense && (
         <DayExpenses
+          date={day.date}
+          label={`${formatted} · ${day.label}`}
           budget={day.budget}
           expenses={expenses}
           onAdd={onAddExpense}
+          onAddWithdrawal={(w) => onAddWithdrawal?.(w)}
           onRemove={(id) => onRemoveExpense?.(id)}
         />
       )}
@@ -440,32 +447,27 @@ function ActivityList({
   );
 }
 
-/** Lo gastado de verdad en el día, en yenes, contra el presupuesto */
+/** Lo gastado de verdad en el día, en su moneda, contra el presupuesto */
 function DayExpenses({
+  date,
+  label,
   budget,
   expenses,
   onAdd,
+  onAddWithdrawal,
   onRemove,
 }: {
+  date: string;
+  label: string;
   budget: string;
   expenses: Expense[];
-  onAdd: (amountYen: number, note: string) => void;
+  onAdd: (expense: Omit<Expense, "id" | "createdAt">) => void;
+  onAddWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemove: (id: string) => void;
 }) {
-  const [amount, setAmount] = useState("");
-  const [note, setNote] = useState("");
-  const value = Number(amount.replace(/[^\d]/g, ""));
-  const total = expenses.reduce((sum, e) => sum + e.amountYen, 0);
-  const totalUsd = Math.round(total / YEN_PER_USD);
+  const [open, setOpen] = useState(false);
+  const totalUsd = Math.round(expenses.reduce((sum, e) => sum + toUsd(e.amount, e.currency), 0));
   const over = totalUsd > Number(budget.replace(/[^\d]/g, ""));
-
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!value) return;
-    onAdd(value, note);
-    setAmount("");
-    setNote("");
-  }
 
   return (
     <section aria-label="Gastos del día" className="flex flex-col gap-2.5 rounded-2xl bg-surface-2 p-3.5">
@@ -474,9 +476,9 @@ function DayExpenses({
           <Wallet className="size-4 text-muted" aria-hidden />
           Gastos del día
         </h3>
-        {total > 0 && (
+        {expenses.length > 0 && (
           <span className={`text-xs font-semibold tabular-nums ${over ? "text-red-700" : "text-emerald-700"}`}>
-            Gastaste {yen(total)} (~${totalUsd}) de {budget}
+            Gastaste ≈US${totalUsd} de {budget}
           </span>
         )}
       </div>
@@ -484,11 +486,16 @@ function DayExpenses({
         <ul className="flex flex-col gap-1">
           {expenses.map((e) => (
             <li key={e.id} className="flex items-center gap-2 text-sm">
-              <span className="w-20 shrink-0 font-semibold tabular-nums">{yen(e.amountYen)}</span>
+              {e.method === "cash" ? (
+                <Banknote className="size-4 shrink-0 text-emerald-600" aria-label="Pagado en efectivo" />
+              ) : (
+                <CreditCard className="size-4 shrink-0 text-sky-600" aria-label="Pagado con tarjeta" />
+              )}
+              <span className="w-24 shrink-0 font-semibold tabular-nums">{formatMoney(e.amount, e.currency)}</span>
               <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
               <button
                 type="button"
-                aria-label={`Quitar gasto ${e.note || yen(e.amountYen)}`}
+                aria-label={`Quitar gasto ${e.note || formatMoney(e.amount, e.currency)}`}
                 onClick={() => onRemove(e.id)}
                 className="rounded-lg p-1 text-muted hover:bg-line"
               >
@@ -498,31 +505,23 @@ function DayExpenses({
           ))}
         </ul>
       )}
-      <form onSubmit={submit} className="flex gap-2">
-        <input
-          aria-label="Monto en yenes"
-          inputMode="numeric"
-          placeholder="¥"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="w-24 rounded-xl border border-line bg-surface px-3 py-2 text-sm tabular-nums"
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
+      >
+        <Plus className="size-4" aria-hidden />
+        Registrar gasto
+      </button>
+      {open && (
+        <ExpenseModal
+          dates={[{ date, label }]}
+          defaultDate={date}
+          onClose={() => setOpen(false)}
+          onSaveExpense={onAdd}
+          onSaveWithdrawal={onAddWithdrawal}
         />
-        <input
-          aria-label="En qué"
-          placeholder="En qué (opcional)"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          className="min-w-0 flex-1 rounded-xl border border-line bg-surface px-3 py-2 text-sm"
-        />
-        <button
-          type="submit"
-          aria-label="Agregar gasto"
-          disabled={!value}
-          className="flex size-9 shrink-0 items-center justify-center self-center rounded-full bg-accent text-accent-fg disabled:opacity-40"
-        >
-          <Plus className="size-5" aria-hidden />
-        </button>
-      </form>
+      )}
     </section>
   );
 }
