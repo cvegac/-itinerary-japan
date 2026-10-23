@@ -11,6 +11,18 @@ export const NOTES: TripNotes = {
       date: "2026-11-04",
     },
     {
+      id: "seguro",
+      text: "Contratar el seguro de viaje",
+      detail:
+        "Que cubra gastos médicos en Japón durante las 5 semanas. Antes preguntale a Bancolombia si la Mastercard Black ya incluye asistencia en viaje por pagar el pasaje con ella",
+    },
+    {
+      id: "salas-vip",
+      text: "Activar las salas VIP de la Mastercard Black (Bancolombia)",
+      detail:
+        "Programa Mastercard Airport Experiences: bajá la app y registrá la tarjeta antes de viajar. Confirmá con el banco cuántos ingresos gratis te quedan este año. En Colombia también entrás a las salas de Avianca mostrando la tarjeta. Sirven en El Dorado (30 oct), las escalas y Narita a la vuelta (5 dic)",
+    },
+    {
       id: "bici-shimanami",
       text: "Reservar la bici eléctrica de Shimanami",
       detail: "Es sábado y las eléctricas son pocas",
