@@ -9,6 +9,8 @@ type Props = {
   onDaySelect: (day: DayEntry) => void;
 };
 
+const usd = (amount: number) => `US$${Math.round(amount).toLocaleString("en-US")}`;
+
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
 }
@@ -16,13 +18,15 @@ function shortDate(date: string): string {
 export default function LodgingSummaryView({ itinerary, onDaySelect }: Props) {
   const stays = computeLodgingSummary(itinerary);
   const totalNights = stays.reduce((sum, s) => sum + s.nights, 0);
+  const totalCost = stays.reduce((sum, s) => sum + (s.cost ?? 0), 0);
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-4">
       <header>
         <h2 className="text-2xl font-bold">Hospedaje</h2>
         <p className="text-sm text-muted">
-          {stays.length} lugares · {totalNights} noches · la fecha de fin es el check-out
+          {stays.length} lugares · {totalNights} noches
+          {totalCost > 0 && ` · ${usd(totalCost)} en total`} · la fecha de fin es el check-out
         </p>
       </header>
 
@@ -57,6 +61,12 @@ export default function LodgingSummaryView({ itinerary, onDaySelect }: Props) {
                   <BedDouble className="mt-0.5 size-4 shrink-0" aria-hidden />
                   {s.recommendation}
                 </span>
+                {s.cost !== undefined && (
+                  <span className="mt-1.5 flex items-baseline gap-1.5 text-sm">
+                    <span className="font-bold">{usd(s.cost)}</span>
+                    {s.nights > 1 && <span className="text-xs text-muted">· {usd(s.cost / s.nights)} por noche</span>}
+                  </span>
+                )}
               </span>
             </button>
           </li>

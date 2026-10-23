@@ -58,6 +58,7 @@ describe("TripApp", () => {
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Hospedaje/ })[0]));
     expect(screen.getByRole("heading", { name: /Hospedaje/ })).toBeTruthy();
     expect(screen.getByText("Centro, Hiroshima")).toBeTruthy();
+    expect(screen.getByText("US$41")).toBeTruthy();
 
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Itinerario/ })[0]));
     expect(title()).toBe("Llegada a Asakusa");

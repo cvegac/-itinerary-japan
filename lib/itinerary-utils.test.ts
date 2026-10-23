@@ -96,6 +96,16 @@ describe("computeLodgingSummary", () => {
     ]);
   });
 
+  it("suma el precio real de las noches de cada estadía", () => {
+    const days = makeDays("2026-11-01", 3).map((d, i) => ({
+      ...d,
+      lodgingPlace: i < 2 ? "Asakusa, Tokio" : "Centro, Kioto",
+      lodgingCost: i < 2 ? 35.5 : undefined,
+    }));
+    const stays = computeLodgingSummary(days);
+    expect(stays.map((s) => s.cost)).toEqual([71, undefined]);
+  });
+
   it("separa estadías en el mismo lugar si no son seguidas", () => {
     const days = makeDays("2026-11-01", 3);
     days[0].lodgingPlace = "Asakusa, Tokio";

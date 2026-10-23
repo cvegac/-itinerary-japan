@@ -37,7 +37,7 @@ export const fixtureTrip: TripData = {
   itinerary: [
     makeDay("2026-11-01", "Dom", { label: "Llegada a Asakusa" }),
     makeDay("2026-11-02", "Lun", { label: "Excursión a Nikko", location: "Nikko" }),
-    makeDay("2026-11-03", "Mar", { label: "Vuelo a Hiroshima", lodgingPlace: "Centro, Hiroshima" }),
+    makeDay("2026-11-03", "Mar", { label: "Vuelo a Hiroshima", lodgingPlace: "Centro, Hiroshima", lodgingCost: 41 }),
   ],
   notes: {
     tasks: [

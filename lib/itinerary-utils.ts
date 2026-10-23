@@ -73,6 +73,8 @@ export type LodgingStay = {
   nights: number;
   place: string;
   recommendation: string;
+  /** Precio real de la estadía en USD (suma de lodgingCost); sin precio, undefined */
+  cost?: number;
 };
 
 function addDays(date: string, days: number): string {
@@ -94,6 +96,7 @@ export function computeLodgingSummary(itinerary: DayEntry[]): LodgingStay[] {
     if (last && last.key === key && last.checkOut === day.date) {
       last.nights += 1;
       last.checkOut = addDays(day.date, 1);
+      if (day.lodgingCost !== undefined) last.cost = (last.cost ?? 0) + day.lodgingCost;
       return;
     }
 
@@ -104,8 +107,13 @@ export function computeLodgingSummary(itinerary: DayEntry[]): LodgingStay[] {
       nights: 1,
       place: day.lodgingPlace ?? day.zona,
       recommendation: day.accommodation,
+      cost: day.lodgingCost,
     });
   });
 
-  return stays.map(({ key: _key, ...stay }) => stay);
+  // Redondeo a centavos: los precios por noche son divisiones del total
+  return stays.map(({ key: _key, cost, ...stay }) => ({
+    ...stay,
+    cost: cost === undefined ? undefined : Math.round(cost * 100) / 100,
+  }));
 }
