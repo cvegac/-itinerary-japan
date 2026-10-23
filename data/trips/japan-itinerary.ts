@@ -153,7 +153,7 @@ export const ITINERARY: DayEntry[] = [
     label: "Vuelo a Hiroshima + Parque de la Paz",
     location: "Hiroshima",
     category: "Ciudad",
-    notes: "Salí del hotel a las ~6:00: tren de Narita a la terminal para estar a las 6:40. Spring Japan IJ621: NRT 07:40 → HIJ 09:10 (opera lun, mié y sáb). Máximo 7 kg en cabina sumando todo: con la ropa de invierno para los Alpes casi seguro te pasás, así que agregá la maleta facturada al reservar. Pagado con billete flexible, ~COP 198,500",
+    notes: "Salí del hotel a las ~6:00: tren de Narita a la terminal para estar a las 6:40. Spring Japan IJ621: NRT 07:40 → HIJ 09:10 (opera lun, mié y sáb). Máximo 7 kg en cabina sumando todo: con la ropa de invierno para los Alpes casi seguro te pasás, así que agregá la maleta facturada al reservar. Todavía sin comprar: el hotel de Narita de la noche anterior depende de este vuelo",
     weekday: "Mié",
     food: "Okonomiyaki estilo Hiroshima en Okonomimura",
     transport: [

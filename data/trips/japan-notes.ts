@@ -4,9 +4,10 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
-      id: "spring-maleta",
-      text: "Agregar la maleta facturada al vuelo de Spring Japan",
-      detail: "Máximo 7 kg en cabina y la ropa de invierno no entra. En el mostrador sale mucho más caro",
+      id: "spring-vuelo",
+      text: "Comprar el vuelo Spring Japan IJ621 (Narita → Hiroshima) con maleta facturada",
+      detail:
+        "Mié 4 nov, 7:40. Máximo 7 kg en cabina: agregá la maleta al comprar, en el mostrador sale mucho más caro. El hotel de Narita del 3 depende de este vuelo",
       date: "2026-11-04",
     },
     {
@@ -103,7 +104,7 @@ export const NOTES: TripNotes = {
       title: "Vuelos",
       items: [
         "Bogotá → Tokio: llegás a HND el 1 nov a las 19:35",
-        "Spring Japan IJ621: NRT 7:40 → HIJ 9:10, el 4 nov",
+        "Spring Japan IJ621: NRT 7:40 → HIJ 9:10, el 4 nov (sin comprar todavía)",
         "Tokio → Bogotá: sale de NRT el 5 dic a las 13:20",
       ],
     },
