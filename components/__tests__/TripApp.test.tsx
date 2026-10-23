@@ -62,4 +62,13 @@ describe("TripApp", () => {
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Itinerario/ })[0]));
     expect(title()).toBe("Llegada a Asakusa");
   });
+
+  it("muestra las notas y desde una tarea abre su día", async () => {
+    renderAt("2026-10-22");
+    await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Notas/ })[0]));
+    expect(screen.getByRole("heading", { name: "Notas" })).toBeTruthy();
+
+    await act(() => userEvent.click(screen.getByRole("button", { name: /Ver el día/ })));
+    expect(title()).toBe("Excursión a Nikko");
+  });
 });

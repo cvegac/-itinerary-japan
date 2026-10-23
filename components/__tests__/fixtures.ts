@@ -39,4 +39,11 @@ export const fixtureTrip: TripData = {
     makeDay("2026-11-02", "Lun", { label: "Excursión a Nikko", location: "Nikko" }),
     makeDay("2026-11-03", "Mar", { label: "Vuelo a Hiroshima", lodgingPlace: "Centro, Hiroshima" }),
   ],
+  notes: {
+    tasks: [
+      { id: "bus-nikko", text: "Reservar el bus a Nikko", detail: "Se llena los fines de semana", date: "2026-11-02" },
+      { id: "yenes", text: "Llevar yenes en efectivo" },
+    ],
+    sections: [{ title: "Pagar en efectivo", items: ["Ueno: ¥17,000"] }],
+  },
 };

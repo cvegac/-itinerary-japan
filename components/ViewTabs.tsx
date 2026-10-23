@@ -1,9 +1,9 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-import { BedDouble, Bus, CalendarDays, Wallet } from "lucide-react";
+import { BedDouble, Bus, CalendarDays, ListChecks, Wallet } from "lucide-react";
 
-export type View = "itinerary" | "costs" | "lodging" | "buses";
+export type View = "itinerary" | "costs" | "lodging" | "buses" | "notes";
 
 type Props = {
   view: View;
@@ -11,16 +11,19 @@ type Props = {
   costTotal: number;
   lodgingNights: number;
   showBuses: boolean;
+  /** Cantidad de tareas; sin notas no se muestra la pestaña */
+  taskCount?: number;
   /** "bottom": barra inferior del celular; "inline": pestañas del panel lateral */
   variant: "bottom" | "inline";
 };
 
-export default function ViewTabs({ view, onChange, costTotal, lodgingNights, showBuses, variant }: Props) {
+export default function ViewTabs({ view, onChange, costTotal, lodgingNights, showBuses, taskCount, variant }: Props) {
   const tabs: { id: View; label: string; icon: LucideIcon; hint: string }[] = [
     { id: "itinerary", label: "Itinerario", icon: CalendarDays, hint: "" },
     { id: "costs", label: "Costos", icon: Wallet, hint: `~$${costTotal} USD` },
     { id: "lodging", label: "Hospedaje", icon: BedDouble, hint: `${lodgingNights} noches` },
     ...(showBuses ? [{ id: "buses" as const, label: "Buses", icon: Bus, hint: "" }] : []),
+    ...(taskCount !== undefined ? [{ id: "notes" as const, label: "Notas", icon: ListChecks, hint: `${taskCount} tareas` }] : []),
   ];
 
   if (variant === "bottom") {

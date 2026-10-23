@@ -16,6 +16,7 @@ import MapModeControl from "@/components/MapModeControl";
 import CostSummaryView from "@/components/CostSummaryView";
 import LodgingSummaryView from "@/components/LodgingSummaryView";
 import BusSummaryView from "@/components/BusSummaryView";
+import NotesView from "@/components/NotesView";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
 
@@ -51,7 +52,7 @@ function useViewportHeight(): number {
 }
 
 export default function TripApp({ tripData }: Props) {
-  const { meta, itinerary, nightBusSummary, routes } = tripData;
+  const { meta, itinerary, nightBusSummary, routes, notes } = tripData;
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const vh = useViewportHeight();
 
@@ -165,6 +166,8 @@ export default function TripApp({ tripData }: Props) {
       <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} />
     ) : view === "buses" && nightBusSummary ? (
       <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setView("itinerary")} />
+    ) : view === "notes" && notes ? (
+      <NotesView notes={notes} itinerary={itinerary} slug={meta.slug} onDaySelect={openFromSummary} />
     ) : null;
 
   const tabs = (variant: "bottom" | "inline") => (
@@ -174,6 +177,7 @@ export default function TripApp({ tripData }: Props) {
       costTotal={costTotal}
       lodgingNights={lodgingNights}
       showBuses={!!nightBusSummary}
+      taskCount={notes?.tasks.length}
       variant={variant}
     />
   );

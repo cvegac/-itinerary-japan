@@ -57,6 +57,13 @@ describe.each(getAllTrips().map((t) => [t.meta.slug, t] as const))("viaje %s", (
     });
   });
 
+  it("tiene tareas con id único y enlazadas a días que existen", () => {
+    const tasks = trip.notes?.tasks ?? [];
+    expect(new Set(tasks.map((t) => t.id)).size).toBe(tasks.length);
+    const dates = new Set(itinerary.map((d) => d.date));
+    tasks.filter((t) => t.date).forEach((t) => expect(dates.has(t.date!), t.id).toBe(true));
+  });
+
   it("cuenta en el resumen de hospedaje todas las noches con cama", () => {
     const nightsWithBed = itinerary.filter(
       (d) => !d.isTransit && !d.nightBus && d.accommodation !== "---"

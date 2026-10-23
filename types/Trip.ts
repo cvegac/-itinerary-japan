@@ -37,9 +37,30 @@ export type TripMeta = {
   mapZoom: number;
 };
 
+export type TripTask = {
+  /** Fijo: con él se recuerda en el dispositivo si la tarea está hecha */
+  id: string;
+  text: string;
+  detail?: string;
+  /** Día del itinerario relacionado (YYYY-MM-DD) */
+  date?: string;
+};
+
+export type TripNoteSection = {
+  title: string;
+  items: string[];
+};
+
+export type TripNotes = {
+  tasks: TripTask[];
+  sections: TripNoteSection[];
+};
+
 export type TripData = {
   meta: TripMeta;
   itinerary: DayEntry[];
+  /** Tareas por hacer y notas para tener a mano */
+  notes?: TripNotes;
   /** Opcional: no todos los viajes usan buses nocturnos */
   nightBusSummary?: NightBusSummary;
   /** Rutas precalculadas por fecha (scripts/fetch-routes.mjs) */
