@@ -147,6 +147,10 @@ export default function TripMap({
   const routeRef = useRef<ReturnType<typeof lineFeature>[]>([]);
   const poiMarkersRef = useRef<Marker[]>([]);
   const cameraRef = useRef<Camera | null>(null);
+  // Listo para dibujar: se activa una vez, al cargar el estilo. No usamos
+  // map.isStyleLoaded(), que da false mientras haya tiles cargando (casi
+  // siempre en el celular) y hacía que se ignoraran los cambios de día o modo.
+  const readyRef = useRef(false);
   const paddingRef = useRef(padding);
   paddingRef.current = padding;
   // Para que los handlers de los marcadores usen siempre el último callback
@@ -187,7 +191,10 @@ export default function TripMap({
           features: routeRef.current,
         });
       });
-      map.once("load", () => renderLayer());
+      map.once("load", () => {
+        readyRef.current = true;
+        renderLayer();
+      });
 
       // El aviso de créditos compacto arranca abierto: lo dejamos como botón "i"
       const collapseAttribution = () =>
@@ -203,6 +210,7 @@ export default function TripMap({
         ro.disconnect();
         map.remove();
         mapRef.current = null;
+        readyRef.current = false;
       };
     })();
 
@@ -215,8 +223,7 @@ export default function TripMap({
 
   // ── Re-renderizar cuando cambian day o mode ──────────────────────────────
   useEffect(() => {
-    const map = mapRef.current;
-    if (map && map.isStyleLoaded()) renderLayer();
+    if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [day, mode]);
 
