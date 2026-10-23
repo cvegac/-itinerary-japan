@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Banknote, CreditCard, Landmark, X } from "lucide-react";
+import { Banknote, CreditCard, Landmark, Plus, X } from "lucide-react";
 import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
 import { cashBalance, dailySummary, spentByDate, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
@@ -33,7 +33,7 @@ const usd = (amount: number) => `US$${Math.round(amount).toLocaleString("en-US")
 export default function CostSummaryView(props: Props) {
   const { itinerary, expenses, withdrawals, defaultDate } = props;
   const [tab, setTab] = useState<"daily" | "budget">("daily");
-  const [modal, setModal] = useState<"expense" | "withdrawal" | null>(null);
+  const [registering, setRegistering] = useState(false);
 
   const spent = spentByDate(expenses);
   const spentTotal = Object.values(spent).reduce((sum, v) => sum + v, 0);
@@ -71,22 +71,15 @@ export default function CostSummaryView(props: Props) {
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setModal("expense")}
-            className="flex-1 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-fg"
-          >
-            + Gasto
-          </button>
-          <button
-            type="button"
-            onClick={() => setModal("withdrawal")}
-            className="flex-1 rounded-full bg-surface-2 px-4 py-2 text-sm font-semibold"
-          >
-            + Retiro
-          </button>
-        </div>
+        {/* Uno solo: en el modal se elige si es un gasto o un retiro del cajero */}
+        <button
+          type="button"
+          onClick={() => setRegistering(true)}
+          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg"
+        >
+          <Plus className="size-4" aria-hidden />
+          Registrar
+        </button>
 
         <Segmented
           name="Vista"
@@ -101,12 +94,11 @@ export default function CostSummaryView(props: Props) {
 
       {tab === "daily" ? <DailySummary {...props} /> : <BudgetWeeks {...props} spent={spent} />}
 
-      {modal && (
+      {registering && (
         <ExpenseModal
           dates={itinerary.map((d) => ({ date: d.date, label: `${shortDate(d.date)} · ${d.label}` }))}
           defaultDate={defaultDate}
-          initialKind={modal}
-          onClose={() => setModal(null)}
+          onClose={() => setRegistering(false)}
           onSaveExpense={props.onAddExpense}
           onSaveWithdrawal={props.onAddWithdrawal}
         />
@@ -121,7 +113,7 @@ function DailySummary({ itinerary, expenses, withdrawals, onRemoveExpense, onRem
   if (days.length === 0) {
     return (
       <p className="rounded-2xl bg-surface-2 p-4 text-sm text-muted">
-        Todavía no registraste gastos ni retiros. Usá + Gasto o + Retiro, o cargalos desde cada día.
+        Todavía no registraste gastos ni retiros. Tocá Registrar, o cargalos desde cada día.
       </p>
     );
   }

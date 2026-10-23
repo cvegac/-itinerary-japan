@@ -60,16 +60,22 @@ describe("CostSummaryView", () => {
     expect(props.onRemoveWithdrawal).toHaveBeenCalledWith("w1");
   });
 
-  it("registra gastos y retiros desde un modal", async () => {
+  it("un solo botón Registrar abre el modal, y adentro se elige gasto o retiro", async () => {
     const props = renderView();
-    await userEvent.click(screen.getByRole("button", { name: "+ Gasto" }));
+    expect(screen.queryByRole("button", { name: "+ Gasto" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "+ Retiro" })).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: "Registrar" }));
     await userEvent.type(screen.getByLabelText("Monto"), "900");
     await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
     expect(props.onAddExpense).toHaveBeenCalledWith(expect.objectContaining({ amount: 900, date: "2026-11-02" }));
     expect(screen.queryByRole("dialog")).toBeNull();
 
-    await userEvent.click(screen.getByRole("button", { name: "+ Retiro" }));
-    expect(screen.getByRole("dialog", { name: "Registrar retiro" })).toBeTruthy();
+    await userEvent.click(screen.getByRole("button", { name: "Registrar" }));
+    await userEvent.click(screen.getByRole("radio", { name: "Retiro" }));
+    await userEvent.type(screen.getByLabelText("Monto"), "30000");
+    await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+    expect(props.onAddWithdrawal).toHaveBeenCalledWith(expect.objectContaining({ amountYen: 30000 }));
   });
 
   it("sin registros lo explica, y el presupuesto sigue en su pestaña", async () => {

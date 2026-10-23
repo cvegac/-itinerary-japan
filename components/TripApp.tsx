@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
 import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
@@ -67,6 +67,23 @@ export default function TripApp({ tripData }: Props) {
   const [snap, setSnap] = useState<Snap>("half");
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
   const [status, setStatus] = useState<TripStatus | null>(null);
+  const [mapFullscreen, setMapFullscreen] = useState(false);
+
+  // Pantalla completa del mapa: entra con una entrada en el historial, así el
+  // botón atrás del celular sale de la pantalla completa y no de la app
+  useEffect(() => {
+    const onPop = () => setMapFullscreen(false);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  function enterFullscreen() {
+    window.history.pushState({ mapFullscreen: true }, "");
+    setMapFullscreen(true);
+  }
+  function exitFullscreen() {
+    if (window.history.state?.mapFullscreen) window.history.back();
+    else setMapFullscreen(false);
+  }
 
   // "Hoy" depende del reloj del dispositivo: se calcula después de montar para
   // que el HTML estático (generado al compilar) no difiera del primer render
@@ -127,7 +144,9 @@ export default function TripApp({ tripData }: Props) {
     half: Math.round(vh * 0.5),
     full: vh - TOP_INSET - NAV_HEIGHT - 8,
   };
-  const mapPadding = isDesktop
+  const mapPadding = mapFullscreen
+    ? { top: 80, bottom: 32, left: 32, right: 64 }
+    : isDesktop
     ? { top: 72, bottom: 48, left: 48, right: 64 }
     : view === "itinerary"
       ? { top: TOP_INSET + 72, bottom: sheetHeights[snap] + NAV_HEIGHT + 24, left: 32, right: 56 }
@@ -208,12 +227,27 @@ export default function TripApp({ tripData }: Props) {
     />
   );
 
+  const fullscreenButton = (
+    <MapButton label="Pantalla completa" onClick={enterFullscreen}>
+      <Maximize2 className="size-5" />
+    </MapButton>
+  );
+
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-bg lg:flex">
+    // fixed a los cuatro bordes: la barra de abajo queda pegada al borde real de la
+    // pantalla aunque el navegador muestre u oculte su barra (con h-dvh, en algunos
+    // Android quedaba por debajo de lo visible)
+    <div className="fixed inset-0 overflow-hidden bg-bg lg:flex">
       {/* El mapa queda siempre en el mismo lugar del árbol: así no se vuelve a crear */}
       <div
         className="absolute inset-0 lg:relative lg:order-2 lg:flex-1"
-        style={{ ["--map-inset-top" as string]: isDesktop ? "52px" : `${TOP_INSET + 52}px` }}
+        style={{
+          ["--map-inset-top" as string]: mapFullscreen
+            ? "calc(max(0.75rem, env(safe-area-inset-top)) + 52px)"
+            : isDesktop
+              ? "52px"
+              : `${TOP_INSET + 52}px`,
+        }}
       >
         <Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-muted">Cargando mapa…</div>}>
           <TripMap
@@ -229,13 +263,29 @@ export default function TripApp({ tripData }: Props) {
             routes={dayRoutes}
           />
         </Suspense>
-        {isDesktop && view === "itinerary" && (
-          <MapModeControl mode={mapMode} onChange={setMapMode} className="absolute left-3 top-3 z-10" />
+        {mapFullscreen ? (
+          <div
+            className="absolute left-3 z-30 flex items-center gap-2"
+            style={{ top: "max(0.75rem, env(safe-area-inset-top))" }}
+          >
+            <MapButton label="Salir de pantalla completa" onClick={exitFullscreen}>
+              <Minimize2 className="size-5" />
+            </MapButton>
+            <MapModeControl mode={mapMode} onChange={setMapMode} />
+          </div>
+        ) : (
+          isDesktop &&
+          view === "itinerary" && (
+            <div className="absolute left-3 top-3 z-10 flex items-center gap-2">
+              <MapModeControl mode={mapMode} onChange={setMapMode} />
+              {fullscreenButton}
+            </div>
+          )
         )}
       </div>
 
-      {isDesktop ? (
-        <aside className="relative z-10 order-1 flex h-dvh w-[440px] shrink-0 flex-col border-r border-line bg-surface">
+      {mapFullscreen ? null : isDesktop ? (
+        <aside className="relative z-10 order-1 flex h-full w-[440px] shrink-0 flex-col border-r border-line bg-surface">
           <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} />
           {tabs("inline")}
           {view === "itinerary" ? (
@@ -255,12 +305,13 @@ export default function TripApp({ tripData }: Props) {
           <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} floating />
           {view === "itinerary" ? (
             <>
-              <MapModeControl
-                mode={mapMode}
-                onChange={setMapMode}
-                className="absolute left-3 z-20"
+              <div
+                className="absolute left-3 z-20 flex items-center gap-2"
                 style={{ top: "calc(max(0.75rem, env(safe-area-inset-top)) + 64px)" }}
-              />
+              >
+                <MapModeControl mode={mapMode} onChange={setMapMode} />
+                {fullscreenButton}
+              </div>
               <BottomSheet
                 snap={snap}
                 heights={sheetHeights}
@@ -309,6 +360,21 @@ function IconButton({
       disabled={disabled}
       onClick={onClick}
       className="flex size-9 items-center justify-center rounded-full bg-surface-2 transition-colors hover:bg-line disabled:opacity-30"
+    >
+      {children}
+    </button>
+  );
+}
+
+/** Botón redondo que flota sobre el mapa, con el mismo estilo que el selector de modo */
+function MapButton({ label, onClick, children }: { label: string; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className="flex size-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface/90 text-fg shadow-md backdrop-blur-md transition-colors hover:bg-surface"
     >
       {children}
     </button>

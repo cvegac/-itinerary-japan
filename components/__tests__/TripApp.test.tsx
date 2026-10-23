@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fixtureTrip } from "./fixtures";
@@ -74,6 +74,32 @@ describe("TripApp", () => {
     expect(screen.getByLabelText("Gastado").textContent).toContain("≈US$20");
     expect(screen.getByText("¥3,140")).toBeTruthy();
     localStorage.clear();
+  });
+
+  describe("mapa en pantalla completa", () => {
+    const fullscreen = () => screen.queryByRole("button", { name: "Salir de pantalla completa" });
+
+    it("esconde la hoja, las barras y el menú, y sale con su botón", async () => {
+      renderAt("2026-10-22");
+      await act(() => userEvent.click(screen.getByRole("button", { name: "Pantalla completa" })));
+      expect(fullscreen()).toBeTruthy();
+      expect(screen.queryByRole("region", { name: "Detalle del día" })).toBeNull();
+      expect(screen.queryAllByRole("tab")).toHaveLength(0);
+      expect(screen.queryByRole("heading", { level: 1 })).toBeNull();
+
+      await act(() => userEvent.click(fullscreen()!));
+      await waitFor(() => expect(fullscreen()).toBeNull());
+      expect(screen.getByRole("region", { name: "Detalle del día" })).toBeTruthy();
+      expect(screen.getAllByRole("tab").length).toBeGreaterThan(0);
+    });
+
+    it("sale también con el botón atrás del celular", async () => {
+      renderAt("2026-10-22");
+      await act(() => userEvent.click(screen.getByRole("button", { name: "Pantalla completa" })));
+      expect(fullscreen()).toBeTruthy();
+      await act(async () => window.history.back());
+      await waitFor(() => expect(fullscreen()).toBeNull());
+    });
   });
 
   it("muestra las notas y desde una tarea abre su día", async () => {

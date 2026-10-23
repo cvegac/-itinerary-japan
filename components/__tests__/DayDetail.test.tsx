@@ -107,7 +107,7 @@ describe("DayDetail", () => {
     it("registra un gasto de ese día desde el modal", async () => {
       const onAdd = vi.fn();
       render(<DayDetail day={day} dayNumber={2} expenses={[]} onAddExpense={onAdd} onRemoveExpense={vi.fn()} />);
-      await userEvent.click(screen.getByRole("button", { name: "Registrar gasto" }));
+      await userEvent.click(screen.getByRole("button", { name: "Registrar" }));
       await userEvent.type(screen.getByLabelText("Monto"), "2500");
       await userEvent.type(screen.getByLabelText("En qué"), "Bici");
       await userEvent.click(screen.getByRole("button", { name: "Guardar" }));

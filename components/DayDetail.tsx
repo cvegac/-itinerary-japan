@@ -511,7 +511,7 @@ function DayExpenses({
         className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
       >
         <Plus className="size-4" aria-hidden />
-        Registrar gasto
+        Registrar
       </button>
       {open && (
         <ExpenseModal
