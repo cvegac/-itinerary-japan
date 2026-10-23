@@ -1,92 +1,283 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
 import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
-import AppHeader from "@/components/AppHeader";
+import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
+import type { MapMode } from "@/components/TripMap";
+import TopBar from "@/components/TopBar";
+import ViewTabs, { type View } from "@/components/ViewTabs";
+import DayStrip from "@/components/DayStrip";
+import DayDetail from "@/components/DayDetail";
+import BottomSheet from "@/components/BottomSheet";
+import MapModeControl from "@/components/MapModeControl";
 import CostSummaryView from "@/components/CostSummaryView";
 import LodgingSummaryView from "@/components/LodgingSummaryView";
 import BusSummaryView from "@/components/BusSummaryView";
-import ItineraryView from "@/components/ItineraryView";
 
-type ActiveView = "itinerary" | "costs" | "lodging" | "buses";
+const TripMap = lazy(() => import("@/components/TripMap"));
 
-type Props = {
-  tripData: TripData;
-};
+type Props = { tripData: TripData };
+
+const NAV_HEIGHT = 64;
+const TOP_INSET = 76; // barra superior flotante
+const SWIPE_MIN_PX = 70;
+
+// ── Hooks de pantalla (en el servidor y en los tests: celular) ─────────────
+function useMediaQuery(query: string): boolean {
+  return useSyncExternalStore(
+    (cb) => {
+      if (typeof window === "undefined" || !window.matchMedia) return () => {};
+      const mq = window.matchMedia(query);
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => (typeof window !== "undefined" && window.matchMedia ? window.matchMedia(query).matches : false),
+    () => false
+  );
+}
+
+function useViewportHeight(): number {
+  return useSyncExternalStore(
+    (cb) => {
+      window.addEventListener("resize", cb);
+      return () => window.removeEventListener("resize", cb);
+    },
+    () => window.innerHeight,
+    () => 800
+  );
+}
 
 export default function TripApp({ tripData }: Props) {
   const { meta, itinerary, nightBusSummary } = tripData;
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const vh = useViewportHeight();
+
   const [selectedDay, setSelectedDay] = useState<DayEntry | null>(itinerary[0] ?? null);
-  const [activeView, setActiveView] = useState<ActiveView>("itinerary");
+  const [view, setView] = useState<View>("itinerary");
+  const [mapMode, setMapMode] = useState<MapMode>("day");
+  const [snap, setSnap] = useState<Snap>("half");
+  const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
+  const [status, setStatus] = useState<TripStatus | null>(null);
+
+  // "Hoy" depende del reloj del dispositivo: se calcula después de montar para
+  // que el HTML estático (generado al compilar) no difiera del primer render
+  useEffect(() => {
+    const s = tripStatus(itinerary, localISODate(new Date()));
+    setStatus(s);
+    if (s.kind === "during") setSelectedDay(itinerary[s.index]);
+  }, [itinerary]);
 
   const costTotal = computeCostSummary(itinerary, meta.startDate).total;
   const lodgingNights = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);
+  const dayNumber = selectedDay ? itinerary.indexOf(selectedDay) + 1 : 0;
 
-  function handleToggleCosts() {
-    setActiveView((v) => (v === "costs" ? "itinerary" : "costs"));
-  }
-
-  function handleToggleLodging() {
-    setActiveView((v) => (v === "lodging" ? "itinerary" : "lodging"));
-  }
-
-  function handleToggleBus() {
-    setActiveView((v) => (v === "buses" ? "itinerary" : "buses"));
-  }
-
-  function handleDaySelectFromSummary(day: DayEntry) {
+  function selectDay(day: DayEntry) {
     setSelectedDay(day);
-    setActiveView("itinerary");
+    setFocusedPoi(null);
+    setMapMode("day");
   }
+
+  function goToday() {
+    if (status?.kind === "during") selectDay(itinerary[status.index]);
+    setView("itinerary");
+  }
+
+  function step(dir: 1 | -1) {
+    if (!selectedDay) return;
+    const next = adjacentDay(itinerary, selectedDay.date, dir);
+    if (next) selectDay(next);
+  }
+
+  function openFromSummary(day: DayEntry) {
+    selectDay(day);
+    setView("itinerary");
+  }
+
+  // Deslizar el detalle a los costados cambia de día
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+  function onTouchStart(e: React.TouchEvent) {
+    swipe.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  function onTouchEnd(e: React.TouchEvent) {
+    const start = swipe.current;
+    swipe.current = null;
+    if (!start) return;
+    const dx = e.changedTouches[0].clientX - start.x;
+    const dy = e.changedTouches[0].clientY - start.y;
+    if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  }
+
+  // Alturas de la hoja y margen del mapa para que nada quede tapado
+  const sheetHeights: Record<Snap, number> = {
+    peek: 196,
+    half: Math.round(vh * 0.5),
+    full: vh - TOP_INSET - NAV_HEIGHT - 8,
+  };
+  const mapPadding = isDesktop
+    ? { top: 72, bottom: 48, left: 48, right: 64 }
+    : view === "itinerary"
+      ? { top: TOP_INSET + 72, bottom: sheetHeights[snap] + NAV_HEIGHT + 24, left: 32, right: 56 }
+      : { top: TOP_INSET, bottom: NAV_HEIGHT, left: 32, right: 32 };
+
+  const stepButtons = (
+    <div className="flex shrink-0 gap-1">
+      <IconButton label="Día anterior" disabled={dayNumber <= 1} onClick={() => step(-1)}>
+        <ChevronLeft className="size-5" />
+      </IconButton>
+      <IconButton label="Día siguiente" disabled={dayNumber >= itinerary.length} onClick={() => step(1)}>
+        <ChevronRight className="size-5" />
+      </IconButton>
+    </div>
+  );
+
+  const strip = (
+    <DayStrip
+      itinerary={itinerary}
+      startDate={meta.startDate}
+      selectedDate={selectedDay?.date ?? null}
+      onSelect={selectDay}
+    />
+  );
+
+  const detail = selectedDay && (
+    <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <DayDetail
+        day={selectedDay}
+        dayNumber={dayNumber}
+        onFocusPoi={(index) => {
+          setMapMode("day");
+          setFocusedPoi({ index, nonce: Date.now() });
+          if (!isDesktop) setSnap("peek");
+        }}
+      />
+    </div>
+  );
+
+  const summaryPage =
+    view === "costs" ? (
+      <CostSummaryView itinerary={itinerary} startDate={meta.startDate} onDaySelect={openFromSummary} />
+    ) : view === "lodging" ? (
+      <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} />
+    ) : view === "buses" && nightBusSummary ? (
+      <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setView("itinerary")} />
+    ) : null;
+
+  const tabs = (variant: "bottom" | "inline") => (
+    <ViewTabs
+      view={view}
+      onChange={setView}
+      costTotal={costTotal}
+      lodgingNights={lodgingNights}
+      showBuses={!!nightBusSummary}
+      variant={variant}
+    />
+  );
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <AppHeader
-        activeView={activeView}
-        onToggleCosts={handleToggleCosts}
-        onToggleLodging={handleToggleLodging}
-        onToggleBus={handleToggleBus}
-        tripMeta={meta}
-        dayCount={itinerary.length}
-        costTotal={costTotal}
-        lodgingNights={lodgingNights}
-        nightBusSummary={nightBusSummary}
-      />
+    <div className="relative h-dvh w-full overflow-hidden bg-bg lg:flex">
+      {/* El mapa queda siempre en el mismo lugar del árbol: así no se vuelve a crear */}
+      <div
+        className="absolute inset-0 lg:relative lg:order-2 lg:flex-1"
+        style={{ ["--map-inset-top" as string]: isDesktop ? "52px" : `${TOP_INSET + 52}px` }}
+      >
+        <Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-muted">Cargando mapa…</div>}>
+          <TripMap
+            day={selectedDay}
+            mode={mapMode}
+            onDaySelect={selectDay}
+            itinerary={itinerary}
+            startDate={meta.startDate}
+            center={meta.mapCenter}
+            zoom={meta.mapZoom}
+            padding={mapPadding}
+            focusedPoi={focusedPoi}
+          />
+        </Suspense>
+        {isDesktop && view === "itinerary" && (
+          <MapModeControl mode={mapMode} onChange={setMapMode} className="absolute left-3 top-3 z-10" />
+        )}
+      </div>
 
-      {activeView === "costs" && (
-        <CostSummaryView
-          itinerary={itinerary}
-          startDate={meta.startDate}
-          onDaySelect={handleDaySelectFromSummary}
-          onClose={() => setActiveView("itinerary")}
-        />
-      )}
-
-      {activeView === "lodging" && (
-        <LodgingSummaryView
-          itinerary={itinerary}
-          onDaySelect={handleDaySelectFromSummary}
-          onClose={() => setActiveView("itinerary")}
-        />
-      )}
-
-      {activeView === "buses" && nightBusSummary && (
-        <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setActiveView("itinerary")} />
-      )}
-
-      {activeView === "itinerary" && (
-        <ItineraryView
-          itinerary={itinerary}
-          startDate={meta.startDate}
-          months={meta.months}
-          mapCenter={meta.mapCenter}
-          mapZoom={meta.mapZoom}
-          selectedDay={selectedDay}
-          onDaySelect={setSelectedDay}
-        />
+      {isDesktop ? (
+        <aside className="relative z-10 order-1 flex h-dvh w-[440px] shrink-0 flex-col border-r border-line bg-surface">
+          <TopBar meta={meta} status={status} onToday={goToday} />
+          {tabs("inline")}
+          {view === "itinerary" ? (
+            <>
+              <div className="flex items-center gap-2 border-y border-line py-2 pr-3">
+                <div className="min-w-0 flex-1">{strip}</div>
+                {stepButtons}
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-4">{detail}</div>
+            </>
+          ) : (
+            <div className="min-h-0 flex-1 overflow-y-auto">{summaryPage}</div>
+          )}
+        </aside>
+      ) : (
+        <>
+          <TopBar meta={meta} status={status} onToday={goToday} floating />
+          {view === "itinerary" ? (
+            <>
+              <MapModeControl
+                mode={mapMode}
+                onChange={setMapMode}
+                className="absolute left-3 z-20"
+                style={{ top: "calc(max(0.75rem, env(safe-area-inset-top)) + 64px)" }}
+              />
+              <BottomSheet
+                snap={snap}
+                heights={sheetHeights}
+                bottomOffset={NAV_HEIGHT}
+                onSnapChange={setSnap}
+                header={
+                  <div className="flex items-center gap-1 pr-3">
+                    <div className="min-w-0 flex-1">{strip}</div>
+                    {stepButtons}
+                  </div>
+                }
+              >
+                {detail}
+              </BottomSheet>
+            </>
+          ) : (
+            <main
+              className="absolute inset-x-0 z-20 overflow-y-auto bg-bg"
+              style={{ top: 0, bottom: NAV_HEIGHT, paddingTop: TOP_INSET }}
+            >
+              {summaryPage}
+            </main>
+          )}
+          {tabs("bottom")}
+        </>
       )}
     </div>
+  );
+}
+
+function IconButton({
+  label,
+  disabled,
+  onClick,
+  children,
+}: {
+  label: string;
+  disabled?: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="flex size-9 items-center justify-center rounded-full bg-surface-2 transition-colors hover:bg-line disabled:opacity-30"
+    >
+      {children}
+    </button>
   );
 }

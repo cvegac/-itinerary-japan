@@ -1,27 +1,35 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { getAllTrips } from "@/data/trips";
 
 export default function HomePage() {
   const trips = getAllTrips();
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 bg-gray-100">
-      <h1 className="text-2xl font-bold text-gray-900">Mis Viajes</h1>
-      <div className="flex flex-col gap-3 w-full max-w-sm">
-        {trips.map((trip) => (
-          <Link
-            key={trip.meta.slug}
-            href={`/${trip.meta.slug}`}
-            className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3 hover:border-gray-400 transition-colors"
-          >
-            <span className="text-2xl">{trip.meta.emoji}</span>
-            <div>
-              <div className="font-semibold text-gray-900">{trip.meta.title}</div>
-              <div className="text-xs text-gray-500">{trip.meta.subtitle}</div>
-            </div>
-          </Link>
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 px-5 py-10">
+      <header>
+        <h1 className="text-3xl font-bold tracking-tight">Mis viajes</h1>
+        <p className="text-sm text-muted">Itinerarios, mapas, costos y hospedaje</p>
+      </header>
+      <ul className="flex flex-col gap-3">
+        {trips.map(({ meta }) => (
+          <li key={meta.slug}>
+            <Link
+              href={`/${meta.slug}`}
+              className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <span className="flex size-12 items-center justify-center rounded-xl bg-surface-2 text-3xl">
+                {meta.emoji}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-semibold">{meta.title}</span>
+                <span className="block text-sm text-muted">{meta.subtitle}</span>
+              </span>
+              <ChevronRight className="size-5 text-muted" aria-hidden />
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </main>
   );
 }

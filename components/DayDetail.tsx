@@ -1,265 +1,270 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
+import {
+  BedDouble,
+  Bike,
+  Bus,
+  CableCar,
+  CarTaxiFront,
+  Clock,
+  Coins,
+  Footprints,
+  MapPin,
+  MessageSquare,
+  Moon,
+  Plane,
+  Ship,
+  StickyNote,
+  Sun,
+  TrainFront,
+  TramFront,
+  Utensils,
+} from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
+import { categoryStyle } from "@/lib/categories";
+import { poiLetter } from "@/lib/map-geo";
 
 type Props = {
   day: DayEntry;
+  dayNumber: number;
+  /** Se tocó un lugar de la lista: el mapa vuela hasta él */
+  onFocusPoi?: (index: number) => void;
 };
 
-const CATEGORY_BADGE: Record<string, string> = {
-  Naturaleza: "bg-emerald-100 text-emerald-800",
-  Logística: "bg-slate-100 text-slate-700",
-  Ciudad: "bg-orange-100 text-orange-800",
-  Paisaje: "bg-sky-100 text-sky-800",
-  Vistas: "bg-violet-100 text-violet-800",
-  Compras: "bg-pink-100 text-pink-800",
-  Libre: "bg-yellow-100 text-yellow-800",
+const TRANSPORT_ICON: Record<string, LucideIcon> = {
+  tren: TrainFront,
+  metro: TramFront,
+  monorriel: TramFront,
+  tranvía: TramFront,
+  bus: Bus,
+  "bus-nocturno": Bus,
+  "bus + funicular": CableCar,
+  ferry: Ship,
+  barco: Ship,
+  teleférico: CableCar,
+  caminar: Footprints,
+  bicicleta: Bike,
+  avión: Plane,
+  taxi: CarTaxiFront,
 };
 
-export default function DayDetail({ day }: Props) {
-  const date = new Date(day.date + "T12:00:00");
-  const formatted = date.toLocaleDateString("es-AR", {
+export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
+  const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
-    year: "numeric",
-    month: "long",
     day: "numeric",
+    month: "long",
   });
-
-  const badgeClass =
-    CATEGORY_BADGE[day.category] ?? "bg-gray-100 text-gray-700";
-
-  const isNightBusDay = !!day.nightBus;
-  const isNightBusArrival = !!day.timeSaved && !day.nightBus;
+  const formatted = longDate.charAt(0).toUpperCase() + longDate.slice(1);
+  const pois = day.pois ?? [];
 
   return (
-    <div className="h-full overflow-y-auto">
-      {/* Header */}
-      <div className="flex flex-col gap-2 mb-5">
-        <div className="flex flex-col gap-0.5">
-          <div className="flex items-baseline gap-2">
-            <h1 className="text-xl font-bold text-gray-900 leading-tight">
-              {day.label}
-            </h1>
-            <span className="text-sm font-bold text-red-500 whitespace-nowrap">
-              {day.budget}
-            </span>
-          </div>
-          <p className="text-sm text-gray-500 capitalize">{formatted}</p>
+    <article className="flex flex-col gap-5 pb-6">
+      {/* Encabezado */}
+      <header className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-xs font-semibold text-muted">
+          <span>Día {dayNumber}</span>
+          <span aria-hidden>·</span>
+          <span>{formatted}</span>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <span className={`text-xs font-semibold px-2 py-1 rounded-full ${badgeClass}`}>
+        <div className="flex items-start justify-between gap-3">
+          <h2 className="text-xl font-bold leading-tight text-balance">{day.label}</h2>
+          <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 text-sm font-bold text-accent tabular-nums">
+            {day.budget}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${categoryStyle(day.category).chip}`}>
             {day.category}
           </span>
-          <span className="text-xs font-semibold px-2 py-1 rounded-full bg-gray-100 text-gray-700">
-            📍 {day.location}
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium">
+            <MapPin className="size-3.5 text-muted" aria-hidden />
+            {day.location}
           </span>
-          {day.isTransit ? (
-            <span className="text-xs font-semibold px-2 py-1 rounded-full bg-amber-100 text-amber-800">
-              🚄 En tránsito
-            </span>
-          ) : isNightBusDay ? (
-            <span className="text-xs font-semibold px-2 py-1 rounded-full bg-orange-100 text-orange-800">
-              🚌 Bus nocturno {day.nightBus} esta noche
-            </span>
-          ) : (
-            <span className="text-xs font-semibold px-2 py-1 rounded-full bg-blue-100 text-blue-800">
-              🏠 {day.accommodation}
+          {day.isTransit && (
+            <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
+              En tránsito
             </span>
           )}
-          {day.zona && (
-            <span className="text-xs px-2 py-1 rounded-full bg-gray-50 text-gray-500 border border-gray-200">
-              🗺 {day.zona}
+          {day.nightBus && (
+            <span className="rounded-full bg-orange-500/15 px-2.5 py-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
+              Bus nocturno {day.nightBus} esta noche
             </span>
           )}
         </div>
-      </div>
+      </header>
 
-      {/* ── Bloque Bus Nocturno ── */}
-      {isNightBusDay && (
-        <div className="mb-5 rounded-xl border-2 border-orange-300 bg-orange-50 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">🚌</span>
-            <span className="font-bold text-orange-800 text-sm">
-              Bus Nocturno {day.nightBus} — Esta noche
-            </span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div>
-              <div className="text-orange-500 font-semibold mb-0.5">Ruta</div>
-              <div className="text-orange-900 font-medium">{day.busRoute}</div>
-            </div>
-            <div>
-              <div className="text-orange-500 font-semibold mb-0.5">Costo bus</div>
-              <div className="text-orange-900 font-medium">{day.busCost}</div>
-            </div>
-            <div>
-              <div className="text-orange-500 font-semibold mb-0.5">Hotel ahorrado</div>
-              <div className="text-orange-900 font-medium">{day.hotelSaved}</div>
-            </div>
-            <div>
-              <div className="text-orange-500 font-semibold mb-0.5">⏱ Tiempo ganado</div>
-              <div className="text-orange-900 font-medium">{day.timeSaved}</div>
-            </div>
-          </div>
+      {/* Notas */}
+      {day.notes && (
+        <div className="flex gap-3 rounded-2xl bg-amber-500/10 p-3.5 text-sm leading-relaxed">
+          <StickyNote className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden />
+          <p>{day.notes}</p>
         </div>
       )}
 
-      {/* ── Bloque llegada con bus nocturno ── */}
-      {isNightBusArrival && (
-        <div className="mb-5 rounded-xl border border-teal-200 bg-teal-50 p-3">
-          <div className="flex items-center gap-2">
-            <span className="text-base">⏰</span>
-            <span className="text-xs text-teal-800 font-medium">{day.timeSaved}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Info row */}
-      <div className="grid grid-cols-2 gap-3 mb-5">
-        <InfoCard icon="🍜" label="Comida" value={day.food} />
-        <InfoCard icon="📝" label="Notas" value={day.notes} />
-      </div>
-
-      {/* Segmentos de transporte */}
-      {day.transport.length > 0 && (
-        <TransportList segments={day.transport} />
-      )}
-
-      {/* Activities */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <ActivityList
-          title="Actividades del Día"
-          icon="☀️"
-          items={day.activitiesDay}
-          accent="amber"
-        />
-        <ActivityList
-          title="Actividades de la Noche"
-          icon="🌙"
-          items={day.activitiesNight}
-          accent="indigo"
-        />
-      </div>
-    </div>
-  );
-}
-
-function InfoCard({
-  icon,
-  label,
-  value,
-}: {
-  icon: string;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="bg-gray-50 rounded-lg p-3">
-      <div className="text-xs text-gray-400 font-medium mb-1">
-        {icon} {label}
-      </div>
-      <div className="text-sm text-gray-800 font-medium leading-snug">
-        {value}
-      </div>
-    </div>
-  );
-}
-
-const TRANSPORT_ICON: Record<string, string> = {
-  tren: "🚃",
-  metro: "🚇",
-  bus: "🚌",
-  "bus-nocturno": "🌙",
-  ferry: "⛴",
-  barco: "🚢",
-  teleférico: "🚡",
-  caminar: "🚶",
-  monorriel: "🚝",
-  tranvía: "🚋",
-};
-
-function TransportList({ segments }: { segments: TransportSegment[] }) {
-  return (
-    <div className="mb-5">
-      <div className="text-xs text-gray-400 font-medium mb-2">🚃 Transporte del día</div>
-      <div className="flex flex-col gap-1.5">
-        {segments.map((seg, i) => {
-          const icon = TRANSPORT_ICON[seg.mode] ?? "🔹";
-          const isBusNocturno = seg.mode === "bus-nocturno";
-          return (
-            <div
-              key={i}
-              className={`flex items-start gap-3 rounded-lg px-3 py-2 text-sm ${
-                isBusNocturno
-                  ? "bg-orange-50 border border-orange-200"
-                  : "bg-gray-50 border border-gray-100"
-              }`}
-            >
-              <span className="text-base shrink-0 mt-0.5">{icon}</span>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className={`font-semibold ${
-                    isBusNocturno ? "text-orange-800" : "text-gray-800"
-                  }`}>
-                    {seg.from}
+      {/* Lugares del día (los mismos puntos del mapa) */}
+      {pois.length > 0 && (
+        <Section title="Lugares">
+          <ul aria-label="Lugares del día" className="flex flex-col gap-1.5">
+            {pois.map((poi, i) => (
+              <li key={poi.name}>
+                <button
+                  type="button"
+                  onClick={() => onFocusPoi?.(i)}
+                  className="flex w-full items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5 text-left text-sm transition-colors hover:bg-line active:scale-[0.99]"
+                >
+                  <span
+                    className={`flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                      poi.night ? "bg-slate-800 text-amber-200" : "bg-fg text-bg"
+                    }`}
+                  >
+                    {poiLetter(i)}
                   </span>
-                  <span className="text-gray-400">→</span>
-                  <span className={`font-semibold ${
-                    isBusNocturno ? "text-orange-800" : "text-gray-800"
-                  }`}>
-                    {seg.to}
-                  </span>
-                  {seg.line && (
-                    <span className="text-xs text-gray-500 italic">({seg.line})</span>
+                  <span className="flex-1 font-medium">{poi.name}</span>
+                  {poi.night ? (
+                    <Moon className="size-4 text-muted" aria-label="De noche" />
+                  ) : (
+                    <Sun className="size-4 text-muted" aria-label="De día" />
                   )}
-                </div>
-                <div className="flex gap-3 mt-0.5 text-xs text-gray-500 flex-wrap">
-                  {seg.duration && <span>⏱ {seg.duration}</span>}
-                  {seg.cost && <span className="text-emerald-700 font-medium">💴 {seg.cost}</span>}
-                  {seg.note && <span className="text-amber-700">💬 {seg.note}</span>}
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {/* Transporte */}
+      {day.transport.length > 0 && (
+        <Section title="Cómo moverse">
+          <TransportTimeline segments={day.transport} />
+        </Section>
+      )}
+
+      {/* Actividades */}
+      <div className="grid gap-3 sm:grid-cols-2">
+        <ActivityList title="De día" icon={Sun} items={day.activitiesDay} tone="amber" />
+        <ActivityList title="De noche" icon={Moon} items={day.activitiesNight} tone="indigo" />
       </div>
-    </div>
+
+      {/* Hospedaje y comida */}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {!day.isTransit && (
+          <InfoCard icon={BedDouble} label="Dormís en" value={day.accommodation} detail={day.zona} />
+        )}
+        {day.food && <InfoCard icon={Utensils} label="Para comer" value={day.food} />}
+      </div>
+    </article>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="flex flex-col gap-2">
+      <h3 className="text-xs font-bold uppercase tracking-wide text-muted">{title}</h3>
+      {children}
+    </section>
+  );
+}
+
+function TransportTimeline({ segments }: { segments: TransportSegment[] }) {
+  return (
+    <ol aria-label="Tramos de transporte" className="relative flex flex-col gap-3 pl-1">
+      {segments.map((seg, i) => {
+        const Icon = TRANSPORT_ICON[seg.mode] ?? TrainFront;
+        const last = i === segments.length - 1;
+        return (
+          <li key={i} className="relative flex gap-3">
+            {!last && <span className="absolute left-[15px] top-8 bottom-[-12px] w-px bg-line" aria-hidden />}
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2">
+              <Icon className="size-4" aria-label={seg.mode} />
+            </span>
+            <div className="min-w-0 flex-1 pt-1">
+              <div className="flex flex-wrap items-center gap-x-1.5 text-sm font-semibold">
+                <span>{seg.from}</span>
+                <span className="text-muted" aria-hidden>→</span>
+                <span>{seg.to}</span>
+              </div>
+              {seg.line && <div className="text-xs text-muted">{seg.line}</div>}
+              <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                {seg.duration && (
+                  <span className="inline-flex items-center gap-1 text-muted">
+                    <Clock className="size-3.5" aria-hidden />
+                    {seg.duration}
+                  </span>
+                )}
+                {seg.cost && (
+                  <span className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-400">
+                    <Coins className="size-3.5" aria-hidden />
+                    {seg.cost}
+                  </span>
+                )}
+              </div>
+              {seg.note && (
+                <div className="mt-1 flex gap-1 text-xs text-amber-700 dark:text-amber-400">
+                  <MessageSquare className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                  <span>{seg.note}</span>
+                </div>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
 function ActivityList({
   title,
-  icon,
+  icon: Icon,
   items,
-  accent,
+  tone,
 }: {
   title: string;
-  icon: string;
+  icon: LucideIcon;
   items: string[];
-  accent: "amber" | "indigo";
+  tone: "amber" | "indigo";
 }) {
-  const headerClass =
-    accent === "amber"
-      ? "bg-amber-50 text-amber-800 border-amber-200"
-      : "bg-indigo-50 text-indigo-800 border-indigo-200";
-
-  const dotClass =
-    accent === "amber" ? "bg-amber-400" : "bg-indigo-400";
-
+  if (items.length === 0) return null;
+  const accent = tone === "amber" ? "text-amber-600 dark:text-amber-400" : "text-indigo-600 dark:text-indigo-400";
+  const dot = tone === "amber" ? "bg-amber-400" : "bg-indigo-400";
   return (
-    <div className="rounded-lg border border-gray-200 overflow-hidden">
-      <div className={`px-3 py-2 text-sm font-bold border-b ${headerClass}`}>
-        {icon} {title}
-      </div>
-      <ul className="divide-y divide-gray-100">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-center gap-2 px-3 py-2">
-            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dotClass}`} />
-            <span className="text-sm text-gray-700">{item}</span>
+    <section className="rounded-2xl border border-line p-3.5">
+      <h3 className={`mb-2 flex items-center gap-1.5 text-sm font-bold ${accent}`}>
+        <Icon className="size-4" aria-hidden />
+        {title}
+      </h3>
+      <ul className="flex flex-col gap-1.5">
+        {items.map((item) => (
+          <li key={item} className="flex gap-2 text-sm leading-snug">
+            <span className={`mt-1.5 size-1.5 shrink-0 rounded-full ${dot}`} aria-hidden />
+            <span>{item}</span>
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+function InfoCard({
+  icon: Icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  detail?: string;
+}) {
+  return (
+    <div className="flex gap-3 rounded-2xl bg-surface-2 p-3.5">
+      <Icon className="mt-0.5 size-4 shrink-0 text-muted" aria-hidden />
+      <div className="min-w-0">
+        <div className="text-xs font-medium text-muted">{label}</div>
+        <div className="text-sm font-semibold leading-snug">{value}</div>
+        {detail && <div className="mt-0.5 text-xs text-muted">{detail}</div>}
+      </div>
     </div>
   );
 }

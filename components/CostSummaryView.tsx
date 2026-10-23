@@ -1,86 +1,73 @@
 "use client";
 
-import { computeCostSummary } from "@/lib/itinerary-utils";
+import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
 import type { DayEntry } from "@/types/DayEntry";
 
 type Props = {
   itinerary: DayEntry[];
   startDate: string;
   onDaySelect: (day: DayEntry) => void;
-  onClose: () => void;
 };
 
-export default function CostSummaryView({ itinerary, startDate, onDaySelect, onClose }: Props) {
-  const costSummary = computeCostSummary(itinerary, startDate);
+function shortDate(date: string): string {
+  return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
+}
+
+export default function CostSummaryView({ itinerary, startDate, onDaySelect }: Props) {
+  const summary = computeCostSummary(itinerary, startDate);
+  const max = Math.max(...summary.weeks.flatMap((w) => w.days.map((d) => d.cost)), 1);
 
   return (
-    <div className="flex-1 bg-gray-50 overflow-y-auto px-4 py-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-emerald-900 flex items-center gap-2">
-            💰 Detalle de Presupuesto Diario (~${costSummary.total} USD)
-          </h2>
-          <button
-            onClick={onClose}
-            className="bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
-          >
-            Volver al itinerario
-          </button>
-        </div>
+    <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-4">
+      <header>
+        <h2 className="text-2xl font-bold">Presupuesto</h2>
+        <p className="text-sm text-muted">
+          ~<span className="font-bold text-fg tabular-nums">${summary.total}</span> USD por persona · comida y
+          entradas incluidas · tocá un día para verlo
+        </p>
+      </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {costSummary.weeks.map((week) => (
-            <div key={week.weekNum} className="bg-white rounded-lg border border-emerald-100 overflow-hidden shadow-xs flex flex-col">
-              <div className="bg-emerald-100/50 px-3 py-2 text-emerald-800 font-bold flex justify-between items-center text-sm">
-                <span>Semana {week.weekNum} ({week.label})</span>
-                <span className="bg-emerald-200/50 px-2.5 py-0.5 rounded-full">${week.total}</span>
-              </div>
-              <div className="overflow-x-auto flex-1">
-                <table className="text-xs w-full">
-                  <thead>
-                    <tr className="text-gray-400 font-medium border-b border-gray-100 bg-gray-50/50">
-                      <th className="text-left font-normal py-1.5 px-3">Día</th>
-                      <th className="text-left font-normal py-1.5 pr-3">Actividad</th>
-                      <th className="text-right font-normal py-1.5 pr-3">Costo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {week.days.map((d, i) => (
-                      <tr
-                        key={i}
-                        className="border-b last:border-b-0 border-gray-50 text-gray-700 hover:bg-emerald-50 cursor-pointer transition-colors"
-                        onClick={() => {
-                          const found = itinerary.find((it) => it.date === d.date);
-                          if (found) onDaySelect(found);
-                        }}
-                      >
-                        <td className="py-1.5 px-3 whitespace-nowrap text-gray-500">
-                          {new Date(d.date + "T12:00:00").toLocaleDateString("es-AR", {
-                            weekday: "short",
-                            day: "numeric",
-                            month: "short",
-                          })}
-                        </td>
-                        <td className="py-1.5 pr-3 font-medium truncate max-w-[120px] sm:max-w-[150px]" title={d.label}>
-                          {d.label}
-                        </td>
-                        <td className="py-1.5 pr-3 text-right font-bold text-emerald-600">{d.budget}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+      {summary.weeks.map((week) => {
+        const color = WEEK_COLORS_HEX[(week.weekNum - 1) % WEEK_COLORS_HEX.length];
+        return (
+          <section key={week.weekNum} className="overflow-hidden rounded-2xl border border-line bg-surface">
+            <div className="flex items-center justify-between border-b border-line px-4 py-2.5">
+              <h3 className="flex items-center gap-2 text-sm font-bold">
+                <span className="size-2.5 rounded-full" style={{ background: color }} />
+                Semana {week.weekNum}
+                <span className="font-normal text-muted">· desde el {week.label}</span>
+              </h3>
+              <span className="text-sm font-bold tabular-nums">${week.total}</span>
             </div>
-          ))}
-        </div>
-
-        <div className="mt-8 text-sm text-emerald-700 font-medium bg-emerald-100/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center border border-emerald-200 gap-2">
-          <span>💡 Podés hacer clic en cualquier día para saltar a él en el itinerario principal.</span>
-          <span className="font-bold text-emerald-800 bg-white px-3 py-1 rounded-full shadow-xs shadow-emerald-200 text-base">
-            Total acumulado: ${costSummary.total}
-          </span>
-        </div>
-      </div>
+            <ul>
+              {week.days.map((d) => (
+                <li key={d.date}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const day = itinerary.find((it) => it.date === d.date);
+                      if (day) onDaySelect(day);
+                    }}
+                    className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-surface-2"
+                  >
+                    <span className="w-20 shrink-0 text-xs capitalize text-muted">{shortDate(d.date)}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate">{d.label}</span>
+                      <span className="mt-1 block h-1 rounded-full bg-surface-2">
+                        <span
+                          className="block h-1 rounded-full"
+                          style={{ width: `${(d.cost / max) * 100}%`, background: color }}
+                        />
+                      </span>
+                    </span>
+                    <span className="w-12 shrink-0 text-right font-semibold tabular-nums">{d.budget}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   );
 }

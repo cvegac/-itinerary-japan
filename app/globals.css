@@ -2,25 +2,102 @@
 @import 'maplibre-gl/dist/maplibre-gl.css' layer(base);
 
 @import 'tailwindcss';
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+/* ── Tokens de diseño: claro y oscuro según el sistema ─────────────────── */
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --surface-2: #f4f5f7;
+  --line: #e5e7eb;
+  --fg: #111827;
+  --muted: #6b7280;
+  --accent: #e11d48;
+  --accent-fg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0f17;
+    --surface: #131a25;
+    --surface-2: #1b2331;
+    --line: #283244;
+    --fg: #e6e9ef;
+    --muted: #94a3b8;
+    --accent: #fb7185;
+    --accent-fg: #1f0a10;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  /* "Twemoji Country Flags" solo trae banderas: va primero para que Windows las dibuje */
+  --font-sans: "Twemoji Country Flags", var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
 @layer base {
+  /* El borde por defecto de Tailwind 4 es currentColor: usamos el token */
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--color-line, currentcolor);
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
-html,
-body {
-  height: 100%;
+/* ── Mapa: controles debajo de la barra superior flotante ──────────────── */
+.trip-map .maplibregl-ctrl-top-left,
+.trip-map .maplibregl-ctrl-top-right {
+  top: var(--map-inset-top, 0px);
+}
+
+.trip-map .maplibregl-popup-content {
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
+}
+
+/* Barras de desplazamiento ocultas en tiras horizontales */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Controles del mapa con los tokens (legibles en modo oscuro) */
+.trip-map .maplibregl-ctrl-group,
+.trip-map .maplibregl-ctrl-attrib {
+  background: var(--surface);
+  color: var(--fg);
+}
+.trip-map .maplibregl-ctrl-attrib a {
+  color: var(--muted);
+}
+@media (prefers-color-scheme: dark) {
+  .trip-map .maplibregl-ctrl-group button + button {
+    border-top-color: var(--line);
+  }
+  .trip-map .maplibregl-ctrl-icon,
+  .trip-map .maplibregl-ctrl-attrib-button {
+    filter: invert(1);
+  }
 }

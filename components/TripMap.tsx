@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { GeoJSONSource, Map as MapLibreMap, Marker } from "maplibre-gl";
+import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import { boundsOf, dayView, escapeHtml, lineFeature, toLngLat, weekColor } from "@/lib/map-geo";
@@ -17,6 +17,10 @@ type Props = {
   /** [lat, lng] */
   center: [number, number];
   zoom: number;
+  /** Margen libre al encuadrar (en el celular, el espacio de la hoja y las barras) */
+  padding?: PaddingOptions;
+  /** Lugar del día a enfocar; el nonce permite volver a enfocar el mismo */
+  focusedPoi?: { index: number; nonce: number } | null;
 };
 
 type MapLibre = typeof import("maplibre-gl");
@@ -29,7 +33,12 @@ const STYLE_DARK = "https://tiles.openfreemap.org/styles/dark";
 const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
 const ROUTE_SOURCE = "trip-route";
-const FIT_PADDING = 60;
+const DEFAULT_PADDING: PaddingOptions = { top: 60, bottom: 60, left: 60, right: 60 };
+
+/** Lo último que se encuadró, para re-encuadrar si cambia el margen */
+type Camera =
+  | { bounds: [[number, number], [number, number]]; maxZoom: number }
+  | { center: [number, number]; zoom: number };
 
 // ── Marcadores (elementos HTML) ─────────────────────────────────────────────
 function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElement {
@@ -121,12 +130,26 @@ function ensureOverlay(map: MapLibreMap) {
   }
 }
 
-export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, center, zoom }: Props) {
+export default function TripMap({
+  day,
+  mode,
+  onDaySelect,
+  itinerary,
+  startDate,
+  center,
+  zoom,
+  padding = DEFAULT_PADDING,
+  focusedPoi = null,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const libRef = useRef<MapLibre | null>(null);
   const markersRef = useRef<Marker[]>([]);
   const routeRef = useRef<ReturnType<typeof lineFeature>[]>([]);
+  const poiMarkersRef = useRef<Marker[]>([]);
+  const cameraRef = useRef<Camera | null>(null);
+  const paddingRef = useRef(padding);
+  paddingRef.current = padding;
   // Para que los handlers de los marcadores usen siempre el último callback
   const onDaySelectRef = useRef(onDaySelect);
   onDaySelectRef.current = onDaySelect;
@@ -149,11 +172,12 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
         style: dark.matches ? STYLE_DARK : STYLE_LIGHT,
         center: toLngLat(center),
         zoom: zoom - 1,
-        attributionControl: { compact: true },
+        attributionControl: false,
         maxPitch: 75,
       });
       mapRef.current = map;
 
+      map.addControl(new lib.AttributionControl({ compact: true }), "top-left");
       map.addControl(new lib.NavigationControl({ visualizePitch: true }), "top-right");
       map.addControl(new lib.TerrainControl({ source: "terrain", exaggeration: 1.3 }), "top-right");
 
@@ -166,6 +190,12 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
         });
       });
       map.once("load", () => renderLayer());
+
+      // El aviso de créditos compacto arranca abierto: lo dejamos como botón "i"
+      const collapseAttribution = () =>
+        containerRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
+      map.on("load", collapseAttribution);
+      map.on("resize", collapseAttribution);
 
       const onScheme = (e: MediaQueryListEvent) => map.setStyle(e.matches ? STYLE_DARK : STYLE_LIGHT);
       dark.addEventListener("change", onScheme);
@@ -195,6 +225,36 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [day, mode]);
 
+  // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
+  const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && cameraRef.current) moveCamera(map, cameraRef.current, 300);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paddingKey]);
+
+  // ── Enfocar un lugar tocado en la lista ──────────────────────────────────
+  useEffect(() => {
+    const map = mapRef.current;
+    const poi = focusedPoi && day?.pois?.[focusedPoi.index];
+    if (!map || !poi || mode !== "day") return;
+    map.flyTo({ center: toLngLat(poi.coords), zoom: 16, padding: paddingRef.current, duration: 800 });
+    poiMarkersRef.current.forEach((m, i) => {
+      const open = !!m.getPopup()?.isOpen();
+      if ((i === focusedPoi!.index) !== open) m.togglePopup();
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusedPoi]);
+
+  function moveCamera(map: MapLibreMap, camera: Camera, duration: number) {
+    cameraRef.current = camera;
+    if ("bounds" in camera) {
+      map.fitBounds(camera.bounds, { padding: paddingRef.current, maxZoom: camera.maxZoom, duration });
+    } else {
+      map.flyTo({ center: camera.center, zoom: camera.zoom, padding: paddingRef.current, duration });
+    }
+  }
+
   function setRoute(features: ReturnType<typeof lineFeature>[]) {
     routeRef.current = features;
     const source = mapRef.current?.getSource(ROUTE_SOURCE) as GeoJSONSource | undefined;
@@ -205,7 +265,7 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
     const lib = libRef.current!;
     const marker = new lib.Marker({ element: el })
       .setLngLat(lngLat)
-      .setPopup(new lib.Popup({ offset: 16, maxWidth: "260px" }).setHTML(popupHtml))
+      .setPopup(new lib.Popup({ offset: 16, maxWidth: "260px", focusAfterOpen: false }).setHTML(popupHtml))
       .addTo(mapRef.current!);
     markersRef.current.push(marker);
     return marker;
@@ -225,6 +285,7 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
 
     markersRef.current.forEach((m) => m.remove());
     markersRef.current = [];
+    poiMarkersRef.current = [];
 
     let selected: Marker | null = null;
     if (mode === "day" && day) selected = renderDayMode(map, day);
@@ -246,17 +307,19 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
     const accomMarker = addDayMarker(d, true);
 
     view.points.forEach((p) => {
-      addMarker(poiMarkerEl(color, p.letter, p.night), p.lngLat, poiPopupHtml(p.letter, p.name, p.night));
+      poiMarkersRef.current.push(
+        addMarker(poiMarkerEl(color, p.letter, p.night), p.lngLat, poiPopupHtml(p.letter, p.name, p.night))
+      );
     });
     setRoute(
       (d.pois?.length ?? 0) > 1 ? [lineFeature(d.pois!.map((p) => p.coords), { color, dashed: true })] : []
     );
 
     if (!view.bounds) {
-      map.flyTo({ center: view.focus, zoom: 11, duration: 800 });
+      moveCamera(map, { center: view.focus, zoom: 11 }, 800);
       return accomMarker;
     }
-    map.fitBounds(view.bounds, { padding: FIT_PADDING, maxZoom: 16, duration: 800 });
+    moveCamera(map, { bounds: view.bounds, maxZoom: 16 }, 800);
     return null;
   }
 
@@ -276,7 +339,7 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
     });
 
     if (coords.length > 0) {
-      map.fitBounds(boundsOf(coords), { padding: FIT_PADDING, maxZoom: 11, duration: 800 });
+      moveCamera(map, { bounds: boundsOf(coords), maxZoom: 11 }, 800);
     }
     return selected;
   }
@@ -301,14 +364,10 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
     });
 
     if (itinerary.length > 0) {
-      map.fitBounds(boundsOf(itinerary.map((d) => d.accommodationCoords)), {
-        padding: FIT_PADDING,
-        maxZoom: 9,
-        duration: 1000,
-      });
+      moveCamera(map, { bounds: boundsOf(itinerary.map((d) => d.accommodationCoords)), maxZoom: 9 }, 1000);
     }
     return selected;
   }
 
-  return <div ref={containerRef} className="w-full h-full" style={{ minHeight: 320 }} />;
+  return <div ref={containerRef} className="trip-map w-full h-full" />;
 }
