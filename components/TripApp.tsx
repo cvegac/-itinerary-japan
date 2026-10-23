@@ -7,6 +7,7 @@ import type { TripData } from "@/types/Trip";
 import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
 import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
 import { hasBed, morningLodging } from "@/lib/map-geo";
+import { spentByDate, useExpenses } from "@/lib/expenses";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
 import ViewTabs, { type View } from "@/components/ViewTabs";
@@ -59,6 +60,7 @@ export default function TripApp({ tripData }: Props) {
 
   const [selectedDay, setSelectedDay] = useState<DayEntry | null>(itinerary[0] ?? null);
   const [view, setView] = useState<View>("itinerary");
+  const { expenses, add: addExpense, remove: removeExpense } = useExpenses(meta.slug);
   const [mapMode, setMapMode] = useState<MapMode>("day");
   const [snap, setSnap] = useState<Snap>("half");
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
@@ -157,6 +159,9 @@ export default function TripApp({ tripData }: Props) {
         routes={dayRoutes}
         morningLodging={morning}
         arriving={arriving}
+        expenses={expenses.filter((e) => e.date === selectedDay.date)}
+        onAddExpense={(amountYen, note) => addExpense(selectedDay.date, amountYen, note)}
+        onRemoveExpense={removeExpense}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
@@ -168,7 +173,12 @@ export default function TripApp({ tripData }: Props) {
 
   const summaryPage =
     view === "costs" ? (
-      <CostSummaryView itinerary={itinerary} startDate={meta.startDate} onDaySelect={openFromSummary} />
+      <CostSummaryView
+        itinerary={itinerary}
+        startDate={meta.startDate}
+        onDaySelect={openFromSummary}
+        spent={spentByDate(expenses)}
+      />
     ) : view === "lodging" ? (
       <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} />
     ) : view === "buses" && nightBusSummary ? (

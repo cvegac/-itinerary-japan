@@ -64,6 +64,17 @@ describe("TripApp", () => {
     expect(title()).toBe("Llegada a Asakusa");
   });
 
+  it("en costos muestra lo gastado de verdad contra el presupuesto", async () => {
+    localStorage.setItem(
+      "viajes-gastos-test",
+      JSON.stringify({ e1: { id: "e1", date: "2026-11-02", amountYen: 3000, note: "Nikko", createdAt: 1 } })
+    );
+    renderAt("2026-10-22");
+    await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
+    expect(screen.getByText(/Gastaste ¥3,000 \(~\$20\)/)).toBeTruthy();
+    localStorage.clear();
+  });
+
   it("muestra las notas y desde una tarea abre su día", async () => {
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Notas/ })[0]));

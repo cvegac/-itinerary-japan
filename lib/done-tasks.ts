@@ -53,8 +53,9 @@ export function useDoneTasks(slug: string): [string[], (id: string) => void] {
     return watchTrip(uid, slug, (remote) => {
       const local = read(slug);
       let next = remote?.doneTasks ?? [];
-      // Al conectar: si no hay nada en la nube o hay cambios hechos sin sesión, se suman
-      if (first && (remote === null || hasPending(slug))) {
+      // Al conectar: si la nube todavía no tiene tareas (el documento puede existir
+      // solo con gastos) o hay cambios hechos sin sesión, se suman
+      if (first && (remote?.doneTasks === undefined || hasPending(slug))) {
         next = [...next, ...local.filter((id) => !next.includes(id))];
         saveTrip(uid, slug, { doneTasks: next });
       }

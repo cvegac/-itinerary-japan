@@ -1,21 +1,32 @@
 "use client";
 
 import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
+import { YEN_PER_USD } from "@/lib/budget";
 import type { DayEntry } from "@/types/DayEntry";
 
 type Props = {
   itinerary: DayEntry[];
   startDate: string;
   onDaySelect: (day: DayEntry) => void;
+  /** Gastos reales por día, en yenes */
+  spent?: Record<string, number>;
 };
+
+const toUsd = (yen: number) => Math.round(yen / YEN_PER_USD);
 
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
 }
 
-export default function CostSummaryView({ itinerary, startDate, onDaySelect }: Props) {
+export default function CostSummaryView({ itinerary, startDate, onDaySelect, spent = {} }: Props) {
   const summary = computeCostSummary(itinerary, startDate);
   const max = Math.max(...summary.weeks.flatMap((w) => w.days.map((d) => d.cost)), 1);
+  const spentTotal = Object.values(spent).reduce((sum, y) => sum + y, 0);
+  // Presupuesto de los días en los que ya cargaste gastos, para comparar parejo
+  const budgetOfSpentDays = summary.weeks
+    .flatMap((w) => w.days)
+    .filter((d) => spent[d.date])
+    .reduce((sum, d) => sum + d.cost, 0);
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-4">
@@ -25,6 +36,16 @@ export default function CostSummaryView({ itinerary, startDate, onDaySelect }: P
           ~<span className="font-bold text-fg tabular-nums">${summary.total}</span> USD por persona · comida y
           entradas incluidas · tocá un día para verlo
         </p>
+        {spentTotal > 0 && (
+          <p
+            className={`mt-1 text-sm font-semibold tabular-nums ${
+              toUsd(spentTotal) > budgetOfSpentDays ? "text-red-700" : "text-emerald-700"
+            }`}
+          >
+            Gastaste ¥{spentTotal.toLocaleString("en-US")} (~${toUsd(spentTotal)}) en los días con gastos cargados,
+            presupuestados en ${budgetOfSpentDays}
+          </p>
+        )}
       </header>
 
       {summary.weeks.map((week) => {
@@ -60,7 +81,18 @@ export default function CostSummaryView({ itinerary, startDate, onDaySelect }: P
                         />
                       </span>
                     </span>
-                    <span className="w-12 shrink-0 text-right font-semibold tabular-nums">{d.budget}</span>
+                    <span className="w-14 shrink-0 text-right tabular-nums">
+                      <span className="block font-semibold">{d.budget}</span>
+                      {spent[d.date] !== undefined && (
+                        <span
+                          className={`block text-xs font-semibold ${
+                            toUsd(spent[d.date]) > d.cost ? "text-red-700" : "text-emerald-700"
+                          }`}
+                        >
+                          ${toUsd(spent[d.date])} real
+                        </span>
+                      )}
+                    </span>
                   </button>
                 </li>
               ))}

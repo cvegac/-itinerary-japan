@@ -88,6 +88,36 @@ describe("DayDetail", () => {
     expect(screen.getByText(/Oscurece a las 1\d:\d{2}/)).toBeTruthy();
   });
 
+  describe("gastos del día", () => {
+    const expenses = [{ id: "e1", date: "2026-11-02", amountYen: 1600, note: "Toshogu", createdAt: 1 }];
+
+    it("lista lo gastado y lo compara con el presupuesto", () => {
+      render(<DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
+      const section = screen.getByRole("region", { name: "Gastos del día" });
+      expect(within(section).getByText("Toshogu")).toBeTruthy();
+      expect(within(section).getByText(/Gastaste ¥1,600 \(~\$11\) de \$110/)).toBeTruthy();
+    });
+
+    it("carga un gasto nuevo en yenes", async () => {
+      const onAdd = vi.fn();
+      render(<DayDetail day={day} dayNumber={2} expenses={[]} onAddExpense={onAdd} onRemoveExpense={vi.fn()} />);
+      const add = screen.getByRole("button", { name: "Agregar gasto" });
+      expect(add.hasAttribute("disabled")).toBe(true);
+      await userEvent.type(screen.getByLabelText("Monto en yenes"), "2500");
+      await userEvent.type(screen.getByLabelText("En qué"), "Bici");
+      await userEvent.click(add);
+      expect(onAdd).toHaveBeenCalledWith(2500, "Bici");
+      expect((screen.getByLabelText("Monto en yenes") as HTMLInputElement).value).toBe("");
+    });
+
+    it("quita un gasto", async () => {
+      const onRemove = vi.fn();
+      render(<DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={onRemove} />);
+      await userEvent.click(screen.getByRole("button", { name: "Quitar gasto Toshogu" }));
+      expect(onRemove).toHaveBeenCalledWith("e1");
+    });
+  });
+
   it("tiene la tarjeta para mostrar al taxista, con el teléfono para llamar", () => {
     const withJa = {
       ...day,

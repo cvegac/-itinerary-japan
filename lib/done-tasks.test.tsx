@@ -71,6 +71,15 @@ describe("useDoneTasks", () => {
     expect(localStorage.getItem(PENDING)).toBeNull();
   });
 
+  it("si la nube todavía no tiene tareas (por ejemplo, solo gastos), sube las del dispositivo", () => {
+    localStorage.setItem(KEY, JSON.stringify(["a"]));
+    cloud.remote = {} as { doneTasks: string[] };
+    const { result } = render();
+    act(() => cloud.login());
+    expect(cloud.saved).toEqual([["a"]]);
+    expect(result.current[0]).toEqual(["a"]);
+  });
+
   it("si lo del dispositivo ya estaba subido, manda la nube", () => {
     localStorage.setItem(KEY, JSON.stringify(["a"]));
     cloud.remote = { doneTasks: ["b"] };

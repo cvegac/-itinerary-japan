@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Moon,
   Phone,
+  Plus,
   Plane,
   Ship,
   StickyNote,
@@ -24,6 +25,8 @@ import {
   TrainFront,
   TramFront,
   Utensils,
+  Wallet,
+  X,
 } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
@@ -31,6 +34,8 @@ import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
+import { YEN_PER_USD } from "@/lib/budget";
+import type { Expense } from "@/lib/expenses";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
@@ -46,7 +51,13 @@ type Props = {
   morningLodging?: DayEntry | null;
   /** Hoy es la primera noche en este hospedaje (por defecto: si cambia la cama) */
   arriving?: boolean;
+  /** Gastos reales del día; sin onAddExpense no se muestra la sección */
+  expenses?: Expense[];
+  onAddExpense?: (amountYen: number, note: string) => void;
+  onRemoveExpense?: (id: string) => void;
 };
+
+const yen = (amount: number) => `¥${amount.toLocaleString("en-US")}`;
 
 /** "KUMANO家-OHGi- (individual con tatami…)" → "KUMANO家-OHGi-" */
 const shortName = (accommodation: string) => accommodation.split(" (")[0];
@@ -88,7 +99,17 @@ const TRANSPORT_ICON: Record<string, LucideIcon> = {
   taxi: CarTaxiFront,
 };
 
-export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningLodging, arriving }: Props) {
+export default function DayDetail({
+  day,
+  dayNumber,
+  onFocusPoi,
+  routes,
+  morningLodging,
+  arriving,
+  expenses = [],
+  onAddExpense,
+  onRemoveExpense,
+}: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
     day: "numeric",
@@ -291,6 +312,15 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes, morningL
         {day.food && <InfoCard icon={Utensils} label="Para comer" value={day.food} />}
       </div>
 
+      {onAddExpense && (
+        <DayExpenses
+          budget={day.budget}
+          expenses={expenses}
+          onAdd={onAddExpense}
+          onRemove={(id) => onRemoveExpense?.(id)}
+        />
+      )}
+
       {/* Para mostrarle al taxista (o a quien le preguntes) cómo llegar */}
       {!day.isTransit && day.lodgingJa && (
         <section
@@ -406,6 +436,93 @@ function ActivityList({
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+/** Lo gastado de verdad en el día, en yenes, contra el presupuesto */
+function DayExpenses({
+  budget,
+  expenses,
+  onAdd,
+  onRemove,
+}: {
+  budget: string;
+  expenses: Expense[];
+  onAdd: (amountYen: number, note: string) => void;
+  onRemove: (id: string) => void;
+}) {
+  const [amount, setAmount] = useState("");
+  const [note, setNote] = useState("");
+  const value = Number(amount.replace(/[^\d]/g, ""));
+  const total = expenses.reduce((sum, e) => sum + e.amountYen, 0);
+  const totalUsd = Math.round(total / YEN_PER_USD);
+  const over = totalUsd > Number(budget.replace(/[^\d]/g, ""));
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!value) return;
+    onAdd(value, note);
+    setAmount("");
+    setNote("");
+  }
+
+  return (
+    <section aria-label="Gastos del día" className="flex flex-col gap-2.5 rounded-2xl bg-surface-2 p-3.5">
+      <div className="flex items-baseline justify-between gap-2">
+        <h3 className="flex items-center gap-1.5 text-sm font-bold">
+          <Wallet className="size-4 text-muted" aria-hidden />
+          Gastos del día
+        </h3>
+        {total > 0 && (
+          <span className={`text-xs font-semibold tabular-nums ${over ? "text-red-700" : "text-emerald-700"}`}>
+            Gastaste {yen(total)} (~${totalUsd}) de {budget}
+          </span>
+        )}
+      </div>
+      {expenses.length > 0 && (
+        <ul className="flex flex-col gap-1">
+          {expenses.map((e) => (
+            <li key={e.id} className="flex items-center gap-2 text-sm">
+              <span className="w-20 shrink-0 font-semibold tabular-nums">{yen(e.amountYen)}</span>
+              <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
+              <button
+                type="button"
+                aria-label={`Quitar gasto ${e.note || yen(e.amountYen)}`}
+                onClick={() => onRemove(e.id)}
+                className="rounded-lg p-1 text-muted hover:bg-line"
+              >
+                <X className="size-4" aria-hidden />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <form onSubmit={submit} className="flex gap-2">
+        <input
+          aria-label="Monto en yenes"
+          inputMode="numeric"
+          placeholder="¥"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-24 rounded-xl border border-line bg-surface px-3 py-2 text-sm tabular-nums"
+        />
+        <input
+          aria-label="En qué"
+          placeholder="En qué (opcional)"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          className="min-w-0 flex-1 rounded-xl border border-line bg-surface px-3 py-2 text-sm"
+        />
+        <button
+          type="submit"
+          aria-label="Agregar gasto"
+          disabled={!value}
+          className="flex size-9 shrink-0 items-center justify-center self-center rounded-full bg-accent text-accent-fg disabled:opacity-40"
+        >
+          <Plus className="size-5" aria-hidden />
+        </button>
+      </form>
     </section>
   );
 }
