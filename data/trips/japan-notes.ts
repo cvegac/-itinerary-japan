@@ -14,7 +14,7 @@ export const NOTES: TripNotes = {
       id: "seguro",
       text: "Contratar el seguro de viaje",
       detail:
-        "Que cubra gastos médicos en Japón durante las 5 semanas. Antes preguntale a Bancolombia si la Mastercard Black ya incluye asistencia en viaje por pagar el pasaje con ella",
+        "Que cubra gastos médicos en Japón durante las 5 semanas. El pasaje no se pagó con la Mastercard Black, así que no cuentes con la asistencia de esa tarjeta: fijate si la tarjeta con la que pagaste incluye alguna, y si no, comprá uno aparte",
     },
     {
       id: "salas-vip",
