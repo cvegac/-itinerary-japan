@@ -2,13 +2,13 @@
 export type CategoryStyle = { dot: string; chip: string };
 
 const CATEGORY_STYLES: Record<string, CategoryStyle> = {
-  Naturaleza: { dot: "bg-emerald-500", chip: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300" },
-  Logística: { dot: "bg-slate-400", chip: "bg-slate-500/15 text-slate-700 dark:text-slate-300" },
-  Ciudad: { dot: "bg-orange-500", chip: "bg-orange-500/15 text-orange-700 dark:text-orange-300" },
-  Paisaje: { dot: "bg-sky-500", chip: "bg-sky-500/15 text-sky-700 dark:text-sky-300" },
-  Vistas: { dot: "bg-violet-500", chip: "bg-violet-500/15 text-violet-700 dark:text-violet-300" },
-  Compras: { dot: "bg-pink-500", chip: "bg-pink-500/15 text-pink-700 dark:text-pink-300" },
-  Libre: { dot: "bg-yellow-500", chip: "bg-yellow-500/15 text-yellow-700 dark:text-yellow-300" },
+  Naturaleza: { dot: "bg-emerald-500", chip: "bg-emerald-500/15 text-emerald-700" },
+  Logística: { dot: "bg-slate-400", chip: "bg-slate-500/15 text-slate-700" },
+  Ciudad: { dot: "bg-orange-500", chip: "bg-orange-500/15 text-orange-700" },
+  Paisaje: { dot: "bg-sky-500", chip: "bg-sky-500/15 text-sky-700" },
+  Vistas: { dot: "bg-violet-500", chip: "bg-violet-500/15 text-violet-700" },
+  Compras: { dot: "bg-pink-500", chip: "bg-pink-500/15 text-pink-700" },
+  Libre: { dot: "bg-yellow-500", chip: "bg-yellow-500/15 text-yellow-700" },
 };
 
 const FALLBACK: CategoryStyle = { dot: "bg-gray-400", chip: "bg-gray-500/15 text-muted" };

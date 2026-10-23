@@ -15,10 +15,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   // Ocupa toda la pantalla en celulares con notch; los paddings usan safe-area
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3f4f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0f17" },
-  ],
+  themeColor: "#f3f4f6",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

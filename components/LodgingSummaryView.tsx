@@ -45,7 +45,7 @@ export default function LodgingSummaryView({ itinerary, onDaySelect }: Props) {
                   <span className="text-sm font-semibold capitalize">
                     {shortDate(s.checkIn)} → {shortDate(s.checkOut)}
                   </span>
-                  <span className="rounded-full bg-indigo-500/15 px-2 py-0.5 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+                  <span className="rounded-full bg-indigo-500/15 px-2 py-0.5 text-xs font-bold text-indigo-700">
                     {s.nights} {s.nights === 1 ? "noche" : "noches"}
                   </span>
                 </span>

@@ -83,12 +83,12 @@ export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
             {day.location}
           </span>
           {day.isTransit && (
-            <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
+            <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-semibold text-amber-700">
               En tránsito
             </span>
           )}
           {day.nightBus && (
-            <span className="rounded-full bg-orange-500/15 px-2.5 py-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
+            <span className="rounded-full bg-orange-500/15 px-2.5 py-1 text-xs font-semibold text-orange-700">
               Bus nocturno {day.nightBus} esta noche
             </span>
           )}
@@ -98,7 +98,7 @@ export default function DayDetail({ day, dayNumber, onFocusPoi }: Props) {
       {/* Notas */}
       {day.notes && (
         <div className="flex gap-3 rounded-2xl bg-amber-500/10 p-3.5 text-sm leading-relaxed">
-          <StickyNote className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden />
+          <StickyNote className="mt-0.5 size-4 shrink-0 text-amber-600" aria-hidden />
           <p>{day.notes}</p>
         </div>
       )}
@@ -194,14 +194,14 @@ function TransportTimeline({ segments }: { segments: TransportSegment[] }) {
                   </span>
                 )}
                 {seg.cost && (
-                  <span className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-400">
+                  <span className="inline-flex items-center gap-1 font-medium text-emerald-700">
                     <Coins className="size-3.5" aria-hidden />
                     {seg.cost}
                   </span>
                 )}
               </div>
               {seg.note && (
-                <div className="mt-1 flex gap-1 text-xs text-amber-700 dark:text-amber-400">
+                <div className="mt-1 flex gap-1 text-xs text-amber-700">
                   <MessageSquare className="mt-0.5 size-3.5 shrink-0" aria-hidden />
                   <span>{seg.note}</span>
                 </div>
@@ -226,7 +226,7 @@ function ActivityList({
   tone: "amber" | "indigo";
 }) {
   if (items.length === 0) return null;
-  const accent = tone === "amber" ? "text-amber-600 dark:text-amber-400" : "text-indigo-600 dark:text-indigo-400";
+  const accent = tone === "amber" ? "text-amber-600" : "text-indigo-600";
   const dot = tone === "amber" ? "bg-amber-400" : "bg-indigo-400";
   return (
     <section className="rounded-2xl border border-line p-3.5">

@@ -27,8 +27,7 @@ type MapLibre = typeof import("maplibre-gl");
 
 // Tiles vectoriales gratis y sin API key. Las etiquetas ya vienen con el nombre
 // latino + el local ("Tokyo 東京"), como el mapa bilingüe anterior.
-const STYLE_LIGHT = "https://tiles.openfreemap.org/styles/liberty";
-const STYLE_DARK = "https://tiles.openfreemap.org/styles/dark";
+const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 // Elevación pública de AWS (Terrarium), con CORS abierto
 const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
@@ -166,10 +165,9 @@ export default function TripMap({
       libRef.current = lib;
       lib.setWorkerUrl("/maplibre-gl-worker.js");
 
-      const dark = window.matchMedia("(prefers-color-scheme: dark)");
       const map = new lib.Map({
         container: containerRef.current,
-        style: dark.matches ? STYLE_DARK : STYLE_LIGHT,
+        style: MAP_STYLE,
         center: toLngLat(center),
         zoom: zoom - 1,
         attributionControl: false,
@@ -197,14 +195,11 @@ export default function TripMap({
       map.on("load", collapseAttribution);
       map.on("resize", collapseAttribution);
 
-      const onScheme = (e: MediaQueryListEvent) => map.setStyle(e.matches ? STYLE_DARK : STYLE_LIGHT);
-      dark.addEventListener("change", onScheme);
 
       const ro = new ResizeObserver(() => map.resize());
       ro.observe(containerRef.current);
 
       cleanup = () => {
-        dark.removeEventListener("change", onScheme);
         ro.disconnect();
         map.remove();
         mapRef.current = null;

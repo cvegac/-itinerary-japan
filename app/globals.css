@@ -3,8 +3,9 @@
 
 @import 'tailwindcss';
 
-/* ── Tokens de diseño: claro y oscuro según el sistema ─────────────────── */
+/* ── Tokens de diseño (solo tema claro) ──────────────────────────────── */
 :root {
+  color-scheme: light;
   --bg: #f3f4f6;
   --surface: #ffffff;
   --surface-2: #f4f5f7;
@@ -15,18 +16,6 @@
   --accent-fg: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b0f17;
-    --surface: #131a25;
-    --surface-2: #1b2331;
-    --line: #283244;
-    --fg: #e6e9ef;
-    --muted: #94a3b8;
-    --accent: #fb7185;
-    --accent-fg: #1f0a10;
-  }
-}
 
 @theme inline {
   --color-bg: var(--bg);
@@ -83,7 +72,7 @@
   display: none;
 }
 
-/* Controles del mapa con los tokens (legibles en modo oscuro) */
+/* Controles del mapa con los tokens de diseño */
 .trip-map .maplibregl-ctrl-group,
 .trip-map .maplibregl-ctrl-attrib {
   background: var(--surface);
@@ -91,13 +80,4 @@
 }
 .trip-map .maplibregl-ctrl-attrib a {
   color: var(--muted);
-}
-@media (prefers-color-scheme: dark) {
-  .trip-map .maplibregl-ctrl-group button + button {
-    border-top-color: var(--line);
-  }
-  .trip-map .maplibregl-ctrl-icon,
-  .trip-map .maplibregl-ctrl-attrib-button {
-    filter: invert(1);
-  }
 }
