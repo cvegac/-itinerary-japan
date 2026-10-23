@@ -29,8 +29,8 @@ describe("parseCostYen", () => {
     expect(parseCostYen("~¥2,000–4,000 eléctrica + peajes")).toBe(3000);
   });
 
-  it("pasa los dólares a yenes a ¥150", () => {
-    expect(parseCostYen("~$50")).toBe(7500);
+  it("pasa los dólares a yenes a ¥157", () => {
+    expect(parseCostYen("~$50")).toBe(7850);
   });
 
   it("cuenta el precio de un pase y nada si ya está incluido", () => {
@@ -49,11 +49,11 @@ describe("dayCostBreakdown", () => {
     const day = makeDay("2026-11-02", "Lun", {
       lodgingCost: 54,
       transport: [
-        { mode: "tren", from: "A", to: "B", cost: "~¥1,500" },
-        { mode: "bus", from: "B", to: "A", cost: "¥1,500" },
+        { mode: "tren", from: "A", to: "B", cost: "~¥1,570" },
+        { mode: "bus", from: "B", to: "A", cost: "¥1,570" },
       ],
-      activitiesDay: ["Santuario Toshogu (~¥1,600)", "Abismo Kanmangafuchi"],
-      activitiesNight: ["Onsen (~¥1,400)"],
+      activitiesDay: ["Santuario Toshogu (~¥1,570)", "Abismo Kanmangafuchi"],
+      activitiesNight: ["Onsen (~¥1,570)"],
     });
     expect(dayCostBreakdown(day)).toEqual({ lodging: 54, transport: 20, entries: 20, food: 35, total: 129 });
   });

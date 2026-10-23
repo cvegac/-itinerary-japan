@@ -4,8 +4,8 @@ import { DayEntry } from "@/types/DayEntry";
 // Prioridades: 1.º naturaleza, 2.º precio. 14 bases cerca de una estación,
 // 8 días de bici fijos + 1 opcional, sin buses nocturnos.
 // budget = USD por persona y por día, calculado con lib/budget.ts: hospedaje real
-// (lodgingCost) + tramos de transporte + entradas + comida ~$35, a ~¥150/USD.
-// Total estimado: ~$3,742, sin los vuelos internacionales. Un test avisa si un día
+// (lodgingCost) + tramos de transporte + entradas + comida ~$35, a ~¥157/USD.
+// Total estimado: ~$3,698, sin los vuelos internacionales. Un test avisa si un día
 // queda desactualizado.
 // Verificado en línea el 2026-10-21:
 // - Spring Japan IJ621 NRT 07:40 → HIJ 09:10, lun/mié/sáb (26 oct – 30 nov),
@@ -96,7 +96,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Santuario Futarasan", coords: [36.7584, 139.59666] },
       { name: "Abismo Kanmangafuchi", coords: [36.74903, 139.58835] },
     ],
-    budget: "$121",
+    budget: "$119",
     isTransit: false,
     activitiesDay: [
       "Puente sagrado Shinkyo",
@@ -187,7 +187,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Jardín Shukkei-en", coords: [34.40034, 132.46745] },
       { name: "Okonomimura", coords: [34.3913, 132.46188], night: true },
     ],
-    budget: "$138",
+    budget: "$137",
     isTransit: false,
     activitiesDay: [
       "Parque y Museo de la Paz (~¥200)",
@@ -278,7 +278,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Callejón de los Gatos", coords: [34.41056, 133.20046] },
       { name: "Onomichi U2", coords: [34.40196, 133.18991], night: true },
     ],
-    budget: "$82",
+    budget: "$81",
     isTransit: false,
     activitiesDay: [
       "Templo Senko-ji y su mirador",
@@ -322,7 +322,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Colina del Mármol Blanco", coords: [34.3033, 133.08883] },
       { name: "Puerto de Setoda", coords: [34.3047, 133.08429] },
     ],
-    budget: "$96",
+    budget: "$94",
     isTransit: false,
     activitiesDay: [
       "Ferry corto a la isla Mukaishima",
@@ -369,7 +369,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Santuario Niukanshofu (inicio del Choishi-michi)", coords: [34.29508, 135.54977] },
       { name: "Templo Zenmyosho-in (Sanada-an)", coords: [34.2908, 135.55978] },
     ],
-    budget: "$137",
+    budget: "$134",
     isTransit: false,
     activitiesDay: [
       "Dejar la mochila en el guesthouse y almorzar en Kudoyama",
@@ -420,7 +420,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Puente Ichinohashi (Okunoin)", coords: [34.2135, 135.59533] },
       { name: "Mausoleo de Kobo Daishi (Okunoin)", coords: [34.21878, 135.60537] },
     ],
-    budget: "$88",
+    budget: "$87",
     isTransit: false,
     activitiesDay: [
       "Choishi-michi entre cedros y marcadores de piedra",
@@ -462,7 +462,7 @@ export const ITINERARY: DayEntry[] = [
     pois: [
       { name: "Santuario Tokei-jinja", coords: [33.72969, 135.38395] },
     ],
-    budget: "$88",
+    budget: "$87",
     isTransit: false,
     activitiesDay: [
       "Último paseo por el río Kino a la mañana",
@@ -554,7 +554,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Onsen Tsuboyu (Yunomine)", coords: [33.82919, 135.75772] },
       { name: "Kumano Hayatama Taisha", coords: [33.7323, 135.98368], night: true },
     ],
-    budget: "$103",
+    budget: "$102",
     isTransit: false,
     activitiesDay: [
       "Última etapa del Nakahechi: de Hosshinmon a Hongu",
@@ -645,7 +645,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Callejón Pontocho", coords: [35.00425, 135.77121], night: true },
       { name: "Gion (Hanamikoji)", coords: [35.00265, 135.77487], night: true },
     ],
-    budget: "$155",
+    budget: "$152",
     isTransit: false,
     activitiesDay: [
       "Costa del Pacífico desde el tren",
@@ -695,7 +695,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Templo Sanzen-in", coords: [35.11964, 135.83492] },
       { name: "Templo Hosen-in", coords: [35.12135, 135.834] },
     ],
-    budget: "$118",
+    budget: "$117",
     isTransit: false,
     activitiesDay: [
       "Templo Kurama-dera (~¥500)",
@@ -740,7 +740,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Puente Togetsukyo", coords: [35.01287, 135.67776] },
       { name: "Adashino Nenbutsu-ji", coords: [35.02692, 135.66463] },
     ],
-    budget: "$104",
+    budget: "$103",
     isTransit: false,
     activitiesDay: [
       "Bosque de bambú de Arashiyama, temprano",
@@ -763,7 +763,7 @@ export const ITINERARY: DayEntry[] = [
     label: "Kobe: Kitano, puerto, monte Rokko y onsen de Arima",
     location: "Kobe",
     category: "Vistas",
-    notes: "El transporte del día sale ~¥6,500 (~$45), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º. El bus directo Arima → Kioto tiene pocas salidas: reservalo",
+    notes: "El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º. El bus directo Arima → Kioto tiene pocas salidas: reservalo",
     weekday: "Mar",
     food: "Almuerzo de carne de Kobe en Sannomiya",
     transport: [
@@ -791,7 +791,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Cima del Rokko (Tenrandai)", coords: [34.75196, 135.23689] },
       { name: "Onsen Kin-no-yu (Arima)", coords: [34.79679, 135.24793], night: true },
     ],
-    budget: "$131",
+    budget: "$129",
     isTransit: false,
     activitiesDay: [
       "Barrio Kitano y sus casas de comerciantes extranjeros",
@@ -838,7 +838,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Casco viejo Sanmachi Suji", coords: [36.14236, 137.25925] },
       { name: "Puente Nakabashi", coords: [36.14001, 137.2592] },
     ],
-    budget: "$169",
+    budget: "$165",
     isTransit: false,
     activitiesDay: [
       "Fushimi Inari: miles de torii hasta la cima, sin gente",
@@ -880,7 +880,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Casa Wada", coords: [36.25992, 136.90763] },
       { name: "Puente colgante Deai-bashi", coords: [36.25653, 136.90378] },
     ],
-    budget: "$126",
+    budget: "$125",
     isTransit: false,
     activitiesDay: [
       "Mirador de Shiroyama (subida a pie de ~20 min)",
@@ -923,7 +923,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Canal de las carpas (Seto-gawa)", coords: [36.23603, 137.18599] },
       { name: "Sendero de Higashiyama (santuario Hakusan)", coords: [36.14608, 137.26529] },
     ],
-    budget: "$132",
+    budget: "$130",
     isTransit: false,
     activitiesDay: [
       "Mercado matutino del Miyagawa",
@@ -969,7 +969,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Calle Nawate (Matsumoto)", coords: [36.23461, 137.97199], night: true },
       { name: "Calle Nakamachi", coords: [36.2338, 137.97146], night: true },
     ],
-    budget: "$127",
+    budget: "$124",
     isTransit: false,
     activitiesDay: [
       "Teleférico de doble piso hasta 2.156 m",
@@ -1012,7 +1012,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Santuario Hotaka", coords: [36.33862, 137.88431] },
       { name: "Castillo de Matsumoto", coords: [36.23864, 137.96887] },
     ],
-    budget: "$87",
+    budget: "$86",
     isTransit: false,
     activitiesDay: [
       "Granja de wasabi Daio y sus molinos de agua (gratis)",
@@ -1060,7 +1060,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Paso de Magome", coords: [35.53869, 137.58455] },
       { name: "Magome", coords: [35.52655, 137.56748] },
     ],
-    budget: "$110",
+    budget: "$108",
     isTransit: false,
     activitiesDay: [
       "Pueblo de posta de Tsumago",
@@ -1101,7 +1101,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Pagoda Chureito", coords: [35.50129, 138.80136] },
       { name: "Corredor de los Arces", coords: [35.52559, 138.76244], night: true },
     ],
-    budget: "$110",
+    budget: "$108",
     isTransit: false,
     activitiesDay: [
       "Pagoda Chureito con el Fuji (Arakurayama Sengen)",
@@ -1143,7 +1143,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Saiko Iyashi no Sato Nenba", coords: [35.5045, 138.66143] },
       { name: "Lago Saiko", coords: [35.49852, 138.68537] },
     ],
-    budget: "$89",
+    budget: "$88",
     isTransit: false,
     activitiesDay: [
       "Parque Oishi en la orilla norte",
@@ -1188,7 +1188,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Inicio de la caminata (Mitsutoge Tozanguchi)", coords: [35.55609, 138.79169] },
       { name: "Cima de Mitsutoge", coords: [35.54916, 138.80916] },
     ],
-    budget: "$79",
+    budget: "$78",
     isTransit: false,
     activitiesDay: [
       "Subida a Mitsutoge",
@@ -1230,7 +1230,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Paseo del río Matsukawa", coords: [34.97041, 139.0958] },
       { name: "Tokaikan (ryokan histórico)", coords: [34.97169, 139.09706] },
     ],
-    budget: "$102",
+    budget: "$101",
     isTransit: false,
     activitiesDay: [
       "Fuji desde el bus, por última vez de cerca",
@@ -1275,7 +1275,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Monte Omuro", coords: [34.90314, 139.09476] },
       { name: "Lago Ippeki-ko", coords: [34.92889, 139.10585] },
     ],
-    budget: "$88",
+    budget: "$87",
     isTransit: false,
     activitiesDay: [
       "Puente colgante de Kadowakizaki sobre el mar",
@@ -1319,7 +1319,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Onsen Tokko-no-yu", coords: [34.9702, 138.92778] },
       { name: "Bosque de arces (Momiji Rinkan)", coords: [34.97795, 138.91303] },
     ],
-    budget: "$98",
+    budget: "$97",
     isTransit: false,
     activitiesDay: [
       "Templo Shuzen-ji",
@@ -1364,7 +1364,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Calle del monjayaki (Tsukishima)", coords: [35.66428, 139.78246], night: true },
       { name: "Mirador del ayuntamiento de Tokio", coords: [35.68974, 139.693], night: true },
     ],
-    budget: "$137",
+    budget: "$136",
     isTransit: false,
     activitiesDay: [
       "Avenida de ginkgos amarillos de Jingu Gaien (Icho Namiki)",
@@ -1408,7 +1408,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Templo Hase-dera", coords: [35.31227, 139.53331] },
       { name: "Isla Enoshima (faro Sea Candle, cuevas al fondo)", coords: [35.29965, 139.47858] },
     ],
-    budget: "$139",
+    budget: "$138",
     isTransit: false,
     activitiesDay: [
       "Templo Hokoku-ji y su bosque de bambú",
@@ -1455,7 +1455,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Monte Shiro (opcional)", coords: [35.62987, 139.22117] },
       { name: "Onsen Gokurakuyu", coords: [35.63212, 139.26927] },
     ],
-    budget: "$117",
+    budget: "$116",
     isTransit: false,
     activitiesDay: [
       "Sendero 6 por el bosque y el arroyo",
@@ -1498,7 +1498,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Parque de Narita-san", coords: [35.78657, 140.32078] },
       { name: "Calle Omotesando de Narita", coords: [35.78242, 140.31564], night: true },
     ],
-    budget: "$100",
+    budget: "$99",
     isTransit: false,
     activitiesDay: [
       "Jardín Rikugien con su color (~¥300)",
@@ -1538,7 +1538,7 @@ export const ITINERARY: DayEntry[] = [
       { name: "Museo de Ino Tadataka (canal del río Ono)", coords: [35.88839, 140.49716] },
       { name: "Estación de ruta Mizu no Sato Sawara (río Tone)", coords: [35.89629, 140.50655] },
     ],
-    budget: "$114",
+    budget: "$113",
     isTransit: false,
     activitiesDay: [
       "Canal del río Ono y sus casas de comerciantes",

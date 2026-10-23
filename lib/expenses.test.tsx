@@ -151,7 +151,7 @@ describe("cashBalance", () => {
 describe("spentByDate", () => {
   it("suma lo gastado cada día en dólares, juntando monedas", () => {
     const totals = spentByDate([
-      expense({ amount: 1500 }),
+      expense({ amount: 1570 }),
       expense({ id: "e2", amount: 32000, currency: "COP" }),
       expense({ id: "e3", date: "2026-11-03", amount: 5, currency: "USD" }),
     ]);
@@ -162,7 +162,7 @@ describe("spentByDate", () => {
 describe("expenseUsd", () => {
   it("usa la cotización guardada con el gasto; si no tiene, la de respaldo", () => {
     expect(expenseUsd(expense({ amount: 1570, perUsd: 157, rateDate: "2026-11-02" }))).toBeCloseTo(10);
-    expect(expenseUsd(expense({ amount: 1500 }))).toBe(10);
+    expect(expenseUsd(expense({ amount: 1570 }))).toBe(10);
   });
 
   it("los totales del día usan la cotización de cada gasto", () => {
@@ -174,7 +174,7 @@ describe("expenseUsd", () => {
 describe("dailySummary", () => {
   it("agrupa gastos y retiros por día, en orden", () => {
     const days = dailySummary(
-      [expense({ date: "2026-11-02", amount: 1500 }), expense({ id: "e2", date: "2026-11-01", amount: 3000 })],
+      [expense({ date: "2026-11-02", amount: 1570 }), expense({ id: "e2", date: "2026-11-01", amount: 3140 })],
       [withdrawal({ date: "2026-11-01" })]
     );
     expect(days.map((d) => [d.date, d.expenses.length, d.withdrawals.length, d.totalUsd])).toEqual([

@@ -3,7 +3,7 @@ import { formatMoney, toUsd } from "./money";
 
 describe("toUsd", () => {
   it("pasa cada moneda a dólares con los cambios de respaldo", () => {
-    expect(toUsd(1500, "JPY")).toBe(10);
+    expect(toUsd(1570, "JPY")).toBe(10);
     expect(toUsd(32000, "COP")).toBe(10);
     expect(toUsd(12.5, "USD")).toBe(12.5);
   });

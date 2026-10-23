@@ -1,7 +1,7 @@
 import type { DayEntry } from "@/types/DayEntry";
 
-/** Tipo de cambio de los presupuestos */
-export const YEN_PER_USD = 150;
+/** Tipo de cambio de los presupuestos (~156.9 el 2026-10-23, según currency-api) */
+export const YEN_PER_USD = 157;
 /** Comida por día, en USD */
 export const FOOD_USD = 35;
 

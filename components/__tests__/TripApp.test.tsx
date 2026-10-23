@@ -67,12 +67,12 @@ describe("TripApp", () => {
   it("en costos muestra lo gastado de verdad (también los gastos guardados en el formato anterior)", async () => {
     localStorage.setItem(
       "viajes-gastos-test",
-      JSON.stringify({ e1: { id: "e1", date: "2026-11-02", amountYen: 3000, note: "Nikko", createdAt: 1 } })
+      JSON.stringify({ e1: { id: "e1", date: "2026-11-02", amountYen: 3140, note: "Nikko", createdAt: 1 } })
     );
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
     expect(screen.getByLabelText("Gastado").textContent).toContain("≈US$20");
-    expect(screen.getByText("¥3,000")).toBeTruthy();
+    expect(screen.getByText("¥3,140")).toBeTruthy();
     localStorage.clear();
   });
 
