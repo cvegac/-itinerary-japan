@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { computeLodgingSummary } from "@/lib/itinerary-utils";
 import { poiSignature } from "@/lib/route-plan";
 import { dayCostBreakdown } from "@/lib/budget";
+import { DEFAULT_POI_ICON, poiIcon } from "@/lib/poi-icons";
 import { getAllTrips } from "./index";
 
 const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -103,6 +104,14 @@ describe("viaje japan", () => {
       .filter((d) => d.budget !== `$${dayCostBreakdown(d).total}`)
       .map((d) => `${d.date}: ${d.budget} → $${dayCostBreakdown(d).total}`);
     expect(stale).toEqual([]);
+  });
+
+  it("tiene un ícono específico para cada lugar (si no, agregá una regla en lib/poi-icons.ts)", () => {
+    const generic = japan.itinerary
+      .flatMap((d) => d.pois ?? [])
+      .filter((p) => poiIcon(p) === DEFAULT_POI_ICON)
+      .map((p) => p.name);
+    expect(generic).toEqual([]);
   });
 
   it("tiene todos los puntos de interés dentro de Japón", () => {

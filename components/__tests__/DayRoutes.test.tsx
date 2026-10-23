@@ -35,9 +35,9 @@ describe("DayDetail con rutas", () => {
   it("lista los lugares en el orden de visita, con las letras en ese orden", () => {
     render(<DayDetail day={day} dayNumber={1} routes={routes} />);
     const names = places().getAllByRole("button").map((b) => b.textContent);
-    expect(names[0]).toMatch(/^APuente/);
-    expect(names[1]).toMatch(/^BTemplo/);
-    expect(names[2]).toMatch(/^CMercado/);
+    expect(names[0]).toMatch(/^A🌉Puente/);
+    expect(names[1]).toMatch(/^B🛕Templo/);
+    expect(names[2]).toMatch(/^C🛍️Mercado/);
   });
 
   it("dice cómo llegar a cada lugar desde el anterior", () => {
@@ -74,7 +74,7 @@ describe("DayDetail con rutas", () => {
 
   it("si los lugares del día cambiaron, ignora las rutas viejas", () => {
     render(<DayDetail day={day} dayNumber={1} routes={{ ...routes, signature: "vieja" }} />);
-    expect(places().getAllByRole("button")[0].textContent).toMatch(/^ATemplo/);
+    expect(places().getAllByRole("button")[0].textContent).toMatch(/^A🛕Templo/);
     expect(screen.queryByText(/a pie ·/)).toBeNull();
   });
 });

@@ -215,11 +215,20 @@ describe("TripMap con rutas", () => {
     expect(features[2].geometry.coordinates).toEqual([toLngLat(pois[0].coords), toLngLat(pois[1].coords)]);
   });
 
-  it("las letras siguen el orden de visita", async () => {
+  it("las letras siguen el orden de visita y cada lugar lleva su ícono", async () => {
     await renderRouted();
     const poiMarkers = fake.state.markers.slice(-3);
-    expect(poiMarkers.map((m) => m.element?.textContent)).toEqual(["A", "B", "C"]);
+    expect(poiMarkers.map((m) => m.element?.querySelector("[data-letter]")?.textContent)).toEqual(["A", "B", "C"]);
+    expect(poiMarkers.map((m) => m.element?.querySelector("[data-icon]")?.textContent)).toEqual(["📍", "📍", "📍"]);
     expect(poiMarkers[0].lngLat).toEqual(toLngLat(pois[2].coords));
+  });
+
+  it("en el modo día marca el hospedaje con una cama", async () => {
+    await renderRouted();
+    const lodging = fake.state.markers.find((m) => m.element?.getAttribute("aria-label") === "Hospedaje");
+    expect(lodging).toBeTruthy();
+    expect(lodging!.element!.textContent).toBe("🛏️");
+    expect(lodging!.lngLat).toEqual(toLngLat(routedDay.accommodationCoords));
   });
 
   it("al tocar un lugar cercano dibuja la ruta a pie desde el hospedaje", async () => {

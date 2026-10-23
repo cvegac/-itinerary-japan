@@ -6,6 +6,7 @@ import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import { boundsOf, dayView, escapeHtml, lineFeature, poiLetter, toLngLat, weekColor, type LineProps } from "@/lib/map-geo";
 import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/route-plan";
+import { poiIcon } from "@/lib/poi-icons";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 import { hasHiResRelief } from "@/lib/map-download";
 
@@ -78,15 +79,42 @@ function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElem
   return el;
 }
 
-function poiMarkerEl(color: string, letter: string, night: boolean): HTMLElement {
+/** Hospedaje del día (modo día): una cama, para no confundirlo con los lugares */
+function lodgingMarkerEl(color: string): HTMLElement {
+  const el = document.createElement("button");
+  el.type = "button";
+  el.setAttribute("aria-label", "Hospedaje");
+  el.style.cssText = `
+    width:34px;height:34px;border-radius:50%;cursor:pointer;
+    background:${color};border:3px solid #fff;
+    display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;
+    box-shadow:0 2px 6px rgba(0,0,0,.35),0 0 0 3px ${color};`;
+  el.style.zIndex = "10";
+  el.textContent = "🛏️";
+  return el;
+}
+
+/** Lugar del día: el ícono de lo que es y su letra (la misma de la lista) en un globito */
+function poiMarkerEl(color: string, letter: string, icon: string, night: boolean): HTMLElement {
   const el = document.createElement("button");
   el.type = "button";
   el.style.cssText = `
-    width:24px;height:24px;border-radius:50%;cursor:pointer;
-    background:${night ? "#1e293b" : "#fff"};color:${night ? "#fde68a" : color};
-    border:2px solid ${color};display:flex;align-items:center;justify-content:center;
-    font:bold 11px system-ui,sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.35);`;
-  el.textContent = letter;
+    position:relative;width:30px;height:30px;border-radius:50%;cursor:pointer;
+    background:${night ? "#1e293b" : "#fff"};border:2px solid ${color};
+    display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;
+    box-shadow:0 1px 4px rgba(0,0,0,.35);`;
+  const iconEl = document.createElement("span");
+  iconEl.dataset.icon = "";
+  iconEl.textContent = icon;
+  const badge = document.createElement("span");
+  badge.dataset.letter = "";
+  badge.textContent = letter;
+  badge.style.cssText = `
+    position:absolute;top:-6px;right:-7px;min-width:16px;height:16px;padding:0 3px;
+    box-sizing:border-box;border-radius:8px;border:1.5px solid #fff;text-align:center;
+    background:${night ? "#fde68a" : color};color:${night ? "#1e293b" : "#fff"};
+    font:bold 10px/13px system-ui,sans-serif;`;
+  el.append(iconEl, badge);
   return el;
 }
 
@@ -103,10 +131,10 @@ function dayPopupHtml(day: DayEntry): string {
     </div>`;
 }
 
-function poiPopupHtml(letter: string, name: string, night: boolean): string {
+function poiPopupHtml(letter: string, icon: string, name: string, night: boolean): string {
   return `
     <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:140px;color:#111">
-      <div style="font-weight:700;font-size:13px">${letter}. ${escapeHtml(name)}</div>
+      <div style="font-weight:700;font-size:13px">${letter}. ${icon} ${escapeHtml(name)}</div>
       <div style="font-size:11px;color:#666;margin-top:2px">${night ? "🌙 De noche" : "☀️ De día"}</div>
     </div>`;
 }
@@ -341,9 +369,9 @@ export default function TripMap({
     return marker;
   }
 
-  function addDayMarker(d: DayEntry, selected: boolean) {
+  function addDayMarker(d: DayEntry, selected: boolean, el?: HTMLElement) {
     const color = weekColor(d.date, startDate, WEEK_COLORS_HEX);
-    const el = dayMarkerEl(color, itinerary.indexOf(d) + 1, selected);
+    el ??= dayMarkerEl(color, itinerary.indexOf(d) + 1, selected);
     const marker = addMarker(el, toLngLat(d.accommodationCoords), dayPopupHtml(d));
     el.addEventListener("click", () => onDaySelectRef.current?.(d));
     return marker;
@@ -372,11 +400,11 @@ export default function TripMap({
     }
   }
 
-  // ── Modo DÍA: hospedaje + puntos de interés con letras ───────────────────
+  // ── Modo DÍA: hospedaje + puntos de interés con ícono y letra ────────────
   function renderDayMode(map: MapLibreMap, d: DayEntry): Marker | null {
     const color = weekColor(d.date, startDate, WEEK_COLORS_HEX);
     const view = dayView(d);
-    const accomMarker = addDayMarker(d, true);
+    const accomMarker = addDayMarker(d, true, lodgingMarkerEl(color));
 
     const r = validRoutes(d);
     const pois = d.pois ?? [];
@@ -384,10 +412,15 @@ export default function TripMap({
     // Letras en el orden de visita (el óptimo, si hay rutas al día)
     orderedPois(d, r).forEach(({ poi, index }, position) => {
       const letter = poiLetter(position);
+      const icon = poiIcon(poi);
       const night = !!poi.night;
       poiMarkersRef.current.set(
         index,
-        addMarker(poiMarkerEl(color, letter, night), toLngLat(poi.coords), poiPopupHtml(letter, poi.name, night))
+        addMarker(
+          poiMarkerEl(color, letter, icon, night),
+          toLngLat(poi.coords),
+          poiPopupHtml(letter, icon, poi.name, night)
+        )
       );
     });
 

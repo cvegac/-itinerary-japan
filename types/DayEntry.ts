@@ -6,6 +6,8 @@ export type PointOfInterest = {
   coords: [number, number];
   /** Se visita de noche */
   night?: boolean;
+  /** Ícono a mano; si falta se deduce del nombre (lib/poi-icons.ts) */
+  icon?: string;
 };
 
 export type DayEntry = {

@@ -25,6 +25,7 @@ import type { DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
 import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
+import { poiIcon } from "@/lib/poi-icons";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
 
 type Props = {
@@ -161,6 +162,9 @@ export default function DayDetail({ day, dayNumber, onFocusPoi, routes }: Props)
                     }`}
                   >
                     {poiLetter(position)}
+                  </span>
+                  <span className="shrink-0 text-lg leading-none" aria-hidden>
+                    {poiIcon(poi)}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium">{poi.name}</span>

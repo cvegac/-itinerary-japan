@@ -29,13 +29,13 @@ describe("DayDetail", () => {
     expect(screen.getByText("$110")).toBeTruthy();
   });
 
-  it("lista los lugares con su letra y avisa cuál se tocó", async () => {
+  it("lista los lugares con su letra y su ícono, y avisa cuál se tocó", async () => {
     const onFocusPoi = vi.fn();
     render(<DayDetail day={day} dayNumber={2} onFocusPoi={onFocusPoi} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     expect(within(places).getAllByRole("button").map((b) => b.textContent)).toEqual([
-      expect.stringContaining("ASantuario Toshogu"),
-      expect.stringContaining("BCena en Asakusa"),
+      expect.stringContaining("A⛩️Santuario Toshogu"),
+      expect.stringContaining("B📍Cena en Asakusa"),
     ]);
     await userEvent.click(within(places).getByRole("button", { name: /Cena en Asakusa/ }));
     expect(onFocusPoi).toHaveBeenCalledWith(1);
