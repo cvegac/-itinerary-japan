@@ -36,8 +36,8 @@ import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
-import type { Expense, Withdrawal } from "@/lib/expenses";
-import { formatMoney, toUsd } from "@/lib/money";
+import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
+import { formatMoney } from "@/lib/money";
 import ExpenseModal from "@/components/ExpenseModal";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
@@ -466,7 +466,7 @@ function DayExpenses({
   onRemove: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const totalUsd = Math.round(expenses.reduce((sum, e) => sum + toUsd(e.amount, e.currency), 0));
+  const totalUsd = Math.round(expenses.reduce((sum, e) => sum + expenseUsd(e), 0));
   const over = totalUsd > Number(budget.replace(/[^\d]/g, ""));
 
   return (

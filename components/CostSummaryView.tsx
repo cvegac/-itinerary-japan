@@ -164,7 +164,18 @@ function DailySummary({ itinerary, expenses, withdrawals, onRemoveExpense, onRem
                   ) : (
                     <CreditCard className="size-4 shrink-0 text-sky-600" aria-label="Pagado con tarjeta" />
                   )}
-                  <span className="w-24 shrink-0 font-semibold tabular-nums">{formatMoney(e.amount, e.currency)}</span>
+                  <span
+                    title={
+                      e.currency === "USD"
+                        ? undefined
+                        : e.perUsd
+                          ? `1 US$ = ${formatMoney(e.perUsd, e.currency, 2)} (${e.rateDate})`
+                          : "Cambio aproximado: se registró sin cotización"
+                    }
+                    className="w-24 shrink-0 font-semibold tabular-nums"
+                  >
+                    {formatMoney(e.amount, e.currency)}
+                  </span>
                   <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
                   <RemoveButton
                     label={`Quitar gasto ${e.note || formatMoney(e.amount, e.currency)}`}

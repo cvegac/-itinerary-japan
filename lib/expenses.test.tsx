@@ -37,7 +37,7 @@ vi.mock("@/lib/cloud", () => ({
   deleteRecord: (_uid: string, _slug: string, field: string, id: string) => void cloud.deleted.push({ field, id }),
 }));
 
-import { cashBalance, dailySummary, spentByDate, useExpenses, useWithdrawals } from "./expenses";
+import { cashBalance, dailySummary, expenseUsd, spentByDate, useExpenses, useWithdrawals } from "./expenses";
 
 const KEY = "viajes-gastos-japan";
 const expense = (over: Partial<Expense> = {}): Expense => ({
@@ -152,10 +152,22 @@ describe("spentByDate", () => {
   it("suma lo gastado cada día en dólares, juntando monedas", () => {
     const totals = spentByDate([
       expense({ amount: 1500 }),
-      expense({ id: "e2", amount: 40000, currency: "COP" }),
+      expense({ id: "e2", amount: 32000, currency: "COP" }),
       expense({ id: "e3", date: "2026-11-03", amount: 5, currency: "USD" }),
     ]);
     expect(totals).toEqual({ "2026-11-02": 20, "2026-11-03": 5 });
+  });
+});
+
+describe("expenseUsd", () => {
+  it("usa la cotización guardada con el gasto; si no tiene, la de respaldo", () => {
+    expect(expenseUsd(expense({ amount: 1570, perUsd: 157, rateDate: "2026-11-02" }))).toBeCloseTo(10);
+    expect(expenseUsd(expense({ amount: 1500 }))).toBe(10);
+  });
+
+  it("los totales del día usan la cotización de cada gasto", () => {
+    const totals = spentByDate([expense({ amount: 3140, perUsd: 157 }), expense({ id: "e2", amount: 6368, currency: "COP", perUsd: 3184 })]);
+    expect(totals["2026-11-02"]).toBeCloseTo(22);
   });
 });
 

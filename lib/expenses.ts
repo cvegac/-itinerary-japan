@@ -15,6 +15,10 @@ export type Expense = {
   method: PaymentMethod;
   note: string;
   createdAt: number;
+  /** Cotización al registrarlo: cuántas unidades de su moneda valía un dólar */
+  perUsd?: number;
+  /** Fecha de esa cotización (YYYY-MM-DD) */
+  rateDate?: string;
 };
 
 /** Efectivo sacado del cajero, en yenes */
@@ -41,10 +45,15 @@ export function useWithdrawals(slug: string) {
   return useSyncedRecords<Withdrawal>(slug, "withdrawals", "retiros");
 }
 
+/** Un gasto en dólares: con su cotización guardada o, si no tiene, la de respaldo */
+export function expenseUsd(e: Expense): number {
+  return e.perUsd ? e.amount / e.perUsd : toUsd(e.amount, e.currency);
+}
+
 /** Lo gastado cada día, en dólares (sumando todas las monedas) */
 export function spentByDate(expenses: Expense[]): Record<string, number> {
   const totals: Record<string, number> = {};
-  expenses.forEach((e) => (totals[e.date] = (totals[e.date] ?? 0) + toUsd(e.amount, e.currency)));
+  expenses.forEach((e) => (totals[e.date] = (totals[e.date] ?? 0) + expenseUsd(e)));
   return totals;
 }
 
@@ -69,7 +78,7 @@ export function dailySummary(expenses: Expense[], withdrawals: Withdrawal[]): Da
   expenses.forEach((e) => {
     const d = day(e.date);
     d.expenses.push(e);
-    d.totalUsd += toUsd(e.amount, e.currency);
+    d.totalUsd += expenseUsd(e);
   });
   withdrawals.forEach((w) => day(w.date).withdrawals.push(w));
   return Array.from(days.values()).sort((a, b) => a.date.localeCompare(b.date));

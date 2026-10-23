@@ -3,6 +3,7 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import ExpenseModal from "@/components/ExpenseModal";
+import { forgetRatesSession } from "@/lib/rates";
 
 afterEach(cleanup);
 
@@ -77,6 +78,47 @@ describe("ExpenseModal", () => {
     const dialog = screen.getByRole("dialog");
     expect(container.contains(dialog)).toBe(false);
     expect(dialog.closest("body")).toBe(document.body);
+  });
+
+  describe("cotización", () => {
+    const SAMPLE = { date: "2026-11-02", usd: { jpy: 156.94, cop: 3181.47 } };
+
+    afterEach(() => {
+      vi.unstubAllGlobals();
+      forgetRatesSession();
+      localStorage.clear();
+    });
+
+    it("muestra la cotización del momento y la guarda con el gasto", async () => {
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => SAMPLE }));
+      const props = renderModal();
+      expect(await screen.findByText(/1 US\$ = ¥156\.94/)).toBeTruthy();
+      await userEvent.type(screen.getByLabelText("Monto"), "1569");
+      expect(screen.getByText(/≈ US\$10/)).toBeTruthy();
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onSaveExpense).toHaveBeenCalledWith(
+        expect.objectContaining({ amount: 1569, currency: "JPY", perUsd: 156.94, rateDate: "2026-11-02" })
+      );
+      // queda como "última conocida" para usar sin conexión
+      expect(JSON.parse(localStorage.getItem("viajes-cambio")!).date).toBe("2026-11-02");
+    });
+
+    it("sin conexión usa la última cotización conocida y lo avisa", async () => {
+      localStorage.setItem("viajes-cambio", JSON.stringify({ date: "2026-11-01", perUsd: { USD: 1, JPY: 155, COP: 3200 } }));
+      const props = renderModal();
+      expect(await screen.findByText(/última conocida/)).toBeTruthy();
+      await userEvent.type(screen.getByLabelText("Monto"), "1550");
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onSaveExpense).toHaveBeenCalledWith(expect.objectContaining({ perUsd: 155, rateDate: "2026-11-01" }));
+    });
+
+    it("sin conexión ni cotización conocida avisa que el cambio es aproximado y no inventa una", async () => {
+      const props = renderModal();
+      expect(screen.getByText(/aproximado/)).toBeTruthy();
+      await userEvent.type(screen.getByLabelText("Monto"), "1500");
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(vi.mocked(props.onSaveExpense).mock.calls[0][0]).not.toHaveProperty("perUsd");
+    });
   });
 
   it("puede abrir directo en retiro", () => {

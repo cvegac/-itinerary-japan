@@ -4,7 +4,8 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import type { Expense, PaymentMethod, Withdrawal } from "@/lib/expenses";
-import { CURRENCIES, type Currency } from "@/lib/money";
+import { CURRENCIES, formatMoney, toUsd, type Currency } from "@/lib/money";
+import { rememberRates, useRates } from "@/lib/rates";
 import Segmented from "@/components/Segmented";
 
 type Kind = "expense" | "withdrawal";
@@ -42,10 +43,26 @@ export default function ExpenseModal({
   );
   const title = isExpense ? "Registrar gasto" : "Registrar retiro";
 
+  // Cotización del momento (o la última conocida); se guarda con el gasto
+  const { rates, source } = useRates();
+  const perUsd = currency === "USD" ? 1 : (rates?.perUsd[currency] ?? null);
+  const usdValue = perUsd ? value / perUsd : toUsd(value, currency);
+  const rateNote =
+    source === "live"
+      ? `cambio del ${shortDate(rates!.date)}`
+      : source === "cached"
+        ? `última conocida (${shortDate(rates!.date)}), sin conexión`
+        : "cambio aproximado, sin conexión";
+
   function save(e: React.FormEvent) {
     e.preventDefault();
     if (!value) return;
-    if (isExpense) onSaveExpense({ date, amount: value, currency, method, note: note.trim() });
+    if (isExpense) {
+      const withRate = rates && currency !== "USD" ? { perUsd: rates.perUsd[currency], rateDate: rates.date } : {};
+      onSaveExpense({ date, amount: value, currency, method, note: note.trim(), ...withRate });
+      // La del momento queda como "última conocida" para registrar sin conexión
+      if (source === "live" && rates) rememberRates(rates);
+    }
     else onSaveWithdrawal({ date, amountYen: value, note: note.trim() });
     onClose();
   }
@@ -119,6 +136,13 @@ export default function ExpenseModal({
           )}
         </div>
 
+        {isExpense && currency !== "USD" && (
+          <p className="-mt-2 text-xs text-muted">
+            1 US$ = {formatMoney(perUsd ?? 1 / toUsd(1, currency), currency, 2)} · {rateNote}
+            {value > 0 && <span className="font-semibold text-fg"> · ≈ US${usdValue.toFixed(2)}</span>}
+          </p>
+        )}
+
         {isExpense && (
           <div>
             <span className={label}>Cómo pagaste</span>
@@ -177,4 +201,8 @@ export default function ExpenseModal({
     </div>,
     document.body
   );
+}
+
+function shortDate(date: string): string {
+  return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short" });
 }
