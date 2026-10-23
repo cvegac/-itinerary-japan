@@ -1,7 +1,10 @@
 node_modules
 .next
 out
+
 formatos-visa
+reservas
+
 # Generados por Next/TypeScript al compilar
 next-env.d.ts
 *.tsbuildinfo
