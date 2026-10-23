@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { computeLodgingSummary } from "@/lib/itinerary-utils";
 import { poiSignature } from "@/lib/route-plan";
+import { dayCostBreakdown } from "@/lib/budget";
 import { getAllTrips } from "./index";
 
 const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -81,6 +82,20 @@ describe("viaje japan", () => {
     expect(japan.itinerary).toHaveLength(35);
     expect(stays).toHaveLength(14);
     expect(stays.reduce((sum, s) => sum + s.nights, 0)).toBe(34);
+  });
+
+  it("tiene el precio real del hospedaje en cada noche con cama", () => {
+    const missing = japan.itinerary
+      .filter((d) => !d.isTransit && d.accommodation !== "---" && !(d.lodgingCost! > 0))
+      .map((d) => d.date);
+    expect(missing).toEqual([]);
+  });
+
+  it("tiene el presupuesto de cada día al día con su desglose (lib/budget.ts)", () => {
+    const stale = japan.itinerary
+      .filter((d) => d.budget !== `$${dayCostBreakdown(d).total}`)
+      .map((d) => `${d.date}: ${d.budget} → $${dayCostBreakdown(d).total}`);
+    expect(stale).toEqual([]);
   });
 
   it("tiene todos los puntos de interés dentro de Japón", () => {

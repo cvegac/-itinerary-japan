@@ -25,6 +25,9 @@ export type DayEntry = {
   lodgingPlace?: string;
   zona: string;
   accommodationCoords: [number, number];
+  /** Precio real de esa noche en USD (total de la reserva / noches). Lo usa el
+   *  presupuesto del día (lib/budget.ts) */
+  lodgingCost?: number;
   /** Puntos de interés del día (coordenadas verificadas con OpenStreetMap).
    *  El mapa los muestra solo en modo "día". */
   pois?: PointOfInterest[];
