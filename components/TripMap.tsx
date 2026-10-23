@@ -28,6 +28,18 @@ type Props = {
 type MapLibre = typeof import("maplibre-gl");
 
 
+// Textos de los controles del mapa (MapLibre los trae en inglés)
+const MAP_LOCALE = {
+  "AttributionControl.ToggleAttribution": "Ver créditos del mapa",
+  "GeolocateControl.FindMyLocation": "Mi ubicación",
+  "GeolocateControl.LocationNotAvailable": "Ubicación no disponible",
+  "NavigationControl.ResetBearing": "Apuntar al norte",
+  "NavigationControl.ZoomIn": "Acercar",
+  "NavigationControl.ZoomOut": "Alejar",
+  "TerrainControl.Enable": "Ver relieve en 3D",
+  "TerrainControl.Disable": "Quitar relieve en 3D",
+};
+
 const ROUTE_SOURCE = "trip-route";
 const DEFAULT_PADDING: PaddingOptions = { top: 60, bottom: 60, left: 60, right: 60 };
 
@@ -151,6 +163,8 @@ export default function TripMap({
   // siempre en el celular) y hacía que se ignoraran los cambios de día o modo.
   const readyRef = useRef(false);
   const paddingRef = useRef(padding);
+  // Si "Mi ubicación" te está siguiendo, la app no mueve la cámara al mover la hoja
+  const trackingRef = useRef(false);
   paddingRef.current = padding;
   // Para que los handlers de los marcadores usen siempre el último callback
   const onDaySelectRef = useRef(onDaySelect);
@@ -177,12 +191,24 @@ export default function TripMap({
         center: toLngLat(center),
         zoom: zoom - 1,
         attributionControl: false,
+        locale: MAP_LOCALE,
         maxPitch: 75,
       });
       mapRef.current = map;
 
       map.addControl(new lib.AttributionControl({ compact: true }), "top-left");
       map.addControl(new lib.NavigationControl({ visualizePitch: true }), "top-right");
+      // Tu ubicación con el GPS del celular: no necesita internet, y no se
+      // guarda ni se manda a ningún lado (el permiso lo pide el navegador)
+      const geolocate = new lib.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+        trackUserLocation: true,
+        showAccuracyCircle: true,
+        fitBoundsOptions: { maxZoom: 16 },
+      });
+      geolocate.on("trackuserlocationstart", () => (trackingRef.current = true));
+      geolocate.on("trackuserlocationend", () => (trackingRef.current = false));
+      map.addControl(geolocate, "top-right");
       map.addControl(new lib.TerrainControl({ source: "terrain", exaggeration: 1.3 }), "top-right");
 
       // Cada cambio de estilo borra las capas propias: se vuelven a agregar
@@ -233,7 +259,10 @@ export default function TripMap({
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
   useEffect(() => {
     const map = mapRef.current;
-    if (map && cameraRef.current) moveCamera(map, cameraRef.current, 300);
+    if (!map) return;
+    // Siguiendo tu ubicación: solo se corre el margen, sin cortar el seguimiento
+    if (trackingRef.current) map.easeTo({ padding: paddingRef.current, duration: 300 });
+    else if (cameraRef.current) moveCamera(map, cameraRef.current, 300);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paddingKey]);
 
@@ -253,7 +282,14 @@ export default function TripMap({
   function moveCamera(map: MapLibreMap, camera: Camera, duration: number) {
     cameraRef.current = camera;
     if ("bounds" in camera) {
-      map.fitBounds(camera.bounds, { padding: paddingRef.current, maxZoom: camera.maxZoom, duration });
+      // absolutePadding: el margen queda fijo en el mapa, así "Mi ubicación" centra
+      // tu punto en la parte visible y no debajo de la hoja del día
+      map.fitBounds(camera.bounds, {
+        padding: paddingRef.current,
+        absolutePadding: true,
+        maxZoom: camera.maxZoom,
+        duration,
+      });
     } else {
       map.flyTo({ center: camera.center, zoom: camera.zoom, padding: paddingRef.current, duration });
     }

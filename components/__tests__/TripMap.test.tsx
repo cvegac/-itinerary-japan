@@ -13,15 +13,19 @@ const fake = vi.hoisted(() => {
     routes: [] as { features: unknown[] }[],
     elements: [] as HTMLElement[],
     toggles: 0,
+    controls: [] as unknown[],
+    mapOptions: [] as Record<string, unknown>[],
   };
 
   class FakeMap {
     handlers: Record<string, Handler[]> = {};
     fitBounds = vi.fn();
     flyTo = vi.fn();
+    easeTo = vi.fn();
     source = { setData: (data: { features: unknown[] }) => state.routes.push(data) };
-    constructor() {
+    constructor(options: Record<string, unknown> = {}) {
       state.maps.push(this);
+      state.mapOptions.push(options);
     }
     on(event: string, fn: Handler) {
       (this.handlers[event] ??= []).push(fn);
@@ -37,7 +41,9 @@ const fake = vi.hoisted(() => {
     isStyleLoaded() {
       return false;
     }
-    addControl() {}
+    addControl(control: unknown) {
+      state.controls.push(control);
+    }
     addSource() {}
     addLayer() {}
     getLayer() {
@@ -90,6 +96,14 @@ const fake = vi.hoisted(() => {
   }
 
   class Control {}
+  class GeolocateControl {
+    handlers: Record<string, () => void> = {};
+    constructor(public options: Record<string, unknown>) {}
+    on(event: string, fn: () => void) {
+      this.handlers[event] = fn;
+      return this;
+    }
+  }
 
   return {
     state,
@@ -100,6 +114,7 @@ const fake = vi.hoisted(() => {
       NavigationControl: Control,
       TerrainControl: Control,
       AttributionControl: Control,
+      GeolocateControl,
       setWorkerUrl: () => {},
     },
   };
@@ -123,6 +138,8 @@ afterEach(() => {
   fake.state.alive = 0;
   fake.state.elements.length = 0;
   fake.state.toggles = 0;
+  fake.state.controls.length = 0;
+  fake.state.mapOptions.length = 0;
 });
 
 /** Elementos de los marcadores de día que siguen en el mapa (los últimos dibujados) */
@@ -139,8 +156,10 @@ const itinerary = [
   makeDay("2026-11-03", "Mar", { accommodationCoords: [34.39, 132.47] }),
 ];
 
-function props(day: DayEntry, mode: MapMode) {
-  return { day, mode, itinerary, startDate: "2026-11-01", center: [35.7, 139.8] as [number, number], zoom: 6 };
+const PADDING = { top: 140, bottom: 480, left: 32, right: 56 };
+
+function props(day: DayEntry, mode: MapMode, padding = PADDING) {
+  return { day, mode, itinerary, startDate: "2026-11-01", center: [35.7, 139.8] as [number, number], zoom: 6, padding };
 }
 
 async function renderLoadedMap(day: DayEntry, mode: MapMode) {
@@ -155,6 +174,49 @@ async function renderLoadedMap(day: DayEntry, mode: MapMode) {
 }
 
 describe("TripMap", () => {
+  it("tiene el botón de mi ubicación, que sigue al usuario con GPS", async () => {
+    await renderLoadedMap(itinerary[0], "day");
+    const geo = fake.state.controls.find((c) => c instanceof fake.module.GeolocateControl) as
+      | { options: Record<string, unknown> }
+      | undefined;
+    expect(geo).toBeTruthy();
+    expect(geo!.options).toMatchObject({
+      trackUserLocation: true,
+      showAccuracyCircle: true,
+      positionOptions: { enableHighAccuracy: true },
+    });
+  });
+
+  it("deja fijo el margen libre del mapa, para que tu ubicación no quede debajo de la hoja", async () => {
+    const { map } = await renderLoadedMap(itinerary[1], "day");
+    expect(map.fitBounds).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining({ padding: PADDING, absolutePadding: true })
+    );
+  });
+
+  it("si te está siguiendo, mover la hoja corre el margen sin cortar el seguimiento", async () => {
+    const { rerender, map } = await renderLoadedMap(itinerary[1], "day");
+    const geo = fake.state.controls.find((c) => c instanceof fake.module.GeolocateControl) as {
+      handlers: Record<string, () => void>;
+    };
+    act(() => geo.handlers.trackuserlocationstart());
+    map.fitBounds.mockClear();
+    const sheetDown = { ...PADDING, bottom: 260 };
+    rerender(<TripMap {...props(itinerary[1], "day", sheetDown)} />);
+    expect(map.easeTo).toHaveBeenLastCalledWith(expect.objectContaining({ padding: sheetDown }));
+    expect(map.fitBounds).not.toHaveBeenCalled();
+  });
+
+  it("muestra los controles del mapa en español", async () => {
+    await renderLoadedMap(itinerary[0], "day");
+    expect(fake.state.mapOptions[0].locale).toMatchObject({
+      "GeolocateControl.FindMyLocation": "Mi ubicación",
+      "NavigationControl.ZoomIn": "Acercar",
+      "NavigationControl.ZoomOut": "Alejar",
+    });
+  });
+
   it("dibuja el día al terminar de cargar: hospedaje + lugares + ruta", async () => {
     await renderLoadedMap(itinerary[1], "day");
     expect(fake.state.alive).toBe(1 + 4);
