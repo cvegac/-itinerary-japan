@@ -108,29 +108,13 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
           zoomControl: true,
         });
 
-        // Basemaps gratis y sin API key, con nombres legibles en Japón
-        // (CARTO dejó de servir: exige API key hasta para Voyager, y el OSM
-        // estándar rotula todo en japonés).
-        // - Esri NatGeo: solo alfabeto latino, pero sin datos pasado el zoom 12
-        //   ("Map data not yet available"); más allá se agranda la tile del 12.
-        //   Esri lo dejó en soporte limitado, por eso queda la alternativa.
-        // - OSM Alemania: nombre local + transcripción latina, con detalle de calles.
-        const natGeo = L.tileLayer(
-          "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}",
-          {
-            attribution: "Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ",
-            maxNativeZoom: 12,
-            maxZoom: 16,
-          }
-        );
-        const osmDe = L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
+        // OSM Alemania: gratis, sin API key, con el nombre local + la
+        // transcripción latina (el OSM estándar rotula Japón solo en japonés;
+        // CARTO exige API key y Esri NatGeo no tiene datos pasado el zoom 12).
+        L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 18,
-        });
-        natGeo.addTo(mapInstanceRef.current);
-        L.control
-          .layers({ "Mapa (en latino)": natGeo, "Calles (bilingüe)": osmDe })
-          .addTo(mapInstanceRef.current);
+        }).addTo(mapInstanceRef.current);
 
         layerGroupRef.current = L.layerGroup().addTo(mapInstanceRef.current);
       }
@@ -221,10 +205,9 @@ export default function TripMap({ day, mode, onDaySelect, itinerary, startDate, 
 
     // Encuadrar en los puntos; el hospedaje entra solo si está cerca (en las
     // excursiones, como Nikko desde Tokio, alejaría demasiado el mapa).
-    // maxZoom 13: el basemap NatGeo no tiene datos pasado el 12 y se pixela.
     const bounds = L.latLngBounds(poiCoords);
     if (map.distance(bounds.getCenter(), [lat, lng]) < 15000) bounds.extend([lat, lng]);
-    map.flyToBounds(bounds.pad(0.2), { duration: 0.8, maxZoom: 13 });
+    map.flyToBounds(bounds.pad(0.2), { duration: 0.8, maxZoom: 16 });
     return null;
   }
 
