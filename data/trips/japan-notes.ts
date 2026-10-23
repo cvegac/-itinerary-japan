@@ -14,7 +14,7 @@ export const NOTES: TripNotes = {
       id: "seguro",
       text: "Contratar el seguro de viaje",
       detail:
-        "Que cubra gastos médicos en Japón durante las 5 semanas. El pasaje no se pagó con la Mastercard Black, así que no cuentes con la asistencia de esa tarjeta: fijate si la tarjeta con la que pagaste incluye alguna, y si no, comprá uno aparte",
+        "Que cubra gastos médicos en Japón durante las 5 semanas. El pasaje no se pagó con la Mastercard Black, así que no cuentes con la asistencia de esa tarjeta: fijate si la tarjeta con la que pagaste incluye alguna, y si no, comprá uno aparte. Opciones en \"Seguro de viaje\", más abajo",
     },
     {
       id: "salas-vip",
@@ -90,6 +90,17 @@ export const NOTES: TripNotes = {
     },
   ],
   sections: [
+    {
+      title: "Seguro de viaje: opciones",
+      items: [
+        "Cubrir del 30 oct al 6 dic (38 días): desde que salís de Bogotá hasta que volvés",
+        "Primero: los beneficios de la tarjeta con la que pagaste el pasaje de KLM. Puede que ya incluya asistencia",
+        "SafetyWing (Nomad Insurance Essential): ~US$56–63 cada 4 semanas entre 18 y 39 años, unos US$80–90 por el viaje. Médico hasta US$250,000 sin deducible, más equipaje facturado y retrasos. Se compra online: confirmá que acepte residentes de Colombia",
+        "Heymondo: muy recomendado para Japón (médico alto, app con chat 24 h). Los precios publicados son para residentes en España: cotizá y fijate si vende a residentes de Colombia",
+        "Asistencias colombianas (Assist Card, Universal Assistance, Travel Ace, SURA): se pagan en pesos y atienden en español. Cotizá el mismo período en 2 o 3",
+        "Al comparar, pedí: médico de al menos US$100,000, deducible bajo o cero, asistencia 24 h en español, equipaje y demoras (vas con 2 escalas) y que no excluya senderismo ni bici (Kumano Kodo, Mitsutoge, Shimanami)",
+      ],
+    },
     {
       title: "Pagar en el hospedaje",
       items: [
