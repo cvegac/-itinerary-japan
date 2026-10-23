@@ -32,24 +32,44 @@ describe("NotesView", () => {
     expect(localStorage.getItem(KEY)).toBeNull();
   });
 
-  it("al tildar una tarea la recuerda en el dispositivo", async () => {
+  const nikko = () => screen.queryByRole("checkbox", { name: /Reservar el bus a Nikko/ });
+
+  it("al tildar una tarea la archiva: sale de pendientes y se recuerda en el dispositivo", async () => {
     renderNotes();
-    const task = screen.getByRole("checkbox", { name: /Reservar el bus a Nikko/ });
-    await act(() => userEvent.click(task));
-    expect(task.getAttribute("aria-checked")).toBe("true");
+    await act(() => userEvent.click(nikko()!));
+    expect(nikko()).toBeNull();
     expect(screen.getByText("1 de 2 hechas")).toBeTruthy();
     expect(JSON.parse(localStorage.getItem(KEY)!)).toEqual(["bus-nikko"]);
 
     cleanup();
     renderNotes();
-    expect(screen.getByRole("checkbox", { name: /Reservar el bus a Nikko/ }).getAttribute("aria-checked")).toBe("true");
+    expect(nikko()).toBeNull();
+    expect(screen.getByRole("button", { name: "Ver archivadas (1)" })).toBeTruthy();
   });
 
-  it("al destildar la saca de lo guardado", async () => {
+  it("muestra las archivadas con un botón, sin haberlas borrado", async () => {
     localStorage.setItem(KEY, JSON.stringify(["bus-nikko"]));
     renderNotes();
-    await act(() => userEvent.click(screen.getByRole("checkbox", { name: /Reservar el bus a Nikko/ })));
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Ver archivadas (1)" })));
+    expect(nikko()!.getAttribute("aria-checked")).toBe("true");
+
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Ocultar archivadas" })));
+    expect(nikko()).toBeNull();
+  });
+
+  it("al destildar una archivada vuelve a pendientes", async () => {
+    localStorage.setItem(KEY, JSON.stringify(["bus-nikko"]));
+    renderNotes();
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Ver archivadas (1)" })));
+    await act(() => userEvent.click(nikko()!));
     expect(JSON.parse(localStorage.getItem(KEY)!)).toEqual([]);
+    expect(nikko()!.getAttribute("aria-checked")).toBe("false");
+    expect(screen.queryByRole("button", { name: /archivadas/ })).toBeNull();
+  });
+
+  it("sin archivadas no muestra el botón", () => {
+    renderNotes();
+    expect(screen.queryByRole("button", { name: /archivadas/ })).toBeNull();
   });
 
   it("abre el día del itinerario de una tarea", async () => {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
-import type { TripNotes } from "@/types/Trip";
+import type { TripNotes, TripTask } from "@/types/Trip";
 
 type Props = {
   notes: TripNotes;
@@ -45,7 +45,55 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
     }
   }
 
-  const doneCount = notes.tasks.filter((t) => done.includes(t.id)).length;
+  // Las hechas se archivan: salen de la lista pero no se borran
+  const pending = notes.tasks.filter((t) => !done.includes(t.id));
+  const archived = notes.tasks.filter((t) => done.includes(t.id));
+  const [showArchived, setShowArchived] = useState(false);
+
+  const taskList = (tasks: TripTask[], label: string) => (
+    <ul aria-label={label} className="flex flex-col gap-2">
+      {tasks.map((task) => {
+        const checked = done.includes(task.id);
+        const day = task.date ? itinerary.find((d) => d.date === task.date) : undefined;
+        return (
+          <li
+            key={task.id}
+            className={`flex items-start gap-3 rounded-2xl border border-line p-3.5 ${checked ? "bg-surface-2" : "bg-surface"}`}
+          >
+            <button
+              type="button"
+              role="checkbox"
+              aria-checked={checked}
+              aria-label={task.text}
+              onClick={() => toggle(task.id)}
+              className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${
+                checked ? "border-accent bg-accent text-white" : "border-line"
+              }`}
+            >
+              {checked && <Check className="size-4" strokeWidth={3} aria-hidden />}
+            </button>
+            <span className="min-w-0 flex-1">
+              <span className={`block text-sm font-semibold ${checked ? "text-muted line-through" : ""}`}>
+                {task.text}
+              </span>
+              {task.detail && <span className="mt-0.5 block text-sm text-muted">{task.detail}</span>}
+            </span>
+            {day && (
+              <button
+                type="button"
+                aria-label={`Ver el día ${shortDate(day.date)}`}
+                onClick={() => onDaySelect(day)}
+                className="flex shrink-0 items-center gap-0.5 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-semibold transition-colors hover:bg-line"
+              >
+                {shortDate(day.date)}
+                <ChevronRight className="size-3.5" aria-hidden />
+              </button>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-4">
@@ -58,48 +106,25 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
         <div className="flex items-baseline justify-between">
           <h3 className="text-lg font-bold">Por hacer</h3>
           <span className="text-sm text-muted">
-            {doneCount} de {notes.tasks.length} hechas
+            {archived.length} de {notes.tasks.length} hechas
           </span>
         </div>
-        <ul className="flex flex-col gap-2">
-          {notes.tasks.map((task) => {
-            const checked = done.includes(task.id);
-            const day = task.date ? itinerary.find((d) => d.date === task.date) : undefined;
-            return (
-              <li key={task.id} className="flex items-start gap-3 rounded-2xl border border-line bg-surface p-3.5">
-                <button
-                  type="button"
-                  role="checkbox"
-                  aria-checked={checked}
-                  aria-label={task.text}
-                  onClick={() => toggle(task.id)}
-                  className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${
-                    checked ? "border-accent bg-accent text-white" : "border-line"
-                  }`}
-                >
-                  {checked && <Check className="size-4" strokeWidth={3} aria-hidden />}
-                </button>
-                <span className="min-w-0 flex-1">
-                  <span className={`block text-sm font-semibold ${checked ? "text-muted line-through" : ""}`}>
-                    {task.text}
-                  </span>
-                  {task.detail && <span className="mt-0.5 block text-sm text-muted">{task.detail}</span>}
-                </span>
-                {day && (
-                  <button
-                    type="button"
-                    aria-label={`Ver el día ${shortDate(day.date)}`}
-                    onClick={() => onDaySelect(day)}
-                    className="flex shrink-0 items-center gap-0.5 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-semibold transition-colors hover:bg-line"
-                  >
-                    {shortDate(day.date)}
-                    <ChevronRight className="size-3.5" aria-hidden />
-                  </button>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        {pending.length > 0 ? (
+          taskList(pending, "Tareas pendientes")
+        ) : (
+          <p className="rounded-2xl bg-surface-2 p-3.5 text-sm text-muted">No queda nada pendiente</p>
+        )}
+        {archived.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={showArchived}
+            onClick={() => setShowArchived((v) => !v)}
+            className="self-start rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold transition-colors hover:bg-line"
+          >
+            {showArchived ? "Ocultar archivadas" : `Ver archivadas (${archived.length})`}
+          </button>
+        )}
+        {showArchived && archived.length > 0 && taskList(archived, "Tareas archivadas")}
       </section>
 
       {notes.sections.map((section) => (
