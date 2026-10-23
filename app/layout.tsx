@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 export const metadata: Metadata = {
   title: "Mis Viajes",
   description: "Gestión de itinerarios de viaje",
+  applicationName: "Mis Viajes",
+  // iPhone: al agregarla al inicio abre como app, sin la barra de Safari
+  appleWebApp: { capable: true, title: "Viajes", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

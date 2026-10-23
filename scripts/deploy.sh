@@ -35,6 +35,9 @@ aws s3 sync out/_next/static/ "s3://$BUCKET/_next/static/" \
   --cache-control "public, max-age=31536000, immutable" \
   --profile "$PROFILE"
 
+echo "==> Manifiesto de la web app con su tipo correcto (sync no siempre reconoce .webmanifest)"
+aws s3 cp out/manifest.webmanifest "s3://$BUCKET/manifest.webmanifest"   --content-type "application/manifest+json"   --cache-control "public, max-age=0, must-revalidate"   --profile "$PROFILE"
+
 echo "==> Invalidando cache de CloudFront"
 aws cloudfront create-invalidation \
   --distribution-id "$DISTRIBUTION_ID" \
