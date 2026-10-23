@@ -1,9 +1,9 @@
+/* Leaflet CSS (los @import tienen que ir antes que cualquier otra regla) */
+@import "leaflet/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Leaflet CSS */
-@import "leaflet/dist/leaflet.css";
 
 html,
 body {
