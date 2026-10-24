@@ -7,81 +7,14 @@
 // Volver a correrlo cuando cambien los lugares de un día (un test avisa).
 // Respeta el uso justo del servicio: un pedido por segundo, reintentos y una
 // caché local de respuestas (.cache/osrm) para no repetir pedidos.
-import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { loadTs, root } from "./lib/load-ts.mjs";
+import { osrm, stats } from "./lib/http-cache.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const require = createRequire(import.meta.url);
-const ts = require(join(root, "node_modules/typescript"));
-
-// ── Cargador mínimo de los módulos TS del proyecto (alias "@/") ────────────
-const cache = new Map();
-function load(file) {
-  if (cache.has(file)) return cache.get(file).exports;
-  const mod = { exports: {} };
-  cache.set(file, mod);
-  if (file.endsWith(".json")) {
-    mod.exports = JSON.parse(readFileSync(file, "utf8"));
-    return mod.exports;
-  }
-  const js = ts.transpileModule(readFileSync(file, "utf8"), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true },
-  }).outputText;
-  const req = (spec) => {
-    const base = spec.startsWith("@/") ? join(root, spec.slice(2)) : spec.startsWith(".") ? join(dirname(file), spec) : null;
-    if (!base) return require(spec);
-    const found = [`${base}.ts`, `${base}.tsx`, join(base, "index.ts"), base].find(
-      (candidate) => existsSync(candidate) && statSync(candidate).isFile()
-    );
-    if (!found) throw new Error(`no se encontró ${spec} desde ${file}`);
-    return load(found);
-  };
-  new Function("module", "exports", "require", js)(mod, mod.exports, req);
-  return mod.exports;
-}
-
-const { getAllTrips } = load(join(root, "data/trips/index.ts"));
-const plan = load(join(root, "lib/route-plan.ts"));
-const { distanceKm, routeStart } = load(join(root, "lib/map-geo.ts"));
-
-// ── OSRM ────────────────────────────────────────────────────────────────
-const OSRM = "https://routing.openstreetmap.de";
-const UA = "japan-trip-itinerary/1.0 (github.com/cvegac/-itinerary-japan)";
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-let requests = 0;
-let cached = 0;
-const CACHE_DIR = join(root, ".cache/osrm");
-mkdirSync(CACHE_DIR, { recursive: true });
-
-async function osrm(path) {
-  const cacheFile = join(CACHE_DIR, createHash("sha1").update(path).digest("hex") + ".json");
-  if (existsSync(cacheFile)) {
-    cached++;
-    return JSON.parse(readFileSync(cacheFile, "utf8"));
-  }
-  const json = await osrmFetch(path);
-  if (json) writeFileSync(cacheFile, JSON.stringify(json));
-  return json;
-}
-
-async function osrmFetch(path) {
-  for (let attempt = 1; attempt <= 4; attempt++) {
-    await sleep(1100);
-    requests++;
-    try {
-      const res = await fetch(`${OSRM}${path}`, { headers: { "User-Agent": UA } });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.code === "Ok") return json;
-      }
-    } catch {}
-    await sleep(2000 * attempt);
-  }
-  return null;
-}
+const { getAllTrips } = loadTs("data/trips/index.ts");
+const plan = loadTs("lib/route-plan.ts");
+const { distanceKm, routeStart } = loadTs("lib/map-geo.ts");
 
 const lngLat = ([lat, lng]) => `${lng},${lat}`;
 const profileFor = (mode) => (mode === "bike" ? "routed-bike" : "routed-foot");
@@ -199,4 +132,4 @@ for (const day of trip.itinerary) {
 
 const file = join(root, `data/trips/${slug}-routes.json`);
 writeFileSync(file, JSON.stringify(out));
-console.log(`\n${Object.keys(out).length} días, ${requests} pedidos a OSRM (${cached} de la caché) → ${file} (${(JSON.stringify(out).length / 1024).toFixed(0)} KB)`);
+console.log(`\n${Object.keys(out).length} días, ${stats.requests} pedidos a OSRM (${stats.cached} de la caché) → ${file} (${(JSON.stringify(out).length / 1024).toFixed(0)} KB)`);
