@@ -42,6 +42,11 @@ describe("TripApp", () => {
     expect(title()).toBe("Excursión a Nikko");
   });
 
+  it("después del viaje abre el último día", () => {
+    renderAt("2026-12-20");
+    expect(title()).toBe("Vuelo a Hiroshima");
+  });
+
   it("pasa al día siguiente y al anterior", async () => {
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getByRole("button", { name: "Día siguiente" })));

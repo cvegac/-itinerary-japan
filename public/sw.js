@@ -3,16 +3,19 @@
  * no se registra y no se guarda nada. Al desactivarlo se borra todo.
  *
  * - App (páginas, JS, CSS, datos): se guarda al instalar, según offline-manifest.json.
- * - Páginas: primero la red (para ver lo último publicado); sin red, la copia.
+ * - Páginas: primero la red (para ver lo último publicado); si tarda más de 2 s
+ *   o no hay red, la copia.
  * - Mapa: tiles y elevación se guardan a medida que se miran, con un tope.
  *   También se usa el mapa descargado por adelantado (lib/map-download.ts),
  *   que vive en otra caché sin tope.
+ * - Estilo y TileJSON del mapa: la copia al instante y se actualiza por detrás
+ *   (esperar la red dejaba el mapa gris varios segundos con datos lentos).
  */
 const VERSION = new URL(self.location.href).searchParams.get("v") || "dev";
 const APP_CACHE = "viajes-app-" + VERSION;
 const MAP_CACHE = "viajes-mapa";
 const MAP_MAX_ENTRIES = 3000;
-const PAGE_TIMEOUT_MS = 4000;
+const PAGE_TIMEOUT_MS = 2000;
 const MAP_HOSTS = ["tiles.openfreemap.org", "elevation-tiles-prod.s3.amazonaws.com"];
 
 // Al desactivar, el navegador deja este worker controlando la página abierta
@@ -81,7 +84,7 @@ function handle(request, strategy) {
     case "map":
       return cacheFirst(request, MAP_CACHE, MAP_MAX_ENTRIES, true);
     case "map-meta":
-      return networkFirstAnyCache(request, MAP_CACHE);
+      return staleWhileRevalidate(request, MAP_CACHE, true);
     case "map-cache-only":
       // Sin la copia, el mapa usa el relieve normal ampliado
       return caches.match(request).then((cached) => cached || Response.error());
@@ -119,19 +122,6 @@ async function networkFirst(request) {
   }
 }
 
-/** Estilo y TileJSON: primero la red (dicen qué versión de tiles pedir); sin red, cualquier copia */
-async function networkFirstAnyCache(request, cacheName) {
-  try {
-    const response = await withTimeout(fetch(request), PAGE_TIMEOUT_MS);
-    if (response.ok) await (await caches.open(cacheName)).put(request, response.clone());
-    return response;
-  } catch (error) {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-    throw error;
-  }
-}
-
 async function cacheFirst(request, cacheName, maxEntries, searchAllCaches = false) {
   const cache = await caches.open(cacheName);
   // Los tiles pueden estar en la caché automática o en la del mapa descargado
@@ -145,9 +135,12 @@ async function cacheFirst(request, cacheName, maxEntries, searchAllCaches = fals
   return response;
 }
 
-async function staleWhileRevalidate(request, cacheName) {
+async function staleWhileRevalidate(request, cacheName, searchAllCaches = false) {
   const cache = await caches.open(cacheName);
-  const cached = await cache.match(request, { ignoreSearch: cacheName === APP_CACHE });
+  // El estilo puede estar también en la caché del mapa descargado
+  const cached = searchAllCaches
+    ? await caches.match(request)
+    : await cache.match(request, { ignoreSearch: cacheName === APP_CACHE });
   const fresh = fetch(request)
     .then(async (response) => {
       if (response.ok) await cache.put(request, response.clone());

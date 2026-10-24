@@ -22,6 +22,13 @@ import NotesView from "@/components/NotesView";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
 
+// MapLibre pesa ~1 MB: que baje en paralelo con el arranque de la app, no recién
+// cuando se monta el mapa (eran ~3,5 s de espera extra en 4G lenta)
+if (typeof window !== "undefined" && process.env.NODE_ENV !== "test") {
+  void import("@/components/TripMap");
+  void import("maplibre-gl");
+}
+
 type Props = { tripData: TripData };
 
 const NAV_HEIGHT = 64;
@@ -90,7 +97,9 @@ export default function TripApp({ tripData }: Props) {
   useEffect(() => {
     const s = tripStatus(itinerary, localISODate(new Date()));
     setStatus(s);
+    // Antes del viaje queda en el primer día; durante, en el de hoy; después, en el último
     if (s.kind === "during") setSelectedDay(itinerary[s.index]);
+    else if (s.kind === "after") setSelectedDay(itinerary[itinerary.length - 1] ?? null);
   }, [itinerary]);
 
   const costTotal = computeCostSummary(itinerary, meta.startDate).total;

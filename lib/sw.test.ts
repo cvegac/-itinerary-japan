@@ -174,15 +174,40 @@ describe("service worker", () => {
     expect(await request(listeners.fetch, hires, "cors", "reload")).toBeUndefined();
   });
 
-  it("el estilo del mapa viene de la red si hay, y si no del guardado", async () => {
+  it("el estilo del mapa guardado se usa al instante y se actualiza por detrás para la próxima", async () => {
+    // Antes esperaba la red hasta 4 s (estilo y después TileJSON): mapa gris con datos lentos
     const { listeners, caches } = loadWorker(network);
     const style = "https://tiles.openfreemap.org/styles/liberty";
-    caches.store.set("viajes-mapa-viaje", new Map([[style, new Response("estilo viejo")]]));
+    caches.store.set("viajes-mapa-viaje", new Map([[style, new Response("estilo guardado")]]));
+    expect(await (await request(listeners.fetch, style))!.text()).toBe("estilo guardado");
+    await new Promise((r) => setTimeout(r, 0));
+    expect(network).toHaveBeenCalled();
+    expect(await caches.store.get("viajes-mapa")!.get(style)!.text()).toBe(`red ${style}`);
+  });
+
+  it("sin estilo guardado lo trae de la red y lo guarda", async () => {
+    const { listeners, caches } = loadWorker(network);
+    const style = "https://tiles.openfreemap.org/styles/liberty";
     expect(await (await request(listeners.fetch, style))!.text()).toBe(`red ${style}`);
-    network.mockImplementation(async () => {
-      throw new TypeError("sin red");
-    });
-    expect(await (await request(listeners.fetch, style))!.text()).not.toMatch(/^red/);
+    expect(caches.store.get("viajes-mapa")!.has(style)).toBe(true);
+  });
+
+  it("con la red lenta no espera la página más de 2 s: usa la guardada", async () => {
+    // Relojes simulados ANTES de crear el worker: si no, captura el setTimeout real
+    vi.useFakeTimers();
+    try {
+      const { listeners } = loadWorker(network);
+      await lifecycle(listeners.install);
+      network.mockImplementation(() => new Promise(() => {}));
+      let settled = false;
+      const pending = request(listeners.fetch, "/japan/", "navigate")!.then((r) => ((settled = true), r));
+      await vi.advanceTimersByTimeAsync(1999);
+      expect(settled).toBe(false);
+      await vi.advanceTimersByTimeAsync(1);
+      expect(await (await pending)!.text()).toBe("precache /japan/");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("el relieve de alta resolución sale solo de lo descargado, sin gastar datos", async () => {
