@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
+import type { ExpressionSpecification, GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import {
@@ -21,6 +21,7 @@ import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/rout
 import { poiIcon } from "@/lib/poi-icons";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 import { hasHiResRelief } from "@/lib/map-download";
+import { TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
 
 export type MapMode = "day" | "week" | "full";
 
@@ -39,6 +40,8 @@ type Props = {
   focusedPoi?: { index: number; nonce: number } | null;
   /** Rutas precalculadas del día elegido (orden de visita y trazados) */
   routes?: DayRoutes;
+  /** Tramos de tren, bus, ferry y avión del día elegido, ya trazados (lib/transit.ts) */
+  transit?: TransitLine[];
 };
 
 type RouteFeature = ReturnType<typeof lineFeature>;
@@ -66,6 +69,7 @@ const MAP_LOCALE = {
 };
 
 const ROUTE_SOURCE = "trip-route";
+const NO_TRANSIT: TransitLine[] = [];
 const DEFAULT_PADDING: PaddingOptions = { top: 60, bottom: 60, left: 60, right: 60 };
 
 /** Lo último que se encuadró, para re-encuadrar si cambia el margen */
@@ -168,6 +172,35 @@ function morningPopupHtml(prev: DayEntry): string {
     </div>`;
 }
 
+const MODE_ICONS: Record<string, string> = {
+  tren: "🚆",
+  metro: "🚇",
+  tranvía: "🚋",
+  bus: "🚌",
+  ferry: "⛴️",
+  teleférico: "🚡",
+  avión: "✈️",
+};
+
+function transitPopupHtml({ segment }: TransitLine): string {
+  const via = segment.via?.length ? ` <span style="color:#666">(por ${segment.via.map(escapeHtml).join(", ")})</span>` : "";
+  return `
+    <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:150px;color:#111">
+      <div style="font-weight:700;font-size:13px">${MODE_ICONS[segment.mode] ?? "🚆"} ${escapeHtml(segment.line ?? segment.mode)}</div>
+      <div style="font-size:12px">${escapeHtml(segment.from)} → ${escapeHtml(segment.to)}${via}</div>
+      ${segment.duration ? `<div style="font-size:11px;color:#666;margin-top:2px">⏱ ${escapeHtml(segment.duration)}</div>` : ""}
+    </div>`;
+}
+
+/** Tramos del día: por encima del mapa y debajo de las rutas a pie */
+function transitFeatures(transit: TransitLine[]): RouteFeature[] {
+  return transit.map((t) =>
+    lngLatFeature(t.line, { ...TRANSIT_STYLE[t.kind], transit: true, label: transitPopupHtml(t) })
+  );
+}
+
+const ROUTE_WIDTH: ExpressionSpecification = ["case", ["==", ["get", "transit"], true], 4.5, 3];
+
 function poiPopupHtml(letter: string, icon: string, name: string, night: boolean): string {
   return `
     <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:140px;color:#111">
@@ -198,13 +231,22 @@ function ensureOverlay(map: MapLibreMap, terrainMaxZoom: number) {
   }
   if (!map.getSource(ROUTE_SOURCE)) {
     map.addSource(ROUTE_SOURCE, { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+    // Borde blanco de los tramos de tren, bus y avión: se distinguen de las calles
+    map.addLayer({
+      id: "transit-casing",
+      type: "line",
+      source: ROUTE_SOURCE,
+      filter: ["==", ["get", "transit"], true],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#fff", "line-width": 7.5, "line-opacity": 0.9 },
+    });
     map.addLayer({
       id: "route-solid",
       type: "line",
       source: ROUTE_SOURCE,
       filter: ["==", ["get", "dashed"], false],
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": ["get", "color"], "line-width": 3, "line-opacity": 0.75 },
+      paint: { "line-color": ["get", "color"], "line-width": ROUTE_WIDTH, "line-opacity": 0.8 },
     });
     map.addLayer({
       id: "route-dashed",
@@ -212,7 +254,7 @@ function ensureOverlay(map: MapLibreMap, terrainMaxZoom: number) {
       source: ROUTE_SOURCE,
       filter: ["==", ["get", "dashed"], true],
       layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": ["get", "color"], "line-width": 2.5, "line-opacity": 0.8, "line-dasharray": [2, 2] },
+      paint: { "line-color": ["get", "color"], "line-width": ROUTE_WIDTH, "line-opacity": 0.85, "line-dasharray": [2, 2] },
     });
   }
 }
@@ -228,6 +270,7 @@ export default function TripMap({
   padding = DEFAULT_PADDING,
   focusedPoi = null,
   routes,
+  transit = NO_TRANSIT,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -313,6 +356,15 @@ export default function TripMap({
         }
       });
 
+      // Tocar un tramo de tren, bus o avión muestra su ficha (línea, de dónde a dónde, duración)
+      for (const layer of ["route-solid", "route-dashed"]) {
+        map.on("click", layer, (e) => {
+          const label = e.features?.[0]?.properties?.label;
+          if (typeof label !== "string" || !label) return;
+          new lib.Popup({ maxWidth: "260px", focusAfterOpen: false }).setLngLat(e.lngLat).setHTML(label).addTo(map);
+        });
+      }
+
       // El aviso de créditos compacto arranca abierto: lo dejamos como botón "i"
       const collapseAttribution = () =>
         containerRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
@@ -344,7 +396,7 @@ export default function TripMap({
   useEffect(() => {
     if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [day, mode, routes]);
+  }, [day, mode, routes, transit]);
 
   // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
@@ -478,11 +530,14 @@ export default function TripMap({
     // Trazado real a pie o en bici; recta punteada en los tramos de tren o bus
     const start = routeStart(itinerary, d);
     const coordsOf = (i: number | "lodging") => (i === "lodging" ? start : pois[i].coords);
-    // El traslado de cama a cama va primero: las rutas del día se dibujan encima
-    const transfer = morning
-      ? [lineFeature([morning.accommodationCoords, d.accommodationCoords], { color: TRANSFER_COLOR, dashed: true })]
-      : [];
+    // Los tramos (o, si no hay, la recta de cama a cama) van primero: las rutas
+    // del día se dibujan encima
+    const transfer =
+      morning && transit.length === 0
+        ? [lineFeature([morning.accommodationCoords, d.accommodationCoords], { color: TRANSFER_COLOR, dashed: true })]
+        : [];
     dayFeaturesRef.current = [
+      ...transitFeatures(transit),
       ...transfer,
       ...(r
         ? r.legs.map((leg) =>
@@ -496,6 +551,13 @@ export default function TripMap({
     ];
     setRoute(dayFeaturesRef.current);
 
+    // Sin lugares (vuelos, traslados): se encuadra el trayecto entero
+    if (!view.bounds && transit.length) {
+      const coords = transit.flatMap((t) => t.line.map(([lng, lat]): [number, number] => [lat, lng]));
+      if (hasBed(d)) coords.push(d.accommodationCoords);
+      moveCamera(map, { bounds: boundsOf(coords), maxZoom: 14 }, 800);
+      return null;
+    }
     if (!view.bounds) {
       moveCamera(map, { center: view.focus, zoom: 11 }, 800);
       return accomMarker;
@@ -506,7 +568,8 @@ export default function TripMap({
 
   // ── Modo SEMANA ───────────────────────────────────────────────────────────
   function renderWeekMode(map: MapLibreMap, selectedDay: DayEntry): Marker | null {
-    const weekDays = getWeekGroup(itinerary, selectedDay.date, startDate);
+    // Los días de vuelo fuera de Japón alejarían el mapa al planeta entero
+    const weekDays = getWeekGroup(itinerary, selectedDay.date, startDate).filter((d) => !d.enRoute);
     const color = weekColor(selectedDay.date, startDate, WEEK_COLORS_HEX);
     const coords = weekDays.map((d) => d.accommodationCoords);
 
@@ -527,10 +590,11 @@ export default function TripMap({
 
   // ── Modo COMPLETO ─────────────────────────────────────────────────────────
   function renderFullMode(map: MapLibreMap, selectedDay: DayEntry | null): Marker | null {
+    const days = itinerary.filter((d) => !d.enRoute);
     // Un tramo por par de días, con el color de la semana del día de llegada
     setRoute(
-      itinerary.slice(1).map((d, i) =>
-        lineFeature([itinerary[i].accommodationCoords, d.accommodationCoords], {
+      days.slice(1).map((d, i) =>
+        lineFeature([days[i].accommodationCoords, d.accommodationCoords], {
           color: weekColor(d.date, startDate, WEEK_COLORS_HEX),
           dashed: false,
         })
@@ -538,14 +602,14 @@ export default function TripMap({
     );
 
     let selected: Marker | null = null;
-    itinerary.forEach((d) => {
+    days.forEach((d) => {
       const isSelected = selectedDay?.date === d.date;
       const marker = addDayMarker(d, isSelected);
       if (isSelected) selected = marker;
     });
 
-    if (itinerary.length > 0) {
-      moveCamera(map, { bounds: boundsOf(itinerary.map((d) => d.accommodationCoords)), maxZoom: 9 }, 1000);
+    if (days.length > 0) {
+      moveCamera(map, { bounds: boundsOf(days.map((d) => d.accommodationCoords)), maxZoom: 9 }, 1000);
     }
     return selected;
   }

@@ -41,6 +41,11 @@ describe("planTiles", () => {
   it("incluye la vista general de todo el viaje", () => {
     expect(planTiles([day], BASE_PLAN).some((t) => t.z === 5)).toBe(true);
   });
+
+  it("no baja el mapa de los días de vuelo fuera del destino (Bogotá, Ámsterdam)", () => {
+    const flight = makeDay("2026-10-31", "Sáb", { accommodation: "---", isTransit: true, enRoute: true, accommodationCoords: [52.31, 4.77] });
+    expect(planTiles([flight, day], BASE_PLAN)).toEqual(planTiles([day], BASE_PLAN));
+  });
 });
 
 describe("layerTiles", () => {

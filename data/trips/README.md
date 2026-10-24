@@ -4,9 +4,22 @@ Cada viaje tiene su itinerario en un JSON (`<viaje>-itinerary.json`), uno por d�
 validado con el esquema de `lib/schema.ts` (lo corre `trips.test.ts`). Se edita
 cargando el JSON, cambiándolo y volviéndolo a guardar: nada de buscar y reemplazar
 texto. Los montos son datos (`lib/cost.ts`): `{ amount, max?, currency, approx? }`.
+Para guardarlo con el mismo formato compacto: `compactJson` de `scripts/lib/compact-json.mjs`.
 
 Después de cambiar lugares o coordenadas de hospedaje, volver a correr
 `node scripts/fetch-routes.mjs japan` (un test avisa si las rutas quedan viejas).
+
+Tramos de tren, bus, ferry, teleférico y avión en el mapa:
+- `<viaje>-places.json`: dónde queda cada estación, parada y aeropuerto, con el
+  nombre exacto que usan los tramos (`from`, `to` y `via`). Coordenadas de
+  OpenStreetMap, buscadas por el nombre en japonés de la estación.
+- `via` en un tramo: paradas intermedias para que el trazado pase por el cambio de
+  línea correcto (ej. Enoshima → Shinjuku por Kamakura).
+- `<viaje>-transit.json`: trazados generados con `node scripts/fetch-transit.mjs japan`
+  (trenes por las vías de OSM, buses por la ruta de OSRM). Un test avisa si quedan
+  viejos o si falta ubicar una parada.
+- `enRoute`: días de vuelo fuera del destino (30–31 oct, 6 dic). El mapa general, el
+  de la semana y la descarga sin conexión no los incluyen.
 
 ## Japón 2026 (`japan-itinerary.json`)
 

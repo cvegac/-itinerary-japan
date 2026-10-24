@@ -33,7 +33,8 @@ export function boundsOf(coords: LatLng[]): LngLatBounds {
   ];
 }
 
-export type LineProps = { color: string; dashed: boolean };
+/** transit: tramo de tren, bus o avión (va más grueso y con borde); label: su ficha */
+export type LineProps = { color: string; dashed: boolean; transit?: boolean; label?: string };
 
 export function lineFeature(coords: LatLng[], properties: LineProps) {
   return {

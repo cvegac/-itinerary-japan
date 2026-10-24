@@ -56,6 +56,9 @@ export type DayEntry = {
   activitiesDay: Activity[];
   activitiesNight: Activity[];
   isTransit: boolean;
+  /** Día de ida o vuelta fuera del destino (vuelos y escalas): el mapa del
+   *  viaje completo y de la semana no lo incluye, para no alejarse al planeta */
+  enRoute?: boolean;
   /** Si esa noche toma bus nocturno, el número de bus (ej: "#1") */
   nightBus?: string;
   /** Tiempo diurno ahorrado por el bus nocturno */

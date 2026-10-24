@@ -131,6 +131,7 @@ vi.mock("maplibre-gl", () => fake.module);
 import TripMap, { type MapMode } from "@/components/TripMap";
 import { poiSignature, type DayRoutes } from "@/lib/route-plan";
 import { toLngLat } from "@/lib/map-geo";
+import { TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
 
 beforeAll(() => {
   globalThis.ResizeObserver ??= class {
@@ -302,6 +303,66 @@ describe("TripMap en días de traslado", () => {
   it("el día que no dormís en ninguna cama no pone la de esta noche", async () => {
     await renderLoadedMap(makeDay("2026-11-04", "Mié", { accommodation: "---", isTransit: true }), "day");
     expect(markerByLabel("Dormís acá")).toBeUndefined();
+  });
+});
+
+describe("TripMap con trenes y vuelos", () => {
+  const [, yesterday, today] = itinerary;
+  const rail: TransitLine = {
+    index: 0,
+    kind: "rail",
+    segment: { mode: "tren", line: "JR Sanyo", from: "Fukuyama", to: "Hiroshima", duration: "1h" },
+    points: [yesterday.accommodationCoords, today.accommodationCoords],
+    line: [[138.7, 35.5], [136, 35], [132.47, 34.39]],
+  };
+  const flight: TransitLine = {
+    index: 1,
+    kind: "flight",
+    segment: { mode: "avión", from: "Bogotá (BOG)", to: "Ámsterdam (AMS)" },
+    points: [[4.7, -74.1], [52.3, 4.8]],
+    line: [[-74.1, 4.7], [-30, 40], [4.8, 52.3]],
+  };
+  type Feature = { properties: { color: string; dashed: boolean; transit?: boolean }; geometry: { coordinates: unknown } };
+  const lastFeatures = () => fake.state.routes.at(-1)!.features as Feature[];
+
+  async function renderWith(day: DayEntry, transit: TransitLine[], mode: MapMode = "day", days = itinerary) {
+    const view = render(<TripMap {...props(day, mode)} itinerary={days} transit={transit} />);
+    await waitFor(() => expect(fake.state.maps).toHaveLength(1));
+    const map = fake.state.maps[0];
+    act(() => map.emit("style.load"));
+    return { ...view, map };
+  }
+
+  it("dibuja cada tramo con el color de su medio, debajo de las rutas del día", async () => {
+    await renderWith(itinerary[0], [rail, flight]);
+    const features = lastFeatures();
+    expect(features.slice(0, 2).map((f) => f.geometry.coordinates)).toEqual([rail.line, flight.line]);
+    expect(features[0].properties).toMatchObject({ color: TRANSIT_STYLE.rail.color, dashed: false, transit: true });
+    expect(features[1].properties).toMatchObject({ color: TRANSIT_STYLE.flight.color, dashed: true, transit: true });
+    // Después vienen las rutas a pie del día
+    expect(features.slice(2).every((f) => !f.properties.transit)).toBe(true);
+  });
+
+  it("con el trayecto dibujado ya no pone la recta de cama a cama", async () => {
+    await renderWith(today, [rail]);
+    const straight = JSON.stringify([toLngLat(yesterday.accommodationCoords), toLngLat(today.accommodationCoords)]);
+    expect(lastFeatures().some((f) => JSON.stringify(f.geometry.coordinates) === straight)).toBe(false);
+  });
+
+  it("un día sin lugares encuadra el trayecto completo", async () => {
+    const flightDay = makeDay("2026-10-30", "Vie", { accommodation: "---", isTransit: true, enRoute: true, accommodationCoords: [4.7, -74.1] });
+    const { map } = await renderWith(flightDay, [flight]);
+    const [bounds] = map.fitBounds.mock.calls.at(-1)!;
+    expect(bounds).toEqual([[-74.1, 4.7], [4.8, 52.3]]);
+  });
+
+  it("el mapa completo y el de la semana dejan afuera los días de vuelo fuera de Japón", async () => {
+    const flightDay = makeDay("2026-10-31", "Sáb", { accommodation: "---", isTransit: true, enRoute: true, accommodationCoords: [52.3, 4.8] });
+    const days = [flightDay, ...itinerary];
+    const { map } = await renderWith(itinerary[0], [], "full", days);
+    expect(fake.state.markers.filter((m) => m.element?.getAttribute("aria-label")?.startsWith("Día "))).toHaveLength(3);
+    const [[west]] = map.fitBounds.mock.calls.at(-1)![0];
+    expect(west).toBeGreaterThan(100);
   });
 });
 

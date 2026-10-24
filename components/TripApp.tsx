@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
@@ -8,6 +8,7 @@ import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils
 import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
 import { hasBed, morningLodging } from "@/lib/map-geo";
 import { useExpenses, useWithdrawals } from "@/lib/expenses";
+import { dayTransitLines } from "@/lib/transit";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
 import ViewTabs, { type View } from "@/components/ViewTabs";
@@ -61,7 +62,7 @@ function useViewportHeight(): number {
 }
 
 export default function TripApp({ tripData }: Props) {
-  const { meta, itinerary, nightBusSummary, routes, notes } = tripData;
+  const { meta, itinerary, nightBusSummary, routes, notes, places, transit } = tripData;
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const vh = useViewportHeight();
 
@@ -106,6 +107,11 @@ export default function TripApp({ tripData }: Props) {
   const lodgingNights = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);
   const dayNumber = selectedDay ? itinerary.indexOf(selectedDay) + 1 : 0;
   const dayRoutes = selectedDay ? routes?.[selectedDay.date] : undefined;
+  // Tramos de tren, bus y avión del día, por las vías y rutas precalculadas
+  const dayTransit = useMemo(
+    () => (selectedDay && places ? dayTransitLines(selectedDay, places, transit?.[selectedDay.date]) : undefined),
+    [selectedDay, places, transit]
+  );
   // Primera noche en un hospedaje: el día 1 o cuando cambia la cama
   const morning = selectedDay ? morningLodging(itinerary, selectedDay) : null;
   const prevDay = dayNumber > 1 ? itinerary[dayNumber - 2] : undefined;
@@ -271,6 +277,7 @@ export default function TripApp({ tripData }: Props) {
             padding={mapPadding}
             focusedPoi={focusedPoi}
             routes={dayRoutes}
+            transit={dayTransit}
           />
         </Suspense>
         {mapFullscreen ? (

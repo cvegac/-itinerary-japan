@@ -1,13 +1,76 @@
 [
   {
+    "date": "2026-10-30",
+    "label": "Bogotá → Ámsterdam: arranca el viaje",
+    "location": "Bogotá → Ámsterdam",
+    "category": "Logística",
+    "notes": "El KLM KL741 sale de El Dorado a las 16:05: llegá unas 3 h antes. Hace una parada técnica en Cartagena (no te bajás) y aterriza en Ámsterdam el sábado a las 10:45. Antes de embarcar, sala VIP con la Mastercard Black",
+    "weekday": "Vie",
+    "food": "Almuerzo antes de salir; la cena va en el avión",
+    "transport": [
+      {
+        "mode": "avión",
+        "line": "KLM KL741",
+        "from": "Bogotá (BOG)",
+        "to": "Ámsterdam (AMS)",
+        "via": ["Cartagena (CTG)"],
+        "duration": "12h40",
+        "note": "Sale 16:05, llega el 31 oct 10:45 · parada técnica en Cartagena · ya pagado"
+      }
+    ],
+    "accommodation": "---",
+    "zona": "En el avión (Bogotá → Ámsterdam)",
+    "accommodationCoords": [4.70159, -74.14691],
+    "budget": "$35",
+    "isTransit": true,
+    "enRoute": true,
+    "activitiesDay": ["Check-in en El Dorado (3 h antes)", "Sala VIP con la Mastercard Black"],
+    "activitiesNight": ["Vuelo nocturno a Ámsterdam"]
+  },
+  {
+    "date": "2026-10-31",
+    "label": "Escala en Ámsterdam → vuelo a Pekín",
+    "location": "Ámsterdam → Pekín",
+    "category": "Logística",
+    "notes": "Llegás a Schiphol 10:45 y el KLM KL897 sale 15:55: 5 h 10 de escala, mejor quedarse en el aeropuerto. El vuelo es de 11 h y llega a Pekín el domingo 1 nov a las 9:55",
+    "weekday": "Sáb",
+    "food": "Almuerzo en Schiphol; la cena va en el avión",
+    "transport": [
+      {
+        "mode": "avión",
+        "line": "KLM KL897",
+        "from": "Ámsterdam (AMS)",
+        "to": "Pekín (PEK)",
+        "duration": "11h",
+        "note": "Sale 15:55, llega el 1 nov 9:55 · ya pagado"
+      }
+    ],
+    "accommodation": "---",
+    "zona": "En el avión (Ámsterdam → Pekín)",
+    "accommodationCoords": [52.31046, 4.76825],
+    "budget": "$35",
+    "isTransit": true,
+    "enRoute": true,
+    "activitiesDay": ["Escala en Schiphol", "Sala VIP (Mastercard Airport Experiences)"],
+    "activitiesNight": ["Vuelo nocturno a Pekín"]
+  },
+  {
     "date": "2026-11-01",
     "label": "Haneda → Asakusa: primera noche",
     "location": "Tokio",
     "category": "Logística",
-    "notes": "Aterrizás en HND a las 19:35. El Keikyu va directo a Asakusa y de ahí son 2 paradas de Ginza Line hasta Inaricho, a ~5 min del hotel. Check-in hasta las 23:30; se paga todo al llegar (¥17,000 las 2 noches). Activá la Suica en el celular antes de llegar",
+    "notes": "Llegás a Pekín 9:55 y el ANA NH962 sale 15:15: 5 h 20 de escala sin salir de la zona de tránsito. Aterrizás en HND a las 19:35. El Keikyu va directo a Asakusa y de ahí son 2 paradas de Ginza Line hasta Inaricho, a ~5 min del hotel. Check-in hasta las 23:30; se paga todo al llegar (¥17,000 las 2 noches). Activá la Suica en el celular antes de llegar",
     "weekday": "Dom",
     "food": "Ramen o konbini cerca del hotel",
     "transport": [
+      {
+        "mode": "avión",
+        "line": "ANA NH962",
+        "from": "Pekín (PEK)",
+        "to": "Haneda (HND)",
+        "duration": "3h20",
+        "note": "Sale 15:15, llega 19:35 · asiento 38A · ya pagado"
+      },
       {
         "mode": "tren",
         "line": "Keikyu Airport Line → Toei Asakusa Line (directo)",
@@ -942,6 +1005,7 @@
         "line": "JR Biwako Line → metro Tozai (cambio en Yamashina)",
         "from": "Otsu",
         "to": "Sanjo Keihan",
+        "via": ["Yamashina"],
         "duration": "~25min",
         "cost": { "amount": 450, "currency": "JPY", "approx": true }
       },
@@ -1217,6 +1281,7 @@
         "line": "Expreso limitado Hida",
         "from": "Nagoya",
         "to": "Takayama",
+        "via": ["Gifu"],
         "duration": "~2h20",
         "cost": { "amount": 11000, "currency": "JPY", "max": 12000, "approx": true, "detail": "en total" },
         "note": "Ventanilla derecha: cañón del río Hida"
@@ -1372,6 +1437,7 @@
         "line": "Shinhotaka Ropeway (líneas 1 y 2)",
         "from": "Shin-Hotaka Onsen",
         "to": "Nishi-Hotakaguchi (2.156 m)",
+        "via": ["Shirakabadaira"],
         "duration": "~25min por trayecto",
         "cost": { "amount": 3800, "currency": "JPY", "detail": "ida y vuelta" }
       },
@@ -1401,7 +1467,7 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Teleférico de Shin-Hotaka (base)", "coords": [36.27524, 137.59129] },
+      { "name": "Teleférico de Shin-Hotaka (base)", "coords": [36.28583, 137.5752] },
       { "name": "Estación de arriba (2.156 m)", "coords": [36.26805, 137.60174] },
       { "name": "Hirayu Onsen", "coords": [36.19109, 137.55165] },
       { "name": "Calle Nawate (Matsumoto)", "coords": [36.23461, 137.97199], "night": true },
@@ -1788,8 +1854,8 @@
       {
         "mode": "teleférico",
         "line": "Telesilla del Omuro",
-        "from": "Base",
-        "to": "Cráter (580 m)",
+        "from": "Base del Omuro",
+        "to": "Cráter del Omuro (580 m)",
         "duration": "~6min",
         "cost": { "amount": 1000, "currency": "JPY", "approx": true }
       }
@@ -1916,6 +1982,7 @@
         "line": "JR Chuo Line (rápido) → Keio New Line",
         "from": "Tokio",
         "to": "Hatsudai",
+        "via": ["Shinjuku"],
         "duration": "~25min",
         "cost": { "amount": 350, "currency": "JPY", "approx": true },
         "note": "Después ~5 min a pie"
@@ -1967,6 +2034,7 @@
         "line": "Keio New Line → JR Shonan-Shinjuku Line (directo)",
         "from": "Hatsudai",
         "to": "Kamakura",
+        "via": ["Shinjuku"],
         "duration": "~1h10",
         "cost": { "amount": 1100, "currency": "JPY", "approx": true }
       },
@@ -1983,6 +2051,7 @@
         "line": "Enoden + JR Shonan-Shinjuku Line",
         "from": "Enoshima",
         "to": "Shinjuku",
+        "via": ["Kamakura"],
         "duration": "~1h15",
         "cost": { "amount": 1100, "currency": "JPY", "approx": true }
       }
@@ -2089,6 +2158,7 @@
         "line": "Keio New Line → JR Yamanote",
         "from": "Hatsudai",
         "to": "Komagome (Rikugien)",
+        "via": ["Shinjuku"],
         "duration": "~30min",
         "cost": { "amount": 350, "currency": "JPY", "approx": true }
       },
@@ -2187,7 +2257,7 @@
     "label": "Último paseo por Narita-san → vuelo NRT 13:20",
     "location": "Narita",
     "category": "Logística",
-    "notes": "Vuelo a las 13:20: llegá al aeropuerto antes de las 10:20. El templo abre temprano, así que da para una última vuelta",
+    "notes": "Vuelo a las 13:20: llegá al aeropuerto antes de las 10:20. El templo abre temprano, así que da para una última vuelta. En Seúl hay 7 h 10 de escala (15:55 → 23:05) y el vuelo a Ámsterdam es de noche",
     "weekday": "Sáb",
     "food": "Desayuno en Omotesando o en el aeropuerto",
     "transport": [
@@ -2198,6 +2268,22 @@
         "to": "Aeropuerto de Narita",
         "duration": "~10min",
         "cost": { "amount": 260, "currency": "JPY", "approx": true }
+      },
+      {
+        "mode": "avión",
+        "line": "Asiana OZ101",
+        "from": "Narita (NRT)",
+        "to": "Seúl-Incheon (ICN)",
+        "duration": "2h35",
+        "note": "Sale 13:20, llega 15:55 · ya pagado"
+      },
+      {
+        "mode": "avión",
+        "line": "KLM KL856",
+        "from": "Seúl-Incheon (ICN)",
+        "to": "Ámsterdam (AMS)",
+        "duration": "14h15",
+        "note": "Sale 23:05, llega el 6 dic 5:20 · ya pagado"
       }
     ],
     "accommodation": "---",
@@ -2211,5 +2297,32 @@
     "isTransit": true,
     "activitiesDay": ["Templo Narita-san temprano", "Check-in y despacho de la maleta", "Compras libres de impuestos", "Últimos KitKat de sabores"],
     "activitiesNight": ["Vuelo de regreso", "¡Hasta pronto, Japón!"]
+  },
+  {
+    "date": "2026-12-06",
+    "label": "Escala en Ámsterdam → llegada a Bogotá",
+    "location": "Ámsterdam → Bogotá",
+    "category": "Logística",
+    "notes": "Llegás a Schiphol 5:20 y el KLM KL741 sale 9:20 (4 h de escala). Aterrizás en El Dorado a las 14:30",
+    "weekday": "Dom",
+    "food": "Desayuno en Schiphol; el almuerzo va en el avión",
+    "transport": [
+      {
+        "mode": "avión",
+        "line": "KLM KL741",
+        "from": "Ámsterdam (AMS)",
+        "to": "Bogotá (BOG)",
+        "duration": "11h10",
+        "note": "Sale 9:20, llega 14:30 · ya pagado"
+      }
+    ],
+    "accommodation": "---",
+    "zona": "De vuelta en casa",
+    "accommodationCoords": [4.70159, -74.14691],
+    "budget": "$35",
+    "isTransit": true,
+    "enRoute": true,
+    "activitiesDay": ["Escala en Schiphol", "Vuelo a Bogotá"],
+    "activitiesNight": ["¡En casa!"]
   }
 ]

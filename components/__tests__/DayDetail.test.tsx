@@ -56,6 +56,12 @@ describe("DayDetail", () => {
     expect(screen.getByLabelText("Atardecer").textContent).toMatch(/^1\d:\d{2}$/);
   });
 
+  it("en un día de vuelo fuera de Japón no muestra el sol (las horas son de Japón)", () => {
+    const flight = makeDay("2026-10-30", "Vie", { accommodation: "---", isTransit: true, enRoute: true, accommodationCoords: [4.7, -74.15] });
+    render(<DayDetail day={flight} dayNumber={1} />);
+    expect(screen.queryByLabelText("Amanecer")).toBeNull();
+  });
+
   it("con conexión y si el día está cerca, muestra el pronóstico", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(new Date("2026-10-25T10:00:00"));

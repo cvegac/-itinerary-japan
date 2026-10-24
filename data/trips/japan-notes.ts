@@ -127,9 +127,13 @@ export const NOTES: TripNotes = {
     {
       title: "Vuelos",
       items: [
-        "Bogotá → Tokio: llegás a HND el 1 nov a las 19:35",
+        "Ida: KLM KL741 BOG 30 oct 16:05 (parada técnica en Cartagena) → AMS 31 oct 10:45 · escala 5 h 10",
+        "KLM KL897 AMS 31 oct 15:55 → Pekín (PEK) 1 nov 9:55 · escala 5 h 20",
+        "ANA NH962 PEK 1 nov 15:15 → Haneda (HND) 19:35 · asiento 38A",
         "Spring Japan IJ621: NRT 7:40 → HIJ 9:10, el 4 nov. Cabina: 1 pieza de 7 kg; facturada: 10 kg",
-        "Tokio → Bogotá: sale de NRT el 5 dic a las 13:20",
+        "Vuelta: Asiana OZ101 NRT 5 dic 13:20 → Seúl (ICN) 15:55 · escala 7 h 10",
+        "KLM KL856 ICN 5 dic 23:05 → AMS 6 dic 5:20 · escala 4 h",
+        "KLM KL741 AMS 6 dic 9:20 → BOG 14:30",
       ],
     },
     {

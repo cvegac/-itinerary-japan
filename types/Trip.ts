@@ -1,5 +1,6 @@
 import type { DayEntry } from "./DayEntry";
 import type { TripRoutes } from "@/lib/route-plan";
+import type { Places, TripTransit } from "@/lib/transit";
 
 export type NightBus = {
   number: string;
@@ -65,4 +66,8 @@ export type TripData = {
   nightBusSummary?: NightBusSummary;
   /** Rutas precalculadas por fecha (scripts/fetch-routes.mjs) */
   routes?: TripRoutes;
+  /** Dónde queda cada estación, parada y aeropuerto de los tramos (<viaje>-places.json) */
+  places?: Places;
+  /** Trazado de los tramos de tren, bus y avión por fecha (scripts/fetch-transit.mjs) */
+  transit?: TripTransit;
 };

@@ -98,7 +98,9 @@ export function tilesInRadius([lat, lng]: LatLng, radiusKm: number, z: number): 
 export const tileKey = (t: Tile) => `${t.z}/${t.x}/${t.y}`;
 
 /** Unión de los tiles de varios planes, sin repetir y hasta un zoom máximo */
-export function planTiles(itinerary: DayEntry[], plans: TilePlan | TilePlan[], maxZoom = Infinity): Tile[] {
+export function planTiles(allDays: DayEntry[], plans: TilePlan | TilePlan[], maxZoom = Infinity): Tile[] {
+  // Los días de vuelo fuera del destino no se usan sin conexión (y bajarían medio planeta)
+  const itinerary = allDays.filter((d) => !d.enRoute);
   const seen = new Map<string, Tile>();
   const add = (tiles: Tile[]) => tiles.forEach((t) => t.z <= maxZoom && seen.set(tileKey(t), t));
 

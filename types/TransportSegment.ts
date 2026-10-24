@@ -9,6 +9,9 @@ export type TransportSegment = {
   from: string;
   /** Destino */
   to: string;
+  /** Paradas intermedias por donde pasa (para trazarlo en el mapa por el camino
+   *  correcto, ej. el cambio de línea en Kamakura). Nombres de <viaje>-places.json */
+  via?: string[];
   /** Duración estimada */
   duration?: string;
   /** Costo estimado, como dato (lib/cost.ts) */

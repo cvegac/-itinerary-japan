@@ -179,12 +179,15 @@ export default function DayDetail({
               Bus nocturno {day.nightBus} esta noche
             </span>
           )}
-          <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium tabular-nums">
-            <Sunrise className="size-3.5 text-amber-600" aria-hidden />
-            <span aria-label="Amanecer">{sun.sunrise}</span>
-            <Sunset className="ml-1 size-3.5 text-indigo-600" aria-hidden />
-            <span aria-label="Atardecer">{sun.sunset}</span>
-          </span>
+          {/* Las horas son de Japón: en los días de vuelo afuera no tienen sentido */}
+          {!day.enRoute && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium tabular-nums">
+              <Sunrise className="size-3.5 text-amber-600" aria-hidden />
+              <span aria-label="Amanecer">{sun.sunrise}</span>
+              <Sunset className="ml-1 size-3.5 text-indigo-600" aria-hidden />
+              <span aria-label="Atardecer">{sun.sunset}</span>
+            </span>
+          )}
           {forecast && weather && (
             <span
               aria-label={`Pronóstico: ${weather.text}`}

@@ -4,6 +4,7 @@ import { poiSignature } from "@/lib/route-plan";
 import { dayCostBreakdown } from "@/lib/budget";
 import { itineraryIssues } from "@/lib/schema";
 import { DEFAULT_POI_ICON, poiIcon } from "@/lib/poi-icons";
+import { transitLegs, transitSignature } from "@/lib/transit";
 import { getAllTrips } from "./index";
 
 const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -90,9 +91,10 @@ describe("viaje japan", () => {
     expect(stale).toEqual([]);
   });
 
-  it("tiene 35 días y 34 noches en 14 bases", () => {
+  it("tiene 38 días (35 en Japón y 3 de vuelos) y 34 noches en 14 bases", () => {
     const stays = computeLodgingSummary(japan.itinerary);
-    expect(japan.itinerary).toHaveLength(35);
+    expect(japan.itinerary).toHaveLength(38);
+    expect(japan.itinerary.filter((d) => !d.enRoute)).toHaveLength(35);
     expect(stays).toHaveLength(14);
     expect(stays.reduce((sum, s) => sum + s.nights, 0)).toBe(34);
   });
@@ -124,6 +126,37 @@ describe("viaje japan", () => {
       .filter((p) => poiIcon(p) === DEFAULT_POI_ICON)
       .map((p) => p.name);
     expect(generic).toEqual([]);
+  });
+
+  it("marca como de vuelo (sin cama) los días fuera de Japón", () => {
+    const enRoute = japan.itinerary.filter((d) => d.enRoute);
+    expect(enRoute.map((d) => d.date)).toEqual(["2026-10-30", "2026-10-31", "2026-12-06"]);
+    enRoute.forEach((d) => expect(d.isTransit, d.date).toBe(true));
+  });
+
+  it("ubica cada parada de tren, bus, ferry y avión (si no: agregala a japan-places.json)", () => {
+    const missing = japan.itinerary.flatMap((d) => transitLegs(d, japan.places ?? {}).missing.map((n) => `${d.date} ${n}`));
+    expect(missing).toEqual([]);
+  });
+
+  it("tiene las paradas cerca de donde anda ese día (en tierra, a menos de 300 km de una de sus camas)", () => {
+    const far = japan.itinerary.flatMap((d, i) =>
+      transitLegs(d, japan.places ?? {})
+        .legs.filter((l) => l.kind !== "flight")
+        .flatMap((l) => l.points)
+        // La cama de esa noche o la de esa mañana (los días de traslado)
+        .filter((p) => [d, japan.itinerary[i - 1]].every((b) => !b || distanceKm(p, b.accommodationCoords) > 300))
+        .map((p) => `${d.date} ${p.join(",")}`)
+    );
+    expect(far).toEqual([]);
+  });
+
+  it("tiene los trazados de los tramos al día (si no: node scripts/fetch-transit.mjs japan)", () => {
+    const stale = japan.itinerary
+      .filter((d) => transitLegs(d, japan.places ?? {}).legs.length > 0)
+      .filter((d) => japan.transit?.[d.date]?.signature !== transitSignature(d, japan.places ?? {}))
+      .map((d) => d.date);
+    expect(stale).toEqual([]);
   });
 
   it("tiene todos los puntos de interés dentro de Japón", () => {
