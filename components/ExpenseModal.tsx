@@ -17,6 +17,9 @@ type Props = {
   initialKind?: Kind;
   /** Registro a editar: abre con sus datos y sin poder pasar de gasto a retiro */
   editing?: { kind: "expense"; record: Expense } | { kind: "withdrawal"; record: Withdrawal };
+  /** Las noches de la estadía de ese día (lib/itinerary-utils stayNights): un
+   *  pago de hospedaje se reparte entre ellas */
+  stayOf?: (date: string) => string[];
   onClose: () => void;
   onSaveExpense: (expense: Omit<Expense, "id" | "createdAt">) => void;
   onSaveWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
@@ -28,6 +31,7 @@ export default function ExpenseModal({
   defaultDate,
   initialKind = "expense",
   editing,
+  stayOf,
   onClose,
   onSaveExpense,
   onSaveWithdrawal,
@@ -42,6 +46,8 @@ export default function ExpenseModal({
   const [method, setMethod] = useState<PaymentMethod>(savedExpense?.method ?? "cash");
   const [category, setCategory] = useState<ExpenseCategory>(savedExpense ? expenseCategory(savedExpense) : "comida");
   const [note, setNote] = useState(editing?.record.note ?? "");
+  // Un hospedaje cubre por defecto toda la estadía (pagaste las noches juntas)
+  const [scope, setScope] = useState<"stay" | "day">(savedExpense && !savedExpense.nights?.length ? "day" : "stay");
 
   const isExpense = kind === "expense";
   // Decimales solo en dólares; en yenes y pesos, solo dígitos
@@ -49,6 +55,9 @@ export default function ExpenseModal({
     isExpense && currency === "USD" ? amount.replace(",", ".").replace(/[^\d.]/g, "") : amount.replace(/[^\d]/g, "")
   );
   const title = `${editing ? "Editar" : "Registrar"} ${isExpense ? "gasto" : "retiro"}`;
+  const stay = isExpense && category === "hospedaje" && stayOf ? stayOf(date) : [];
+  const askScope = stay.length > 1;
+  const nights = askScope && scope === "stay" ? stay : undefined;
 
   // Cotización del momento (o la última conocida); se guarda con el gasto. Al
   // editar sin cambiar la moneda queda la del día en que se registró
@@ -76,7 +85,16 @@ export default function ExpenseModal({
         : rates && currency !== "USD"
           ? { perUsd: rates.perUsd[currency], rateDate: rates.date }
           : {};
-      onSaveExpense({ date, amount: value, currency, method, category, note: note.trim(), ...withRate });
+      onSaveExpense({
+        date,
+        amount: value,
+        currency,
+        method,
+        category,
+        ...(nights ? { nights } : {}),
+        note: note.trim(),
+        ...withRate,
+      });
       // La del momento queda como "última conocida" para registrar sin conexión
       if (!keepRate && source === "live" && rates) rememberRates(rates);
     }
@@ -180,6 +198,39 @@ export default function ExpenseModal({
                 </option>
               ))}
             </select>
+          </div>
+        )}
+
+        {askScope && (
+          <div>
+            <span className={label}>¿A qué noches corresponde?</span>
+            <Segmented
+              name="noches"
+              value={scope}
+              onChange={setScope}
+              options={[
+                { value: "stay", label: `Toda la estadía · ${stay.length} noches` },
+                { value: "day", label: "Solo este día" },
+              ]}
+            />
+            {nights && (
+              <p className="mt-1.5 text-xs text-muted">
+                {shortDate(nights[0])} – {shortDate(nights[nights.length - 1])}
+                {value > 0 && (
+                  <>
+                    {" · "}
+                    <span className="font-semibold text-fg">
+                      {formatMoney(
+                        currency === "USD" ? value / nights.length : Math.round(value / nights.length),
+                        currency,
+                        currency === "USD" ? 2 : undefined
+                      )}{" "}
+                      por noche
+                    </span>
+                  </>
+                )}
+              </p>
+            )}
           </div>
         )}
 

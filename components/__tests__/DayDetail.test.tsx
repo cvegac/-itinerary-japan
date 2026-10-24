@@ -132,6 +132,15 @@ describe("DayDetail", () => {
       expect(onUpdate).toHaveBeenCalledWith("e1", expect.objectContaining({ amount: 1650, category: "entradas" }));
     });
 
+    it("un hospedaje pagado el día anterior muestra la parte de esta noche", () => {
+      const paid: Expense = { id: "h", date: "2026-11-01", amount: 17000, currency: "JPY", method: "card", category: "hospedaje", nights: ["2026-11-01", "2026-11-02"], note: "New Izu", createdAt: 1, perUsd: 157 };
+      render(<DayDetail day={day} dayNumber={2} expenses={[paid]} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
+      const section = screen.getByRole("region", { name: "Gastos del día" });
+      expect(within(section).getByText("¥8,500")).toBeTruthy();
+      expect(within(section).getByText("noche 2 de 2")).toBeTruthy();
+      expect(within(section).getByText(/Gastaste ≈US\$54/)).toBeTruthy();
+    });
+
     it("quita un gasto", async () => {
       const onRemove = vi.fn();
       render(<DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={onRemove} />);

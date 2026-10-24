@@ -59,6 +59,50 @@ describe("ExpenseModal", () => {
     );
   });
 
+  describe("hospedaje de varias noches", () => {
+    const stayOf = (date: string) => (date <= "2026-11-02" ? ["2026-11-01", "2026-11-02"] : ["2026-11-03"]);
+
+    it("por defecto se reparte entre las noches de la estadía", async () => {
+      const props = renderModal({ stayOf });
+      await userEvent.type(screen.getByLabelText("Monto"), "17000");
+      await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "hospedaje");
+      expect(screen.getByRole("radio", { name: /Toda la estadía/ }).getAttribute("aria-checked")).toBe("true");
+      expect(screen.getByText(/¥8,500 por noche/)).toBeTruthy();
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onSaveExpense).toHaveBeenCalledWith(
+        expect.objectContaining({ category: "hospedaje", nights: ["2026-11-01", "2026-11-02"] })
+      );
+    });
+
+    it("con Solo este día cuenta para el día del pago", async () => {
+      const props = renderModal({ stayOf });
+      await userEvent.type(screen.getByLabelText("Monto"), "8500");
+      await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "hospedaje");
+      await userEvent.click(screen.getByRole("radio", { name: "Solo este día" }));
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(vi.mocked(props.onSaveExpense).mock.calls[0][0]).not.toHaveProperty("nights");
+    });
+
+    it("si la estadía es de una noche (o no es hospedaje) no pregunta", async () => {
+      const props = renderModal({ stayOf, defaultDate: "2026-11-03", dates: [...dates, { date: "2026-11-03", label: "Mar 3 nov" }] });
+      await userEvent.type(screen.getByLabelText("Monto"), "6480");
+      expect(screen.queryByRole("radio", { name: /Toda la estadía/ })).toBeNull();
+      await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "hospedaje");
+      expect(screen.queryByRole("radio", { name: /Toda la estadía/ })).toBeNull();
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(vi.mocked(props.onSaveExpense).mock.calls[0][0]).not.toHaveProperty("nights");
+    });
+
+    it("al editar respeta lo que se eligió", () => {
+      const base = { id: "h", date: "2026-11-01", amount: 8500, currency: "JPY" as const, method: "card" as const, category: "hospedaje" as const, note: "", createdAt: 1 };
+      renderModal({ stayOf, editing: { kind: "expense", record: base } });
+      expect(screen.getByRole("radio", { name: "Solo este día" }).getAttribute("aria-checked")).toBe("true");
+      cleanup();
+      renderModal({ stayOf, editing: { kind: "expense", record: { ...base, nights: ["2026-11-01", "2026-11-02"] } } });
+      expect(screen.getByRole("radio", { name: /Toda la estadía/ }).getAttribute("aria-checked")).toBe("true");
+    });
+  });
+
   describe("al editar", () => {
     const saved: Expense = {
       id: "e1",

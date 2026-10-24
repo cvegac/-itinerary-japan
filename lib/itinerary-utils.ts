@@ -117,3 +117,11 @@ export function computeLodgingSummary(itinerary: DayEntry[]): LodgingStay[] {
     cost: cost === undefined ? undefined : Math.round(cost * 100) / 100,
   }));
 }
+
+/** Las noches de la estadía a la que pertenece la noche de ese día (vacío si esa
+ *  noche no hay cama). Para repartir un pago de hospedaje entre sus noches */
+export function stayNights(itinerary: DayEntry[], date: string): string[] {
+  const stay = computeLodgingSummary(itinerary).find((s) => s.checkIn <= date && date < s.checkOut);
+  if (!stay) return [];
+  return Array.from({ length: stay.nights }, (_, i) => addDays(stay.checkIn, i));
+}

@@ -4,10 +4,10 @@ import { Suspense, lazy, useEffect, useMemo, useRef, useState, useSyncExternalSt
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2 } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
-import { computeCostSummary, computeLodgingSummary } from "@/lib/itinerary-utils";
+import { computeCostSummary, computeLodgingSummary, stayNights } from "@/lib/itinerary-utils";
 import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } from "@/lib/trip-time";
 import { hasBed, morningLodging } from "@/lib/map-geo";
-import { useExpenses, useWithdrawals } from "@/lib/expenses";
+import { expenseDates, useExpenses, useWithdrawals } from "@/lib/expenses";
 import { dayTransitLines } from "@/lib/transit";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
@@ -195,11 +195,13 @@ export default function TripApp({ tripData }: Props) {
         routes={dayRoutes}
         morningLodging={morning}
         arriving={arriving}
-        expenses={expenses.records.filter((e) => e.date === selectedDay.date)}
+        // Un hospedaje pagado otro día también cuenta para las noches que cubre
+        expenses={expenses.records.filter((e) => expenseDates(e).includes(selectedDay.date))}
         onAddExpense={expenses.add}
         onAddWithdrawal={withdrawals.add}
         onRemoveExpense={expenses.remove}
         onUpdateExpense={expenses.update}
+        stayOf={(date) => stayNights(itinerary, date)}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });

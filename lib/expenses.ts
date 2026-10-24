@@ -27,6 +27,9 @@ export type Expense = {
   method: PaymentMethod;
   /** Sin tipo: se cargó antes de que existiera (cuenta como "otros") */
   category?: ExpenseCategory;
+  /** Noches que cubre un pago de hospedaje (YYYY-MM-DD): el monto se reparte
+   *  entre ellas. Sin esto, cuenta solo para `date` */
+  nights?: string[];
   note: string;
   createdAt: number;
   /** Cotización al registrarlo: cuántas unidades de su moneda valía un dólar */
@@ -73,10 +76,21 @@ export function expenseUsd(e: Expense): number {
   return e.perUsd ? e.amount / e.perUsd : toUsd(e.amount, e.currency);
 }
 
-/** Lo gastado cada día, en dólares (sumando todas las monedas) */
+/** Los días a los que corresponde el gasto: las noches que paga, o el día en que se hizo */
+export function expenseDates(e: Expense): string[] {
+  return e.nights?.length ? e.nights : [e.date];
+}
+
+/** La parte del gasto que le toca a cada uno de sus días, en dólares */
+export function expenseShareUsd(e: Expense): number {
+  return expenseUsd(e) / expenseDates(e).length;
+}
+
+/** Lo gastado cada día, en dólares (sumando todas las monedas; el hospedaje,
+ *  repartido entre sus noches) */
 export function spentByDate(expenses: Expense[]): Record<string, number> {
   const totals: Record<string, number> = {};
-  expenses.forEach((e) => (totals[e.date] = (totals[e.date] ?? 0) + expenseUsd(e)));
+  expenses.forEach((e) => expenseDates(e).forEach((d) => (totals[d] = (totals[d] ?? 0) + expenseShareUsd(e))));
   return totals;
 }
 
@@ -98,11 +112,14 @@ export function dailySummary(expenses: Expense[], withdrawals: Withdrawal[]): Da
     if (!days.has(date)) days.set(date, { date, expenses: [], withdrawals: [], totalUsd: 0 });
     return days.get(date)!;
   };
-  expenses.forEach((e) => {
-    const d = day(e.date);
-    d.expenses.push(e);
-    d.totalUsd += expenseUsd(e);
-  });
+  // Un hospedaje de varias noches aparece en cada una, con su parte en el total
+  expenses.forEach((e) =>
+    expenseDates(e).forEach((date) => {
+      const d = day(date);
+      d.expenses.push(e);
+      d.totalUsd += expenseShareUsd(e);
+    })
+  );
   withdrawals.forEach((w) => day(w.date).withdrawals.push(w));
   return Array.from(days.values()).sort((a, b) => a.date.localeCompare(b.date));
 }

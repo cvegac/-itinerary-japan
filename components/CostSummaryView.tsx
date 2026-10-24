@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Download, Plus } from "lucide-react";
-import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
+import { WEEK_COLORS_HEX, computeCostSummary, stayNights } from "@/lib/itinerary-utils";
 import { cashBalance, dailySummary, spentByDate, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
 import { downloadCsv, expensesCsv } from "@/lib/csv";
@@ -129,6 +129,7 @@ export default function CostSummaryView(props: Props) {
           dates={itinerary.map((d) => ({ date: d.date, label: `${shortDate(d.date)} · ${d.label}` }))}
           defaultDate={defaultDate}
           editing={editing}
+          stayOf={(date) => stayNights(itinerary, date)}
           onClose={() => setModal(null)}
           onSaveExpense={editing ? (e) => props.onUpdateExpense(editing.record.id, e) : props.onAddExpense}
           onSaveWithdrawal={editing ? (w) => props.onUpdateWithdrawal(editing.record.id, w) : props.onAddWithdrawal}
@@ -192,6 +193,7 @@ function DailySummary({
                 <ExpenseRow
                   key={e.id}
                   expense={e}
+                  date={d.date}
                   onEdit={() => onEdit({ kind: "expense", record: e })}
                   onRemove={() => onRemoveExpense(e.id)}
                 />

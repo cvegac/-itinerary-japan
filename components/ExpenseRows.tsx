@@ -1,15 +1,28 @@
 "use client";
 
 import { Banknote, CreditCard, Landmark, Pencil, X } from "lucide-react";
-import { categoryInfo, type Expense, type Withdrawal } from "@/lib/expenses";
+import { categoryInfo, expenseDates, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
 
 // Filas de gastos y retiros (en el resumen de costos y en el día): tocar la fila
 // la abre para editarla; la X la quita
 
-export function ExpenseRow({ expense: e, onEdit, onRemove }: { expense: Expense; onEdit: () => void; onRemove: () => void }) {
+/** date: el día que se está mostrando; un hospedaje de varias noches muestra la parte de esa noche */
+export function ExpenseRow({
+  expense: e,
+  date,
+  onEdit,
+  onRemove,
+}: {
+  expense: Expense;
+  date: string;
+  onEdit: () => void;
+  onRemove: () => void;
+}) {
   const name = e.note || formatMoney(e.amount, e.currency);
   const category = categoryInfo(e);
+  // Un hospedaje de varias noches muestra la parte de esta noche
+  const dates = expenseDates(e);
   return (
     <li className="flex items-center gap-1 text-sm">
       <button
@@ -27,18 +40,26 @@ export function ExpenseRow({ expense: e, onEdit, onRemove }: { expense: Expense;
           <CreditCard className="size-4 shrink-0 text-sky-600" aria-label="Pagado con tarjeta" />
         )}
         <span
-          title={
+          title={[
+            dates.length > 1 ? `Pagaste ${formatMoney(e.amount, e.currency)} por ${dates.length} noches` : "",
             e.currency === "USD"
-              ? undefined
+              ? ""
               : e.perUsd
                 ? `1 US$ = ${formatMoney(e.perUsd, e.currency, 2)} (${e.rateDate})`
-                : "Cambio aproximado: se registró sin cotización"
-          }
+                : "Cambio aproximado: se registró sin cotización",
+          ]
+            .filter(Boolean)
+            .join(" · ") || undefined}
           className="w-24 shrink-0 font-semibold tabular-nums"
         >
-          {formatMoney(e.amount, e.currency)}
+          {formatMoney(e.amount / dates.length, e.currency)}
         </span>
-        <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
+        <span className="min-w-0 flex-1 truncate text-muted">
+          {dates.length > 1 && (
+            <span className="mr-1.5 rounded bg-surface-2 px-1 text-xs font-medium">{`noche ${dates.indexOf(date) + 1} de ${dates.length}`}</span>
+          )}
+          {e.note}
+        </span>
         <Pencil className="size-3.5 shrink-0 text-muted" aria-hidden />
       </button>
       <RemoveButton label={`Quitar gasto ${name}`} onClick={onRemove} />

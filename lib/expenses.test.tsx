@@ -37,7 +37,7 @@ vi.mock("@/lib/cloud", () => ({
   deleteRecord: (_uid: string, _slug: string, field: string, id: string) => void cloud.deleted.push({ field, id }),
 }));
 
-import { cashBalance, dailySummary, expenseCategory, expenseUsd, spentByDate, useExpenses, useWithdrawals } from "./expenses";
+import { cashBalance, dailySummary, expenseCategory, expenseDates, expenseUsd, spentByDate, useExpenses, useWithdrawals } from "./expenses";
 
 const KEY = "viajes-gastos-japan";
 const expense = (over: Partial<Expense> = {}): Expense => ({
@@ -160,6 +160,36 @@ describe("expenseCategory", () => {
   it("los gastos sin tipo (cargados antes de que existiera) cuentan como Otros", () => {
     expect(expenseCategory(expense())).toBe("otros");
     expect(expenseCategory(expense({ category: "transporte" }))).toBe("transporte");
+  });
+});
+
+describe("hospedaje pagado por varias noches", () => {
+  // ¥17,000 a 157 = US$108,28: la mitad a cada noche
+  const lodging = expense({ id: "h", date: "2026-11-01", amount: 17000, category: "hospedaje", perUsd: 157, nights: ["2026-11-01", "2026-11-02"] });
+
+  it("cuenta para cada noche que cubre, no solo para el día en que se pagó", () => {
+    expect(expenseDates(lodging)).toEqual(["2026-11-01", "2026-11-02"]);
+    expect(expenseDates(expense())).toEqual(["2026-11-02"]);
+  });
+
+  it("reparte el monto en partes iguales entre esas noches", () => {
+    const totals = spentByDate([lodging]);
+    expect(totals["2026-11-01"]).toBeCloseTo(54.14, 2);
+    expect(totals["2026-11-02"]).toBeCloseTo(54.14, 2);
+  });
+
+  it("aparece en el resumen de cada noche, con su parte en el total del día", () => {
+    const days = dailySummary([lodging], []);
+    expect(days.map((d) => [d.date, d.expenses.map((e) => e.id)])).toEqual([
+      ["2026-11-01", ["h"]],
+      ["2026-11-02", ["h"]],
+    ]);
+    expect(days[1].totalUsd).toBeCloseTo(54.14, 2);
+  });
+
+  it("el efectivo descuenta el pago completo una sola vez", () => {
+    const cash = cashBalance([{ ...lodging, method: "cash", perUsd: undefined }], [withdrawal()]);
+    expect(cash.spentCash).toBe(17000);
   });
 });
 

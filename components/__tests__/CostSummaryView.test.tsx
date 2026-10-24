@@ -88,6 +88,18 @@ describe("CostSummaryView", () => {
     expect(props.onUpdateWithdrawal).toHaveBeenCalledWith("w1", { date: "2026-11-01", amountYen: 20000, note: "Cajero" });
   });
 
+  it("un hospedaje de dos noches aparece en las dos, con su mitad", () => {
+    renderView({ expenses: [{ id: "h", date: "2026-11-01", amount: 17000, currency: "JPY", method: "card", category: "hospedaje", nights: ["2026-11-01", "2026-11-02"], note: "New Izu", createdAt: 1, perUsd: 157 }], withdrawals: [] });
+    for (const [day, night] of [[/1 nov/, "noche 1 de 2"], [/2 nov/, "noche 2 de 2"]] as const) {
+      const region = screen.getByRole("region", { name: day });
+      expect(within(region).getByText("¥8,500")).toBeTruthy();
+      expect(within(region).getByText(night)).toBeTruthy();
+      expect(within(region).getByText(/≈US\$54/)).toBeTruthy();
+    }
+    // El total gastado es el pago completo
+    expect(screen.getByLabelText("Gastado").textContent).toContain("≈US$108");
+  });
+
   it("quita un gasto o un retiro", async () => {
     const props = renderView();
     await userEvent.click(screen.getByRole("button", { name: "Quitar gasto Toshogu" }));

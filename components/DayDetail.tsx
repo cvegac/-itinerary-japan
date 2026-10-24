@@ -33,7 +33,7 @@ import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
-import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
+import { expenseShareUsd, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatCost, formatPrice } from "@/lib/cost";
 import ExpenseModal from "@/components/ExpenseModal";
 import { ExpenseRow } from "@/components/ExpenseRows";
@@ -58,6 +58,8 @@ type Props = {
   onAddWithdrawal?: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemoveExpense?: (id: string) => void;
   onUpdateExpense?: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
+  /** Noches de la estadía de un día: el hospedaje se reparte entre ellas */
+  stayOf?: (date: string) => string[];
 };
 
 
@@ -113,6 +115,7 @@ export default function DayDetail({
   onAddWithdrawal,
   onRemoveExpense,
   onUpdateExpense,
+  stayOf,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
@@ -329,6 +332,7 @@ export default function DayDetail({
           onAddWithdrawal={(w) => onAddWithdrawal?.(w)}
           onRemove={(id) => onRemoveExpense?.(id)}
           onUpdate={(id, e) => onUpdateExpense?.(id, e)}
+          stayOf={stayOf}
         />
       )}
 
@@ -471,6 +475,7 @@ function DayExpenses({
   onAddWithdrawal,
   onRemove,
   onUpdate,
+  stayOf,
 }: {
   date: string;
   label: string;
@@ -480,11 +485,13 @@ function DayExpenses({
   onAddWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemove: (id: string) => void;
   onUpdate: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
+  stayOf?: (date: string) => string[];
 }) {
   // null: cerrado; {}: registrar; { record }: editar ese gasto
   const [modal, setModal] = useState<{ record?: Expense } | null>(null);
   const editing = modal?.record;
-  const totalUsd = Math.round(expenses.reduce((sum, e) => sum + expenseUsd(e), 0));
+  // De un hospedaje de varias noches, solo la parte de esta
+  const totalUsd = Math.round(expenses.reduce((sum, e) => sum + expenseShareUsd(e), 0));
   const over = totalUsd > Number(budget.replace(/[^\d]/g, ""));
 
   return (
@@ -503,7 +510,13 @@ function DayExpenses({
       {expenses.length > 0 && (
         <ul className="flex flex-col">
           {expenses.map((e) => (
-            <ExpenseRow key={e.id} expense={e} onEdit={() => setModal({ record: e })} onRemove={() => onRemove(e.id)} />
+            <ExpenseRow
+              key={e.id}
+              expense={e}
+              date={date}
+              onEdit={() => setModal({ record: e })}
+              onRemove={() => onRemove(e.id)}
+            />
           ))}
         </ul>
       )}
@@ -520,6 +533,7 @@ function DayExpenses({
           dates={[{ date, label }]}
           defaultDate={date}
           editing={editing && { kind: "expense", record: editing }}
+          stayOf={stayOf}
           onClose={() => setModal(null)}
           onSaveExpense={editing ? (e) => onUpdate(editing.id, e) : onAdd}
           onSaveWithdrawal={onAddWithdrawal}

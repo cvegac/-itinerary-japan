@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { fixtureTrip } from "./fixtures";
@@ -78,6 +78,14 @@ describe("TripApp", () => {
     await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
     expect(screen.getByLabelText("Gastado").textContent).toContain("≈US$20");
     expect(screen.getByText("¥3,140")).toBeTruthy();
+    localStorage.clear();
+  });
+
+  it("el día siguiente al pago del hospedaje también muestra su parte", () => {
+    localStorage.setItem("viajes-gastos-test", JSON.stringify({ h: { id: "h", date: "2026-11-01", amount: 17000, currency: "JPY", method: "card", category: "hospedaje", nights: ["2026-11-01", "2026-11-02"], note: "New Izu", createdAt: 1, perUsd: 157 } }));
+    renderAt("2026-11-02");
+    const section = screen.getByRole("region", { name: "Gastos del día" });
+    expect(within(section).getByText("¥8,500")).toBeTruthy();
     localStorage.clear();
   });
 

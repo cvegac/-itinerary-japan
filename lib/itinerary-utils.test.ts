@@ -6,6 +6,7 @@ import {
   getTotalWeeks,
   getWeekGroup,
   getWeekIndex,
+  stayNights,
 } from "./itinerary-utils";
 
 function makeDay(date: string, overrides: Partial<DayEntry> = {}): DayEntry {
@@ -131,6 +132,32 @@ describe("computeLodgingSummary", () => {
     expect(stays[0].nights).toBe(1);
   });
 
+  it("usa la zona cuando el día no tiene lodgingPlace", () => {
+    const stays = computeLodgingSummary([makeDay("2026-11-01", { zona: "Avenida Circunvalar, Pereira" })]);
+    expect(stays[0].place).toBe("Avenida Circunvalar, Pereira");
+  });
+});
+
+describe("stayNights", () => {
+  const days = makeDays("2026-11-01", 5).map((d, i) => ({
+    ...d,
+    lodgingPlace: i < 2 ? "Asakusa, Tokio" : "Centro, Kioto",
+    ...(i === 4 ? { isTransit: true, accommodation: "---" } : {}),
+  }));
+
+  it("da las noches de la estadía a la que pertenece ese día, sea el primero o no", () => {
+    expect(stayNights(days, "2026-11-01")).toEqual(["2026-11-01", "2026-11-02"]);
+    expect(stayNights(days, "2026-11-02")).toEqual(["2026-11-01", "2026-11-02"]);
+    expect(stayNights(days, "2026-11-04")).toEqual(["2026-11-03", "2026-11-04"]);
+  });
+
+  it("un día sin cama no tiene estadía", () => {
+    expect(stayNights(days, "2026-11-05")).toEqual([]);
+    expect(stayNights(days, "2026-12-31")).toEqual([]);
+  });
+});
+
+describe("computeLodgingSummary (zona)", () => {
   it("usa la zona cuando el día no tiene lodgingPlace", () => {
     const stays = computeLodgingSummary([makeDay("2026-11-01", { zona: "Avenida Circunvalar, Pereira" })]);
     expect(stays[0].place).toBe("Avenida Circunvalar, Pereira");
