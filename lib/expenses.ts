@@ -5,6 +5,18 @@ import { useSyncedRecords } from "@/lib/synced-records";
 
 export type PaymentMethod = "cash" | "card";
 
+/** Tipo de gasto: los cuatro primeros son los mismos rubros del presupuesto (lib/budget.ts) */
+export type ExpenseCategory = "comida" | "transporte" | "hospedaje" | "entradas" | "compras" | "otros";
+
+export const EXPENSE_CATEGORIES: { value: ExpenseCategory; label: string; icon: string }[] = [
+  { value: "comida", label: "Comida", icon: "🍜" },
+  { value: "transporte", label: "Transporte", icon: "🚆" },
+  { value: "hospedaje", label: "Hospedaje", icon: "🛏️" },
+  { value: "entradas", label: "Entradas y actividades", icon: "🎟️" },
+  { value: "compras", label: "Compras y souvenirs", icon: "🛍️" },
+  { value: "otros", label: "Otros", icon: "📦" },
+];
+
 export type Expense = {
   id: string;
   /** Día del itinerario (YYYY-MM-DD) */
@@ -13,6 +25,8 @@ export type Expense = {
   amount: number;
   currency: Currency;
   method: PaymentMethod;
+  /** Sin tipo: se cargó antes de que existiera (cuenta como "otros") */
+  category?: ExpenseCategory;
   note: string;
   createdAt: number;
   /** Cotización al registrarlo: cuántas unidades de su moneda valía un dólar */
@@ -43,6 +57,15 @@ export function useExpenses(slug: string) {
 
 export function useWithdrawals(slug: string) {
   return useSyncedRecords<Withdrawal>(slug, "withdrawals", "retiros");
+}
+
+export function expenseCategory(e: Expense): ExpenseCategory {
+  return e.category ?? "otros";
+}
+
+export function categoryInfo(e: Expense) {
+  const value = expenseCategory(e);
+  return EXPENSE_CATEGORIES.find((c) => c.value === value)!;
 }
 
 /** Un gasto en dólares: con su cotización guardada o, si no tiene, la de respaldo */

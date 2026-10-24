@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
-import type { Expense, PaymentMethod, Withdrawal } from "@/lib/expenses";
+import { EXPENSE_CATEGORIES, expenseCategory, type Expense, type ExpenseCategory, type PaymentMethod, type Withdrawal } from "@/lib/expenses";
 import { CURRENCIES, formatMoney, toUsd, type Currency } from "@/lib/money";
 import { rememberRates, useRates } from "@/lib/rates";
 import Segmented from "@/components/Segmented";
@@ -15,40 +15,53 @@ type Props = {
   dates: { date: string; label: string }[];
   defaultDate: string;
   initialKind?: Kind;
+  /** Registro a editar: abre con sus datos y sin poder pasar de gasto a retiro */
+  editing?: { kind: "expense"; record: Expense } | { kind: "withdrawal"; record: Withdrawal };
   onClose: () => void;
   onSaveExpense: (expense: Omit<Expense, "id" | "createdAt">) => void;
   onSaveWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
 };
 
-/** Modal para registrar un gasto (con su moneda y cómo se pagó) o un retiro de efectivo */
+/** Modal para registrar o editar un gasto (con su tipo, su moneda y cómo se pagó) o un retiro de efectivo */
 export default function ExpenseModal({
   dates,
   defaultDate,
   initialKind = "expense",
+  editing,
   onClose,
   onSaveExpense,
   onSaveWithdrawal,
 }: Props) {
-  const [kind, setKind] = useState<Kind>(initialKind);
-  const [date, setDate] = useState(defaultDate);
-  const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState<Currency>("JPY");
-  const [method, setMethod] = useState<PaymentMethod>("cash");
-  const [note, setNote] = useState("");
+  const savedExpense = editing?.kind === "expense" ? editing.record : undefined;
+  const [kind, setKind] = useState<Kind>(editing?.kind ?? initialKind);
+  const [date, setDate] = useState(editing?.record.date ?? defaultDate);
+  const [amount, setAmount] = useState(
+    editing ? String(editing.kind === "expense" ? editing.record.amount : editing.record.amountYen) : ""
+  );
+  const [currency, setCurrency] = useState<Currency>(savedExpense?.currency ?? "JPY");
+  const [method, setMethod] = useState<PaymentMethod>(savedExpense?.method ?? "cash");
+  const [category, setCategory] = useState<ExpenseCategory>(savedExpense ? expenseCategory(savedExpense) : "comida");
+  const [note, setNote] = useState(editing?.record.note ?? "");
 
   const isExpense = kind === "expense";
   // Decimales solo en dólares; en yenes y pesos, solo dígitos
   const value = Number(
     isExpense && currency === "USD" ? amount.replace(",", ".").replace(/[^\d.]/g, "") : amount.replace(/[^\d]/g, "")
   );
-  const title = isExpense ? "Registrar gasto" : "Registrar retiro";
+  const title = `${editing ? "Editar" : "Registrar"} ${isExpense ? "gasto" : "retiro"}`;
 
-  // Cotización del momento (o la última conocida); se guarda con el gasto
+  // Cotización del momento (o la última conocida); se guarda con el gasto. Al
+  // editar sin cambiar la moneda queda la del día en que se registró
   const { rates, source } = useRates();
-  const perUsd = currency === "USD" ? 1 : (rates?.perUsd[currency] ?? null);
+  const keepRate = !!savedExpense && savedExpense.currency === currency;
+  const keptRate = keepRate && savedExpense.perUsd ? { perUsd: savedExpense.perUsd, rateDate: savedExpense.rateDate } : null;
+  const perUsd = currency === "USD" ? 1 : keepRate ? (keptRate?.perUsd ?? null) : (rates?.perUsd[currency] ?? null);
   const usdValue = perUsd ? value / perUsd : toUsd(value, currency);
-  const rateNote =
-    source === "live"
+  const rateNote = keepRate
+    ? keptRate?.rateDate
+      ? `cambio del ${shortDate(keptRate.rateDate)}, cuando lo registraste`
+      : "cambio aproximado (se registró sin cotización)"
+    : source === "live"
       ? `cambio del ${shortDate(rates!.date)}`
       : source === "cached"
         ? `última conocida (${shortDate(rates!.date)}), sin conexión`
@@ -58,10 +71,14 @@ export default function ExpenseModal({
     e.preventDefault();
     if (!value) return;
     if (isExpense) {
-      const withRate = rates && currency !== "USD" ? { perUsd: rates.perUsd[currency], rateDate: rates.date } : {};
-      onSaveExpense({ date, amount: value, currency, method, note: note.trim(), ...withRate });
+      const withRate = keepRate
+        ? (keptRate ?? {})
+        : rates && currency !== "USD"
+          ? { perUsd: rates.perUsd[currency], rateDate: rates.date }
+          : {};
+      onSaveExpense({ date, amount: value, currency, method, category, note: note.trim(), ...withRate });
       // La del momento queda como "última conocida" para registrar sin conexión
-      if (source === "live" && rates) rememberRates(rates);
+      if (!keepRate && source === "live" && rates) rememberRates(rates);
     }
     else onSaveWithdrawal({ date, amountYen: value, note: note.trim() });
     onClose();
@@ -89,15 +106,17 @@ export default function ExpenseModal({
           </button>
         </div>
 
-        <Segmented
-          name="tipo"
-          value={kind}
-          onChange={setKind}
-          options={[
-            { value: "expense", label: "Gasto" },
-            { value: "withdrawal", label: "Retiro" },
-          ]}
-        />
+        {!editing && (
+          <Segmented
+            name="tipo"
+            value={kind}
+            onChange={setKind}
+            options={[
+              { value: "expense", label: "Gasto" },
+              { value: "withdrawal", label: "Retiro" },
+            ]}
+          />
+        )}
 
         <div className="flex gap-2">
           <div className="min-w-0 flex-1">
@@ -108,7 +127,7 @@ export default function ExpenseModal({
               id="monto"
               aria-label="Monto"
               inputMode="decimal"
-              autoFocus
+              autoFocus={!editing}
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className={`${field} tabular-nums`}
@@ -141,6 +160,27 @@ export default function ExpenseModal({
             1 US$ = {formatMoney(perUsd ?? 1 / toUsd(1, currency), currency, 2)} · {rateNote}
             {value > 0 && <span className="font-semibold text-fg"> · ≈ US${usdValue.toFixed(2)}</span>}
           </p>
+        )}
+
+        {isExpense && (
+          <div>
+            <label htmlFor="categoria" className={label}>
+              Tipo de gasto
+            </label>
+            <select
+              id="categoria"
+              aria-label="Tipo de gasto"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as ExpenseCategory)}
+              className={field}
+            >
+              {EXPENSE_CATEGORIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.icon} {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
         )}
 
         {isExpense && (

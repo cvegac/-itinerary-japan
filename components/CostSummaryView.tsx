@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Banknote, CreditCard, Download, Landmark, Plus, X } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
 import { cashBalance, dailySummary, spentByDate, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
@@ -9,6 +9,7 @@ import { downloadCsv, expensesCsv } from "@/lib/csv";
 import { localISODate } from "@/lib/trip-time";
 import type { DayEntry } from "@/types/DayEntry";
 import ExpenseModal from "@/components/ExpenseModal";
+import { ExpenseRow, WithdrawalRow } from "@/components/ExpenseRows";
 import Segmented from "@/components/Segmented";
 
 type Props = {
@@ -25,7 +26,13 @@ type Props = {
   onAddWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemoveExpense: (id: string) => void;
   onRemoveWithdrawal: (id: string) => void;
+  onUpdateExpense: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
+  onUpdateWithdrawal: (id: string, withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
 };
+
+/** Qué abre el modal: registrar algo nuevo o editar lo ya cargado */
+type Editing = { kind: "expense"; record: Expense } | { kind: "withdrawal"; record: Withdrawal };
+type ModalState = { editing?: Editing } | null;
 
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
@@ -37,7 +44,8 @@ const usd = (amount: number) => `US$${Math.round(amount).toLocaleString("en-US")
 export default function CostSummaryView(props: Props) {
   const { itinerary, expenses, withdrawals, defaultDate } = props;
   const [tab, setTab] = useState<"daily" | "budget">("daily");
-  const [registering, setRegistering] = useState(false);
+  const [modal, setModal] = useState<ModalState>(null);
+  const editing = modal?.editing;
 
   const spent = spentByDate(expenses);
   const spentTotal = Object.values(spent).reduce((sum, v) => sum + v, 0);
@@ -79,7 +87,7 @@ export default function CostSummaryView(props: Props) {
           {/* Uno solo: en el modal se elige si es un gasto o un retiro del cajero */}
           <button
             type="button"
-            onClick={() => setRegistering(true)}
+            onClick={() => setModal({})}
             className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg"
           >
             <Plus className="size-4" aria-hidden />
@@ -110,15 +118,20 @@ export default function CostSummaryView(props: Props) {
         />
       </header>
 
-      {tab === "daily" ? <DailySummary {...props} /> : <BudgetWeeks {...props} spent={spent} />}
+      {tab === "daily" ? (
+        <DailySummary {...props} onEdit={(e) => setModal({ editing: e })} />
+      ) : (
+        <BudgetWeeks {...props} spent={spent} />
+      )}
 
-      {registering && (
+      {modal && (
         <ExpenseModal
           dates={itinerary.map((d) => ({ date: d.date, label: `${shortDate(d.date)} · ${d.label}` }))}
           defaultDate={defaultDate}
-          onClose={() => setRegistering(false)}
-          onSaveExpense={props.onAddExpense}
-          onSaveWithdrawal={props.onAddWithdrawal}
+          editing={editing}
+          onClose={() => setModal(null)}
+          onSaveExpense={editing ? (e) => props.onUpdateExpense(editing.record.id, e) : props.onAddExpense}
+          onSaveWithdrawal={editing ? (w) => props.onUpdateWithdrawal(editing.record.id, w) : props.onAddWithdrawal}
         />
       )}
     </div>
@@ -126,7 +139,15 @@ export default function CostSummaryView(props: Props) {
 }
 
 /** Lo registrado en la nube o el dispositivo, día por día */
-function DailySummary({ itinerary, expenses, withdrawals, onRemoveExpense, onRemoveWithdrawal, onDaySelect }: Props) {
+function DailySummary({
+  itinerary,
+  expenses,
+  withdrawals,
+  onRemoveExpense,
+  onRemoveWithdrawal,
+  onDaySelect,
+  onEdit,
+}: Props & { onEdit: (editing: Editing) => void }) {
   const days = dailySummary(expenses, withdrawals);
   if (days.length === 0) {
     return (
@@ -166,57 +187,28 @@ function DailySummary({ itinerary, expenses, withdrawals, onRemoveExpense, onRem
                 </span>
               )}
             </button>
-            <ul className="flex flex-col px-4 py-2">
+            <ul className="flex flex-col px-3 py-1.5">
               {d.expenses.map((e) => (
-                <li key={e.id} className="flex items-center gap-2.5 py-1 text-sm">
-                  {e.method === "cash" ? (
-                    <Banknote className="size-4 shrink-0 text-emerald-600" aria-label="Pagado en efectivo" />
-                  ) : (
-                    <CreditCard className="size-4 shrink-0 text-sky-600" aria-label="Pagado con tarjeta" />
-                  )}
-                  <span
-                    title={
-                      e.currency === "USD"
-                        ? undefined
-                        : e.perUsd
-                          ? `1 US$ = ${formatMoney(e.perUsd, e.currency, 2)} (${e.rateDate})`
-                          : "Cambio aproximado: se registró sin cotización"
-                    }
-                    className="w-24 shrink-0 font-semibold tabular-nums"
-                  >
-                    {formatMoney(e.amount, e.currency)}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
-                  <RemoveButton
-                    label={`Quitar gasto ${e.note || formatMoney(e.amount, e.currency)}`}
-                    onClick={() => onRemoveExpense(e.id)}
-                  />
-                </li>
+                <ExpenseRow
+                  key={e.id}
+                  expense={e}
+                  onEdit={() => onEdit({ kind: "expense", record: e })}
+                  onRemove={() => onRemoveExpense(e.id)}
+                />
               ))}
               {d.withdrawals.map((w) => (
-                <li key={w.id} className="flex items-center gap-2.5 py-1 text-sm">
-                  <Landmark className="size-4 shrink-0 text-amber-600" aria-hidden />
-                  <span className="shrink-0 font-semibold tabular-nums">Retiro {formatMoney(w.amountYen, "JPY")}</span>
-                  <span className="min-w-0 flex-1 truncate text-muted">{w.note}</span>
-                  <RemoveButton
-                    label={`Quitar retiro ${w.note || formatMoney(w.amountYen, "JPY")}`}
-                    onClick={() => onRemoveWithdrawal(w.id)}
-                  />
-                </li>
+                <WithdrawalRow
+                  key={w.id}
+                  withdrawal={w}
+                  onEdit={() => onEdit({ kind: "withdrawal", record: w })}
+                  onRemove={() => onRemoveWithdrawal(w.id)}
+                />
               ))}
             </ul>
           </section>
         );
       })}
     </div>
-  );
-}
-
-function RemoveButton({ label, onClick }: { label: string; onClick: () => void }) {
-  return (
-    <button type="button" aria-label={label} onClick={onClick} className="rounded-lg p-1 text-muted hover:bg-surface-2">
-      <X className="size-4" aria-hidden />
-    </button>
   );
 }
 

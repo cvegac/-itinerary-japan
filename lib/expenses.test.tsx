@@ -37,7 +37,7 @@ vi.mock("@/lib/cloud", () => ({
   deleteRecord: (_uid: string, _slug: string, field: string, id: string) => void cloud.deleted.push({ field, id }),
 }));
 
-import { cashBalance, dailySummary, expenseUsd, spentByDate, useExpenses, useWithdrawals } from "./expenses";
+import { cashBalance, dailySummary, expenseCategory, expenseUsd, spentByDate, useExpenses, useWithdrawals } from "./expenses";
 
 const KEY = "viajes-gastos-japan";
 const expense = (over: Partial<Expense> = {}): Expense => ({
@@ -111,6 +111,28 @@ describe("useExpenses", () => {
     expect(result.current.records).toEqual([]);
   });
 
+  it("edita un gasto: mismo id y fecha de creación, y se vuelve a subir", () => {
+    cloud.remote = { expenses: {} };
+    const { result } = renderHook(() => useExpenses("japan"));
+    act(() => cloud.login());
+    act(() => result.current.add({ ...newExpense, category: "comida" }));
+    const { id, createdAt } = result.current.records[0];
+    act(() => result.current.update(id, { ...newExpense, amount: 2000, category: "entradas" }));
+    expect(result.current.records).toMatchObject([{ id, createdAt, amount: 2000, category: "entradas" }]);
+    expect(cloud.saved.map((s) => s.record.id)).toEqual([id, id]);
+    expect(JSON.parse(localStorage.getItem(KEY)!)[id]).toMatchObject({ amount: 2000 });
+  });
+
+  it("lo editado sin sesión gana al conectar, aunque ya estuviera en la nube", () => {
+    localStorage.setItem(KEY, JSON.stringify({ a: expense({ id: "a" }) }));
+    cloud.remote = { expenses: { a: expense({ id: "a" }) } };
+    const { result } = renderHook(() => useExpenses("japan"));
+    act(() => result.current.update("a", { ...newExpense, amount: 2000 }));
+    act(() => cloud.login());
+    expect(cloud.saved).toMatchObject([{ field: "expenses", record: { id: "a", amount: 2000 } }]);
+    expect(result.current.records).toMatchObject([{ id: "a", amount: 2000 }]);
+  });
+
   it("con sesión cada gasto se sube y se borra de la nube", () => {
     cloud.remote = { expenses: {} };
     const { result } = renderHook(() => useExpenses("japan"));
@@ -131,6 +153,13 @@ describe("useWithdrawals", () => {
     act(() => result.current.add({ date: "2026-11-01", amountYen: 30000, note: "Cajero 7-Eleven" }));
     expect(cloud.saved).toMatchObject([{ field: "withdrawals", record: { amountYen: 30000 } }]);
     expect(localStorage.getItem("viajes-retiros-japan")).not.toBeNull();
+  });
+});
+
+describe("expenseCategory", () => {
+  it("los gastos sin tipo (cargados antes de que existiera) cuentan como Otros", () => {
+    expect(expenseCategory(expense())).toBe("otros");
+    expect(expenseCategory(expense({ category: "transporte" }))).toBe("transporte");
   });
 });
 

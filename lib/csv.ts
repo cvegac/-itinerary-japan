@@ -1,4 +1,4 @@
-import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
+import { categoryInfo, expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
 
 // Exportación de gastos y retiros a CSV (RFC 4180: coma, comillas dobles,
 // fin de línea CRLF). Con BOM para que Excel lea bien tildes y ¥.
@@ -6,6 +6,7 @@ import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
 const HEADER = [
   "Fecha",
   "Tipo",
+  "Tipo de gasto",
   "Monto",
   "Moneda",
   "Forma de pago",
@@ -29,6 +30,7 @@ export function expensesCsv(expenses: Expense[], withdrawals: Withdrawal[]): str
       cells: [
         e.date,
         "Gasto",
+        categoryInfo(e).label,
         e.amount,
         e.currency,
         e.method === "cash" ? "Efectivo" : "Tarjeta",
@@ -41,7 +43,7 @@ export function expensesCsv(expenses: Expense[], withdrawals: Withdrawal[]): str
     ...withdrawals.map((w) => ({
       date: w.date,
       createdAt: w.createdAt,
-      cells: [w.date, "Retiro", w.amountYen, "JPY", "Efectivo", w.note, undefined, undefined, undefined],
+      cells: [w.date, "Retiro", undefined, w.amountYen, "JPY", "Efectivo", w.note, undefined, undefined, undefined],
     })),
   ].sort((a, b) => a.date.localeCompare(b.date) || a.createdAt - b.createdAt);
 

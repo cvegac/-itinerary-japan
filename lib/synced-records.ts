@@ -57,7 +57,7 @@ export function useSyncedRecords<T extends SyncedRecord>(
   normalize: (raw: T) => T = (r) => r
 ) {
   const listKey = `viajes-${storage}-${slug}`;
-  /** Ids cargados sin sesión que todavía no están en la nube */
+  /** Ids cargados o editados sin sesión que todavía no están en la nube */
   const pendingKey = `${listKey}-sin-subir`;
 
   const [map, setMap] = useState<RecordMap<T>>({});
@@ -74,11 +74,12 @@ export function useSyncedRecords<T extends SyncedRecord>(
     let first = true;
     return watchTrip(uid, slug, (remote) => {
       const next: RecordMap<T> = { ...((remote?.[field] as RecordMap<T> | undefined) ?? {}) };
-      // Al conectar: se suben solo los registros cargados sin sesión
+      // Al conectar: se suben solo los registros cargados o editados sin sesión
+      // (la versión del dispositivo gana: es la última que tocaste)
       if (first) {
         const local = read<RecordMap<T>>(listKey, {});
         read<string[]>(pendingKey, []).forEach((id) => {
-          if (local[id] && !next[id]) {
+          if (local[id]) {
             next[id] = local[id];
             saveRecord(uid, slug, field, local[id]);
           }
@@ -100,6 +101,21 @@ export function useSyncedRecords<T extends SyncedRecord>(
     else write(pendingKey, [...read<string[]>(pendingKey, []), record.id]);
   }
 
+  /** Cambia los datos de un registro; conserva su id y cuándo se creó */
+  function update(id: string, input: Omit<T, "id" | "createdAt">) {
+    const current = mapRef.current[id];
+    if (!current) return;
+    const record = { ...input, id, createdAt: current.createdAt } as T;
+    const next = { ...mapRef.current, [id]: record };
+    setMap(next);
+    write(listKey, next);
+    if (uid) saveRecord(uid, slug, field, record);
+    else {
+      const pending = read<string[]>(pendingKey, []);
+      if (!pending.includes(id)) write(pendingKey, [...pending, id]);
+    }
+  }
+
   function remove(id: string) {
     const { [id]: _removed, ...next } = mapRef.current;
     setMap(next);
@@ -112,5 +128,5 @@ export function useSyncedRecords<T extends SyncedRecord>(
     .map(normalize)
     .sort((a, b) => a.date.localeCompare(b.date) || a.createdAt - b.createdAt);
 
-  return { records, add, remove };
+  return { records, add, update, remove };
 }

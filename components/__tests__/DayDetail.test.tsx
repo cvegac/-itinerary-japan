@@ -117,8 +117,19 @@ describe("DayDetail", () => {
       await userEvent.type(screen.getByLabelText("Monto"), "2500");
       await userEvent.type(screen.getByLabelText("En qué"), "Bici");
       await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
-      expect(onAdd).toHaveBeenCalledWith({ date: "2026-11-02", amount: 2500, currency: "JPY", method: "cash", note: "Bici" });
+      expect(onAdd).toHaveBeenCalledWith({ date: "2026-11-02", amount: 2500, currency: "JPY", method: "cash", category: "comida", note: "Bici" });
       expect(screen.queryByRole("dialog")).toBeNull();
+    });
+
+    it("tocar un gasto lo abre para editarlo", async () => {
+      const onUpdate = vi.fn();
+      render(
+        <DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} onUpdateExpense={onUpdate} />
+      );
+      await userEvent.click(screen.getByRole("button", { name: "Editar gasto Toshogu" }));
+      await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "entradas");
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(onUpdate).toHaveBeenCalledWith("e1", expect.objectContaining({ amount: 1650, category: "entradas" }));
     });
 
     it("quita un gasto", async () => {

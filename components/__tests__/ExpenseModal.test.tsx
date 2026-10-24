@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import ExpenseModal from "@/components/ExpenseModal";
 import { forgetRatesSession } from "@/lib/rates";
+import type { Expense } from "@/lib/expenses";
 
 afterEach(cleanup);
 
@@ -26,7 +27,7 @@ function renderModal(over: Partial<Parameters<typeof ExpenseModal>[0]> = {}) {
 }
 
 describe("ExpenseModal", () => {
-  it("registra un gasto con su moneda, cómo se pagó y el día", async () => {
+  it("registra un gasto con su tipo, su moneda, cómo se pagó y el día", async () => {
     const props = renderModal();
     expect(screen.getByRole("dialog", { name: "Registrar gasto" })).toBeTruthy();
     expect((screen.getByLabelText("Día") as HTMLSelectElement).value).toBe("2026-11-02");
@@ -34,6 +35,7 @@ describe("ExpenseModal", () => {
     await userEvent.type(screen.getByLabelText("Monto"), "12.50");
     await userEvent.selectOptions(screen.getByLabelText("Moneda"), "USD");
     await userEvent.click(screen.getByRole("radio", { name: "Tarjeta" }));
+    await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "transporte");
     await userEvent.type(screen.getByLabelText("En qué"), "Taxi");
     await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
 
@@ -42,16 +44,80 @@ describe("ExpenseModal", () => {
       amount: 12.5,
       currency: "USD",
       method: "card",
+      category: "transporte",
       note: "Taxi",
     });
     expect(props.onClose).toHaveBeenCalled();
   });
 
-  it("por defecto el gasto es en yenes y en efectivo", async () => {
+  it("por defecto el gasto es de comida, en yenes y en efectivo", async () => {
     const props = renderModal();
     await userEvent.type(screen.getByLabelText("Monto"), "1600");
     await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(props.onSaveExpense).toHaveBeenCalledWith(expect.objectContaining({ amount: 1600, currency: "JPY", method: "cash" }));
+    expect(props.onSaveExpense).toHaveBeenCalledWith(
+      expect.objectContaining({ amount: 1600, currency: "JPY", method: "cash", category: "comida" })
+    );
+  });
+
+  describe("al editar", () => {
+    const saved: Expense = {
+      id: "e1",
+      date: "2026-11-01",
+      amount: 1570,
+      currency: "JPY",
+      method: "card",
+      category: "comida",
+      note: "Toshogu",
+      createdAt: 1,
+      perUsd: 150,
+      rateDate: "2026-11-01",
+    };
+
+    it("abre con los datos del gasto y sin la opción de pasarlo a retiro", () => {
+      renderModal({ editing: { kind: "expense", record: saved } });
+      expect(screen.getByRole("dialog", { name: "Editar gasto" })).toBeTruthy();
+      expect(screen.queryByRole("radio", { name: "Retiro" })).toBeNull();
+      expect((screen.getByLabelText("Monto") as HTMLInputElement).value).toBe("1570");
+      expect((screen.getByLabelText("Día") as HTMLSelectElement).value).toBe("2026-11-01");
+      expect((screen.getByLabelText("Tipo de gasto") as HTMLSelectElement).value).toBe("comida");
+      expect((screen.getByLabelText("En qué") as HTMLInputElement).value).toBe("Toshogu");
+      expect(screen.getByRole("radio", { name: "Tarjeta" }).getAttribute("aria-checked")).toBe("true");
+    });
+
+    it("guarda los cambios con la cotización de ese día si no cambia la moneda", async () => {
+      const props = renderModal({ editing: { kind: "expense", record: saved } });
+      await userEvent.clear(screen.getByLabelText("Monto"));
+      await userEvent.type(screen.getByLabelText("Monto"), "2000");
+      await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "entradas");
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onSaveExpense).toHaveBeenCalledWith({
+        date: "2026-11-01",
+        amount: 2000,
+        currency: "JPY",
+        method: "card",
+        category: "entradas",
+        note: "Toshogu",
+        perUsd: 150,
+        rateDate: "2026-11-01",
+      });
+    });
+
+    it("un gasto sin tipo (de antes) abre como Otros", () => {
+      const { category: _c, ...old } = saved;
+      renderModal({ editing: { kind: "expense", record: old } });
+      expect((screen.getByLabelText("Tipo de gasto") as HTMLSelectElement).value).toBe("otros");
+    });
+
+    it("edita un retiro", async () => {
+      const props = renderModal({
+        editing: { kind: "withdrawal", record: { id: "w1", date: "2026-11-01", amountYen: 30000, note: "Cajero", createdAt: 1 } },
+      });
+      expect(screen.getByRole("dialog", { name: "Editar retiro" })).toBeTruthy();
+      await userEvent.clear(screen.getByLabelText("Monto"));
+      await userEvent.type(screen.getByLabelText("Monto"), "20000");
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onSaveWithdrawal).toHaveBeenCalledWith({ date: "2026-11-01", amountYen: 20000, note: "Cajero" });
+    });
   });
 
   it("registra un retiro de efectivo en yenes", async () => {

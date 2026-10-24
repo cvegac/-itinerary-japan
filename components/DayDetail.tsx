@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
-  Banknote,
   BedDouble,
   Bike,
   Bus,
@@ -11,7 +10,6 @@ import {
   CarTaxiFront,
   Clock,
   Coins,
-  CreditCard,
   Footprints,
   MapPin,
   MessageSquare,
@@ -28,7 +26,6 @@ import {
   TramFront,
   Utensils,
   Wallet,
-  X,
 } from "lucide-react";
 import type { Activity, DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
@@ -37,9 +34,9 @@ import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
 import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
-import { formatMoney } from "@/lib/money";
 import { formatCost, formatPrice } from "@/lib/cost";
 import ExpenseModal from "@/components/ExpenseModal";
+import { ExpenseRow } from "@/components/ExpenseRows";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
@@ -60,6 +57,7 @@ type Props = {
   onAddExpense?: (expense: Omit<Expense, "id" | "createdAt">) => void;
   onAddWithdrawal?: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemoveExpense?: (id: string) => void;
+  onUpdateExpense?: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
 };
 
 
@@ -114,6 +112,7 @@ export default function DayDetail({
   onAddExpense,
   onAddWithdrawal,
   onRemoveExpense,
+  onUpdateExpense,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
@@ -329,6 +328,7 @@ export default function DayDetail({
           onAdd={onAddExpense}
           onAddWithdrawal={(w) => onAddWithdrawal?.(w)}
           onRemove={(id) => onRemoveExpense?.(id)}
+          onUpdate={(id, e) => onUpdateExpense?.(id, e)}
         />
       )}
 
@@ -470,6 +470,7 @@ function DayExpenses({
   onAdd,
   onAddWithdrawal,
   onRemove,
+  onUpdate,
 }: {
   date: string;
   label: string;
@@ -478,8 +479,11 @@ function DayExpenses({
   onAdd: (expense: Omit<Expense, "id" | "createdAt">) => void;
   onAddWithdrawal: (withdrawal: Omit<Withdrawal, "id" | "createdAt">) => void;
   onRemove: (id: string) => void;
+  onUpdate: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  // null: cerrado; {}: registrar; { record }: editar ese gasto
+  const [modal, setModal] = useState<{ record?: Expense } | null>(null);
+  const editing = modal?.record;
   const totalUsd = Math.round(expenses.reduce((sum, e) => sum + expenseUsd(e), 0));
   const over = totalUsd > Number(budget.replace(/[^\d]/g, ""));
 
@@ -497,42 +501,27 @@ function DayExpenses({
         )}
       </div>
       {expenses.length > 0 && (
-        <ul className="flex flex-col gap-1">
+        <ul className="flex flex-col">
           {expenses.map((e) => (
-            <li key={e.id} className="flex items-center gap-2 text-sm">
-              {e.method === "cash" ? (
-                <Banknote className="size-4 shrink-0 text-emerald-600" aria-label="Pagado en efectivo" />
-              ) : (
-                <CreditCard className="size-4 shrink-0 text-sky-600" aria-label="Pagado con tarjeta" />
-              )}
-              <span className="w-24 shrink-0 font-semibold tabular-nums">{formatMoney(e.amount, e.currency)}</span>
-              <span className="min-w-0 flex-1 truncate text-muted">{e.note}</span>
-              <button
-                type="button"
-                aria-label={`Quitar gasto ${e.note || formatMoney(e.amount, e.currency)}`}
-                onClick={() => onRemove(e.id)}
-                className="rounded-lg p-1 text-muted hover:bg-line"
-              >
-                <X className="size-4" aria-hidden />
-              </button>
-            </li>
+            <ExpenseRow key={e.id} expense={e} onEdit={() => setModal({ record: e })} onRemove={() => onRemove(e.id)} />
           ))}
         </ul>
       )}
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => setModal({})}
         className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
       >
         <Plus className="size-4" aria-hidden />
         Registrar
       </button>
-      {open && (
+      {modal && (
         <ExpenseModal
           dates={[{ date, label }]}
           defaultDate={date}
-          onClose={() => setOpen(false)}
-          onSaveExpense={onAdd}
+          editing={editing && { kind: "expense", record: editing }}
+          onClose={() => setModal(null)}
+          onSaveExpense={editing ? (e) => onUpdate(editing.id, e) : onAdd}
           onSaveWithdrawal={onAddWithdrawal}
         />
       )}

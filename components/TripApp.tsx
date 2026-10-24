@@ -199,6 +199,7 @@ export default function TripApp({ tripData }: Props) {
         onAddExpense={expenses.add}
         onAddWithdrawal={withdrawals.add}
         onRemoveExpense={expenses.remove}
+        onUpdateExpense={expenses.update}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
@@ -222,6 +223,8 @@ export default function TripApp({ tripData }: Props) {
         onAddWithdrawal={withdrawals.add}
         onRemoveExpense={expenses.remove}
         onRemoveWithdrawal={withdrawals.remove}
+        onUpdateExpense={expenses.update}
+        onUpdateWithdrawal={withdrawals.update}
       />
     ) : view === "lodging" ? (
       <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} />

@@ -9,6 +9,7 @@ const expenses: Expense[] = [
     amount: 1570,
     currency: "JPY",
     method: "cash",
+    category: "entradas",
     note: 'Toshogu, entrada "general"',
     createdAt: 2,
     perUsd: 157,
@@ -27,11 +28,12 @@ describe("expensesCsv", () => {
 
   it("tiene encabezado y una fila por gasto o retiro, ordenadas por fecha", () => {
     const [header, ...data] = rows(expensesCsv(expenses, withdrawals));
-    expect(header).toBe("Fecha,Tipo,Monto,Moneda,Forma de pago,En qué,Cotización (1 US$ =),Fecha cotización,≈ US$");
+    expect(header).toBe("Fecha,Tipo,Tipo de gasto,Monto,Moneda,Forma de pago,En qué,Cotización (1 US$ =),Fecha cotización,≈ US$");
     expect(data).toEqual([
-      "2026-11-01,Gasto,12.5,USD,Tarjeta,Taxi,1,,12.50",
-      "2026-11-01,Retiro,30000,JPY,Efectivo,Cajero,,,",
-      '2026-11-02,Gasto,1570,JPY,Efectivo,"Toshogu, entrada ""general""",157,2026-11-02,10.00',
+      // Sin tipo (cargado antes de que existiera): Otros
+      "2026-11-01,Gasto,Otros,12.5,USD,Tarjeta,Taxi,1,,12.50",
+      "2026-11-01,Retiro,,30000,JPY,Efectivo,Cajero,,,",
+      '2026-11-02,Gasto,Entradas y actividades,1570,JPY,Efectivo,"Toshogu, entrada ""general""",157,2026-11-02,10.00',
     ]);
   });
 
@@ -39,7 +41,7 @@ describe("expensesCsv", () => {
     const [, row] = rows(
       expensesCsv([{ id: "x", date: "2026-11-03", amount: 3140, currency: "JPY", method: "card", note: "", createdAt: 1 }], [])
     );
-    expect(row).toBe("2026-11-03,Gasto,3140,JPY,Tarjeta,,,,20.00");
+    expect(row).toBe("2026-11-03,Gasto,Otros,3140,JPY,Tarjeta,,,,20.00");
   });
 
   it("sin registros devuelve solo el encabezado", () => {
