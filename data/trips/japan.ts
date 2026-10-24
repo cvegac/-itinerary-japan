@@ -1,7 +1,9 @@
-import { ITINERARY } from "./japan-itinerary";
+// El itinerario es un JSON validado con lib/schema.ts (ver README.md)
+import itinerary from "./japan-itinerary.json";
 import routes from "./japan-routes.json";
 import { NOTES } from "./japan-notes";
 import type { TripData } from "@/types/Trip";
+import type { DayEntry } from "@/types/DayEntry";
 import type { TripRoutes } from "@/lib/route-plan";
 
 export const japanTrip: TripData = {
@@ -18,7 +20,7 @@ export const japanTrip: TripData = {
     mapCenter: [35.2, 136.5],
     mapZoom: 6,
   },
-  itinerary: ITINERARY,
+  itinerary: itinerary as DayEntry[],
   notes: NOTES,
   // Precalculadas con scripts/fetch-routes.mjs (un test avisa si quedan viejas)
   routes: routes as unknown as TripRoutes,

@@ -30,7 +30,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
-import type { DayEntry } from "@/types/DayEntry";
+import type { Activity, DayEntry } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
 import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
@@ -38,6 +38,7 @@ import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
 import { expenseUsd, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
+import { formatCost, formatPrice } from "@/lib/cost";
 import ExpenseModal from "@/components/ExpenseModal";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
@@ -397,7 +398,7 @@ function TransportTimeline({ segments }: { segments: TransportSegment[] }) {
                 {seg.cost && (
                   <span className="inline-flex items-center gap-1 font-medium text-emerald-700">
                     <Coins className="size-3.5" aria-hidden />
-                    {seg.cost}
+                    {formatCost(seg.cost)}
                   </span>
                 )}
               </div>
@@ -423,7 +424,7 @@ function ActivityList({
 }: {
   title: string;
   icon: LucideIcon;
-  items: string[];
+  items: Activity[];
   tone: "amber" | "indigo";
 }) {
   if (items.length === 0) return null;
@@ -436,12 +437,22 @@ function ActivityList({
         {title}
       </h3>
       <ul className="flex flex-col gap-1.5">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2 text-sm leading-snug">
-            <span className={`mt-1.5 size-1.5 shrink-0 rounded-full ${dot}`} aria-hidden />
-            <span>{item}</span>
-          </li>
-        ))}
+        {items.map((item) => {
+          const { text, price } = typeof item === "string" ? { text: item, price: undefined } : item;
+          return (
+            <li key={text} className="flex gap-2 text-sm leading-snug">
+              <span className={`mt-1.5 size-1.5 shrink-0 rounded-full ${dot}`} aria-hidden />
+              <span>
+                {text}
+                {price && (
+                  <span className="ml-1.5 whitespace-nowrap text-xs font-semibold text-emerald-700">
+                    {formatPrice(price)}
+                  </span>
+                )}
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

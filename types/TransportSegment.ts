@@ -1,3 +1,5 @@
+import type { Cost } from "@/lib/cost";
+
 export type TransportSegment = {
   /** Tipo: tren, bus, metro, ferry, teleférico, caminar, monorriel, bus-nocturno */
   mode: string;
@@ -9,8 +11,10 @@ export type TransportSegment = {
   to: string;
   /** Duración estimada */
   duration?: string;
-  /** Costo estimado */
-  cost?: string;
+  /** Costo estimado, como dato (lib/cost.ts) */
+  cost?: Cost;
+  /** No forma parte del plan base: no suma al presupuesto */
+  optional?: boolean;
   /** Notas adicionales */
   note?: string;
 };

@@ -1,7 +1,7 @@
-import type { DayEntry } from "@/types/DayEntry";
+import type { DayEntry, Weekday } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
 
-export function makeDay(date: string, weekday: string, overrides: Partial<DayEntry> = {}): DayEntry {
+export function makeDay(date: string, weekday: Weekday, overrides: Partial<DayEntry> = {}): DayEntry {
   return {
     date,
     label: `Plan del ${date}`,

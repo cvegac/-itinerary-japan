@@ -1,4 +1,3 @@
-import { YEN_PER_USD } from "@/lib/budget";
 
 export type Currency = "JPY" | "USD" | "COP";
 
@@ -8,8 +7,9 @@ export const CURRENCIES: { code: Currency; label: string }[] = [
   { code: "COP", label: "COP Peso" },
 ];
 
-/** Cambios de respaldo, para cuando un gasto no tiene su cotización guardada (sin
- *  conexión y sin una conocida). Peso: ~3,184 el 2026-10-23; yen: el del presupuesto */
+/** Cambio del presupuesto y de respaldo del yen (~156.9 el 2026-10-23, según currency-api) */
+export const YEN_PER_USD = 157;
+/** Cambio de respaldo del peso, para gastos sin cotización guardada (~3,184 el 2026-10-23) */
 export const COP_PER_USD = 3200;
 
 const PER_USD: Record<Currency, number> = { USD: 1, JPY: YEN_PER_USD, COP: COP_PER_USD };

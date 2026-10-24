@@ -12,13 +12,13 @@ const day = makeDay("2026-11-02", "Lun", {
   label: "Excursión a Nikko",
   budget: "$110",
   transport: [
-    { mode: "tren", line: "Tobu Nikko Line", from: "Asakusa", to: "Tobu-Nikko", duration: "~2h", cost: "¥3,000" },
+    { mode: "tren", line: "Tobu Nikko Line", from: "Asakusa", to: "Tobu-Nikko", duration: "~2h", cost: { amount: 3000, currency: "JPY", included: "el NIKKO PASS", detail: "2 días" } },
   ],
   pois: [
     { name: "Santuario Toshogu", coords: [36.758, 139.599] },
     { name: "Cena en Asakusa", coords: [35.71, 139.79], night: true },
   ],
-  activitiesDay: ["Puente Shinkyo"],
+  activitiesDay: ["Puente Shinkyo", { text: "Santuario Toshogu", price: { amount: 1600, currency: "JPY", approx: true } }],
   activitiesNight: ["Paseo por el río"],
 });
 
@@ -162,5 +162,14 @@ describe("DayDetail", () => {
     expect(within(transport).getByText("Tobu Nikko Line")).toBeTruthy();
     expect(screen.getByText("Puente Shinkyo")).toBeTruthy();
     expect(screen.getByText("Paseo por el río")).toBeTruthy();
+  });
+
+  it("muestra los costos y las entradas a partir de los datos", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    const transport = screen.getByRole("list", { name: "Tramos de transporte" });
+    expect(within(transport).getByText("Incluido en el NIKKO PASS (¥3,000, 2 días)")).toBeTruthy();
+    const deDia = screen.getByRole("heading", { name: "De día" }).closest("section")!;
+    const toshogu = within(deDia).getByText("Santuario Toshogu").closest("li")!;
+    expect(within(toshogu).getByText("~¥1,600")).toBeTruthy();
   });
 });

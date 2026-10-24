@@ -1,4 +1,10 @@
 import type { TransportSegment } from "./TransportSegment";
+import type { Money } from "@/lib/cost";
+
+/** Actividad del día: un texto, o un texto con su entrada (que suma al presupuesto) */
+export type Activity = string | { text: string; price?: Money; optional?: boolean };
+
+export type Weekday = "Dom" | "Lun" | "Mar" | "Mié" | "Jue" | "Vie" | "Sáb";
 
 /** Lugar a visitar ese día, en el orden del recorrido */
 export type PointOfInterest = {
@@ -17,7 +23,7 @@ export type DayEntry = {
   location: string;
   category: string;
   notes: string;
-  weekday: string;
+  weekday: Weekday;
   food: string;
   /** Array de segmentos de transporte para ese día */
   transport: TransportSegment[];
@@ -41,12 +47,14 @@ export type DayEntry = {
   /** El orden de los lugares es intencional (sendero, tren, alquiler de bici,
    *  horario): las rutas lo respetan en vez de optimizarlo */
   keepOrder?: boolean;
+  /** Por qué se respeta ese orden (documentación, no se muestra) */
+  keepOrderReason?: string;
   /** Día de sendero (Kumano Kodo, Nakasendo…): los tramos largos a pie se
    *  trazan por el camino en vez de marcarse como tren o bus */
   hike?: boolean;
   budget: string;
-  activitiesDay: string[];
-  activitiesNight: string[];
+  activitiesDay: Activity[];
+  activitiesNight: Activity[];
   isTransit: boolean;
   /** Si esa noche toma bus nocturno, el número de bus (ej: "#1") */
   nightBus?: string;

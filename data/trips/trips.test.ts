@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { computeLodgingSummary } from "@/lib/itinerary-utils";
 import { poiSignature } from "@/lib/route-plan";
 import { dayCostBreakdown } from "@/lib/budget";
+import { itineraryIssues } from "@/lib/schema";
 import { DEFAULT_POI_ICON, poiIcon } from "@/lib/poi-icons";
 import { getAllTrips } from "./index";
 
@@ -23,6 +24,10 @@ function distanceKm([lat1, lng1]: [number, number], [lat2, lng2]: [number, numbe
 
 describe.each(getAllTrips().map((t) => [t.meta.slug, t] as const))("viaje %s", (_slug, trip) => {
   const { meta, itinerary } = trip;
+
+  it("cumple el esquema del itinerario (lib/schema.ts)", () => {
+    expect(itineraryIssues(itinerary)).toEqual([]);
+  });
 
   it("empieza en startDate y tiene fechas consecutivas", () => {
     itinerary.forEach((day, i) => {
