@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Banknote, CreditCard, Landmark, Plus, X } from "lucide-react";
+import { Banknote, CreditCard, Download, Landmark, Plus, X } from "lucide-react";
 import { WEEK_COLORS_HEX, computeCostSummary } from "@/lib/itinerary-utils";
 import { cashBalance, dailySummary, spentByDate, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatMoney } from "@/lib/money";
+import { downloadCsv, expensesCsv } from "@/lib/csv";
+import { localISODate } from "@/lib/trip-time";
 import type { DayEntry } from "@/types/DayEntry";
 import ExpenseModal from "@/components/ExpenseModal";
 import Segmented from "@/components/Segmented";
 
 type Props = {
+  /** Para el nombre del archivo exportado */
+  slug: string;
   itinerary: DayEntry[];
   startDate: string;
   onDaySelect: (day: DayEntry) => void;
@@ -71,15 +75,29 @@ export default function CostSummaryView(props: Props) {
           </div>
         </div>
 
-        {/* Uno solo: en el modal se elige si es un gasto o un retiro del cajero */}
-        <button
-          type="button"
-          onClick={() => setRegistering(true)}
-          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg"
-        >
-          <Plus className="size-4" aria-hidden />
-          Registrar
-        </button>
+        <div className="flex gap-2">
+          {/* Uno solo: en el modal se elige si es un gasto o un retiro del cajero */}
+          <button
+            type="button"
+            onClick={() => setRegistering(true)}
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-accent-fg"
+          >
+            <Plus className="size-4" aria-hidden />
+            Registrar
+          </button>
+          {(expenses.length > 0 || withdrawals.length > 0) && (
+            <button
+              type="button"
+              onClick={() =>
+                downloadCsv(`gastos-${props.slug}-${localISODate(new Date())}.csv`, expensesCsv(expenses, withdrawals))
+              }
+              className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-4 py-2.5 text-sm font-semibold"
+            >
+              <Download className="size-4" aria-hidden />
+              Exportar CSV
+            </button>
+          )}
+        </div>
 
         <Segmented
           name="Vista"

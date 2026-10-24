@@ -196,6 +196,7 @@ export default function TripApp({ tripData }: Props) {
   const summaryPage =
     view === "costs" ? (
       <CostSummaryView
+        slug={meta.slug}
         itinerary={itinerary}
         startDate={meta.startDate}
         onDaySelect={openFromSummary}

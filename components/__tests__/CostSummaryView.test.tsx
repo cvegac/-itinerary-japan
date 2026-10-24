@@ -5,6 +5,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import CostSummaryView from "@/components/CostSummaryView";
 import type { Expense, Withdrawal } from "@/lib/expenses";
 import { fixtureTrip } from "./fixtures";
+import { downloadCsv } from "@/lib/csv";
+
+// La descarga real necesita un navegador: se reemplaza y se mira qué se iba a bajar
+vi.mock("@/lib/csv", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/csv")>()),
+  downloadCsv: vi.fn(),
+}));
 
 afterEach(cleanup);
 
@@ -16,6 +23,7 @@ const withdrawals: Withdrawal[] = [{ id: "w1", date: "2026-11-01", amountYen: 30
 
 function renderView(over: Partial<Parameters<typeof CostSummaryView>[0]> = {}) {
   const props = {
+    slug: "test",
     itinerary: fixtureTrip.itinerary,
     startDate: fixtureTrip.meta.startDate,
     defaultDate: "2026-11-02",
@@ -76,6 +84,22 @@ describe("CostSummaryView", () => {
     await userEvent.type(screen.getByLabelText("Monto"), "30000");
     await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
     expect(props.onAddWithdrawal).toHaveBeenCalledWith(expect.objectContaining({ amountYen: 30000 }));
+  });
+
+  it("exporta gastos y retiros a un CSV", async () => {
+    const download = vi.mocked(downloadCsv);
+    renderView();
+    await userEvent.click(screen.getByRole("button", { name: "Exportar CSV" }));
+    expect(download).toHaveBeenCalledTimes(1);
+    const [filename, csv] = download.mock.calls[0];
+    expect(filename).toMatch(/^gastos-test-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect(csv).toContain("Toshogu");
+    expect(csv).toContain("Retiro,30000,JPY");
+  });
+
+  it("sin registros no ofrece exportar", () => {
+    renderView({ expenses: [], withdrawals: [] });
+    expect(screen.queryByRole("button", { name: "Exportar CSV" })).toBeNull();
   });
 
   it("sin registros lo explica, y el presupuesto sigue en su pestaña", async () => {
