@@ -250,6 +250,34 @@ describe("TripMap con rutas", () => {
 
 const markerByLabel = (label: string) => fake.state.markers.find((m) => m.element?.getAttribute("aria-label") === label);
 
+describe("TripMap al cargar", () => {
+  async function renderMap(day: DayEntry) {
+    const view = render(<TripMap {...props(day, "day")} />);
+    await waitFor(() => expect(fake.state.maps).toHaveLength(1));
+    return { ...view, map: fake.state.maps[0] };
+  }
+  const poiMarkers = () => fake.state.markers.filter((m) => m.element?.querySelector("[data-letter]"));
+
+  it("dibuja el día apenas está el estilo, sin esperar a que bajen todos los tiles", async () => {
+    // En el celular el evento "load" tarda: espera todos los tiles, también el relieve
+    const { map } = await renderMap(itinerary[0]);
+    act(() => map.emit("style.load"));
+    expect(poiMarkers()).toHaveLength(2);
+    expect(markerByLabel("Dormís acá")).toBeTruthy();
+  });
+
+  it("si cambiás de día mientras el mapa carga, dibuja el día elegido y no el del arranque", async () => {
+    const { map, rerender } = await renderMap(itinerary[0]);
+    rerender(<TripMap {...props(itinerary[1], "day")} />);
+    act(() => {
+      map.emit("style.load");
+      map.emit("load");
+    });
+    // itinerary[0] tiene 2 lugares; itinerary[1], 4
+    expect(poiMarkers()).toHaveLength(4);
+  });
+});
+
 describe("TripMap en días de traslado", () => {
   it("muestra la cama donde amanecés, la de esta noche y el traslado entre las dos", async () => {
     const [, yesterday, today] = itinerary;

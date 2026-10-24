@@ -240,9 +240,11 @@ export default function TripMap({
   const routesRef = useRef(routes);
   routesRef.current = routes;
   const cameraRef = useRef<Camera | null>(null);
-  // Listo para dibujar: se activa una vez, al cargar el estilo. No usamos
+  // Listo para dibujar: se activa una vez, apenas carga el estilo. No usamos
   // map.isStyleLoaded(), que da false mientras haya tiles cargando (casi
-  // siempre en el celular) y hacía que se ignoraran los cambios de día o modo.
+  // siempre en el celular) y hacía que se ignoraran los cambios de día o modo,
+  // ni el evento "load", que espera a que bajen todos los tiles (también el
+  // relieve): con datos móviles tardaba y el primer día quedaba sin dibujar.
   const readyRef = useRef(false);
   const paddingRef = useRef(padding);
   // Si "Mi ubicación" te está siguiendo, la app no mueve la cámara al mover la hoja
@@ -251,6 +253,9 @@ export default function TripMap({
   // Para que los handlers de los marcadores usen siempre el último callback
   const onDaySelectRef = useRef(onDaySelect);
   onDaySelectRef.current = onDaySelect;
+  // Los eventos del mapa se registran una vez: llaman a la última versión de
+  // renderLayer, que ve el día y el modo elegidos ahora
+  const renderLayerRef = useRef(() => {});
 
   // ── Inicializar mapa ─────────────────────────────────────────────────────
   useEffect(() => {
@@ -293,17 +298,19 @@ export default function TripMap({
       map.addControl(geolocate, "top-right");
       map.addControl(new lib.TerrainControl({ source: "terrain", exaggeration: 1.3 }), "top-right");
 
-      // Cada cambio de estilo borra las capas propias: se vuelven a agregar
+      // Cada cambio de estilo borra las capas propias: se vuelven a agregar.
+      // La primera vez, además, se dibuja el día: con la última versión de
+      // renderLayer (la de este efecto quedó con el día del arranque)
       map.on("style.load", () => {
         ensureOverlay(map, terrainMaxZoom);
         (map.getSource(ROUTE_SOURCE) as GeoJSONSource).setData({
           type: "FeatureCollection",
           features: routeRef.current,
         });
-      });
-      map.once("load", () => {
-        readyRef.current = true;
-        renderLayer();
+        if (!readyRef.current) {
+          readyRef.current = true;
+          renderLayerRef.current();
+        }
       });
 
       // El aviso de créditos compacto arranca abierto: lo dejamos como botón "i"
@@ -330,6 +337,8 @@ export default function TripMap({
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  renderLayerRef.current = renderLayer;
 
   // ── Re-renderizar cuando cambian day o mode ──────────────────────────────
   useEffect(() => {
