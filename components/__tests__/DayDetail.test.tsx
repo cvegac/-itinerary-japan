@@ -316,10 +316,19 @@ describe("DayDetail: Google Maps", () => {
     expect(link.getAttribute("target")).toBe("_blank");
   });
 
-  it("el recorrido del día, en el orden de visita", () => {
+  it("el recorrido del día vuelve al hospedaje, y lo lejano (Nikko) queda para el tren", () => {
     render(<DayDetail day={day} dayNumber={2} />);
-    const link = screen.getByRole("link", { name: /Recorrido A → B/ });
-    expect(link.getAttribute("href")).toContain("/maps/dir/?api=1&origin=36.758%2C139.599&destination=35.71%2C139.79");
+    const links = screen.getAllByRole("link", { name: /^Recorrido/ });
+    expect(links.map((l) => l.getAttribute("aria-label"))).toEqual(["Recorrido B → Hospedaje a pie en Google Maps"]);
+    expect(links[0].getAttribute("href")).toContain("origin=35.71%2C139.79&destination=35.7119%2C139.7983");
+  });
+
+  it("sale del hospedaje cuando los lugares quedan cerca", () => {
+    const near = makeDay("2026-11-03", "Mar", { pois: [{ name: "Ameyoko", coords: [35.71, 139.7745] }] });
+    render(<DayDetail day={near} dayNumber={3} />);
+    expect(screen.getByRole("link", { name: /^Recorrido/ }).getAttribute("aria-label")).toBe(
+      "Recorrido Hospedaje → Hospedaje a pie en Google Maps"
+    );
   });
 
   it("cada tramo de transporte, entre sus estaciones", () => {

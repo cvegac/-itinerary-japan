@@ -1,6 +1,7 @@
-import type { LatLng } from "@/lib/map-geo";
-import type { LegMode } from "@/lib/route-plan";
+import { distanceKm, hasBed, poiLetter, type LatLng } from "@/lib/map-geo";
+import { isBikeDay, legMode, type Leg, type LegMode } from "@/lib/route-plan";
 import type { Places } from "@/lib/transit";
+import type { DayEntry, PointOfInterest } from "@/types/DayEntry";
 import type { TransportSegment } from "@/types/TransportSegment";
 
 // Links a Google Maps (Maps URLs, sin API key): en el celular abren la app.
@@ -35,6 +36,50 @@ export type RouteStop = {
 };
 
 export type RouteLink = { url: string; from: string; to: string; mode: TravelMode };
+
+export const LODGING_LABEL = "Hospedaje";
+
+/** "KUMANO家-OHGi- (individual con tatami…)" → "KUMANO家-OHGi-" */
+const lodgingName = (accommodation: string) => accommodation.split(" (")[0];
+
+/** Las paradas del recorrido: sale de la cama donde amanecés, pasa por los
+ *  lugares en orden de visita y vuelve a la de esta noche (si hay). Entre dos
+ *  paradas va el tramo precalculado o, si no hay, el que toca por distancia */
+export function dayStops(
+  day: DayEntry,
+  ordered: { poi: PointOfInterest; index: number }[],
+  legTo: Map<number, Leg>,
+  morning: DayEntry | null
+): RouteStop[] {
+  if (ordered.length === 0) return [];
+  const byDistance = (a: LatLng, b: LatLng) => legMode(distanceKm(a, b), isBikeDay(day), !!day.hike);
+  // Sin cama anoche distinta, amanecés en la de hoy; sin cama hoy ni anoche, no hay salida
+  const wake = morning ?? (hasBed(day) ? day : null);
+
+  const stops: RouteStop[] = [];
+  if (wake) stops.push({ label: LODGING_LABEL, name: lodgingName(wake.accommodation), coords: wake.accommodationCoords });
+  ordered.forEach(({ poi, index }, position) => {
+    const prev = stops.at(-1);
+    const leg = legTo.get(index);
+    stops.push({
+      label: poiLetter(position),
+      name: poi.name,
+      coords: poi.coords,
+      // Los tramos "desde el hospedaje" salen del de esta noche: en un traslado no sirven
+      modeFromPrev: prev ? (leg && leg.from !== "lodging" ? leg.mode : byDistance(prev.coords, poi.coords)) : undefined,
+    });
+  });
+  if (hasBed(day)) {
+    const last = stops.at(-1)!;
+    stops.push({
+      label: LODGING_LABEL,
+      name: lodgingName(day.accommodation),
+      coords: day.accommodationCoords,
+      modeFromPrev: byDistance(last.coords, day.accommodationCoords),
+    });
+  }
+  return stops;
+}
 
 /** El recorrido del día en tramos para Google Maps: se corta donde hay tren o
  *  bus (esos van con su tramo de transporte) y cada link lleva hasta 5 puntos */

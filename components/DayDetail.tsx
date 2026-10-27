@@ -47,7 +47,7 @@ import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route
 import { placeNotes } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
 import DayNotes, { NoteCard, useFreshNotes } from "@/components/DayNotes";
-import { dayRouteLinks, placeUrl, segmentUrl, type TravelMode } from "@/lib/google-maps";
+import { dayRouteLinks, dayStops, placeUrl, segmentUrl, type TravelMode } from "@/lib/google-maps";
 import type { Places } from "@/lib/transit";
 
 type Props = {
@@ -176,16 +176,9 @@ export default function DayDetail({
   const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
   const legTo = new Map(validRoutes?.legs.map((l) => [l.to, l]) ?? []);
   const reordered = validRoutes?.order.some((v, i) => v !== i) ?? false;
-  // El recorrido en Google Maps, en el orden de visita (se corta donde hay tren o bus)
-  const routeLinks = dayRouteLinks(
-    pois.map(({ poi, index }, position) => ({
-      label: poiLetter(position),
-      name: poi.name,
-      coords: poi.coords,
-      modeFromPrev: legTo.get(index)?.from === "lodging" ? undefined : legTo.get(index)?.mode,
-    })),
-    day.transport.some((t) => t.mode === "bicicleta") ? "bicycling" : "walking"
-  );
+  // El recorrido en Google Maps: del hospedaje, por los lugares en orden de
+  // visita, al hospedaje (se corta donde hay tren o bus)
+  const routeLinks = dayRouteLinks(dayStops(day, pois, legTo, morningLodging ?? null));
   const savedMin =
     validRoutes?.originalCostS && validRoutes.bestCostS
       ? Math.round((validRoutes.originalCostS - validRoutes.bestCostS) / 60)
