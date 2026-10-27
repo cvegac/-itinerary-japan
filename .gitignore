@@ -14,3 +14,7 @@ public/maplibre-gl-worker.js
 
 # Respuestas de OSRM guardadas por scripts/fetch-routes.mjs
 .cache/
+
+# Emulador de Firebase
+firebase-debug.log
+firestore-debug.log
