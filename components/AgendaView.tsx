@@ -42,7 +42,6 @@ export default function AgendaView({ itinerary, openDate, onToggle, renderDetail
           const open = day.date === openDate;
           const own = dayNotes(notes, day.date);
           const fresh = unseen.filter((n) => n.day === day.date).length;
-          const last = own.at(-1);
           return (
             <li
               key={day.date}
@@ -80,11 +79,17 @@ export default function AgendaView({ itinerary, openDate, onToggle, renderDetail
                       )}
                     </span>
                   )}
-                  {!open && last && (
-                    <span className="mt-0.5 block truncate text-xs text-muted">
-                      {last.author === me ? "Vos" : (names[last.author] ?? "Alguien")}: {last.text}
-                    </span>
-                  )}
+                  {/* El comienzo de cada nota, en orden: una nueva no tapa las anteriores */}
+                  {!open &&
+                    own.map((n) => (
+                      <span key={n.id} data-testid="note-preview" className="mt-0.5 block truncate text-xs text-muted">
+                        <span className="font-semibold text-fg">
+                          {n.author === me ? "Vos" : (names[n.author] ?? "Alguien")}
+                          {n.place && ` · ${n.place}`}
+                        </span>
+                        : {n.text}
+                      </span>
+                    ))}
                 </span>
                 <ChevronDown className={`mt-1 size-4 shrink-0 text-muted transition-transform ${open ? "rotate-180" : ""}`} aria-hidden />
               </button>

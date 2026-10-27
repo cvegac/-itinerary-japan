@@ -61,12 +61,27 @@ describe("AgendaView", () => {
     expect(props.onToggle).toHaveBeenCalledWith(itinerary[1]);
   });
 
-  it("cerrado, muestra cuántas notas tiene, cuántas son nuevas y la última", () => {
+  it("cerrado, muestra cuántas notas tiene y cuántas son nuevas", () => {
     renderAgenda({ notes: [note("a", { createdAt: 1 }), note("b", { createdAt: 2, author: "cris" })], unseen: [note("a")] });
     const nikko = dayButton(/Excursión a Nikko/);
     expect(nikko.textContent).toContain("2 notas");
     expect(nikko.textContent).toContain("1 nueva");
-    expect(nikko.textContent).toContain("Vos: Texto b");
     expect(dayButton(/Llegada a Asakusa/).textContent).not.toContain("nota");
+  });
+
+  it("cerrado, muestra el comienzo de todas las notas, en orden y con quién la puso", () => {
+    renderAgenda({
+      notes: [
+        note("b", { createdAt: 2, author: "cris", place: "Toshogu" }),
+        note("a", { createdAt: 1, text: "Visitar el templo antes de las 8am" }),
+      ],
+    });
+    const previews = within(dayButton(/Excursión a Nikko/)).getAllByTestId("note-preview");
+    expect(previews.map((p) => p.textContent)).toEqual(["Karla: Visitar el templo antes de las 8am", "Vos · Toshogu: Texto b"]);
+  });
+
+  it("abierto no repite las notas (ya están en el detalle)", () => {
+    renderAgenda({ openDate: "2026-11-02", notes: [note("a")] });
+    expect(within(dayButton(/Excursión a Nikko/)).queryAllByTestId("note-preview")).toHaveLength(0);
   });
 });
