@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { ChevronDown, MessageSquare } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import { dayNotes, type SharedNote } from "@/lib/shared-notes";
+import { authorColor } from "@/components/noteAuthor";
 
 type Props = {
   itinerary: DayEntry[];
@@ -83,7 +84,7 @@ export default function AgendaView({ itinerary, openDate, onToggle, renderDetail
                   {!open &&
                     own.map((n) => (
                       <span key={n.id} data-testid="note-preview" className="mt-0.5 block truncate text-xs text-muted">
-                        <span className="font-semibold text-fg">
+                        <span className={`font-semibold ${authorColor(n.author, me)}`}>
                           {n.author === me ? "Vos" : (names[n.author] ?? "Alguien")}
                           {n.place && ` · ${n.place}`}
                         </span>

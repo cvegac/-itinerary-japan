@@ -408,9 +408,9 @@ export default function DayDetail({
           <button
             type="button"
             onClick={() => onOpenList({ day: day.date })}
-            className="-mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-surface-2 px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-line hover:text-fg"
+            className="-mt-2 inline-flex items-center gap-1.5 self-start rounded-full border border-accent/40 bg-accent/10 px-3.5 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent/20"
           >
-            <ListChecks className="size-3.5" aria-hidden />
+            <ListChecks className="size-4" aria-hidden />
             Lista para este día
           </button>
         </>

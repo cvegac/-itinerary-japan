@@ -80,6 +80,16 @@ describe("AgendaView", () => {
     expect(previews.map((p) => p.textContent)).toEqual(["Karla: Visitar el templo antes de las 8am", "Vos · Toshogu: Texto b"]);
   });
 
+  it("quién la puso va en color, uno distinto para cada uno", () => {
+    renderAgenda({ notes: [note("a", { createdAt: 1 }), note("b", { createdAt: 2, author: "cris" })] });
+    const [karla, vos] = within(dayButton(/Excursión a Nikko/))
+      .getAllByTestId("note-preview")
+      .map((p) => p.firstElementChild!.className);
+    expect(karla).toMatch(/text-/);
+    expect(vos).toMatch(/text-/);
+    expect(karla).not.toBe(vos);
+  });
+
   it("abierto no repite las notas (ya están en el detalle)", () => {
     renderAgenda({ openDate: "2026-11-02", notes: [note("a")] });
     expect(within(dayButton(/Excursión a Nikko/)).queryAllByTestId("note-preview")).toHaveLength(0);

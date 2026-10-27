@@ -4,6 +4,7 @@ import { useEffect, useState, type RefObject } from "react";
 import { LogIn, MessageSquare, Pencil, Trash2 } from "lucide-react";
 import { NOTE_MAX, generalNotes, type SharedNote } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
+import { authorColor } from "@/components/noteAuthor";
 
 /** Las nuevas de un día se marcan mientras está abierto y quedan como vistas */
 export function useFreshNotes(api: SharedNotesApi | undefined, date: string): Set<string> {
@@ -32,7 +33,7 @@ export function NoteCard({ note, api, fresh }: { note: SharedNote; api: SharedNo
   return (
     <li className={`rounded-xl border p-2.5 text-sm ${fresh ? "border-accent/40 bg-accent/5" : "border-line bg-surface"}`}>
       <div className="flex items-center gap-1.5 text-xs">
-        <span className="font-semibold">{authorName(api, note)}</span>
+        <span className={`font-semibold ${authorColor(note.author, api.me)}`}>{authorName(api, note)}</span>
         {fresh && <span className="rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold text-accent-fg">Nueva</span>}
         {note.createdAt === null && <span className="text-muted">· sin subir</span>}
         <span className="ml-auto flex gap-0.5">
