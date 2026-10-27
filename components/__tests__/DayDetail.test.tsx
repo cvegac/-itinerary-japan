@@ -305,3 +305,26 @@ describe("DayDetail: notas compartidas", () => {
     expect(api.markSeen).toHaveBeenCalledWith(["n"]);
   });
 });
+
+describe("DayDetail: Google Maps", () => {
+  const places = { Asakusa: [35.71, 139.79] as [number, number], "Tobu-Nikko": [36.74, 139.62] as [number, number] };
+
+  it("cada lugar se abre en Google Maps", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    const link = screen.getByRole("link", { name: "Abrir Santuario Toshogu en Google Maps" });
+    expect(link.getAttribute("href")).toBe("https://www.google.com/maps/search/?api=1&query=36.758%2C139.599");
+    expect(link.getAttribute("target")).toBe("_blank");
+  });
+
+  it("el recorrido del día, en el orden de visita", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    const link = screen.getByRole("link", { name: /Recorrido A → B/ });
+    expect(link.getAttribute("href")).toContain("/maps/dir/?api=1&origin=36.758%2C139.599&destination=35.71%2C139.79");
+  });
+
+  it("cada tramo de transporte, entre sus estaciones", () => {
+    render(<DayDetail day={day} dayNumber={2} places={places} />);
+    const link = screen.getByRole("link", { name: "Ver Asakusa → Tobu-Nikko en Google Maps" });
+    expect(link.getAttribute("href")).toContain("travelmode=transit");
+  });
+});

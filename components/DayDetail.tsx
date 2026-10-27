@@ -16,6 +16,7 @@ import {
   MessageSquare,
   MessageSquarePlus,
   Moon,
+  Navigation,
   Phone,
   Plus,
   Plane,
@@ -46,6 +47,8 @@ import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route
 import { placeNotes } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
 import DayNotes, { NoteCard, useFreshNotes } from "@/components/DayNotes";
+import { dayRouteLinks, placeUrl, segmentUrl, type TravelMode } from "@/lib/google-maps";
+import type { Places } from "@/lib/transit";
 
 type Props = {
   day: DayEntry;
@@ -68,6 +71,15 @@ type Props = {
   stayOf?: (date: string) => string[];
   /** Notas del viaje compartido; sin esto no se muestran */
   shared?: SharedNotesApi;
+  /** Coordenadas de las estaciones: cada tramo se abre en Google Maps */
+  places?: Places;
+};
+
+const MODE_TEXT: Record<TravelMode, string> = {
+  walking: "a pie",
+  bicycling: "en bici",
+  transit: "en transporte",
+  driving: "en auto",
 };
 
 
@@ -125,6 +137,7 @@ export default function DayDetail({
   onUpdateExpense,
   stayOf,
   shared,
+  places,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
@@ -163,6 +176,16 @@ export default function DayDetail({
   const validRoutes = routes && routes.signature === poiSignature(day) ? routes : undefined;
   const legTo = new Map(validRoutes?.legs.map((l) => [l.to, l]) ?? []);
   const reordered = validRoutes?.order.some((v, i) => v !== i) ?? false;
+  // El recorrido en Google Maps, en el orden de visita (se corta donde hay tren o bus)
+  const routeLinks = dayRouteLinks(
+    pois.map(({ poi, index }, position) => ({
+      label: poiLetter(position),
+      name: poi.name,
+      coords: poi.coords,
+      modeFromPrev: legTo.get(index)?.from === "lodging" ? undefined : legTo.get(index)?.mode,
+    })),
+    day.transport.some((t) => t.mode === "bicicleta") ? "bicycling" : "walking"
+  );
   const savedMin =
     validRoutes?.originalCostS && validRoutes.bestCostS
       ? Math.round((validRoutes.originalCostS - validRoutes.bestCostS) / 60)
@@ -318,6 +341,15 @@ export default function DayDetail({
                     <MessageSquarePlus className="size-4" />
                   </button>
                 )}
+                <a
+                  href={placeUrl(poi.coords)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Abrir ${poi.name} en Google Maps`}
+                  className="flex w-10 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-muted transition-colors hover:bg-line hover:text-fg"
+                >
+                  <Navigation className="size-4" />
+                </a>
                 </div>
                 {notesHere.length > 0 && (
                   <ul aria-label={`Notas de ${poi.name}`} className="ml-9 flex flex-col gap-1">
@@ -330,6 +362,25 @@ export default function DayDetail({
               );
             })}
           </ul>
+          {routeLinks.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 text-xs">
+              <span className="font-semibold text-muted">Recorrido en Google Maps:</span>
+              {routeLinks.map((r) => (
+                <a
+                  key={`${r.from}-${r.to}`}
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Recorrido ${r.from} → ${r.to} ${MODE_TEXT[r.mode]} en Google Maps`}
+                  className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 font-semibold transition-colors hover:bg-line"
+                >
+                  <Navigation className="size-3.5" aria-hidden />
+                  {r.from} → {r.to}
+                  <span className="font-normal text-muted">{MODE_TEXT[r.mode]}</span>
+                </a>
+              ))}
+            </div>
+          )}
         </Section>
       )}
 
@@ -349,7 +400,7 @@ export default function DayDetail({
       {/* Transporte */}
       {day.transport.length > 0 && (
         <Section title="Cómo moverse">
-          <TransportTimeline segments={day.transport} />
+          <TransportTimeline segments={day.transport} places={places} />
         </Section>
       )}
 
@@ -452,12 +503,13 @@ function DayPayments({ day }: { day: DayEntry }) {
   );
 }
 
-function TransportTimeline({ segments }: { segments: TransportSegment[] }) {
+function TransportTimeline({ segments, places }: { segments: TransportSegment[]; places?: Places }) {
   return (
     <ol aria-label="Tramos de transporte" className="relative flex flex-col gap-3 pl-1">
       {segments.map((seg, i) => {
         const Icon = TRANSPORT_ICON[seg.mode] ?? TrainFront;
         const last = i === segments.length - 1;
+        const mapsUrl = places && segmentUrl(seg, places);
         return (
           <li key={i} className="relative flex gap-3">
             {!last && <span className="absolute left-[15px] top-8 bottom-[-12px] w-px bg-line" aria-hidden />}
@@ -483,6 +535,18 @@ function TransportTimeline({ segments }: { segments: TransportSegment[] }) {
                     <Coins className="size-3.5" aria-hidden />
                     {formatCost(seg.cost)}
                   </span>
+                )}
+                {mapsUrl && (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Ver ${seg.from} → ${seg.to} en Google Maps`}
+                    className="inline-flex items-center gap-1 font-semibold text-accent"
+                  >
+                    <Navigation className="size-3.5" aria-hidden />
+                    Google Maps
+                  </a>
                 )}
               </div>
               {seg.note && (

@@ -231,6 +231,7 @@ export default function TripApp({ tripData }: Props) {
         onUpdateExpense={expenses.update}
         stayOf={(date) => stayNights(itinerary, date)}
         shared={shared}
+        places={places}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
