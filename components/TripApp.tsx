@@ -76,11 +76,13 @@ export default function TripApp({ tripData }: Props) {
   // El itinerario se ve en el mapa o como agenda: lo que se abre desde otras
   // secciones (búsqueda, costos, notas) va a la última que usaste
   const [itineraryView, setItineraryView] = useState<"itinerary" | "agenda">("itinerary");
-  const [agendaOpen, setAgendaOpen] = useState(true);
+  // La agenda arranca con todos los días cerrados; se abre uno al tocarlo o al
+  // llegar desde la búsqueda, otra sección o "Hoy"
+  const [agendaOpen, setAgendaOpen] = useState(false);
   function setView(next: View) {
     setViewState(next);
     if (next === "itinerary" || next === "agenda") setItineraryView(next);
-    if (next === "agenda") setAgendaOpen(true);
+    if (next === "agenda") setAgendaOpen(false);
   }
   // Notas de los dos en cada día (viaje compartido con el link)
   const shared = useSharedNotes(meta.slug);
@@ -144,6 +146,7 @@ export default function TripApp({ tripData }: Props) {
   function goToday() {
     if (status?.kind === "during") selectDay(itinerary[status.index]);
     setView(itineraryView);
+    setAgendaOpen(true);
   }
 
   function step(dir: 1 | -1) {
@@ -155,6 +158,7 @@ export default function TripApp({ tripData }: Props) {
   function openFromSummary(day: DayEntry) {
     selectDay(day);
     setView(itineraryView);
+    setAgendaOpen(true);
   }
 
   // En la agenda: tocar un día lo abre; tocar el abierto lo cierra

@@ -123,11 +123,14 @@ describe("TripApp", () => {
     const openAgenda = () => act(() => userEvent.click(screen.getAllByRole("tab", { name: /Agenda/ })[0]));
     const dayRow = (name: RegExp) => within(screen.getByRole("list", { name: "Días del viaje" })).getByRole("button", { name });
 
-    it("muestra todos los días con el elegido abierto, y tocar otro lo abre", async () => {
+    it("muestra todos los días cerrados, y tocar uno lo abre", async () => {
       renderAt("2026-10-22");
       await openAgenda();
       expect(screen.getByRole("heading", { name: "Agenda" })).toBeTruthy();
-      expect(dayRow(/Llegada a Asakusa/).getAttribute("aria-expanded")).toBe("true");
+      expect(dayRow(/Llegada a Asakusa/).getAttribute("aria-expanded")).toBe("false");
+      expect(screen.queryByRole("heading", { name: "Llegada a Asakusa" })).toBeNull();
+
+      await act(() => userEvent.click(dayRow(/Llegada a Asakusa/)));
       expect(screen.getByRole("heading", { name: "Llegada a Asakusa" })).toBeTruthy();
 
       await act(() => userEvent.click(dayRow(/Excursión a Nikko/)));
@@ -143,7 +146,17 @@ describe("TripApp", () => {
       renderAt("2026-10-22");
       await openAgenda();
       await act(() => userEvent.click(dayRow(/Llegada a Asakusa/)));
+      await act(() => userEvent.click(dayRow(/Llegada a Asakusa/)));
       expect(dayRow(/Llegada a Asakusa/).getAttribute("aria-expanded")).toBe("false");
+    });
+
+    it("al volver a la pestaña, arranca cerrada otra vez", async () => {
+      renderAt("2026-10-22");
+      await openAgenda();
+      await act(() => userEvent.click(dayRow(/Excursión a Nikko/)));
+      await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
+      await openAgenda();
+      expect(dayRow(/Excursión a Nikko/).getAttribute("aria-expanded")).toBe("false");
     });
 
     it("lo que se abre desde la búsqueda va a la vista que estabas usando", async () => {
@@ -160,6 +173,7 @@ describe("TripApp", () => {
     it("cada día tiene su lugar para las notas", async () => {
       renderAt("2026-10-22");
       await openAgenda();
+      await act(() => userEvent.click(dayRow(/Excursión a Nikko/)));
       expect(screen.getByRole("region", { name: "Notas del día" })).toBeTruthy();
     });
   });
