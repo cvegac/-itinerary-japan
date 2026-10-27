@@ -11,6 +11,8 @@ import { expenseDates, useExpenses, useWithdrawals } from "@/lib/expenses";
 import { dayTransitLines } from "@/lib/transit";
 import type { MapMode } from "@/components/TripMap";
 import TopBar from "@/components/TopBar";
+import SearchModal from "@/components/SearchModal";
+import { useBackClose } from "@/lib/use-back-close";
 import ViewTabs, { type View } from "@/components/ViewTabs";
 import DayStrip from "@/components/DayStrip";
 import DayDetail from "@/components/DayDetail";
@@ -20,6 +22,9 @@ import CostSummaryView from "@/components/CostSummaryView";
 import LodgingSummaryView from "@/components/LodgingSummaryView";
 import BusSummaryView from "@/components/BusSummaryView";
 import NotesView from "@/components/NotesView";
+import AgendaView from "@/components/AgendaView";
+import InviteBanner from "@/components/InviteBanner";
+import { useSharedNotes } from "@/lib/use-shared-notes";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
 
@@ -67,7 +72,18 @@ export default function TripApp({ tripData }: Props) {
   const vh = useViewportHeight();
 
   const [selectedDay, setSelectedDay] = useState<DayEntry | null>(itinerary[0] ?? null);
-  const [view, setView] = useState<View>("itinerary");
+  const [view, setViewState] = useState<View>("itinerary");
+  // El itinerario se ve en el mapa o como agenda: lo que se abre desde otras
+  // secciones (búsqueda, costos, notas) va a la última que usaste
+  const [itineraryView, setItineraryView] = useState<"itinerary" | "agenda">("itinerary");
+  const [agendaOpen, setAgendaOpen] = useState(true);
+  function setView(next: View) {
+    setViewState(next);
+    if (next === "itinerary" || next === "agenda") setItineraryView(next);
+    if (next === "agenda") setAgendaOpen(true);
+  }
+  // Notas de los dos en cada día (viaje compartido con el link)
+  const shared = useSharedNotes(meta.slug);
   // Gastos y retiros: en el dispositivo y, con sesión, sincronizados
   const expenses = useExpenses(meta.slug);
   const withdrawals = useWithdrawals(meta.slug);
@@ -76,6 +92,8 @@ export default function TripApp({ tripData }: Props) {
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
   const [status, setStatus] = useState<TripStatus | null>(null);
   const [mapFullscreen, setMapFullscreen] = useState(false);
+  // Búsqueda en todos los días: el botón atrás del celular la cierra
+  const [searching, openSearchWith, closeSearch] = useBackClose<true>("search");
 
   // Pantalla completa del mapa: entra con una entrada en el historial, así el
   // botón atrás del celular sale de la pantalla completa y no de la app
@@ -125,7 +143,7 @@ export default function TripApp({ tripData }: Props) {
 
   function goToday() {
     if (status?.kind === "during") selectDay(itinerary[status.index]);
-    setView("itinerary");
+    setView(itineraryView);
   }
 
   function step(dir: 1 | -1) {
@@ -136,7 +154,14 @@ export default function TripApp({ tripData }: Props) {
 
   function openFromSummary(day: DayEntry) {
     selectDay(day);
-    setView("itinerary");
+    setView(itineraryView);
+  }
+
+  // En la agenda: tocar un día lo abre; tocar el abierto lo cierra
+  function toggleAgendaDay(day: DayEntry) {
+    if (day === selectedDay && agendaOpen) return setAgendaOpen(false);
+    selectDay(day);
+    setAgendaOpen(true);
   }
 
   // Deslizar el detalle a los costados cambia de día
@@ -187,8 +212,7 @@ export default function TripApp({ tripData }: Props) {
     />
   );
 
-  const detail = selectedDay && (
-    <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+  const dayDetail = selectedDay && (
       <DayDetail
         day={selectedDay}
         dayNumber={dayNumber}
@@ -202,17 +226,37 @@ export default function TripApp({ tripData }: Props) {
         onRemoveExpense={expenses.remove}
         onUpdateExpense={expenses.update}
         stayOf={(date) => stayNights(itinerary, date)}
+        shared={shared}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
+          // Desde la agenda del celular, el lugar se muestra en el mapa
+          if (!isDesktop && view === "agenda") setView("itinerary");
           if (!isDesktop) setSnap("peek");
         }}
       />
+  );
+
+  // En el mapa, deslizar el detalle a los costados cambia de día
+  const detail = dayDetail && (
+    <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {dayDetail}
     </div>
   );
 
   const summaryPage =
-    view === "costs" ? (
+    view === "agenda" ? (
+      <AgendaView
+        itinerary={itinerary}
+        openDate={agendaOpen ? (selectedDay?.date ?? null) : null}
+        onToggle={toggleAgendaDay}
+        renderDetail={() => dayDetail}
+        notes={shared.notes}
+        unseen={shared.unseen}
+        names={shared.names}
+        me={shared.me}
+      />
+    ) : view === "costs" ? (
       <CostSummaryView
         slug={meta.slug}
         itinerary={itinerary}
@@ -233,7 +277,7 @@ export default function TripApp({ tripData }: Props) {
     ) : view === "buses" && nightBusSummary ? (
       <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setView("itinerary")} />
     ) : view === "notes" && notes ? (
-      <NotesView notes={notes} itinerary={itinerary} slug={meta.slug} onDaySelect={openFromSummary} />
+      <NotesView notes={notes} itinerary={itinerary} slug={meta.slug} onDaySelect={openFromSummary} sharing={shared} />
     ) : null;
 
   const tabs = (variant: "bottom" | "inline") => (
@@ -244,6 +288,7 @@ export default function TripApp({ tripData }: Props) {
       lodgingNights={lodgingNights}
       showBuses={!!nightBusSummary}
       taskCount={notes?.tasks.length}
+      agendaBadge={shared.unseen.length}
       variant={variant}
     />
   );
@@ -308,7 +353,7 @@ export default function TripApp({ tripData }: Props) {
 
       {mapFullscreen ? null : isDesktop ? (
         <aside className="relative z-10 order-1 flex h-full w-[440px] shrink-0 flex-col border-r border-line bg-surface">
-          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} />
+          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} onSearch={() => openSearchWith(true)} />
           {tabs("inline")}
           {view === "itinerary" ? (
             <>
@@ -324,7 +369,14 @@ export default function TripApp({ tripData }: Props) {
         </aside>
       ) : (
         <>
-          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} floating />
+          <TopBar
+            meta={meta}
+            itinerary={itinerary}
+            status={status}
+            onToday={goToday}
+            onSearch={() => openSearchWith(true)}
+            floating
+          />
           {view === "itinerary" ? (
             <>
               <div
@@ -359,6 +411,20 @@ export default function TripApp({ tripData }: Props) {
           )}
           {tabs("bottom")}
         </>
+      )}
+
+      <InviteBanner api={shared} />
+
+      {searching && (
+        <SearchModal
+          itinerary={itinerary}
+          notes={shared.notes}
+          onSelect={(day) => {
+            closeSearch();
+            openFromSummary(day);
+          }}
+          onClose={closeSearch}
+        />
       )}
     </div>
   );

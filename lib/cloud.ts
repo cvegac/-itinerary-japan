@@ -3,6 +3,7 @@ import type { Auth, User } from "firebase/auth";
 import type { Firestore } from "firebase/firestore";
 import { FIREBASE_CONFIG } from "@/lib/firebase-config";
 import type { Expense, Withdrawal } from "@/lib/expenses";
+import type { SharedNote, SharedTrip } from "@/lib/shared-notes";
 
 // Login con Google y datos en Firestore, opcionales. Firebase se descarga y se
 // inicia recién cuando iniciás sesión (o si ya la habías iniciado antes): sin
@@ -168,4 +169,108 @@ export function saveRecord(uid: string, slug: string, field: RecordField, record
 export function deleteRecord(uid: string, slug: string, field: RecordField, id: string) {
   if (!services) return;
   saveTrip(uid, slug, { [field]: { [id]: services.m.fs.deleteField() } });
+}
+
+// ── Viaje compartido: notas por día y por lugar (viajes/{id}, firestore.rules) ─
+/** Nombre corto para firmar las notas: el primer nombre (las reglas: 1 a 30 letras) */
+export function shortName(user: CloudUser): string {
+  const name = (user.name ?? user.email?.split("@")[0] ?? "").trim().split(/\s+/)[0] ?? "";
+  return name.slice(0, 30) || "Viajero";
+}
+
+/** Los viajes compartidos con este nombre de los que sos miembro */
+export function watchMyTrips(uid: string, slug: string, onData: (trips: SharedTrip[]) => void): () => void {
+  if (!services) return () => {};
+  const { m, db } = services;
+  const q = m.fs.query(
+    m.fs.collection(db, "viajes"),
+    m.fs.where("members", "array-contains", uid),
+    m.fs.where("slug", "==", slug)
+  );
+  return m.fs.onSnapshot(
+    q,
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          const data = d.data();
+          return { id: d.id, members: data.members ?? [], names: data.names ?? {} };
+        })
+      ),
+    () => {}
+  );
+}
+
+/** Crea el viaje con vos solo; el id sale al toque (sin esperar la red) y es el secreto del link */
+export function createSharedTrip(user: CloudUser, slug: string): string | null {
+  if (!services) return null;
+  const { m, db } = services;
+  const ref = m.fs.doc(m.fs.collection(db, "viajes"));
+  m.fs
+    .setDoc(ref, { slug, members: [user.uid], names: { [user.uid]: shortName(user) }, createdAt: m.fs.serverTimestamp() })
+    .catch(() => {});
+  return ref.id;
+}
+
+/** Sumarse con el link: las reglas solo lo dejan mientras haya uno solo */
+export async function joinSharedTrip(tripId: string, user: CloudUser): Promise<void> {
+  if (!services) return;
+  const { m, db } = services;
+  await m.fs.updateDoc(m.fs.doc(db, "viajes", tripId), {
+    members: m.fs.arrayUnion(user.uid),
+    [`names.${user.uid}`]: shortName(user),
+  });
+}
+
+const toMs = (v: unknown): number | null =>
+  v && typeof (v as { toMillis?: unknown }).toMillis === "function" ? (v as { toMillis: () => number }).toMillis() : null;
+
+export function watchNotes(tripId: string, onData: (notes: SharedNote[]) => void): () => void {
+  if (!services) return () => {};
+  const { m, db } = services;
+  return m.fs.onSnapshot(
+    m.fs.collection(db, "viajes", tripId, "notas"),
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          // Lo escrito sin conexión todavía no tiene la hora del servidor
+          const data = d.data({ serverTimestamps: "estimate" });
+          return {
+            id: d.id,
+            day: data.day,
+            ...(data.place ? { place: data.place } : {}),
+            text: data.text,
+            author: data.author,
+            createdAt: toMs(data.createdAt),
+            editedAt: toMs(data.editedAt),
+          };
+        })
+      ),
+    () => {}
+  );
+}
+
+export function addNote(tripId: string, uid: string, note: { day: string; text: string; place?: string }) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs
+    .addDoc(m.fs.collection(db, "viajes", tripId, "notas"), {
+      day: note.day,
+      ...(note.place ? { place: note.place } : {}),
+      text: note.text,
+      author: uid,
+      createdAt: m.fs.serverTimestamp(),
+    })
+    .catch(() => {});
+}
+
+export function editNote(tripId: string, noteId: string, text: string) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs.updateDoc(m.fs.doc(db, "viajes", tripId, "notas", noteId), { text, editedAt: m.fs.serverTimestamp() }).catch(() => {});
+}
+
+export function deleteNote(tripId: string, noteId: string) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs.deleteDoc(m.fs.doc(db, "viajes", tripId, "notas", noteId)).catch(() => {});
 }

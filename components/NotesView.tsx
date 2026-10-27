@@ -3,8 +3,12 @@
 import { useState } from "react";
 import { Check, ChevronRight } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
-import type { TripNotes, TripTask } from "@/types/Trip";
+import type { TripNoteTopic, TripNotes, TripTask } from "@/types/Trip";
 import { useDoneTasks } from "@/lib/done-tasks";
+import { useBackClose } from "@/lib/use-back-close";
+import NoteTopicModal from "@/components/NoteTopicModal";
+import TripSharing from "@/components/TripSharing";
+import type { SharedNotesApi } from "@/lib/use-shared-notes";
 
 type Props = {
   notes: TripNotes;
@@ -12,13 +16,15 @@ type Props = {
   /** Separa lo guardado de cada viaje */
   slug: string;
   onDaySelect: (day: DayEntry) => void;
+  /** Viaje compartido: invitar a alguien a dejar notas */
+  sharing?: SharedNotesApi;
 };
 
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short" });
 }
 
-export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props) {
+export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing }: Props) {
   // Lo tildado se guarda en el dispositivo al tildar algo; con sesión, también en la nube
   const [done, toggle] = useDoneTasks(slug);
 
@@ -26,6 +32,10 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
   const pending = notes.tasks.filter((t) => !done.includes(t.id));
   const archived = notes.tasks.filter((t) => done.includes(t.id));
   const [showArchived, setShowArchived] = useState(false);
+
+  // El botón atrás del celular cierra el tema abierto
+  const [openTopic, openTopicWith, closeTopic] = useBackClose<TripNoteTopic>("noteTopic");
+  const showTopic = (topic: TripNoteTopic) => openTopicWith(topic, topic.id);
 
   const taskList = (tasks: TripTask[], label: string) => (
     <ul aria-label={label} className="flex flex-col gap-2">
@@ -79,6 +89,8 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
         <p className="text-sm text-muted">Lo que falta hacer y lo que conviene tener a mano</p>
       </header>
 
+      {sharing && <TripSharing api={sharing} />}
+
       <section className="flex flex-col gap-2.5">
         <div className="flex items-baseline justify-between">
           <h3 className="text-lg font-bold">Por hacer</h3>
@@ -104,6 +116,32 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
         {showArchived && archived.length > 0 && taskList(archived, "Tareas archivadas")}
       </section>
 
+      {notes.topics && notes.topics.length > 0 && (
+        <section className="flex flex-col gap-2.5">
+          <h3 className="text-lg font-bold">Temas</h3>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {notes.topics.map((topic) => (
+              <li key={topic.id}>
+                <button
+                  type="button"
+                  onClick={() => showTopic(topic)}
+                  className="flex h-full w-full items-center gap-3 rounded-2xl border border-line bg-surface p-3.5 text-left transition-colors hover:bg-surface-2"
+                >
+                  <span aria-hidden className="text-2xl">
+                    {topic.emoji}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold">{topic.title}</span>
+                    <span className="block text-sm text-muted">{topic.summary}</span>
+                  </span>
+                  <ChevronRight className="size-4 shrink-0 text-muted" aria-hidden />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {notes.sections.map((section) => (
         <section key={section.title} className="rounded-2xl border border-line bg-surface p-4">
           <h3 className="mb-2 font-bold">{section.title}</h3>
@@ -114,6 +152,8 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect }: Props
           </ul>
         </section>
       ))}
+
+      {openTopic && <NoteTopicModal topic={openTopic} onClose={closeTopic} />}
     </div>
   );
 }

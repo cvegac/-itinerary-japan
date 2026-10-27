@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BedDouble,
@@ -10,9 +10,11 @@ import {
   CarTaxiFront,
   Clock,
   Coins,
+  CreditCard,
   Footprints,
   MapPin,
   MessageSquare,
+  MessageSquarePlus,
   Moon,
   Phone,
   Plus,
@@ -35,11 +37,15 @@ import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
 import { expenseShareUsd, type Expense, type Withdrawal } from "@/lib/expenses";
 import { formatCost, formatPrice } from "@/lib/cost";
+import { dayPayments } from "@/lib/pay";
 import ExpenseModal from "@/components/ExpenseModal";
 import { ExpenseRow } from "@/components/ExpenseRows";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
+import { placeNotes } from "@/lib/shared-notes";
+import type { SharedNotesApi } from "@/lib/use-shared-notes";
+import DayNotes, { NoteCard, useFreshNotes } from "@/components/DayNotes";
 
 type Props = {
   day: DayEntry;
@@ -60,6 +66,8 @@ type Props = {
   onUpdateExpense?: (id: string, expense: Omit<Expense, "id" | "createdAt">) => void;
   /** Noches de la estadía de un día: el hospedaje se reparte entre ellas */
   stayOf?: (date: string) => string[];
+  /** Notas del viaje compartido; sin esto no se muestran */
+  shared?: SharedNotesApi;
 };
 
 
@@ -116,6 +124,7 @@ export default function DayDetail({
   onRemoveExpense,
   onUpdateExpense,
   stayOf,
+  shared,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
@@ -137,6 +146,17 @@ export default function DayDetail({
   const [today, setToday] = useState<string | null>(null);
   useEffect(() => setToday(localISODate(new Date())), []);
   const forecast = useForecast(day.date, sunPlace, today);
+  // Notas compartidas: a qué lugar va la próxima ("" = todo el día) y cuáles son nuevas
+  const [noteTarget, setNoteTarget] = useState("");
+  useEffect(() => setNoteTarget(""), [day.date]);
+  const noteInput = useRef<HTMLTextAreaElement>(null);
+  const fresh = useFreshNotes(shared, day.date);
+  const notesReady = shared?.status === "ready";
+  function noteFor(place: string) {
+    setNoteTarget(place);
+    noteInput.current?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+    noteInput.current?.focus({ preventScroll: true });
+  }
   const weather = forecast && weatherLabel(forecast.code);
   const checkOutPrev = morningLodging?.checkOut;
   const checkInToday = (arriving ?? !!morningLodging) && !day.isTransit ? day.checkIn : undefined;
@@ -249,12 +269,14 @@ export default function DayDetail({
             {pois.map(({ poi, index }, position) => {
               const leg = legTo.get(index);
               const lodging = validRoutes?.fromLodging[index];
+              const notesHere = notesReady ? placeNotes(shared.notes, day.date, poi.name) : [];
               return (
-              <li key={poi.name}>
+              <li key={poi.name} className="flex flex-col gap-1">
+                <div className="flex items-stretch gap-1">
                 <button
                   type="button"
                   onClick={() => onFocusPoi?.(index)}
-                  className="flex w-full items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5 text-left text-sm transition-colors hover:bg-line active:scale-[0.99]"
+                  className="flex min-w-0 flex-1 items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5 text-left text-sm transition-colors hover:bg-line active:scale-[0.99]"
                 >
                   <span
                     className={`flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
@@ -286,11 +308,42 @@ export default function DayDetail({
                     <Sun className="size-4 text-muted" aria-label="De día" />
                   )}
                 </button>
+                {notesReady && (
+                  <button
+                    type="button"
+                    aria-label={`Nota para ${poi.name}`}
+                    onClick={() => noteFor(poi.name)}
+                    className="flex w-10 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-muted transition-colors hover:bg-line hover:text-fg"
+                  >
+                    <MessageSquarePlus className="size-4" />
+                  </button>
+                )}
+                </div>
+                {notesHere.length > 0 && (
+                  <ul aria-label={`Notas de ${poi.name}`} className="ml-9 flex flex-col gap-1">
+                    {notesHere.map((n) => (
+                      <NoteCard key={n.id} note={n} api={shared!} fresh={fresh.has(n.id)} />
+                    ))}
+                  </ul>
+                )}
               </li>
               );
             })}
           </ul>
         </Section>
+      )}
+
+      {/* Tips de los dos: del día o de un lugar */}
+      {shared && shared.status !== "disabled" && (
+        <DayNotes
+          api={shared}
+          date={day.date}
+          places={pois.map(({ poi }) => poi.name)}
+          target={noteTarget}
+          onTargetChange={setNoteTarget}
+          fresh={fresh}
+          inputRef={noteInput}
+        />
       )}
 
       {/* Transporte */}
@@ -299,6 +352,9 @@ export default function DayDetail({
           <TransportTimeline segments={day.transport} />
         </Section>
       )}
+
+      {/* Con qué se paga cada tramo */}
+      <DayPayments day={day} />
 
       {/* Actividades */}
       <div className="grid gap-3 sm:grid-cols-2">
@@ -373,6 +429,26 @@ function Section({ title, children }: { title: string; children: React.ReactNode
       <h3 className="text-xs font-bold uppercase tracking-wide text-muted">{title}</h3>
       {children}
     </section>
+  );
+}
+
+function DayPayments({ day }: { day: DayEntry }) {
+  const payments = dayPayments(day);
+  if (payments.length === 0) return null;
+  return (
+    <Section title="Tarjetas del día">
+      <ul aria-label="Tarjetas del día" className="flex flex-col gap-2 rounded-2xl border border-line p-3.5">
+        {payments.map((p) => (
+          <li key={p.method} className="flex gap-2.5 text-sm leading-snug">
+            <CreditCard className="mt-0.5 size-4 shrink-0 text-muted" aria-hidden />
+            <span>
+              <span className="font-semibold">{p.label}</span>
+              <span className="block text-xs text-muted">{p.legs.join(" · ")}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }
 

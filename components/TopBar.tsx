@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, LocateFixed } from "lucide-react";
+import { ArrowLeft, LocateFixed, Search } from "lucide-react";
 import type { TripMeta } from "@/types/Trip";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripStatus } from "@/lib/trip-time";
@@ -14,11 +14,13 @@ type Props = {
   itinerary?: DayEntry[];
   status: TripStatus | null;
   onToday: () => void;
+  /** Abre la búsqueda en todos los días */
+  onSearch?: () => void;
   /** En el celular flota sobre el mapa */
   floating?: boolean;
 };
 
-export default function TopBar({ meta, itinerary, status, onToday, floating = false }: Props) {
+export default function TopBar({ meta, itinerary, status, onToday, onSearch, floating = false }: Props) {
   return (
     <header
       className={
@@ -55,6 +57,16 @@ export default function TopBar({ meta, itinerary, status, onToday, floating = fa
         <span className="shrink-0 rounded-full bg-surface-2 px-3 py-1.5 text-xs font-semibold text-muted">
           {status.daysUntil === 1 ? "Mañana empieza" : `Faltan ${status.daysUntil} días`}
         </span>
+      )}
+      {onSearch && (
+        <button
+          type="button"
+          aria-label="Buscar en el viaje"
+          onClick={onSearch}
+          className="flex size-9 shrink-0 items-center justify-center rounded-xl text-muted transition-colors hover:bg-surface-2 hover:text-fg"
+        >
+          <Search className="size-5" />
+        </button>
       )}
       <OfflineControl itinerary={itinerary} />
       <AccountControl />

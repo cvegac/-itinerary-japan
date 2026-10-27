@@ -180,6 +180,26 @@ describe("DayDetail", () => {
     expect(screen.queryByText("Amanecés en")).toBeNull();
   });
 
+  it("muestra con qué tarjeta o pase se paga cada tramo del día", () => {
+    const paid = makeDay("2026-11-02", "Lun", {
+      transport: [
+        { mode: "metro", line: "Ginza Line", from: "Inaricho", to: "Asakusa", pay: ["suica"] },
+        { mode: "tren", line: "Tobu Nikko Line", from: "Asakusa", to: "Tobu-Nikko", pay: ["NIKKO PASS"] },
+      ],
+    });
+    render(<DayDetail day={paid} dayNumber={2} />);
+    const cards = screen.getByRole("list", { name: "Tarjetas del día" });
+    const rows = within(cards).getAllByRole("listitem").map((li) => li.textContent);
+    expect(rows).toEqual([expect.stringContaining("Suica / PASMO"), expect.stringContaining("NIKKO PASS")]);
+    expect(rows[0]).toContain("Ginza Line");
+    expect(rows[1]).toContain("Tobu Nikko Line");
+  });
+
+  it("no muestra las tarjetas si ningún tramo dice cómo se paga", () => {
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(screen.queryByRole("list", { name: "Tarjetas del día" })).toBeNull();
+  });
+
   it("muestra los tramos de transporte y las actividades", () => {
     render(<DayDetail day={day} dayNumber={2} />);
     const transport = screen.getByRole("list", { name: "Tramos de transporte" });
@@ -197,5 +217,91 @@ describe("DayDetail", () => {
     const deDia = screen.getByRole("heading", { name: "De día" }).closest("section")!;
     const toshogu = within(deDia).getByText("Santuario Toshogu").closest("li")!;
     expect(within(toshogu).getByText("~¥1,600")).toBeTruthy();
+  });
+});
+
+describe("DayDetail: notas compartidas", () => {
+  const base: import("@/lib/use-shared-notes").SharedNotesApi = {
+    status: "ready",
+    me: "cris",
+    trip: { id: "t1", members: ["cris", "karla"], names: { cris: "Cris", karla: "Karla" } },
+    names: { cris: "Cris", karla: "Karla" },
+    notes: [] as import("@/lib/shared-notes").SharedNote[],
+    unseen: [] as import("@/lib/shared-notes").SharedNote[],
+    markSeen: vi.fn(),
+    add: vi.fn(),
+    edit: vi.fn(),
+    remove: vi.fn(),
+    invite: vi.fn(),
+    signIn: vi.fn(),
+    invited: false,
+    inviteError: null,
+  };
+  const shared = (extra: Partial<typeof base> = {}) => ({ ...base, markSeen: vi.fn(), add: vi.fn(), edit: vi.fn(), remove: vi.fn(), signIn: vi.fn(), ...extra });
+  const note = (id: string, extra: object = {}) => ({ id, day: "2026-11-02", text: `Texto ${id}`, author: "karla", createdAt: 1, ...extra });
+  const section = () => screen.getByRole("region", { name: "Notas del día" });
+
+  it("sin sesión invita a entrar para ver y dejar notas", async () => {
+    const api = shared({ status: "signed-out", me: null, trip: null });
+    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    await userEvent.click(within(section()).getByRole("button", { name: /Iniciar sesión/ }));
+    expect(api.signIn).toHaveBeenCalled();
+  });
+
+  it("muestra las notas del día con quién las escribió", () => {
+    render(<DayDetail day={day} dayNumber={2} shared={shared({ notes: [note("a"), note("b", { author: "cris" }), note("otro", { day: "2026-11-05" })] })} />);
+    const list = within(section()).getByRole("list", { name: "Notas" });
+    expect(within(list).getAllByRole("listitem").map((li) => li.textContent)).toEqual([
+      expect.stringMatching(/Karla.*Texto a/),
+      expect.stringMatching(/Vos.*Texto b/),
+    ]);
+  });
+
+  it("agrega una nota para todo el día", async () => {
+    const api = shared();
+    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    await userEvent.type(within(section()).getByRole("textbox", { name: "Nueva nota" }), "Llevar abrigo");
+    await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
+    expect(api.add).toHaveBeenCalledWith("2026-11-02", "Llevar abrigo", undefined);
+  });
+
+  it("desde un lugar, la nota queda para ese lugar y se ve debajo de él", async () => {
+    const api = shared({ notes: [note("l", { place: "Santuario Toshogu", text: "Ir temprano" })] });
+    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    const places = screen.getByRole("list", { name: "Lugares del día" });
+    expect(within(places).getByText("Ir temprano")).toBeTruthy();
+    expect(within(section()).queryByText("Ir temprano")).toBeNull();
+
+    await userEvent.click(within(places).getByRole("button", { name: "Nota para Santuario Toshogu" }));
+    expect((within(section()).getByRole("combobox", { name: "Sobre qué" }) as HTMLSelectElement).value).toBe("Santuario Toshogu");
+    await userEvent.type(within(section()).getByRole("textbox", { name: "Nueva nota" }), "Hay fila");
+    await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
+    expect(api.add).toHaveBeenCalledWith("2026-11-02", "Hay fila", "Santuario Toshogu");
+  });
+
+  it("cada uno edita las suyas; cualquiera borra", async () => {
+    const api = shared({ notes: [note("a"), note("b", { author: "cris" })] });
+    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    const list = within(section()).getByRole("list", { name: "Notas" });
+    const [theirs, mine] = within(list).getAllByRole("listitem");
+    expect(within(theirs).queryByRole("button", { name: "Editar nota" })).toBeNull();
+
+    await userEvent.click(within(mine).getByRole("button", { name: "Editar nota" }));
+    const box = within(mine).getByRole("textbox", { name: "Editar nota" });
+    await userEvent.clear(box);
+    await userEvent.type(box, "Mejor al mediodía");
+    await userEvent.click(within(mine).getByRole("button", { name: "Guardar" }));
+    expect(api.edit).toHaveBeenCalledWith("b", "Mejor al mediodía");
+
+    await userEvent.click(within(theirs).getByRole("button", { name: "Borrar nota" }));
+    expect(api.remove).toHaveBeenCalledWith("a");
+  });
+
+  it("marca las nuevas y las da por vistas", () => {
+    const fresh = note("n");
+    const api = shared({ notes: [fresh], unseen: [fresh, note("otro-dia", { day: "2026-11-05" })] });
+    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    expect(within(section()).getByText("Nueva")).toBeTruthy();
+    expect(api.markSeen).toHaveBeenCalledWith(["n"]);
   });
 });
