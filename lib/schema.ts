@@ -36,6 +36,7 @@ const TransportSchema = z
     via: z.array(text).min(1).optional(),
     duration: text.optional(),
     cost: CostSchema.optional(),
+    pay: z.array(text).min(1).optional(),
     optional: z.boolean().optional(),
     note: text.optional(),
   })

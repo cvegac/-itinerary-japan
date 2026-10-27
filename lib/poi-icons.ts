@@ -39,7 +39,7 @@ const RULES: [RegExp, string][] = [
   [/monjayaki|okonomimura/, "🍜"],
   [/onomichi u2/, "🍺"],
   [/gion|pontocho/, "🏮"],
-  [/mercado|calle|ginza|ameyoko|omotesando/, "🛍️"],
+  [/mercado|calle|ginza|ameyoko|omotesando|tienda/, "🛍️"],
   [/pueblo|aldea|casco viejo|barrio|iyashi no sato|^tsumago$|^magome$/, "🏘️"],
 ];
 

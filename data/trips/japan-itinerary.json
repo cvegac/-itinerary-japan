@@ -59,7 +59,7 @@
     "label": "Haneda → Asakusa: primera noche",
     "location": "Tokio",
     "category": "Logística",
-    "notes": "Llegás a Pekín 9:55 y el ANA NH962 sale 15:15: 5 h 20 de escala sin salir de la zona de tránsito. Aterrizás en HND a las 19:35. El Keikyu va directo a Asakusa y de ahí son 2 paradas de Ginza Line hasta Inaricho, a ~5 min del hotel. Check-in hasta las 23:30; se paga todo al llegar (¥17,000 las 2 noches). Activá la Suica en el celular antes de llegar",
+    "notes": "Llegás a Pekín 9:55 y el ANA NH962 sale 15:15: 5 h 20 de escala sin salir de la zona de tránsito. Aterrizás en HND a las 19:35. El Keikyu va directo a Asakusa y de ahí son 2 paradas de Ginza Line hasta Inaricho, a ~5 min del hotel. Check-in hasta las 23:30; se paga todo al llegar (¥17,000 las 2 noches). En Haneda comprá una tarjeta de plástico: PASMO común en las máquinas de Keikyu o, si no hay, la Welcome Suica (dura 28 días; después comprás otra). Se recargan con efectivo. Tu Android no puede llevar la Suica en el celular",
     "weekday": "Dom",
     "food": "Ramen o konbini cerca del hotel",
     "transport": [
@@ -77,7 +77,8 @@
         "from": "Haneda Airport",
         "to": "Asakusa",
         "duration": "~45min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true }
+        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "metro",
@@ -86,6 +87,7 @@
         "to": "Inaricho",
         "duration": "~3min",
         "cost": { "amount": 180, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Después ~5 min a pie hasta el hotel"
       }
     ],
@@ -103,10 +105,16 @@
     ],
     "budget": "$94",
     "isTransit": false,
-    "activitiesDay": ["Migración y aduana en Haneda", "Activar eSIM o recoger la SIM", "Recargar la Suica en el celular", "Check-in en Ueno"],
+    "activitiesDay": [
+      "Migración y aduana en Haneda",
+      "Activar eSIM o recoger la SIM",
+      "Comprar y recargar la PASMO o Suica (¥3,000 alcanzan para empezar)",
+      "Check-in en Ueno"
+    ],
     "activitiesNight": [
       "Senso-ji iluminado (abierto de noche, sin gente)",
       "Ramen de medianoche",
+      "Si te falta abrigo para Nikko: Don Quijote de Okachimachi (abre hasta la 1:00)",
       "Vista de la Skytree desde el puente Azuma",
       "Dormir temprano: mañana se madruga a Nikko"
     ]
@@ -127,6 +135,7 @@
         "to": "Asakusa",
         "duration": "~3min",
         "cost": { "amount": 180, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "O ~20 min a pie"
       },
       {
@@ -136,6 +145,7 @@
         "to": "Tobu-Nikko",
         "duration": "~2h10–2h30",
         "cost": { "amount": 3000, "currency": "JPY", "included": "el NIKKO PASS World Heritage Area", "detail": "2 días" },
+        "pay": ["NIKKO PASS"],
         "note": "Ida y vuelta normal: ¥2,800. El pase suma los buses de la zona. El expreso limitado Revaty / Spacia X cuesta ¥1,450–2,140 extra por tramo"
       },
       {
@@ -144,7 +154,8 @@
         "from": "Tobu-Nikko",
         "to": "Shinkyo / Toshogu",
         "duration": "~10min",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" }
+        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" },
+        "pay": ["NIKKO PASS"]
       },
       {
         "mode": "tren",
@@ -152,7 +163,8 @@
         "from": "Tobu-Nikko",
         "to": "Asakusa",
         "duration": "~2h10–2h30",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" }
+        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" },
+        "pay": ["NIKKO PASS"]
       }
     ],
     "accommodation": "Tokyo Ueno New Izu Hotel (individual, baño compartido)",
@@ -183,10 +195,10 @@
   },
   {
     "date": "2026-11-03",
-    "label": "Bici por Ueno y Yanaka → noche en Narita",
+    "label": "Compras en Okachimachi + bici por Yanaka → noche en Narita",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Feriado (Día de la Cultura). Check-out del hotel de Ueno hasta las 11:00: dejá la mochila en un locker de Keisei-Ueno. Mañana en bici compartida y a la tarde Keisei directo a Narita, la ciudad (el hotel no está en el aeropuerto). Mañana el vuelo sale a las 7:40 y el shuttle del hotel recién sale a las 7:00: tomá el primer tren a la terminal (~10 min, confirmá el horario) o un taxi. Revisá en la reserva desde qué terminal sale Spring Japan (suele ser la T3)",
+    "notes": "Feriado (Día de la Cultura): las tiendas abren igual, entre las 10:00 y las 11:00. Check-out del hotel de Ueno hasta las 11:00: dejá la mochila en un locker de Keisei-Ueno. A la mañana, compras en Okachimachi (a ~10 min a pie del hotel): Uniqlo y GU en el mismo edificio, mont-bell y Art Sports para la montaña a 100 m, y Ameyoko. Comprá solo lo que vas a usar en las próximas dos semanas: mañana Spring Japan te deja 7 kg en cabina y 10 kg facturados. Guardá las bolsas en el locker y a la tarde salí en bici compartida por Yanaka. Después, Keisei directo a Narita, la ciudad (el hotel no está en el aeropuerto). Mañana el vuelo sale a las 7:40 y el shuttle del hotel recién sale a las 7:00: tomá el primer tren a la terminal (~10 min, confirmá el horario) o un taxi. Revisá en la reserva desde qué terminal sale Spring Japan (suele ser la T3)",
     "weekday": "Mar",
     "food": "Menchi katsu en Yanaka Ginza",
     "transport": [
@@ -194,9 +206,10 @@
         "mode": "bicicleta",
         "line": "docomo bike share / HELLO CYCLING",
         "from": "Ueno",
-        "to": "Yanaka → Asakusa → Ueno",
-        "duration": "~20–25 km, llano",
-        "cost": { "amount": 1000, "currency": "JPY", "max": 2000, "approx": true },
+        "to": "Yanaka → Ueno",
+        "duration": "~10 km, llano, a la tarde",
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["app"],
         "note": "Crear la cuenta en la app antes del viaje, con tarjeta de crédito"
       },
       {
@@ -205,7 +218,8 @@
         "from": "Keisei-Ueno",
         "to": "Keisei-Narita",
         "duration": "~1h10",
-        "cost": { "amount": 900, "currency": "JPY", "max": 1000, "approx": true }
+        "cost": { "amount": 900, "currency": "JPY", "max": 1000, "approx": true },
+        "pay": ["suica"]
       },
       { "mode": "caminar", "from": "Estación Keisei-Narita", "to": "Narita U-City Hotel", "duration": "~5min" }
     ],
@@ -218,19 +232,20 @@
     "checkIn": "15:00–00:00",
     "checkOut": "hasta 11:00",
     "pois": [
-      { "name": "Parque de Ueno", "coords": [35.71402, 139.77393] },
-      { "name": "Estanque Shinobazu", "coords": [35.71187, 139.77086] },
+      { "name": "Tienda Uniqlo y GU (Okachimachi)", "coords": [35.70761, 139.77438] },
+      { "name": "Tienda mont-bell y Art Sports (montaña)", "coords": [35.70641, 139.77375] },
+      { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
       { "name": "Cementerio de Yanaka", "coords": [35.72437, 139.77114] },
       { "name": "Yanaka Ginza", "coords": [35.72767, 139.76532] }
     ],
-    "budget": "$92",
+    "budget": "$88",
     "isTransit": false,
     "activitiesDay": [
-      "Bici por el parque de Ueno y el estanque Shinobazu",
-      "Barrio antiguo de Yanaka y su cementerio arbolado",
-      "Templos de Yanaka",
-      "Calle comercial Yanaka Ginza",
-      "Devolver la bici y salir a Narita a media tarde"
+      "Uniqlo y GU de Okachimachi: Heattech, capas y ropa del día a día",
+      "mont-bell y Art Sports: medias de trekking, cortaviento y capa térmica",
+      "Ameyoko: puestos de ropa barata y comida",
+      "Bici por Yanaka: cementerio arbolado, templos y la calle Yanaka Ginza",
+      "Devolver la bici y salir a Narita antes de que oscurezca (~16:40)"
     ],
     "activitiesNight": [
       "Cena cerca de la estación de Narita",
@@ -255,6 +270,7 @@
         "to": "Aeropuerto de Narita",
         "duration": "~10min",
         "cost": { "amount": 200, "currency": "JPY", "max": 300, "approx": true },
+        "pay": ["suica"],
         "note": "Confirmá el primer tren: el shuttle del hotel (7:00) llega tarde"
       },
       {
@@ -273,6 +289,7 @@
         "to": "Estación de Hiroshima (salida Shinkansen)",
         "duration": "~50min",
         "cost": { "amount": 1450, "currency": "JPY" },
+        "pay": ["suica", "efectivo"],
         "note": "Se puede pagar con Suica"
       },
       {
@@ -282,6 +299,7 @@
         "to": "Nishi-Kannonmachi",
         "duration": "~25min",
         "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "Después ~7 min a pie. Check-in desde las 15:00: si llegás antes, preguntá si guardan la mochila"
       },
       {
@@ -291,6 +309,7 @@
         "to": "Parque de la Paz → castillo → Shukkei-en",
         "duration": "~15 km, llano",
         "cost": { "amount": 1100, "max": 1500, "currency": "JPY", "approx": true, "detail": "el pase de 1 día" },
+        "pay": ["app"],
         "optional": true
       }
     ],
@@ -342,6 +361,7 @@
         "to": "Nishi-Hiroshima",
         "duration": "~10min",
         "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "O directo hasta Hiroden-Miyajima-guchi, ~50min"
       },
       {
@@ -350,7 +370,8 @@
         "from": "Nishi-Hiroshima",
         "to": "Miyajimaguchi",
         "duration": "~25min",
-        "cost": { "amount": 330, "currency": "JPY", "approx": true }
+        "cost": { "amount": 330, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "ferry",
@@ -358,7 +379,8 @@
         "from": "Miyajimaguchi",
         "to": "Miyajima",
         "duration": "~10min",
-        "cost": { "amount": 300, "currency": "JPY", "detail": "(¥200 + ¥100 de impuesto de visitante)" }
+        "cost": { "amount": 300, "currency": "JPY", "detail": "(¥200 + ¥100 de impuesto de visitante)" },
+        "pay": ["suica"]
       },
       {
         "mode": "caminar",
@@ -412,6 +434,7 @@
         "to": "Estación de Hiroshima",
         "duration": "~25min",
         "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "Check-out hasta las 10:00"
       },
       {
@@ -420,7 +443,8 @@
         "from": "Hiroshima",
         "to": "Onomichi",
         "duration": "~1h20",
-        "cost": { "amount": 1500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "teleférico",
@@ -429,6 +453,7 @@
         "to": "Parque Senkoji",
         "duration": "~3min",
         "cost": { "amount": 500, "currency": "JPY", "approx": true, "detail": "ida" },
+        "pay": ["efectivo", "tarjeta"],
         "note": "Subí en teleférico y bajá a pie por el Sendero de la Literatura"
       }
     ],
@@ -472,6 +497,7 @@
         "to": "Setoda (isla Ikuchijima)",
         "duration": "~35 km, cuestas suaves en los puentes",
         "cost": { "amount": 2000, "currency": "JPY", "max": 4000, "approx": true, "detail": "eléctrica + peajes" },
+        "pay": ["efectivo", "tarjeta"],
         "note": "Si vas hasta Imabari son 70 km: volvé en bus o tren"
       },
       {
@@ -480,6 +506,7 @@
         "to": "Onomichi",
         "duration": "~40min",
         "cost": { "amount": 1300, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"],
         "note": "Se puede subir la bici. Confirmá el último ferry"
       }
     ],
@@ -518,14 +545,22 @@
     "weekday": "Dom",
     "food": "El guesthouse tiene cocina: comprá la cena en Hashimoto o Kudoyama",
     "transport": [
-      { "mode": "tren", "line": "JR Sanyo Line", "from": "Onomichi", "to": "Fukuyama", "duration": "~20min (8:30 → 8:50)" },
+      {
+        "mode": "tren",
+        "line": "JR Sanyo Line",
+        "from": "Onomichi",
+        "to": "Fukuyama",
+        "duration": "~20min (8:30 → 8:50)",
+        "pay": ["boleto"]
+      },
       {
         "mode": "tren",
         "line": "Sanyo Shinkansen",
         "from": "Fukuyama",
         "to": "Shin-Osaka",
         "duration": "~1h05 (9:10 → 10:15)",
-        "cost": { "amount": 9000, "currency": "JPY", "approx": true, "detail": "(con el tramo anterior)" }
+        "cost": { "amount": 9000, "currency": "JPY", "approx": true, "detail": "(con el tramo anterior)" },
+        "pay": ["boleto"]
       },
       {
         "mode": "metro",
@@ -533,7 +568,8 @@
         "from": "Shin-Osaka",
         "to": "Namba",
         "duration": "~15min (10:30 → 10:45)",
-        "cost": { "amount": 290, "currency": "JPY" }
+        "cost": { "amount": 290, "currency": "JPY" },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -541,7 +577,8 @@
         "from": "Namba",
         "to": "Kamuro",
         "duration": "~1h10 (11:00 → 12:10)",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       { "mode": "caminar", "from": "Estación Kamuro", "to": "Guesthouse 輪", "duration": "~7min" },
       {
@@ -551,6 +588,7 @@
         "to": "Kudoyama",
         "duration": "~3min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "O ~45 min a pie junto al río Kino"
       },
       { "mode": "caminar", "from": "Estación Kudoyama", "to": "Templo Jison-in", "duration": "~20min (13:30 → 13:50)" }
@@ -599,7 +637,8 @@
         "from": "Kamuro",
         "to": "Kamikosawa",
         "duration": "~15min (7:45 → 8:00)",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       { "mode": "caminar", "from": "Estación Kamikosawa", "to": "Unión con el Choishi-michi", "duration": "~1h de subida (8:00 → 9:00)" },
       {
@@ -616,6 +655,7 @@
         "to": "Ichinohashi (Okunoin)",
         "duration": "~10min (15:00 → 15:30)",
         "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "O a pie, ~30 min"
       },
       {
@@ -624,7 +664,8 @@
         "from": "Okunoin-mae",
         "to": "Estación Koyasan",
         "duration": "~20min (17:45 → 18:05)",
-        "cost": { "amount": 450, "currency": "JPY", "approx": true }
+        "cost": { "amount": 450, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "teleférico",
@@ -632,7 +673,8 @@
         "from": "Koyasan",
         "to": "Gokurakubashi",
         "duration": "~5min (18:15 → 18:20)",
-        "cost": { "amount": 500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 500, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "tren",
@@ -640,7 +682,8 @@
         "from": "Gokurakubashi",
         "to": "Kamuro",
         "duration": "~40min (18:35 → 19:15)",
-        "cost": { "amount": 450, "currency": "JPY", "approx": true }
+        "cost": { "amount": 450, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Guesthouse 輪 高野山麓 (litera en dormitorio mixto)",
@@ -692,16 +735,25 @@
         "from": "Kamuro",
         "to": "Hashimoto",
         "duration": "~7min (8:30 → 8:37)",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
-      { "mode": "tren", "line": "JR Wakayama Line", "from": "Hashimoto", "to": "Wakayama", "duration": "~1h05 (9:00 → 10:05)" },
+      {
+        "mode": "tren",
+        "line": "JR Wakayama Line",
+        "from": "Hashimoto",
+        "to": "Wakayama",
+        "duration": "~1h05 (9:00 → 10:05)",
+        "pay": ["boleto"]
+      },
       {
         "mode": "tren",
         "line": "Expreso limitado Kuroshio (o local)",
         "from": "Wakayama",
         "to": "Kii-Tanabe",
         "duration": "~1h (10:30 → 11:30)",
-        "cost": { "amount": 4000, "currency": "JPY", "approx": true, "detail": "desde Hashimoto con expreso" }
+        "cost": { "amount": 4000, "currency": "JPY", "approx": true, "detail": "desde Hashimoto con expreso" },
+        "pay": ["boleto"]
       },
       { "mode": "caminar", "from": "Estación Kii-Tanabe", "to": "Tsukasa House", "duration": "~7min" }
     ],
@@ -746,6 +798,7 @@
         "to": "Takijiri-oji",
         "duration": "~40min",
         "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "Hay un bus ~8:00 (confirmar horario)"
       },
       { "mode": "caminar", "line": "Kumano Kodo Nakahechi", "from": "Takijiri-oji", "to": "Chikatsuyu-oji", "duration": "~5–7h, ~13 km" },
@@ -754,7 +807,8 @@
         "from": "Chikatsuyu",
         "to": "Kii-Tanabe",
         "duration": "~1h",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       }
     ],
     "accommodation": "Tsukasa House (individual con tatami, baño compartido)",
@@ -799,7 +853,8 @@
         "from": "Kii-Tanabe",
         "to": "Hosshinmon-oji",
         "duration": "~2h",
-        "cost": { "amount": 2000, "currency": "JPY", "approx": true, "detail": "o más" }
+        "cost": { "amount": 2000, "currency": "JPY", "approx": true, "detail": "o más" },
+        "pay": ["efectivo", "tarjeta"]
       },
       {
         "mode": "caminar",
@@ -814,7 +869,8 @@
         "from": "Hongu Taisha-mae",
         "to": "Shingu",
         "duration": "~1h20",
-        "cost": { "amount": 1540, "currency": "JPY", "detail": "(o con el pase)" }
+        "cost": { "amount": 1540, "currency": "JPY", "detail": "(o con el pase)" },
+        "pay": ["Pase de bus Kumano Gobo"]
       },
       {
         "mode": "caminar",
@@ -877,6 +933,7 @@
         "to": "Kii-Katsuura",
         "duration": "~20min",
         "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
         "note": "La estación queda a ~15 min a pie del hospedaje"
       },
       {
@@ -885,7 +942,8 @@
         "from": "Kii-Katsuura",
         "to": "Daimonzaka",
         "duration": "~20min",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase Kumano Gobo" }
+        "cost": { "amount": 0, "currency": "JPY", "included": "el pase Kumano Gobo" },
+        "pay": ["Pase de bus Kumano Gobo"]
       },
       { "mode": "caminar", "from": "Daimonzaka", "to": "Santuario Kumano Nachi Taisha", "duration": "~30–40min de escalones de piedra" },
       {
@@ -893,7 +951,8 @@
         "from": "Cascada de Nachi",
         "to": "Kii-Katsuura",
         "duration": "~25min",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" }
+        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" },
+        "pay": ["Pase de bus Kumano Gobo"]
       },
       {
         "mode": "tren",
@@ -901,7 +960,8 @@
         "from": "Kii-Katsuura",
         "to": "Shingu",
         "duration": "~20min",
-        "cost": { "amount": 240, "currency": "JPY", "approx": true }
+        "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       }
     ],
     "accommodation": "KUMANO家-OHGi- (individual con tatami, baño compartido)",
@@ -951,7 +1011,8 @@
         "from": "Shingu",
         "to": "Shin-Osaka (o Kioto)",
         "duration": "~4h20",
-        "cost": { "amount": 9000, "currency": "JPY", "max": 10500, "approx": true }
+        "cost": { "amount": 9000, "currency": "JPY", "max": 10500, "approx": true },
+        "pay": ["boleto"]
       },
       {
         "mode": "tren",
@@ -960,6 +1021,7 @@
         "to": "Kioto",
         "duration": "~25min",
         "cost": { "amount": 580, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Solo si tu Kuroshio no sigue a Kioto"
       },
       {
@@ -969,6 +1031,7 @@
         "to": "Otsu",
         "duration": "~10min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Para el check-in; después volvés a Kioto y a la noche otra vez a Otsu"
       }
     ],
@@ -1007,7 +1070,8 @@
         "to": "Sanjo Keihan",
         "via": ["Yamashina"],
         "duration": "~25min",
-        "cost": { "amount": 450, "currency": "JPY", "approx": true }
+        "cost": { "amount": 450, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -1015,7 +1079,8 @@
         "from": "Sanjo",
         "to": "Demachiyanagi",
         "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true }
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -1023,7 +1088,8 @@
         "from": "Demachiyanagi",
         "to": "Kurama",
         "duration": "~30min",
-        "cost": { "amount": 470, "currency": "JPY", "approx": true }
+        "cost": { "amount": 470, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       { "mode": "caminar", "from": "Kurama-dera", "to": "Santuario Kibune", "duration": "~2h por la montaña" },
       {
@@ -1032,7 +1098,8 @@
         "from": "Kibuneguchi",
         "to": "Demachiyanagi",
         "duration": "~30min",
-        "cost": { "amount": 470, "currency": "JPY", "approx": true }
+        "cost": { "amount": 470, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "bus",
@@ -1040,7 +1107,8 @@
         "from": "Demachiyanagi",
         "to": "Ohara",
         "duration": "~35min",
-        "cost": { "amount": 500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 500, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "bus",
@@ -1048,7 +1116,8 @@
         "from": "Ohara",
         "to": "Kioto",
         "duration": "~1h",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true }
+        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "tren",
@@ -1056,7 +1125,8 @@
         "from": "Kioto",
         "to": "Otsu",
         "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1102,7 +1172,8 @@
         "from": "Otsu",
         "to": "Kioto",
         "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bicicleta",
@@ -1110,7 +1181,8 @@
         "from": "Kioto",
         "to": "Río Kamo → Arashiyama → Sagano",
         "duration": "~20–25 km, llano",
-        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por día" }
+        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por día" },
+        "pay": ["tarjeta", "efectivo"]
       },
       {
         "mode": "tren",
@@ -1118,7 +1190,8 @@
         "from": "Kioto",
         "to": "Otsu",
         "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1163,7 +1236,8 @@
         "from": "Otsu",
         "to": "Sannomiya",
         "duration": "~1h",
-        "cost": { "amount": 1300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -1171,7 +1245,8 @@
         "from": "Sannomiya",
         "to": "Rokkomichi",
         "duration": "~10min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true }
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bus",
@@ -1179,7 +1254,8 @@
         "from": "Rokkomichi",
         "to": "Rokko Cable Shita",
         "duration": "~20min",
-        "cost": { "amount": 230, "currency": "JPY", "approx": true }
+        "cost": { "amount": 230, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "teleférico",
@@ -1187,7 +1263,8 @@
         "from": "Rokko Cable Shita",
         "to": "Rokko Sanjo",
         "duration": "~10min",
-        "cost": { "amount": 880, "currency": "JPY" }
+        "cost": { "amount": 880, "currency": "JPY" },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "teleférico",
@@ -1195,7 +1272,8 @@
         "from": "Cima del Rokko",
         "to": "Arima Onsen",
         "duration": "~12min",
-        "cost": { "amount": 1400, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1400, "currency": "JPY", "approx": true },
+        "pay": ["efectivo", "tarjeta"]
       },
       {
         "mode": "bus",
@@ -1204,6 +1282,7 @@
         "to": "Kioto",
         "duration": "~1h10",
         "cost": { "amount": 1850, "currency": "JPY", "max": 2000, "approx": true },
+        "pay": ["tarjeta", "efectivo"],
         "note": "Si lo perdés: tren Shintetsu a Sannomiya + JR a Kioto (~1h30)"
       },
       {
@@ -1212,7 +1291,8 @@
         "from": "Kioto",
         "to": "Otsu",
         "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1264,7 +1344,8 @@
         "from": "Otsu",
         "to": "Kioto",
         "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -1272,10 +1353,11 @@
         "from": "Kioto",
         "to": "Inari (ida y vuelta)",
         "duration": "~5min por tramo",
-        "cost": { "amount": 150, "currency": "JPY", "perLeg": true }
+        "cost": { "amount": 150, "currency": "JPY", "perLeg": true },
+        "pay": ["suica"]
       },
       { "mode": "caminar", "from": "Santuario Fushimi Inari", "to": "Cima del monte Inari", "duration": "~2–3h ida y vuelta" },
-      { "mode": "tren", "line": "Tokaido Shinkansen", "from": "Kioto", "to": "Nagoya", "duration": "~35min" },
+      { "mode": "tren", "line": "Tokaido Shinkansen", "from": "Kioto", "to": "Nagoya", "duration": "~35min", "pay": ["boleto"] },
       {
         "mode": "tren",
         "line": "Expreso limitado Hida",
@@ -1284,6 +1366,7 @@
         "via": ["Gifu"],
         "duration": "~2h20",
         "cost": { "amount": 11000, "currency": "JPY", "max": 12000, "approx": true, "detail": "en total" },
+        "pay": ["boleto"],
         "note": "Ventanilla derecha: cañón del río Hida"
       }
     ],
@@ -1329,7 +1412,8 @@
         "from": "Takayama",
         "to": "Shirakawa-go",
         "duration": "~50min",
-        "cost": { "amount": 2800, "currency": "JPY", "approx": true, "perLeg": true }
+        "cost": { "amount": 2800, "currency": "JPY", "approx": true, "perLeg": true },
+        "pay": ["tarjeta", "efectivo"]
       },
       {
         "mode": "bus",
@@ -1337,7 +1421,8 @@
         "from": "Shirakawa-go",
         "to": "Takayama",
         "duration": "~50min",
-        "cost": { "amount": 2800, "currency": "JPY", "approx": true }
+        "cost": { "amount": 2800, "currency": "JPY", "approx": true },
+        "pay": ["tarjeta", "efectivo"]
       }
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
@@ -1378,7 +1463,8 @@
         "from": "Takayama",
         "to": "Hida-Furukawa",
         "duration": "~15–20min",
-        "cost": { "amount": 250, "currency": "JPY", "approx": true }
+        "cost": { "amount": 250, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
       },
       {
         "mode": "bicicleta",
@@ -1386,7 +1472,8 @@
         "from": "Hida-Furukawa",
         "to": "Arrozales y aldeas de Hida",
         "duration": "~3h30, ~22 km, fácil",
-        "cost": { "amount": 4900, "currency": "JPY", "max": 7600, "approx": true }
+        "cost": { "amount": 4900, "currency": "JPY", "max": 7600, "approx": true },
+        "pay": ["tarjeta"]
       }
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
@@ -1430,7 +1517,8 @@
         "from": "Takayama",
         "to": "Shin-Hotaka Ropeway",
         "duration": "~1h30",
-        "cost": { "amount": 2200, "currency": "JPY", "approx": true }
+        "cost": { "amount": 2200, "currency": "JPY", "approx": true },
+        "pay": ["tarjeta", "efectivo"]
       },
       {
         "mode": "teleférico",
@@ -1439,7 +1527,8 @@
         "to": "Nishi-Hotakaguchi (2.156 m)",
         "via": ["Shirakabadaira"],
         "duration": "~25min por trayecto",
-        "cost": { "amount": 3800, "currency": "JPY", "detail": "ida y vuelta" }
+        "cost": { "amount": 3800, "currency": "JPY", "detail": "ida y vuelta" },
+        "pay": ["tarjeta", "efectivo"]
       },
       {
         "mode": "bus",
@@ -1447,7 +1536,8 @@
         "from": "Shin-Hotaka",
         "to": "Hirayu Onsen",
         "duration": "~35–45min",
-        "cost": { "amount": 910, "currency": "JPY" }
+        "cost": { "amount": 910, "currency": "JPY" },
+        "pay": ["efectivo"]
       },
       {
         "mode": "bus",
@@ -1455,7 +1545,8 @@
         "from": "Hirayu Onsen",
         "to": "Matsumoto",
         "duration": "~1h30",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
+        "pay": ["tarjeta", "efectivo"]
       }
     ],
     "accommodation": "Minka House (litera en dormitorio mixto)",
@@ -1500,7 +1591,8 @@
         "from": "Matsumoto",
         "to": "Hotaka",
         "duration": "~30min",
-        "cost": { "amount": 330, "currency": "JPY", "approx": true }
+        "cost": { "amount": 330, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bicicleta",
@@ -1508,7 +1600,8 @@
         "from": "Hotaka",
         "to": "Granja Daio → ríos de Azumino",
         "duration": "~20–30 km, llano",
-        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por el día" }
+        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por el día" },
+        "pay": ["efectivo", "tarjeta"]
       }
     ],
     "accommodation": "Minka House (litera en dormitorio mixto)",
@@ -1553,14 +1646,16 @@
         "from": "Matsumoto",
         "to": "Nagiso",
         "duration": "~1h",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
       },
       {
         "mode": "bus",
         "from": "Nagiso",
         "to": "Tsumago",
         "duration": "~10min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"]
       },
       { "mode": "caminar", "line": "Nakasendo", "from": "Tsumago", "to": "Magome", "duration": "~2h30–3h, ~8 km" },
       {
@@ -1568,7 +1663,8 @@
         "from": "Magome",
         "to": "Nakatsugawa",
         "duration": "~25min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true }
+        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"]
       },
       {
         "mode": "tren",
@@ -1576,7 +1672,8 @@
         "from": "Nakatsugawa",
         "to": "Matsumoto",
         "duration": "~1h20",
-        "cost": { "amount": 3500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 3500, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
       }
     ],
     "accommodation": "Minka House (litera en dormitorio mixto)",
@@ -1622,7 +1719,8 @@
         "from": "Matsumoto",
         "to": "Otsuki",
         "duration": "~2h",
-        "cost": { "amount": 5000, "currency": "JPY", "approx": true }
+        "cost": { "amount": 5000, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
       },
       {
         "mode": "tren",
@@ -1630,7 +1728,8 @@
         "from": "Otsuki",
         "to": "Fujikyu-Highland",
         "duration": "~55min",
-        "cost": { "amount": 1100, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1100, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       }
     ],
     "accommodation": "Mt.Fuji Cabin & Lounge Highland Station Inn (cápsula, solo hombres)",
@@ -1671,6 +1770,7 @@
         "to": "Kawaguchiko",
         "duration": "~3min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "O ~20 min a pie"
       },
       {
@@ -1679,7 +1779,8 @@
         "from": "Kawaguchiko",
         "to": "Lago Kawaguchi → Saiko",
         "duration": "~25–35 km, llano con una subida",
-        "cost": { "amount": 1500, "currency": "JPY", "max": 3000, "approx": true, "detail": "(eléctrica más cara)" }
+        "cost": { "amount": 1500, "currency": "JPY", "max": 3000, "approx": true, "detail": "(eléctrica más cara)" },
+        "pay": ["efectivo", "tarjeta"]
       }
     ],
     "accommodation": "Mt.Fuji Cabin & Lounge Highland Station Inn (cápsula, solo hombres)",
@@ -1724,6 +1825,7 @@
         "to": "Kawaguchiko",
         "duration": "~3min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Salí antes de las 9:30 para el bus"
       },
       {
@@ -1732,7 +1834,8 @@
         "from": "Kawaguchiko",
         "to": "Mitsutoge Tozanguchi",
         "duration": "~28min",
-        "cost": { "amount": 840, "currency": "JPY" }
+        "cost": { "amount": 840, "currency": "JPY" },
+        "pay": ["suica", "efectivo"]
       },
       { "mode": "caminar", "from": "Mitsutoge Tozanguchi", "to": "Cima de Mitsutoge → bajada a Kawaguchi", "duration": "~5–6h" },
       {
@@ -1740,7 +1843,8 @@
         "from": "Kawaguchi-kyoku-mae",
         "to": "Kawaguchiko",
         "duration": "~10min",
-        "cost": { "amount": 350, "currency": "JPY", "approx": true }
+        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       }
     ],
     "accommodation": "Mt.Fuji Cabin & Lounge Highland Station Inn (cápsula, solo hombres)",
@@ -1782,16 +1886,18 @@
         "from": "Kawaguchiko",
         "to": "Estación de Mishima",
         "duration": "~1h30–2h",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true }
+        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
-      { "mode": "tren", "line": "JR Tokaido Line", "from": "Mishima", "to": "Atami", "duration": "~15min" },
+      { "mode": "tren", "line": "JR Tokaido Line", "from": "Mishima", "to": "Atami", "duration": "~15min", "pay": ["boleto"] },
       {
         "mode": "tren",
         "line": "JR Ito Line",
         "from": "Atami",
         "to": "Ito",
         "duration": "~25min",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true, "detail": "desde Mishima" }
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true, "detail": "desde Mishima" },
+        "pay": ["boleto"]
       },
       {
         "mode": "tren",
@@ -1800,6 +1906,7 @@
         "to": "Kawana",
         "duration": "~8min",
         "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Después ~7 min a pie, bajando hacia el mar"
       }
     ],
@@ -1840,7 +1947,8 @@
         "from": "Kawana",
         "to": "Jogasaki-Kaigan",
         "duration": "~10min",
-        "cost": { "amount": 400, "currency": "JPY", "approx": true }
+        "cost": { "amount": 400, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       { "mode": "caminar", "line": "Sendero costero de Jogasaki", "from": "Faro de Kadowakizaki", "to": "Izu-Kogen", "duration": "~2–3h" },
       {
@@ -1849,7 +1957,8 @@
         "from": "Izu-Kogen",
         "to": "Monte Omuro",
         "duration": "~15min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "teleférico",
@@ -1857,7 +1966,8 @@
         "from": "Base del Omuro",
         "to": "Cráter del Omuro (580 m)",
         "duration": "~6min",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["efectivo", "tarjeta"]
       }
     ],
     "accommodation": "Villa FUN Kawana (habitación triple, baño compartido)",
@@ -1901,7 +2011,8 @@
         "from": "Kawana",
         "to": "Ito",
         "duration": "~8min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bus",
@@ -1909,7 +2020,8 @@
         "from": "Ito",
         "to": "Shuzenji Onsen",
         "duration": "~1h",
-        "cost": { "amount": 1300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1300, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "bus",
@@ -1917,7 +2029,8 @@
         "from": "Shuzenji Onsen",
         "to": "Ito",
         "duration": "~1h",
-        "cost": { "amount": 1300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1300, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"]
       },
       {
         "mode": "tren",
@@ -1925,7 +2038,8 @@
         "from": "Ito",
         "to": "Kawana",
         "duration": "~8min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Villa FUN Kawana (habitación triple, baño compartido)",
@@ -1967,7 +2081,8 @@
         "from": "Kawana",
         "to": "Ito",
         "duration": "~8min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true }
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -1975,7 +2090,8 @@
         "from": "Ito",
         "to": "Tokio",
         "duration": "~1h45",
-        "cost": { "amount": 4000, "currency": "JPY", "approx": true }
+        "cost": { "amount": 4000, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
       },
       {
         "mode": "tren",
@@ -1985,6 +2101,7 @@
         "via": ["Shinjuku"],
         "duration": "~25min",
         "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "Después ~5 min a pie"
       }
     ],
@@ -2036,7 +2153,8 @@
         "to": "Kamakura",
         "via": ["Shinjuku"],
         "duration": "~1h10",
-        "cost": { "amount": 1100, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1100, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bicicleta",
@@ -2044,7 +2162,8 @@
         "from": "Kamakura",
         "to": "Gran Buda → costa → Enoshima",
         "duration": "~15–20 km, llano junto al mar",
-        "cost": { "amount": 1600, "currency": "JPY", "max": 2500, "approx": true }
+        "cost": { "amount": 1600, "currency": "JPY", "max": 2500, "approx": true },
+        "pay": ["efectivo", "tarjeta"]
       },
       {
         "mode": "tren",
@@ -2053,7 +2172,8 @@
         "to": "Shinjuku",
         "via": ["Kamakura"],
         "duration": "~1h15",
-        "cost": { "amount": 1100, "currency": "JPY", "approx": true }
+        "cost": { "amount": 1100, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Mi-Hotel Hearts Shinjuku (individual con cocina)",
@@ -2098,6 +2218,7 @@
         "from": "Hatsudai",
         "to": "Sasazuka o Meidaimae",
         "duration": "~5–10min",
+        "pay": ["suica"],
         "note": "Ahí cambiás a la Keio Line"
       },
       {
@@ -2106,7 +2227,8 @@
         "from": "Sasazuka o Meidaimae",
         "to": "Takaosanguchi",
         "duration": "~50min",
-        "cost": { "amount": 430, "currency": "JPY", "approx": true, "detail": "en total" }
+        "cost": { "amount": 430, "currency": "JPY", "approx": true, "detail": "en total" },
+        "pay": ["suica"]
       },
       {
         "mode": "caminar",
@@ -2160,7 +2282,8 @@
         "to": "Komagome (Rikugien)",
         "via": ["Shinjuku"],
         "duration": "~30min",
-        "cost": { "amount": 350, "currency": "JPY", "approx": true }
+        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -2169,6 +2292,7 @@
         "to": "Keisei Narita",
         "duration": "~1h",
         "cost": { "amount": 900, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "note": "De Komagome a Nippori son 3 paradas de Yamanote"
       },
       { "mode": "caminar", "from": "Estación Keisei Narita", "to": "Welco Narita", "duration": "~2min" }
@@ -2212,7 +2336,8 @@
         "from": "Narita",
         "to": "Sawara",
         "duration": "~30–40min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true }
+        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "bicicleta",
@@ -2220,7 +2345,8 @@
         "from": "Sawara",
         "to": "Canal del río Ono → ciclovía del río Tone",
         "duration": "~20–30 km, llano",
-        "cost": { "amount": 1000, "currency": "JPY", "max": 1500, "approx": true }
+        "cost": { "amount": 1000, "currency": "JPY", "max": 1500, "approx": true },
+        "pay": ["efectivo", "tarjeta"]
       },
       {
         "mode": "tren",
@@ -2228,7 +2354,8 @@
         "from": "Sawara",
         "to": "Narita",
         "duration": "~30–40min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true }
+        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Welco Narita (individual)",
@@ -2257,7 +2384,7 @@
     "label": "Último paseo por Narita-san → vuelo NRT 13:20",
     "location": "Narita",
     "category": "Logística",
-    "notes": "Vuelo a las 13:20: llegá al aeropuerto antes de las 10:20. El templo abre temprano, así que da para una última vuelta. En Seúl hay 7 h 10 de escala (15:55 → 23:05) y el vuelo a Ámsterdam es de noche",
+    "notes": "Vuelo a las 13:20: llegá al aeropuerto antes de las 10:20, o a las 10:00 si tenés compras sin impuesto: primero la terminal de devolución y después el despacho de la maleta. El templo abre temprano, así que da para una última vuelta. En Seúl hay 7 h 10 de escala (15:55 → 23:05) y el vuelo a Ámsterdam es de noche",
     "weekday": "Sáb",
     "food": "Desayuno en Omotesando o en el aeropuerto",
     "transport": [
@@ -2267,7 +2394,8 @@
         "from": "Narita (pueblo)",
         "to": "Aeropuerto de Narita",
         "duration": "~10min",
-        "cost": { "amount": 260, "currency": "JPY", "approx": true }
+        "cost": { "amount": 260, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "avión",
@@ -2295,7 +2423,13 @@
     ],
     "budget": "$37",
     "isTransit": true,
-    "activitiesDay": ["Templo Narita-san temprano", "Check-in y despacho de la maleta", "Compras libres de impuestos", "Últimos KitKat de sabores"],
+    "activitiesDay": [
+      "Templo Narita-san temprano",
+      "Devolución del impuesto en la terminal (antes de despachar)",
+      "Check-in y despacho de la maleta",
+      "Compras libres de impuestos",
+      "Últimos KitKat de sabores"
+    ],
     "activitiesNight": ["Vuelo de regreso", "¡Hasta pronto, Japón!"]
   },
   {

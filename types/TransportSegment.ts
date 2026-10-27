@@ -16,6 +16,9 @@ export type TransportSegment = {
   duration?: string;
   /** Costo estimado, como dato (lib/cost.ts) */
   cost?: Cost;
+  /** Cómo se paga, de lo más cómodo a lo de respaldo: ids de lib/pay.ts
+   *  (suica, boleto, tarjeta, efectivo, app) o el nombre de un pase */
+  pay?: string[];
   /** No forma parte del plan base: no suma al presupuesto */
   optional?: boolean;
   /** Notas adicionales */

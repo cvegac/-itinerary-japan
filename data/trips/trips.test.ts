@@ -128,6 +128,15 @@ describe("viaje japan", () => {
     expect(generic).toEqual([]);
   });
 
+  it("dice cómo se paga cada tramo en Japón (menos los vuelos ya pagados y a pie)", () => {
+    const unpaid = japan.itinerary.flatMap((d) =>
+      d.transport
+        .filter((t) => t.mode !== "avión" && t.mode !== "caminar" && !t.pay?.length)
+        .map((t) => `${d.date} ${t.from} → ${t.to}`)
+    );
+    expect(unpaid).toEqual([]);
+  });
+
   it("marca como de vuelo (sin cama) los días fuera de Japón", () => {
     const enRoute = japan.itinerary.filter((d) => d.enRoute);
     expect(enRoute.map((d) => d.date)).toEqual(["2026-10-30", "2026-10-31", "2026-12-06"]);
