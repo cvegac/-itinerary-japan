@@ -45,5 +45,17 @@ export const fixtureTrip: TripData = {
       { id: "yenes", text: "Llevar yenes en efectivo" },
     ],
     sections: [{ title: "Pagar en efectivo", items: ["Ueno: ¥17,000"] }],
+    topics: [
+      {
+        id: "tax-free",
+        emoji: "🧾",
+        title: "Compras sin impuesto",
+        summary: "Cómo te devuelven el 10%",
+        sections: [
+          { title: "Al comprar", items: ["Mostrá el pasaporte"] },
+          { title: "En el aeropuerto", items: ["Pasá por la terminal antes de despachar"] },
+        ],
+      },
+    ],
   },
 };

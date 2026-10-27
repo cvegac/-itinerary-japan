@@ -52,9 +52,19 @@ export type TripNoteSection = {
   items: string[];
 };
 
+/** Tema largo: en Notas se ve el título y el resumen, y se abre en una ventana */
+export type TripNoteTopic = {
+  id: string;
+  emoji: string;
+  title: string;
+  summary: string;
+  sections: TripNoteSection[];
+};
+
 export type TripNotes = {
   tasks: TripTask[];
   sections: TripNoteSection[];
+  topics?: TripNoteTopic[];
 };
 
 export type TripData = {
