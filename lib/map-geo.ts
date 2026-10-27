@@ -82,13 +82,22 @@ export function hasBed(day: DayEntry): boolean {
 /** Menos que esto entre las dos camas es el mismo lugar */
 const SAME_LODGING_KM = 0.05;
 
-/** La cama donde amanecés, si es otra que la de esta noche: la del día anterior */
-export function morningLodging(itinerary: DayEntry[], day: DayEntry): DayEntry | null {
+/** La cama de anoche (la del día anterior), si la hubo */
+function lastNightBed(itinerary: DayEntry[], day: DayEntry): DayEntry | null {
   const i = itinerary.findIndex((d) => d.date === day.date);
   const prev = i > 0 ? itinerary[i - 1] : undefined;
-  if (!prev || !hasBed(prev)) return null;
-  const sameBed = hasBed(day) && distanceKm(prev.accommodationCoords, day.accommodationCoords) < SAME_LODGING_KM;
-  return sameBed ? null : prev;
+  return prev && hasBed(prev) ? prev : null;
+}
+
+/** Amanecés y dormís en la misma cama */
+export function wakesUpInSameBed(itinerary: DayEntry[], day: DayEntry): boolean {
+  const prev = lastNightBed(itinerary, day);
+  return !!prev && hasBed(day) && distanceKm(prev.accommodationCoords, day.accommodationCoords) < SAME_LODGING_KM;
+}
+
+/** La cama donde amanecés, si es otra que la de esta noche: la del día anterior */
+export function morningLodging(itinerary: DayEntry[], day: DayEntry): DayEntry | null {
+  return wakesUpInSameBed(itinerary, day) ? null : lastNightBed(itinerary, day);
 }
 
 /** Desde dónde salen las rutas del día: el hospedaje de esta noche o, si esa

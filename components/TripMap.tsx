@@ -14,6 +14,7 @@ import {
   poiLetter,
   routeStart,
   toLngLat,
+  wakesUpInSameBed,
   weekColor,
   type LineProps,
 } from "@/lib/map-geo";
@@ -95,13 +96,17 @@ function dayMarkerEl(color: string, number: number, selected: boolean): HTMLElem
   return el;
 }
 
-/** Cama del día (modo día): la de esta noche, rellena 🌙, y la de esta mañana en
- *  los días de traslado, en blanco ☀️. Sin "position" propio (ver poiMarkerEl) */
-function lodgingMarkerEl(color: string, when: "night" | "morning"): HTMLElement {
-  const night = when === "night";
+/** Cama del día (modo día): la de esta noche, rellena con 🌙 arriba a la derecha, y la
+ *  de esta mañana en los días de traslado, en blanco con ☀️ arriba a la izquierda. Si
+ *  amanecés y dormís en la misma, lleva los dos. Sin "position" propio (ver poiMarkerEl) */
+function lodgingMarkerEl(color: string, when: "night" | "morning" | "both"): HTMLElement {
+  const night = when !== "morning";
   const el = document.createElement("button");
   el.type = "button";
-  el.setAttribute("aria-label", night ? "Dormís acá" : "Amanecés acá");
+  el.setAttribute(
+    "aria-label",
+    when === "both" ? "Amanecés y dormís acá" : night ? "Dormís acá" : "Amanecés acá"
+  );
   el.style.cssText = `
     width:34px;height:34px;border-radius:50%;cursor:pointer;
     background:${night ? color : "#fff"};border:3px solid ${night ? "#fff" : color};
@@ -111,14 +116,21 @@ function lodgingMarkerEl(color: string, when: "night" | "morning"): HTMLElement 
   const icon = document.createElement("span");
   icon.dataset.icon = "";
   icon.textContent = "🛏️";
+  el.append(icon);
+  if (when !== "night") el.append(lodgingBadge("☀️", "sun", "left"));
+  if (night) el.append(lodgingBadge("🌙", "moon", "right"));
+  return el;
+}
+
+function lodgingBadge(emoji: string, kind: "sun" | "moon", side: "left" | "right"): HTMLElement {
   const badge = document.createElement("span");
-  badge.textContent = night ? "🌙" : "☀️";
+  badge.dataset[kind] = "";
+  badge.textContent = emoji;
   badge.style.cssText = `
-    position:absolute;top:-8px;right:-8px;width:18px;height:18px;border-radius:50%;
+    position:absolute;top:-8px;${side}:-8px;width:18px;height:18px;border-radius:50%;
     background:#fff;display:flex;align-items:center;justify-content:center;
     font-size:11px;box-shadow:0 1px 3px rgba(0,0,0,.3);`;
-  el.append(icon, badge);
-  return el;
+  return badge;
 }
 
 /** Color de la línea del traslado entre la cama de la mañana y la de la noche */
@@ -504,7 +516,8 @@ export default function TripMap({
     const morning = morningLodging(itinerary, d);
     const view = dayView(d, morning?.accommodationCoords);
     // El día que no hay cama (vuelo de vuelta) el punto del día queda con su número
-    const accomMarker = addDayMarker(d, true, hasBed(d) ? lodgingMarkerEl(color, "night") : undefined);
+    const bed = wakesUpInSameBed(itinerary, d) ? "both" : "night";
+    const accomMarker = addDayMarker(d, true, hasBed(d) ? lodgingMarkerEl(color, bed) : undefined);
     if (morning) {
       addMarker(lodgingMarkerEl(color, "morning"), toLngLat(morning.accommodationCoords), morningPopupHtml(morning));
     }

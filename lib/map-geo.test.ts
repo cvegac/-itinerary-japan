@@ -11,6 +11,7 @@ import {
   poiLetter,
   routeStart,
   toLngLat,
+  wakesUpInSameBed,
   weekColor,
 } from "./map-geo";
 
@@ -169,6 +170,27 @@ describe("morningLodging", () => {
 
   it("no devuelve nada si anoche no hubo cama (tránsito, bus nocturno o '---')", () => {
     expect(morningLodging(days, days[4])).toBeNull();
+  });
+});
+
+describe("wakesUpInSameBed", () => {
+  const days = [
+    makeDay({ date: "2026-11-01", accommodation: "Ueno", accommodationCoords: [35.7101, 139.7792] }),
+    makeDay({ date: "2026-11-02", accommodation: "Ueno", accommodationCoords: [35.7101, 139.7792] }),
+    makeDay({ date: "2026-11-03", accommodation: "Narita", accommodationCoords: [35.7775, 140.3117] }),
+    makeDay({ date: "2026-11-04", accommodation: "---", isTransit: true, accommodationCoords: [35.772, 140.3929] }),
+    makeDay({ date: "2026-11-05", accommodation: "Hiroshima", accommodationCoords: [34.3915, 132.4415] }),
+  ];
+
+  it("es verdad si anoche dormiste en la misma cama que esta noche", () => {
+    expect(wakesUpInSameBed(days, days[1])).toBe(true);
+  });
+
+  it("es falso el primer día, si cambiás de cama, si anoche no hubo cama o si hoy no hay", () => {
+    expect(wakesUpInSameBed(days, days[0])).toBe(false);
+    expect(wakesUpInSameBed(days, days[2])).toBe(false);
+    expect(wakesUpInSameBed(days, days[3])).toBe(false);
+    expect(wakesUpInSameBed(days, days[4])).toBe(false);
   });
 });
 

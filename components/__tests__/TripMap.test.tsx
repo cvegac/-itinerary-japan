@@ -294,10 +294,22 @@ describe("TripMap en días de traslado", () => {
     expect(transfer?.properties.dashed).toBe(true);
   });
 
-  it("si seguís en la misma cama muestra una sola", async () => {
+  it("si seguís en la misma cama muestra una sola, con el sol y la luna", async () => {
     await renderLoadedMap(itinerary[1], "day");
     expect(markerByLabel("Amanecés acá")).toBeUndefined();
-    expect(markerByLabel("Dormís acá")).toBeTruthy();
+    const bed = markerByLabel("Amanecés y dormís acá")!.element!;
+    expect(bed.querySelector("[data-sun]")?.textContent).toBe("☀️");
+    expect(bed.querySelector("[data-moon]")?.textContent).toBe("🌙");
+  });
+
+  it("si cambiás de cama, la de la mañana lleva solo el sol y la de la noche solo la luna", async () => {
+    await renderLoadedMap(itinerary[2], "day");
+    const morning = markerByLabel("Amanecés acá")!.element!;
+    const night = markerByLabel("Dormís acá")!.element!;
+    expect(morning.querySelector("[data-sun]")).toBeTruthy();
+    expect(morning.querySelector("[data-moon]")).toBeNull();
+    expect(night.querySelector("[data-moon]")).toBeTruthy();
+    expect(night.querySelector("[data-sun]")).toBeNull();
   });
 
   it("el día que no dormís en ninguna cama no pone la de esta noche", async () => {
