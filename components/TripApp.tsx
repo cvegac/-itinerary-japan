@@ -25,6 +25,7 @@ import NotesView from "@/components/NotesView";
 import AgendaView from "@/components/AgendaView";
 import InviteBanner from "@/components/InviteBanner";
 import { useSharedNotes } from "@/lib/use-shared-notes";
+import ListModal, { type ListTarget } from "@/components/ListModal";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
 
@@ -86,6 +87,9 @@ export default function TripApp({ tripData }: Props) {
   }
   // Notas de los dos en cada día (viaje compartido con el link)
   const shared = useSharedNotes(meta.slug);
+  // Ventana de una lista de los dos: el botón atrás del celular la cierra
+  const [listTarget, openListWith, closeList] = useBackClose<ListTarget>("list");
+  const openList = (target: ListTarget) => openListWith(target, target.listId ?? "nueva");
   // Gastos y retiros: en el dispositivo y, con sesión, sincronizados
   const expenses = useExpenses(meta.slug);
   const withdrawals = useWithdrawals(meta.slug);
@@ -232,6 +236,7 @@ export default function TripApp({ tripData }: Props) {
         stayOf={(date) => stayNights(itinerary, date)}
         shared={shared}
         places={places}
+        onOpenList={openList}
         onFocusPoi={(index) => {
           setMapMode("day");
           setFocusedPoi({ index, nonce: Date.now() });
@@ -282,7 +287,7 @@ export default function TripApp({ tripData }: Props) {
     ) : view === "buses" && nightBusSummary ? (
       <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setView("itinerary")} />
     ) : view === "notes" && notes ? (
-      <NotesView notes={notes} itinerary={itinerary} slug={meta.slug} onDaySelect={openFromSummary} sharing={shared} />
+      <NotesView notes={notes} itinerary={itinerary} slug={meta.slug} onDaySelect={openFromSummary} sharing={shared} onOpenList={openList} />
     ) : null;
 
   const tabs = (variant: "bottom" | "inline") => (
@@ -419,6 +424,8 @@ export default function TripApp({ tripData }: Props) {
       )}
 
       <InviteBanner api={shared} />
+
+      {listTarget && <ListModal api={shared} target={listTarget} itinerary={itinerary} onClose={closeList} />}
 
       {searching && (
         <SearchModal

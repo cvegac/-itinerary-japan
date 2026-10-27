@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Check, ChevronRight } from "lucide-react";
+import { Check, ChevronRight, LogIn, Plus } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripNoteTopic, TripNotes, TripTask } from "@/types/Trip";
 import { useDoneTasks } from "@/lib/done-tasks";
 import { useBackClose } from "@/lib/use-back-close";
 import NoteTopicModal from "@/components/NoteTopicModal";
 import TripSharing from "@/components/TripSharing";
+import ListCards from "@/components/ListCards";
+import type { ListTarget } from "@/components/ListModal";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
 
 type Props = {
@@ -18,13 +20,15 @@ type Props = {
   onDaySelect: (day: DayEntry) => void;
   /** Viaje compartido: invitar a alguien a dejar notas */
   sharing?: SharedNotesApi;
+  /** Abre una lista de los dos, o una nueva */
+  onOpenList?: (target: ListTarget) => void;
 };
 
 function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short" });
 }
 
-export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing }: Props) {
+export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing, onOpenList }: Props) {
   // Lo tildado se guarda en el dispositivo al tildar algo; con sesión, también en la nube
   const [done, toggle] = useDoneTasks(slug);
 
@@ -115,6 +119,44 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing
         )}
         {showArchived && archived.length > 0 && taskList(archived, "Tareas archivadas")}
       </section>
+
+      {/* Listas de los dos: compras, cosas para empacar… (con o sin día) */}
+      {sharing && onOpenList && sharing.status !== "disabled" && sharing.status !== "loading" && (
+        <section aria-label="Listas" className="flex flex-col gap-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-lg font-bold">Listas</h3>
+            {sharing.status === "ready" && (
+              <button
+                type="button"
+                onClick={() => onOpenList({})}
+                className="inline-flex items-center gap-1 rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
+              >
+                <Plus className="size-4" aria-hidden />
+                Nueva lista
+              </button>
+            )}
+          </div>
+          {sharing.status === "signed-out" ? (
+            <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3.5 text-sm">
+              <p className="text-muted">Entrá con Google para armar listas de compras o de cosas para empacar, que los dos pueden tildar.</p>
+              <button
+                type="button"
+                onClick={sharing.signIn}
+                className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
+              >
+                <LogIn className="size-4" aria-hidden />
+                Iniciar sesión con Google
+              </button>
+            </div>
+          ) : sharing.lists.length > 0 ? (
+            <ListCards api={sharing} lists={sharing.lists} onOpen={onOpenList} />
+          ) : (
+            <p className="rounded-2xl bg-surface-2 p-3.5 text-sm text-muted">
+              Todavía no hay listas. Armá una para las compras o para lo que hay que empacar.
+            </p>
+          )}
+        </section>
+      )}
 
       {notes.topics && notes.topics.length > 0 && (
         <section className="flex flex-col gap-2.5">

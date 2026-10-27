@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { SharedNote, SharedTrip } from "./shared-notes";
+import type { ListItem, SharedList, SharedNote, SharedTrip } from "./shared-notes";
 
 // Nube de mentira: sesión, viajes y notas que "llegan" de Firestore, y lo que se escribió
 const cloud = vi.hoisted(() => {
@@ -11,6 +11,8 @@ const cloud = vi.hoisted(() => {
     listeners,
     trips: null as null | ((t: SharedTrip[]) => void),
     notes: null as null | ((n: SharedNote[]) => void),
+    lists: null as null | ((l: SharedList[]) => void),
+    items: {} as Record<string, (i: ListItem[]) => void>,
     watchedTrip: null as string | null,
     calls: [] as unknown[][],
     joinError: false,
@@ -45,6 +47,20 @@ vi.mock("@/lib/cloud", () => ({
   addNote: (...args: unknown[]) => cloud.calls.push(["add", ...args]),
   editNote: (...args: unknown[]) => cloud.calls.push(["edit", ...args]),
   deleteNote: (...args: unknown[]) => cloud.calls.push(["delete", ...args]),
+  watchLists: (_trip: string, cb: (l: SharedList[]) => void) => {
+    cloud.lists = cb;
+    return () => {};
+  },
+  watchListItems: (_trip: string, listId: string, cb: (i: ListItem[]) => void) => {
+    cloud.items[listId] = cb;
+    return () => delete cloud.items[listId];
+  },
+  createList: (...args: unknown[]) => (cloud.calls.push(["createList", ...args]), "lista1"),
+  updateList: (...args: unknown[]) => cloud.calls.push(["updateList", ...args]),
+  deleteList: (...args: unknown[]) => cloud.calls.push(["deleteList", ...args]),
+  addListItem: (...args: unknown[]) => cloud.calls.push(["addItem", ...args]),
+  updateListItem: (...args: unknown[]) => cloud.calls.push(["updateItem", ...args]),
+  deleteListItem: (...args: unknown[]) => cloud.calls.push(["deleteItem", ...args]),
 }));
 
 import { useSharedNotes } from "./use-shared-notes";
@@ -54,7 +70,8 @@ const note = (id: string, author = "karla"): SharedNote => ({ id, day: "2026-11-
 
 beforeEach(() => {
   cloud.state = { status: "signed-out", user: null, error: null };
-  cloud.trips = cloud.notes = null;
+  cloud.trips = cloud.notes = cloud.lists = null;
+  cloud.items = {};
   cloud.watchedTrip = null;
   cloud.calls = [];
   cloud.joinError = false;
@@ -157,5 +174,76 @@ describe("useSharedNotes", () => {
     const { result } = render();
     act(() => cloud.login("caro"));
     await waitFor(() => expect(result.current.inviteError).toMatch(/ya no sirve/));
+  });
+
+  describe("listas", () => {
+    const list = (id: string, day: string | null = null): SharedList => ({ id, title: id, day, author: "cris", createdAt: 1 });
+    const item = (id: string, done = false): ListItem => ({ id, text: id, done, doneBy: null, author: "karla", createdAt: 1 });
+    const ready = () => {
+      const hook = render();
+      act(() => cloud.login());
+      act(() => cloud.trips!([trip]));
+      return hook;
+    };
+
+    it("trae las listas y las cosas de cada una", () => {
+      const { result } = ready();
+      act(() => cloud.lists!([list("compras", "2026-11-01"), list("empacar")]));
+      act(() => cloud.items.compras([item("polar"), item("guantes", true)]));
+      expect(result.current.lists.map((l) => l.id)).toEqual(["compras", "empacar"]);
+      expect(result.current.items.compras.map((i) => i.id)).toEqual(["polar", "guantes"]);
+      expect(result.current.items.empacar).toBeUndefined();
+    });
+
+    it("crear una lista crea el viaje si hace falta y devuelve su id", () => {
+      const { result } = render();
+      act(() => cloud.login());
+      act(() => cloud.trips!([]));
+      let id: string | null = null;
+      act(() => {
+        id = result.current.createList("  Compras para Nikko ", "2026-11-01");
+      });
+      expect(id).toBe("lista1");
+      expect(cloud.calls).toEqual([
+        ["create", "japan"],
+        ["createList", "nuevo", "cris", { title: "Compras para Nikko", day: "2026-11-01" }],
+      ]);
+    });
+
+    it("no crea listas sin título", () => {
+      const { result } = ready();
+      act(() => void result.current.createList("  ", null));
+      expect(cloud.calls).toEqual([]);
+    });
+
+    it("tildar deja quién fue; destildar lo borra", () => {
+      const { result } = ready();
+      act(() => cloud.lists!([list("compras")]));
+      act(() => cloud.items.compras([item("polar"), item("guantes", true)]));
+      act(() => result.current.toggleItem("compras", "polar"));
+      act(() => result.current.toggleItem("compras", "guantes"));
+      expect(cloud.calls).toEqual([
+        ["updateItem", "t1", "compras", "polar", { done: true, doneBy: "cris" }],
+        ["updateItem", "t1", "compras", "guantes", { done: false, doneBy: null }],
+      ]);
+    });
+
+    it("agrega, corrige y borra cosas; borrar la lista se lleva sus cosas", () => {
+      const { result } = ready();
+      act(() => cloud.lists!([list("compras")]));
+      act(() => cloud.items.compras([item("polar")]));
+      act(() => result.current.addItem("compras", " Kairo "));
+      act(() => result.current.editItem("compras", "polar", "Polar abrigado"));
+      act(() => result.current.removeItem("compras", "polar"));
+      act(() => result.current.updateList("compras", { title: "Compras", day: null }));
+      act(() => result.current.removeList("compras"));
+      expect(cloud.calls).toEqual([
+        ["addItem", "t1", "compras", "cris", "Kairo"],
+        ["updateItem", "t1", "compras", "polar", { text: "Polar abrigado" }],
+        ["deleteItem", "t1", "compras", "polar"],
+        ["updateList", "t1", "compras", { title: "Compras", day: null }],
+        ["deleteList", "t1", "compras", ["polar"]],
+      ]);
+    });
   });
 });

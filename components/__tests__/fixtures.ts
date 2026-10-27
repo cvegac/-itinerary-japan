@@ -1,5 +1,7 @@
 import type { DayEntry, Weekday } from "@/types/DayEntry";
 import type { TripData } from "@/types/Trip";
+import { vi } from "vitest";
+import type { SharedNotesApi } from "@/lib/use-shared-notes";
 
 export function makeDay(date: string, weekday: Weekday, overrides: Partial<DayEntry> = {}): DayEntry {
   return {
@@ -59,3 +61,33 @@ export const fixtureTrip: TripData = {
     ],
   },
 };
+
+/** Viaje compartido de prueba: listo, con sesión de "cris", todo vacío y espiado */
+export function makeSharedApi(overrides: Partial<SharedNotesApi> = {}): SharedNotesApi {
+  return {
+    status: "ready",
+    me: "cris",
+    trip: { id: "t1", members: ["cris", "karla"], names: { cris: "Cris", karla: "Karla" } },
+    names: { cris: "Cris", karla: "Karla" },
+    notes: [],
+    unseen: [],
+    markSeen: vi.fn(),
+    add: vi.fn(),
+    edit: vi.fn(),
+    remove: vi.fn(),
+    invite: vi.fn(() => null),
+    signIn: vi.fn(),
+    invited: false,
+    inviteError: null,
+    lists: [],
+    items: {},
+    createList: vi.fn(() => null),
+    updateList: vi.fn(),
+    removeList: vi.fn(),
+    addItem: vi.fn(),
+    toggleItem: vi.fn(),
+    editItem: vi.fn(),
+    removeItem: vi.fn(),
+    ...overrides,
+  };
+}

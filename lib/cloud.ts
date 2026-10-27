@@ -3,7 +3,7 @@ import type { Auth, User } from "firebase/auth";
 import type { Firestore } from "firebase/firestore";
 import { FIREBASE_CONFIG } from "@/lib/firebase-config";
 import type { Expense, Withdrawal } from "@/lib/expenses";
-import type { SharedNote, SharedTrip } from "@/lib/shared-notes";
+import type { ListItem, SharedList, SharedNote, SharedTrip } from "@/lib/shared-notes";
 
 // Login con Google y datos en Firestore, opcionales. Firebase se descarga y se
 // inicia recién cuando iniciás sesión (o si ya la habías iniciado antes): sin
@@ -273,4 +273,94 @@ export function deleteNote(tripId: string, noteId: string) {
   if (!services) return;
   const { m, db } = services;
   m.fs.deleteDoc(m.fs.doc(db, "viajes", tripId, "notas", noteId)).catch(() => {});
+}
+
+// ── Listas de los dos (viajes/{id}/listas/{lista}/items) ──────────────────
+export function watchLists(tripId: string, onData: (lists: SharedList[]) => void): () => void {
+  if (!services) return () => {};
+  const { m, db } = services;
+  return m.fs.onSnapshot(
+    m.fs.collection(db, "viajes", tripId, "listas"),
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          const data = d.data({ serverTimestamps: "estimate" });
+          return { id: d.id, title: data.title, day: data.day ?? null, author: data.author, createdAt: toMs(data.createdAt) };
+        })
+      ),
+    () => {}
+  );
+}
+
+export function watchListItems(tripId: string, listId: string, onData: (items: ListItem[]) => void): () => void {
+  if (!services) return () => {};
+  const { m, db } = services;
+  return m.fs.onSnapshot(
+    m.fs.collection(db, "viajes", tripId, "listas", listId, "items"),
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          const data = d.data({ serverTimestamps: "estimate" });
+          return {
+            id: d.id,
+            text: data.text,
+            done: !!data.done,
+            doneBy: data.doneBy ?? null,
+            author: data.author,
+            createdAt: toMs(data.createdAt),
+          };
+        })
+      ),
+    () => {}
+  );
+}
+
+/** El id sale al toque (sin esperar la red): la lista se abre aunque no haya señal */
+export function createList(tripId: string, uid: string, list: { title: string; day: string | null }): string | null {
+  if (!services) return null;
+  const { m, db } = services;
+  const ref = m.fs.doc(m.fs.collection(db, "viajes", tripId, "listas"));
+  m.fs.setDoc(ref, { title: list.title, day: list.day, author: uid, createdAt: m.fs.serverTimestamp() }).catch(() => {});
+  return ref.id;
+}
+
+export function updateList(tripId: string, listId: string, patch: { title?: string; day?: string | null }) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs.updateDoc(m.fs.doc(db, "viajes", tripId, "listas", listId), patch).catch(() => {});
+}
+
+/** Firestore no borra las subcolecciones: se van las cosas de la lista y la lista, juntas */
+export function deleteList(tripId: string, listId: string, itemIds: string[]) {
+  if (!services) return;
+  const { m, db } = services;
+  const batch = m.fs.writeBatch(db);
+  for (const id of itemIds) batch.delete(m.fs.doc(db, "viajes", tripId, "listas", listId, "items", id));
+  batch.delete(m.fs.doc(db, "viajes", tripId, "listas", listId));
+  batch.commit().catch(() => {});
+}
+
+export function addListItem(tripId: string, listId: string, uid: string, text: string) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs
+    .addDoc(m.fs.collection(db, "viajes", tripId, "listas", listId, "items"), {
+      text,
+      done: false,
+      author: uid,
+      createdAt: m.fs.serverTimestamp(),
+    })
+    .catch(() => {});
+}
+
+export function updateListItem(tripId: string, listId: string, itemId: string, patch: { text?: string; done?: boolean; doneBy?: string | null }) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs.updateDoc(m.fs.doc(db, "viajes", tripId, "listas", listId, "items", itemId), patch).catch(() => {});
+}
+
+export function deleteListItem(tripId: string, listId: string, itemId: string) {
+  if (!services) return;
+  const { m, db } = services;
+  m.fs.deleteDoc(m.fs.doc(db, "viajes", tripId, "listas", listId, "items", itemId)).catch(() => {});
 }

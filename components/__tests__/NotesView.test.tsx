@@ -3,7 +3,7 @@ import { act, cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import NotesView from "@/components/NotesView";
-import { fixtureTrip } from "./fixtures";
+import { fixtureTrip, makeSharedApi } from "./fixtures";
 
 const notes = fixtureTrip.notes!;
 const KEY = "viajes-tareas-test";
@@ -132,23 +132,13 @@ describe("NotesView", () => {
 });
 
 describe("NotesView: compartir el viaje", () => {
-  const api = (extra: object = {}) => ({
-    status: "ready" as const,
-    me: "cris",
-    trip: { id: "t1", members: ["cris"], names: { cris: "Cris" } },
-    names: { cris: "Cris" },
-    notes: [],
-    unseen: [],
-    markSeen: vi.fn(),
-    add: vi.fn(),
-    edit: vi.fn(),
-    remove: vi.fn(),
-    invite: vi.fn(() => "https://viajes.example/japan/?unirse=t1"),
-    signIn: vi.fn(),
-    invited: false,
-    inviteError: null,
-    ...extra,
-  });
+  const api = (extra: Partial<import("@/lib/use-shared-notes").SharedNotesApi> = {}) =>
+    makeSharedApi({
+      trip: { id: "t1", members: ["cris"], names: { cris: "Cris" } },
+      names: { cris: "Cris" },
+      invite: vi.fn(() => "https://viajes.example/japan/?unirse=t1"),
+      ...extra,
+    });
   const renderWith = (sharing: ReturnType<typeof api>) =>
     render(<NotesView notes={notes} itinerary={fixtureTrip.itinerary} slug="test" onDaySelect={vi.fn()} sharing={sharing} />);
   const card = () => screen.getByRole("region", { name: "Viaje compartido" });
@@ -174,5 +164,41 @@ describe("NotesView: compartir el viaje", () => {
     renderWith(api({ trip: { id: "t1", members: ["cris", "karla"], names: { cris: "Cris", karla: "Karla" } }, names: { cris: "Cris", karla: "Karla" } }));
     expect(within(card()).getByText(/Compartido con Karla/)).toBeTruthy();
     expect(within(card()).queryByRole("button", { name: "Invitar a alguien" })).toBeNull();
+  });
+});
+
+describe("NotesView: listas de los dos", () => {
+  const sharing = (extra: Partial<import("@/lib/use-shared-notes").SharedNotesApi> = {}) =>
+    makeSharedApi({
+      lists: [
+        { id: "l1", title: "Compras para Nikko", day: "2026-11-01", author: "cris", createdAt: 1 },
+        { id: "l2", title: "Empacar", day: null, author: "karla", createdAt: 2 },
+      ],
+      items: {
+        l1: [
+          { id: "a", text: "Polar", done: true, doneBy: "cris", author: "cris", createdAt: 1 },
+          { id: "b", text: "Kairo", done: false, doneBy: null, author: "cris", createdAt: 2 },
+        ],
+      },
+      ...extra,
+    });
+
+  it("muestra todas las listas con su día y cuánto falta, y abre la que tocás", async () => {
+    const onOpenList = vi.fn();
+    render(<NotesView notes={notes} itinerary={fixtureTrip.itinerary} slug="test" onDaySelect={vi.fn()} sharing={sharing()} onOpenList={onOpenList} />);
+    const section = screen.getByRole("region", { name: "Listas" });
+    const cards = within(section).getAllByRole("button", { name: /Compras para Nikko|Empacar/ });
+    expect(cards.map((c) => c.textContent)).toEqual([expect.stringMatching(/Compras para Nikko.*1 nov.*1 de 2/), expect.stringMatching(/Empacar.*Sin día.*0 de 0/)]);
+    await userEvent.click(cards[1]);
+    expect(onOpenList).toHaveBeenCalledWith({ listId: "l2" });
+    await userEvent.click(within(section).getByRole("button", { name: "Nueva lista" }));
+    expect(onOpenList).toHaveBeenCalledWith({});
+  });
+
+  it("sin sesión pide entrar", async () => {
+    const s = sharing({ status: "signed-out", me: null, trip: null, lists: [] });
+    render(<NotesView notes={notes} itinerary={fixtureTrip.itinerary} slug="test" onDaySelect={vi.fn()} sharing={s} onOpenList={vi.fn()} />);
+    await userEvent.click(within(screen.getByRole("region", { name: "Listas" })).getByRole("button", { name: /Iniciar sesión/ }));
+    expect(s.signIn).toHaveBeenCalled();
   });
 });

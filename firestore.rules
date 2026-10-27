@@ -39,6 +39,20 @@ service cloud.firestore {
         && n.text is string && n.text.size() > 0 && n.text.size() <= 1000;
     }
 
+    function validItemText(t) {
+      return t is string && t.size() > 0 && t.size() <= 200;
+    }
+
+    function validListTitle(t) {
+      return t is string && t.size() > 0 && t.size() <= 80;
+    }
+
+    // Sin día, o un día del viaje
+    function validListDay(l) {
+      return !('day' in l) || l.day == null
+        || (l.day is string && l.day.matches('[0-9]{4}-[0-9]{2}-[0-9]{2}'));
+    }
+
     match /viajes/{tripId} {
       // Solo los miembros lo ven (también la búsqueda "mis viajes")
       allow read: if signedIn() && request.auth.uid in resource.data.members;
@@ -89,6 +103,44 @@ service cloud.firestore {
 
         // Cualquiera de los dos borra (si una sugerencia no va, se saca)
         allow delete: if isTraveler(tripId);
+      }
+
+      // Listas de los dos (compras, cosas para empacar…), con o sin un día del
+      // viaje. Cualquiera de los dos las crea, cambia o borra
+      match /listas/{listId} {
+        allow read, delete: if isTraveler(tripId);
+
+        allow create: if isTraveler(tripId)
+          && request.resource.data.keys().hasOnly(['title', 'day', 'author', 'createdAt'])
+          && validListTitle(request.resource.data.title)
+          && validListDay(request.resource.data)
+          && request.resource.data.author == request.auth.uid
+          && request.resource.data.createdAt == request.time;
+
+        allow update: if isTraveler(tripId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'day'])
+          && validListTitle(request.resource.data.title)
+          && validListDay(request.resource.data);
+
+        match /items/{itemId} {
+          allow read, delete: if isTraveler(tripId);
+
+          allow create: if isTraveler(tripId)
+            && request.resource.data.keys().hasOnly(['text', 'done', 'author', 'createdAt'])
+            && validItemText(request.resource.data.text)
+            && request.resource.data.done == false
+            && request.resource.data.author == request.auth.uid
+            && request.resource.data.createdAt == request.time;
+
+          // Al tildar queda quién fue; al destildar, nadie
+          allow update: if isTraveler(tripId)
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text', 'done', 'doneBy'])
+            && validItemText(request.resource.data.text)
+            && request.resource.data.done is bool
+            && (!('doneBy' in request.resource.data)
+              || request.resource.data.doneBy == null
+              || request.resource.data.doneBy == request.auth.uid);
+        }
       }
     }
   }

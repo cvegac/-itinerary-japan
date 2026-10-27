@@ -12,6 +12,7 @@ import {
   Coins,
   CreditCard,
   Footprints,
+  ListChecks,
   MapPin,
   MessageSquare,
   MessageSquarePlus,
@@ -49,6 +50,8 @@ import type { SharedNotesApi } from "@/lib/use-shared-notes";
 import DayNotes, { NoteCard, useFreshNotes } from "@/components/DayNotes";
 import { dayRouteLinks, dayStops, placeUrl, segmentUrl, type TravelMode } from "@/lib/google-maps";
 import type { Places } from "@/lib/transit";
+import ListCards from "@/components/ListCards";
+import type { ListTarget } from "@/components/ListModal";
 
 type Props = {
   day: DayEntry;
@@ -73,6 +76,8 @@ type Props = {
   shared?: SharedNotesApi;
   /** Coordenadas de las estaciones: cada tramo se abre en Google Maps */
   places?: Places;
+  /** Abre una lista de los dos (o una nueva para este día) */
+  onOpenList?: (target: ListTarget) => void;
 };
 
 const MODE_TEXT: Record<TravelMode, string> = {
@@ -138,6 +143,7 @@ export default function DayDetail({
   stayOf,
   shared,
   places,
+  onOpenList,
 }: Props) {
   const longDate = new Date(day.date + "T12:00:00").toLocaleDateString("es-AR", {
     weekday: "long",
@@ -388,6 +394,26 @@ export default function DayDetail({
           fresh={fresh}
           inputRef={noteInput}
         />
+      )}
+
+      {/* Listas de los dos que son para este día (la mayoría de los días no tiene) */}
+      {notesReady && onOpenList && (
+        <>
+          {shared.lists.some((l) => l.day === day.date) && (
+            <section aria-label="Listas del día" className="flex flex-col gap-2">
+              <h3 className="text-xs font-bold uppercase tracking-wide text-muted">Listas del día</h3>
+              <ListCards api={shared} lists={shared.lists.filter((l) => l.day === day.date)} onOpen={onOpenList} showDay={false} />
+            </section>
+          )}
+          <button
+            type="button"
+            onClick={() => onOpenList({ day: day.date })}
+            className="-mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-surface-2 px-3 py-1.5 text-xs font-semibold text-muted transition-colors hover:bg-line hover:text-fg"
+          >
+            <ListChecks className="size-3.5" aria-hidden />
+            Lista para este día
+          </button>
+        </>
       )}
 
       {/* Transporte */}

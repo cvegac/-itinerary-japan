@@ -166,3 +166,80 @@ describe("viajes/{tripId}/notas", () => {
     await assertFails(addDoc(collection(as("ana"), "viajes", id, "notas"), note("ana")));
   });
 });
+
+describe("viajes/{tripId}/listas (compras, cosas para empacar…)", () => {
+  const list = (author: string, extra: object = {}) => ({
+    title: "Compras para Nikko",
+    day: "2026-11-01",
+    author,
+    createdAt: serverTimestamp(),
+    ...extra,
+  });
+  const item = (author: string, extra: object = {}) => ({
+    text: "Polar",
+    done: false,
+    author,
+    createdAt: serverTimestamp(),
+    ...extra,
+  });
+  async function newList(id: string) {
+    return addDoc(collection(as("ana"), "viajes", id, "listas"), list("ana"));
+  }
+
+  it("los dos crean listas, con un día o sin día, y las cambian o borran", async () => {
+    const id = await sharedTrip();
+    const ref = await newList(id);
+    await assertSucceeds(addDoc(collection(as("cris"), "viajes", id, "listas"), list("cris", { title: "Empacar", day: null })));
+    await assertSucceeds(addDoc(collection(as("cris"), "viajes", id, "listas"), { title: "Regalos", author: "cris", createdAt: serverTimestamp() }));
+    await assertSucceeds(getDocs(collection(as("cris"), "viajes", id, "listas")));
+    await assertSucceeds(updateDoc(doc(as("cris"), ref.path), { title: "Compras Nikko", day: "2026-11-02" }));
+    await assertSucceeds(updateDoc(doc(as("cris"), ref.path), { day: null }));
+    await assertSucceeds(deleteDoc(doc(as("cris"), ref.path)));
+  });
+
+  it("la lista lleva un título corto, un día válido y la firma de quien la crea", async () => {
+    const id = await sharedTrip();
+    const lists = collection(as("ana"), "viajes", id, "listas");
+    await assertFails(addDoc(lists, list("cris")));
+    await assertFails(addDoc(lists, list("ana", { title: "" })));
+    await assertFails(addDoc(lists, list("ana", { title: "x".repeat(81) })));
+    await assertFails(addDoc(lists, list("ana", { day: "mañana" })));
+    await assertFails(addDoc(lists, list("ana", { extra: 1 })));
+    const ref = await newList(id);
+    await assertFails(updateDoc(doc(as("ana"), ref.path), { author: "cris" }));
+  });
+
+  it("los dos agregan, tildan, corrigen y borran cosas de la lista", async () => {
+    const id = await sharedTrip();
+    const items = collection(as("ana"), "viajes", id, "listas", (await newList(id)).id, "items");
+    const ref = await addDoc(items, item("ana"));
+    await assertSucceeds(updateDoc(doc(as("cris"), ref.path), { done: true, doneBy: "cris" }));
+    await assertSucceeds(updateDoc(doc(as("cris"), ref.path), { text: "Polar y guantes" }));
+    await assertSucceeds(updateDoc(doc(as("ana"), ref.path), { done: false, doneBy: null }));
+    await assertSucceeds(getDocs(collection(as("cris"), items.path)));
+    await assertSucceeds(deleteDoc(doc(as("cris"), ref.path)));
+  });
+
+  it("cada cosa se crea sin tildar, firmada, con texto corto; al tildar queda quién fue", async () => {
+    const id = await sharedTrip();
+    const items = collection(as("ana"), "viajes", id, "listas", (await newList(id)).id, "items");
+    await assertFails(addDoc(items, item("cris")));
+    await assertFails(addDoc(items, item("ana", { done: true })));
+    await assertFails(addDoc(items, item("ana", { text: "x".repeat(201) })));
+    await assertFails(addDoc(items, item("ana", { extra: 1 })));
+    const ref = await addDoc(items, item("ana"));
+    await assertFails(updateDoc(doc(as("ana"), ref.path), { done: true, doneBy: "cris" }));
+    await assertFails(updateDoc(doc(as("ana"), ref.path), { author: "cris" }));
+  });
+
+  it("alguien de afuera no ve ni toca nada", async () => {
+    const id = await sharedTrip();
+    const ref = await newList(id);
+    const thing = await addDoc(collection(as("ana"), ref.path, "items"), item("ana"));
+    await assertFails(getDocs(collection(as("caro"), "viajes", id, "listas")));
+    await assertFails(getDocs(collection(as("caro"), ref.path, "items")));
+    await assertFails(addDoc(collection(as("caro"), "viajes", id, "listas"), list("caro")));
+    await assertFails(updateDoc(doc(as("caro"), thing.path), { done: true, doneBy: "caro" }));
+    await assertFails(deleteDoc(doc(as("caro"), ref.path)));
+  });
+});

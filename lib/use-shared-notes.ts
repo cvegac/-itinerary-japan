@@ -1,24 +1,37 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
+  addListItem,
   addNote,
+  createList as cloudCreateList,
   createSharedTrip,
+  deleteList,
+  deleteListItem,
   deleteNote,
   editNote,
   getCloudState,
   joinSharedTrip,
   signIn,
   subscribeCloud,
+  updateList as cloudUpdateList,
+  updateListItem,
+  watchListItems,
+  watchLists,
   watchMyTrips,
   watchNotes,
   type CloudState,
 } from "@/lib/cloud";
 import {
   INVITE_PARAM,
+  ITEM_MAX,
+  LIST_TITLE_MAX,
   NOTE_MAX,
   inviteLink,
   invitedTripId,
   pickTrip,
   unseenNotes,
+  sortLists,
+  type ListItem,
+  type SharedList,
   type SharedNote,
   type SharedTrip,
 } from "@/lib/shared-notes";
@@ -41,6 +54,18 @@ export type SharedNotesApi = {
   /** Se abrió con un link de invitación que todavía no se usó */
   invited: boolean;
   inviteError: string | null;
+  /** Listas de los dos, primero las de un día */
+  lists: SharedList[];
+  /** Cosas de cada lista (por id de lista) */
+  items: Record<string, ListItem[]>;
+  /** Crea una lista (y el viaje si hace falta); devuelve su id */
+  createList: (title: string, day: string | null) => string | null;
+  updateList: (listId: string, patch: { title?: string; day?: string | null }) => void;
+  removeList: (listId: string) => void;
+  addItem: (listId: string, text: string) => void;
+  toggleItem: (listId: string, itemId: string) => void;
+  editItem: (listId: string, itemId: string, text: string) => void;
+  removeItem: (listId: string, itemId: string) => void;
 };
 
 const SERVER_STATE: CloudState = { status: "idle", user: null, error: null };
@@ -77,6 +102,8 @@ export function useSharedNotes(slug: string): SharedNotesApi {
   const [trips, setTrips] = useState<SharedTrip[] | null>(null);
   const [notes, setNotes] = useState<SharedNote[]>([]);
   const [seen, setSeen] = useState<string[]>([]);
+  const [lists, setLists] = useState<SharedList[]>([]);
+  const [items, setItems] = useState<Record<string, ListItem[]>>({});
   const [inviteId, setInviteId] = useState<string | null>(null);
   const [inviteError, setInviteError] = useState<string | null>(null);
   const trip = trips ? pickTrip(trips) : null;
@@ -102,6 +129,21 @@ export function useSharedNotes(slug: string): SharedNotesApi {
     created.current = null;
     return watchNotes(tripId, setNotes);
   }, [tripId]);
+
+  useEffect(() => {
+    setLists([]);
+    if (!tripId) return;
+    return watchLists(tripId, setLists);
+  }, [tripId]);
+
+  // Las cosas de cada lista: una escucha por lista (son pocas)
+  const listIds = lists.map((l) => l.id).join(",");
+  useEffect(() => {
+    setItems({});
+    if (!tripId || !listIds) return;
+    const stops = listIds.split(",").map((id) => watchListItems(tripId, id, (next) => setItems((all) => ({ ...all, [id]: next }))));
+    return () => stops.forEach((stop) => stop());
+  }, [tripId, listIds]);
 
   // Con sesión y link: sumarse una vez
   useEffect(() => {
@@ -163,5 +205,37 @@ export function useSharedNotes(slug: string): SharedNotesApi {
     signIn: () => void signIn(),
     invited: !!inviteId,
     inviteError,
+    lists: sortLists(lists),
+    items,
+    createList(title, day) {
+      const clean = title.trim().slice(0, LIST_TITLE_MAX);
+      if (!clean || !uid) return null;
+      const id = ensureTrip();
+      return id ? cloudCreateList(id, uid, { title: clean, day }) : null;
+    },
+    updateList(listId, patch) {
+      const title = patch.title?.trim().slice(0, LIST_TITLE_MAX);
+      if (!tripId || title === "") return;
+      cloudUpdateList(tripId, listId, { ...patch, ...(title !== undefined ? { title } : {}) });
+    },
+    removeList(listId) {
+      if (tripId) deleteList(tripId, listId, (items[listId] ?? []).map((i) => i.id));
+    },
+    addItem(listId, text) {
+      const clean = text.trim().slice(0, ITEM_MAX);
+      if (clean && tripId && uid) addListItem(tripId, listId, uid, clean);
+    },
+    toggleItem(listId, itemId) {
+      const item = items[listId]?.find((i) => i.id === itemId);
+      if (!item || !tripId) return;
+      updateListItem(tripId, listId, itemId, item.done ? { done: false, doneBy: null } : { done: true, doneBy: uid });
+    },
+    editItem(listId, itemId, text) {
+      const clean = text.trim().slice(0, ITEM_MAX);
+      if (clean && tripId) updateListItem(tripId, listId, itemId, { text: clean });
+    },
+    removeItem(listId, itemId) {
+      if (tripId) deleteListItem(tripId, listId, itemId);
+    },
   };
 }

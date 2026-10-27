@@ -3,7 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import DayDetail from "@/components/DayDetail";
-import { makeDay } from "./fixtures";
+import { makeDay, makeSharedApi } from "./fixtures";
 import type { Expense } from "@/lib/expenses";
 
 afterEach(cleanup);
@@ -221,23 +221,7 @@ describe("DayDetail", () => {
 });
 
 describe("DayDetail: notas compartidas", () => {
-  const base: import("@/lib/use-shared-notes").SharedNotesApi = {
-    status: "ready",
-    me: "cris",
-    trip: { id: "t1", members: ["cris", "karla"], names: { cris: "Cris", karla: "Karla" } },
-    names: { cris: "Cris", karla: "Karla" },
-    notes: [] as import("@/lib/shared-notes").SharedNote[],
-    unseen: [] as import("@/lib/shared-notes").SharedNote[],
-    markSeen: vi.fn(),
-    add: vi.fn(),
-    edit: vi.fn(),
-    remove: vi.fn(),
-    invite: vi.fn(),
-    signIn: vi.fn(),
-    invited: false,
-    inviteError: null,
-  };
-  const shared = (extra: Partial<typeof base> = {}) => ({ ...base, markSeen: vi.fn(), add: vi.fn(), edit: vi.fn(), remove: vi.fn(), signIn: vi.fn(), ...extra });
+  const shared = (extra: Partial<import("@/lib/use-shared-notes").SharedNotesApi> = {}) => makeSharedApi(extra);
   const note = (id: string, extra: object = {}) => ({ id, day: "2026-11-02", text: `Texto ${id}`, author: "karla", createdAt: 1, ...extra });
   const section = () => screen.getByRole("region", { name: "Notas del día" });
 
@@ -335,5 +319,33 @@ describe("DayDetail: Google Maps", () => {
     render(<DayDetail day={day} dayNumber={2} places={places} />);
     const link = screen.getByRole("link", { name: "Ver Asakusa → Tobu-Nikko en Google Maps" });
     expect(link.getAttribute("href")).toContain("travelmode=transit");
+  });
+});
+
+describe("DayDetail: listas", () => {
+  const sharedWithLists = (lists: { id: string; title: string; day: string | null }[]) =>
+    makeSharedApi({ lists: lists.map((l) => ({ ...l, author: "cris", createdAt: 1 })) });
+
+  it("muestra solo las listas de ese día y las abre", async () => {
+    const onOpenList = vi.fn();
+    const shared = sharedWithLists([
+      { id: "hoy", title: "Compras para Nikko", day: "2026-11-02" },
+      { id: "otro", title: "Regalos", day: "2026-12-05" },
+      { id: "sin", title: "Empacar", day: null },
+    ]);
+    render(<DayDetail day={day} dayNumber={2} shared={shared} onOpenList={onOpenList} />);
+    const section = screen.getByRole("region", { name: "Listas del día" });
+    expect(within(section).queryByText("Regalos")).toBeNull();
+    expect(within(section).queryByText("Empacar")).toBeNull();
+    await userEvent.click(within(section).getByRole("button", { name: /Compras para Nikko/ }));
+    expect(onOpenList).toHaveBeenCalledWith({ listId: "hoy" });
+  });
+
+  it("un día sin listas no muestra la sección, pero deja crear una para ese día", async () => {
+    const onOpenList = vi.fn();
+    render(<DayDetail day={day} dayNumber={2} shared={sharedWithLists([])} onOpenList={onOpenList} />);
+    expect(screen.queryByRole("region", { name: "Listas del día" })).toBeNull();
+    await userEvent.click(screen.getByRole("button", { name: "Lista para este día" }));
+    expect(onOpenList).toHaveBeenCalledWith({ day: "2026-11-02" });
   });
 });

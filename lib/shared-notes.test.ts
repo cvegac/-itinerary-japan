@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dayNotes, generalNotes, inviteLink, invitedTripId, pickTrip, placeNotes, unseenNotes, type SharedNote } from "./shared-notes";
+import { dayNotes, generalNotes, sortItems, sortLists, inviteLink, invitedTripId, pickTrip, placeNotes, unseenNotes, type SharedNote } from "./shared-notes";
 
 const note = (id: string, extra: Partial<SharedNote> = {}): SharedNote => ({
   id,
@@ -39,5 +39,18 @@ describe("notas del viaje compartido", () => {
     expect(link).toBe("https://viajes.example/japan/?unirse=abc123");
     expect(invitedTripId(new URL(link).search)).toBe("abc123");
     expect(invitedTripId("?otra=1")).toBeNull();
+  });
+});
+
+describe("listas de los dos", () => {
+  const list = (id: string, day: string | null, createdAt = 1) => ({ id, title: id, day, author: "a", createdAt });
+  const item = (id: string, done: boolean, createdAt: number | null) => ({ id, text: id, done, doneBy: null, author: "a", createdAt });
+
+  it("primero las de un día en el orden del viaje, al final las sin día", () => {
+    expect(sortLists([list("sin", null), list("dic", "2026-12-05"), list("nov", "2026-11-01")]).map((l) => l.id)).toEqual(["nov", "dic", "sin"]);
+  });
+
+  it("lo pendiente arriba, lo tildado abajo", () => {
+    expect(sortItems([item("hecho", true, 1), item("b", false, 3), item("a", false, 2), item("nuevo", false, null)]).map((i) => i.id)).toEqual(["a", "b", "nuevo", "hecho"]);
   });
 });
