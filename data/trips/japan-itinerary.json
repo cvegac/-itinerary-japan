@@ -114,7 +114,7 @@
     "activitiesNight": [
       "Senso-ji iluminado (abierto de noche, sin gente)",
       "Ramen de medianoche",
-      "Compras para Nikko (allá hace ~3 °C a la mañana): Don Quijote de Okachimachi, a ~10 min a pie (hasta la 1:00), o el de Ueno (hasta las 4:00). Polar o buzo abrigado, guantes, gorro, kairo y un paraguas o poncho",
+      "Compras para Nikko (allá hace ~3 °C a la mañana). A esta hora GU (cierra 21:00) y Muji de Ueno Marui (20:00) ya cerraron: andá al Don Quijote de Okachimachi, a ~10 min a pie (hasta la 1:00), o al de Ueno (hasta las 4:00). Polar o buzo abrigado, guantes, gorro, medias gruesas, kairo y un paraguas o poncho. Lo justo para mañana: la ropa buena y barata va el 3 en Uniqlo y GU",
       "Konbini: agua y desayuno para el primer tren a Nikko",
       "Vista de la Skytree desde el puente Azuma",
       "Dormir temprano: mañana se madruga a Nikko"
@@ -196,13 +196,23 @@
   },
   {
     "date": "2026-11-03",
-    "label": "Compras en Okachimachi + bici por Yanaka → noche en Narita",
+    "label": "Cámara en Akihabara + compras en Okachimachi + bici por Yanaka → noche en Narita",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Feriado (Día de la Cultura): las tiendas abren igual, entre las 10:00 y las 11:00. Check-out del hotel de Ueno hasta las 11:00: dejá la mochila en un locker de Keisei-Ueno. A la mañana, compras en Okachimachi (a ~10 min a pie del hotel): Uniqlo y GU en el mismo edificio, mont-bell y Art Sports para la montaña a 100 m, y Ameyoko. Comprá solo lo que vas a usar en las próximas dos semanas: mañana Spring Japan te deja 7 kg en cabina y 10 kg facturados. Guardá las bolsas en el locker y a la tarde salí en bici compartida por Yanaka. Después, Keisei directo a Narita, la ciudad (el hotel no está en el aeropuerto). Mañana el vuelo sale a las 7:40 y el shuttle del hotel recién sale a las 7:00: tomá el primer tren a la terminal (~10 min, confirmá el horario) o un taxi. Revisá en la reserva desde qué terminal sale Spring Japan (suele ser la T3)",
+    "notes": "Feriado (Día de la Cultura): las tiendas abren igual, entre las 10:00 y las 11:00. Hacé el check-out temprano (~9:30) y dejá la mochila en un locker de Keisei-Ueno. Primero la cámara usada (Sony o Canon) en Akihabara, a 1 parada de JR desde Okachimachi: Kitamura Camera (usados, al lado de Yodobashi, desde las 10:30), Lemonsha y Tokyo Camera (desde las 10:00–10:30), Sofmap de usados (desde las 11:00) y Yodobashi Akiba (desde las 9:30) para probar cuerpos y lentes nuevos y comparar. Llevá el pasaporte: sin impuesto en compras de más de ¥5,000. Revisá el número de disparos, el sensor, y que los lentes no tengan hongos ni niebla. Dale ~2 h. Ojo con el peso: una cámara con uno o dos lentes suma entre 1 y 1,5 kg a los 7 + 10 kg de Spring Japan. Después, compras en Okachimachi (a ~10 min a pie del hotel): Uniqlo y GU en el mismo edificio, mont-bell y Art Sports para la montaña a 100 m, y Ameyoko. Comprá solo lo que vas a usar en las próximas dos semanas: mañana Spring Japan te deja 7 kg en cabina y 10 kg facturados. Guardá las bolsas en el locker y a la tarde salí en bici compartida por Yanaka. Después, Keisei directo a Narita, la ciudad (el hotel no está en el aeropuerto). Mañana el vuelo sale a las 7:40 y el shuttle del hotel recién sale a las 7:00: tomá el primer tren a la terminal (~10 min, confirmá el horario) o un taxi. Revisá en la reserva desde qué terminal sale Spring Japan (suele ser la T3)",
     "weekday": "Mar",
     "food": "Menchi katsu en Yanaka Ginza",
     "transport": [
+      {
+        "mode": "tren",
+        "line": "JR Yamanote / Keihin-Tohoku",
+        "from": "Okachimachi",
+        "to": "Akihabara",
+        "duration": "~2min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "O ~10 min a pie. Vuelta igual para las compras en Okachimachi"
+      },
       {
         "mode": "bicicleta",
         "line": "docomo bike share / HELLO CYCLING",
@@ -233,15 +243,17 @@
     "checkIn": "15:00–00:00",
     "checkOut": "hasta 11:00",
     "pois": [
+      { "name": "Yodobashi Akiba y Kitamura Camera (usados)", "coords": [35.6986, 139.7745], "icon": "📷" },
       { "name": "Tienda Uniqlo y GU (Okachimachi)", "coords": [35.70761, 139.77438] },
       { "name": "Tienda mont-bell y Art Sports (montaña)", "coords": [35.70641, 139.77375] },
       { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
       { "name": "Cementerio de Yanaka", "coords": [35.72437, 139.77114] },
       { "name": "Yanaka Ginza", "coords": [35.72767, 139.76532] }
     ],
-    "budget": "$88",
+    "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
+      "Cámara usada en Akihabara: probar Sony y Canon, cuerpos y lentes (~10:00–12:00)",
       "Uniqlo y GU de Okachimachi: Heattech, capas y ropa del día a día",
       "mont-bell y Art Sports: medias de trekking, cortaviento y capa térmica",
       "Ameyoko: puestos de ropa barata y comida",
