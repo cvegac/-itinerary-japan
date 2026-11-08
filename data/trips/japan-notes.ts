@@ -29,45 +29,111 @@ export const NOTES: TripNotes = {
       date: "2026-11-07",
     },
     {
+      id: "avisar-llegada",
+      text: "Avisar la hora de llegada a los hospedajes con horario ajustado",
+      detail:
+        "Hoy Kamuro: llegás ~12:10 y el check-in es desde las 16:00, pedí que te guarden la mochila. Después Shingu (cierra a las 19:00), Otsu (salida antes de las 7:00 el 18) y Kawana (instrucciones del self check-in)",
+      date: "2026-11-08",
+    },
+    {
+      id: "okunoin",
+      text: "Confirmar el último bus de Okunoin y el último funicular de Koyasan",
+      detail:
+        "El último funicular de bajada sale ~21:40 (horario de Nankai desde el 16 oct 2026, según una guía). El último bus de Okunoin no lo pude confirmar: miralo en la parada al llegar",
+      date: "2026-11-09",
+    },
+    {
       id: "kuroshio",
       text: "Reservar asiento en el Kuroshio (Shingu → Kioto)",
-      detail: "~4h40 de viaje: del lado del mar",
+      detail:
+        "Sábado de otoño, ~4h20: del lado del mar. Se vende desde 1 mes antes: en la web de JR West (e5489) con tarjeta, retirás el boleto en una máquina de la estación; o en la ventanilla de JR de Tanabe el 10",
       date: "2026-11-14",
+      url: "https://ekitan.com/en/article/kuroshio",
     },
     {
       id: "bus-arima",
       text: "Reservar el bus Arima → Kioto",
-      detail: "Tiene pocas salidas al día",
+      detail:
+        "\"Kyoto Arima Onsen Liner\" de Keihan: todos los asientos son reservados y se reserva desde 1 mes antes. ~1h15, ~¥1,650–1,850. En 2026 salía de Arima ~11:30 y ~17:20: elegí la de la tarde. Reservas: 075-661-8200 (9:00–19:00)",
+      date: "2026-11-17",
+      url: "https://japanbusonline.com/en/CourseSearch/12800290001",
+    },
+    {
+      id: "rokko",
+      text: "Confirmar que el funicular de Rokko esté funcionando",
+      detail: "Estuvo cerrado de enero a abril de 2026 por obras y se suspende con viento fuerte o nieve. Una guía de 2026 dice que reabrió",
       date: "2026-11-17",
     },
     {
       id: "hida",
-      text: "Reservar asiento en el Hida (Nagoya → Takayama)",
-      detail: "Ventanilla derecha: cañón del río Hida",
+      text: "Reservar asiento en el Hida (Nagoya → Takayama) y el shinkansen Kioto → Nagoya",
+      detail:
+        "Ventanilla derecha: cañón del río Hida. ~¥6,140 con asiento reservado. Lo más fácil: en la ventanilla de JR de Kioto u Otsu, los dos tramos juntos",
       date: "2026-11-18",
+      url: "https://ekitan.com/es/article/hida",
     },
     {
       id: "bus-nohi",
-      text: "Reservar el bus Nohi a Shirakawa-go",
-      detail: "Se llena en temporada de hojas rojas: +81-577-32-1688",
+      text: "Bus a Shirakawa-go SIN reserva: llegar temprano",
+      detail:
+        "Las reservas se agotaron, pero el bus Nohi tiene salidas sin reserva (las que NO tienen \"R\" en el horario), por orden de llegada. Estate en la fila de la Nohi Bus Center (al lado de la estación de Takayama) 20+ min antes de la primera salida sin \"R\". El boleto (¥2,800) se compra ahí ese día. Si se llena, va el siguiente. Mientras tanto, mirá si se liberan lugares reservados (+81-577-32-1688)",
       date: "2026-11-19",
+      url: "https://Japan-guide.com/bus/shirakawago.html",
     },
     {
       id: "satoyama",
       text: "Reservar el tour en bici de Satoyama Experience",
-      detail: "Con guía y cupo limitado",
+      detail:
+        "Con guía y cupo limitado: ~3h30 y 22 km, o la media vuelta de 2h30. Si no hay lugar, alquilá la bici sola por ~¥2,000. Lo cancelan si el día anterior pronostican mal tiempo",
       date: "2026-11-20",
+      url: "https://satoyama-experience.com/",
     },
     {
       id: "bus-hirayu",
-      text: "Confirmar el horario de invierno del bus Hirayu → Matsumoto",
+      text: "Revisar el horario del bus Hirayu → Matsumoto",
+      detail:
+        "La línea Takayama–Matsumoto corre hasta el 30 nov: el 21 todavía hay. Horario 2026–2027 en el PDF del parque Chubu Sangaku",
       date: "2026-11-21",
+      url: "https://chubusangaku.jp/ja/wp-content/uploads/sites/3/2026/05/Shinhotaka-To-Matsumoto.pdf",
     },
     {
-      id: "avisar-llegada",
-      text: "Avisar la hora de llegada a los hospedajes con horario ajustado",
+      id: "azusa",
+      text: "Comprar el Azusa o Kaiji (Matsumoto → Otsuki)",
       detail:
-        "Hiroshima y Kamuro (pedir que guarden la mochila), Shingu (cierra a las 19:00), Otsu (salida antes de las 7:00 el 18) y Kawana (instrucciones del self check-in)",
+        "Alcanza con comprarlo en la estación ese día. Online, en la web de JR East (a veces rechaza tarjetas extranjeras)",
+      date: "2026-11-24",
+      url: "https://ekitan.com/es/article/azusa",
+    },
+    {
+      id: "bus-mishima",
+      text: "Reservar el bus Kawaguchiko → Mishima",
+      detail:
+        "Mishima-Kawaguchiko Liner de Fujikyu: ~1h30, ~¥2,260, sale cada ~2 h y recomiendan reservar. Online, por teléfono o en la ventanilla de la estación Kawaguchiko (pasás por ahí el 25 y el 26)",
+      date: "2026-11-27",
+    },
+    {
+      id: "odoriko",
+      text: "Comprar el Odoriko (Ito → Tokio)",
+      detail: "Online en la web de JR East, con descuento si comprás antes, o en la estación de Ito ese día",
+      date: "2026-11-30",
+      url: "https://ekitan.com/es/article/odoriko",
+    },
+    {
+      id: "shibuya-sky",
+      text: "Reservar Shibuya Sky al atardecer (3 dic)",
+      detail:
+        "Los boletos salen ~2 semanas antes, a las 00:00 de Japón, y los del atardecer se agotan en minutos: entrá apenas abra. Turno ~15:30–16:00 (el sol se pone ~16:30), ~¥3,400 desde las 15:00",
+      date: "2026-12-03",
+      from: "2026-11-19",
+      url: "https://www.shibuya-scramble-square.com/sky/",
+    },
+    {
+      id: "skyliner",
+      text: "Comprar el Skyliner (Nippori → aeropuerto, 5 dic)",
+      detail:
+        "e-ticket en la web de Keisei desde 1 mes antes: lo cambiás por el boleto en la máquina de Nippori. O lo comprás en la estación esa mañana (sale cada ~20 min)",
+      date: "2026-12-05",
+      url: "https://www.keisei.co.jp/keisei/tetudou/skyliner/us/skyliner/purchase.php",
     },
     {
       id: "yenes",

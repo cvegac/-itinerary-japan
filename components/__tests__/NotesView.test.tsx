@@ -129,6 +129,49 @@ describe("NotesView", () => {
     await act(() => userEvent.click(screen.getByRole("button", { name: /Ver el día/ })));
     expect(onDaySelect).toHaveBeenCalledWith(fixtureTrip.itinerary[1]);
   });
+
+  describe("reservas con link y fecha de apertura", () => {
+    const withBookings = {
+      ...notes,
+      tasks: [
+        { id: "sky", text: "Reservar Shibuya Sky", date: "2026-11-02", from: "2026-11-19", url: "https://sky.example/" },
+        { id: "yenes", text: "Llevar yenes en efectivo" },
+        { id: "bus-nikko", text: "Reservar el bus a Nikko", date: "2026-11-02", url: "https://bus.example/nikko" },
+      ],
+    };
+
+    afterEach(() => vi.useRealTimers());
+
+    function renderOn(today: string) {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date(`${today}T12:00:00`));
+      render(<NotesView notes={withBookings} itinerary={fixtureTrip.itinerary} slug="test" onDaySelect={vi.fn()} />);
+    }
+
+    const pendingNames = () =>
+      within(screen.getByRole("list", { name: "Tareas pendientes" }))
+        .getAllByRole("checkbox")
+        .map((c) => c.getAttribute("aria-label"));
+
+    it("abre el sitio para hacerla en otra pestaña", () => {
+      renderOn("2026-11-01");
+      const link = screen.getByRole("link", { name: "Abrir el sitio: Reservar el bus a Nikko" });
+      expect(link.getAttribute("href")).toBe("https://bus.example/nikko");
+      expect(link.getAttribute("target")).toBe("_blank");
+      expect(link.getAttribute("rel")).toContain("noopener");
+    });
+
+    it("lo que todavía no se puede hacer dice desde cuándo y va al final", () => {
+      renderOn("2026-11-01");
+      expect(screen.getByText("Desde 19 nov")).toBeTruthy();
+      expect(pendingNames()).toEqual(["Reservar el bus a Nikko", "Llevar yenes en efectivo", "Reservar Shibuya Sky"]);
+    });
+
+    it("el día que abre deja de decir desde cuándo", () => {
+      renderOn("2026-11-19");
+      expect(screen.queryByText("Desde 19 nov")).toBeNull();
+    });
+  });
 });
 
 describe("NotesView: compartir el viaje", () => {

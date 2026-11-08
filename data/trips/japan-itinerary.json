@@ -640,7 +640,7 @@
     "label": "Choishi-michi a pie hasta Koyasan + Okunoin al anochecer",
     "location": "Koyasan",
     "category": "Naturaleza",
-    "notes": "Camino de peregrinación Patrimonio de la Humanidad, marcado con piedras cada ~109 m. Versión media: entrás por la estación Kamikosawa (~4h hasta Daimon). Versión completa: desde Jison-in a las 7:00, ~22 km y 6–8h, llegando a Daimon a las ~14:00 (sin Kongobu-ji). En noviembre oscurece a las ~16:50. Confirmá el último bus desde Okunoin y el último funicular (las fuentes dicen entre 21:00 y 22:00) y que el desvío desde Kamikosawa esté abierto. Horas aproximadas",
+    "notes": "Camino de peregrinación Patrimonio de la Humanidad, marcado con piedras cada ~109 m. Versión media: entrás por la estación Kamikosawa (~4h hasta Daimon). Versión completa: desde Jison-in a las 7:00, ~22 km y 6–8h, llegando a Daimon a las ~14:00 (sin Kongobu-ji). En noviembre oscurece a las ~16:50. El último funicular de bajada sale ~21:40 (horario de Nankai desde el 16 oct 2026, según una guía); confirmá el último bus desde Okunoin en la parada y que el desvío desde Kamikosawa esté abierto. Horas aproximadas",
     "weekday": "Lun",
     "food": "Almuerzo de shojin ryori cerca de Danjo Garan (~¥3,000)",
     "transport": [
@@ -1412,7 +1412,7 @@
       "Cañón del río Hida desde el tren",
       "Casco viejo de Sanmachi Suji",
       "Puente rojo Nakabashi",
-      "Reservar el bus de mañana a Shirakawa-go"
+      "Mirar en la Nohi Bus Center la primera salida sin reserva de mañana"
     ],
     "activitiesNight": ["Sake en una bodega de Sanmachi", "Cena de Hida-gyu", "Casco viejo iluminado", "Dormir temprano"],
     "keepOrder": true,
@@ -1423,7 +1423,7 @@
     "label": "Shirakawa-go y su mirador",
     "location": "Shirakawa-go",
     "category": "Paisaje",
-    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. A fines de noviembre puede tocarte la primera nieve. Reservá el bus Nohi: se llena (reservas +81-577-32-1688)",
+    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. A fines de noviembre puede tocarte la primera nieve. Sin reserva (se agotaron): el bus Nohi tiene salidas sin reserva, las que NO tienen \"R\" en el horario, por orden de llegada. Estate en la fila de la Nohi Bus Center 20+ min antes y comprá ahí el boleto (¥2,800). Si se llena, va el siguiente; la vuelta también puede ser sin reserva",
     "weekday": "Jue",
     "food": "Soba y gohei-mochi en Shirakawa-go",
     "transport": [

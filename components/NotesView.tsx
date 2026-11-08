@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Check, ChevronRight, LogIn, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Check, ChevronRight, ExternalLink, LogIn, Plus } from "lucide-react";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripNoteTopic, TripNotes, TripTask } from "@/types/Trip";
 import { useDoneTasks } from "@/lib/done-tasks";
+import { isTaskOpen, orderTasks } from "@/lib/task-order";
+import { localISODate } from "@/lib/trip-time";
 import { useBackClose } from "@/lib/use-back-close";
 import NoteTopicModal from "@/components/NoteTopicModal";
 import TripSharing from "@/components/TripSharing";
@@ -32,8 +34,14 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing
   // Lo tildado se guarda en el dispositivo al tildar algo; con sesión, también en la nube
   const [done, toggle] = useDoneTasks(slug);
 
-  // Las hechas se archivan: salen de la lista pero no se borran
-  const pending = notes.tasks.filter((t) => !done.includes(t.id));
+  // "Hoy" sale del reloj del dispositivo: se calcula después de montar
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => setToday(localISODate(new Date())), []);
+
+  // Las hechas se archivan: salen de la lista pero no se borran. Las pendientes van
+  // en el orden en que conviene hacerlas (lib/task-order.ts)
+  const pendingRaw = notes.tasks.filter((t) => !done.includes(t.id));
+  const pending = today ? orderTasks(pendingRaw, today) : pendingRaw;
   const archived = notes.tasks.filter((t) => done.includes(t.id));
   const [showArchived, setShowArchived] = useState(false);
 
@@ -68,6 +76,27 @@ export default function NotesView({ notes, itinerary, slug, onDaySelect, sharing
                 {task.text}
               </span>
               {task.detail && <span className="mt-0.5 block text-sm text-muted">{task.detail}</span>}
+              {(task.url || (task.from && today && !isTaskOpen(task, today))) && (
+                <span className="mt-2 flex flex-wrap items-center gap-2">
+                  {task.from && today && !isTaskOpen(task, today) && (
+                    <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800">
+                      Desde {shortDate(task.from)}
+                    </span>
+                  )}
+                  {task.url && (
+                    <a
+                      href={task.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Abrir el sitio: ${task.text}`}
+                      className="flex items-center gap-1 rounded-full border border-accent/40 bg-accent/10 px-2.5 py-1 text-xs font-semibold text-accent transition-colors hover:bg-accent/20"
+                    >
+                      Abrir el sitio
+                      <ExternalLink className="size-3.5" aria-hidden />
+                    </a>
+                  )}
+                </span>
+              )}
             </span>
             {day && (
               <button

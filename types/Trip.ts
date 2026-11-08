@@ -45,6 +45,10 @@ export type TripTask = {
   detail?: string;
   /** Día del itinerario relacionado (YYYY-MM-DD) */
   date?: string;
+  /** Desde cuándo se puede hacer (YYYY-MM-DD), ej. el día que salen los boletos. Sin esto: ya */
+  from?: string;
+  /** Sitio donde se hace (reservar, comprar, ver el horario) */
+  url?: string;
 };
 
 export type TripNoteSection = {
