@@ -44,11 +44,10 @@ export const NOTES: TripNotes = {
     },
     {
       id: "kuroshio",
-      text: "Reservar asiento en el Kuroshio (Shingu → Kioto)",
+      text: "Sacar el Nanki 4 (Shingu 9:13) y el Kintetsu a Kioto",
       detail:
-        "Sábado de otoño, ~4h20: del lado del mar. Se vende desde 1 mes antes: en la web de JR West (e5489) con tarjeta, retirás el boleto en una máquina de la estación; o en la ventanilla de JR de Tanabe el 10",
+        "Cambió la ruta: según Google Maps, el Nanki 4 hasta Matsusaka + Kintetsu llega a Kioto a las 14:00 (~¥8,740), 1h30 antes y más barato que el Kuroshio. Asiento reservado del Nanki: en la ventanilla de JR de Tanabe el 10 o en Shingu, del lado derecho (el mar). El expreso de Kintetsu se saca en Matsusaka, en sus máquinas",
       date: "2026-11-14",
-      url: "https://ekitan.com/en/article/kuroshio",
     },
     {
       id: "bus-arima",
@@ -90,9 +89,9 @@ export const NOTES: TripNotes = {
     },
     {
       id: "bus-hirayu",
-      text: "Revisar el horario del bus Hirayu → Matsumoto",
+      text: "Reservar el bus Hirayu → Matsumoto",
       detail:
-        "La línea Takayama–Matsumoto corre hasta el 30 nov: el 21 todavía hay. Horario 2026–2027 en el PDF del parque Chubu Sangaku",
+        "Según Google Maps es SOLO CON RESERVA: sale a las 12:55, 14:55, 15:55 y 17:55, tarda 1h32 y cuesta ~¥2,800. Con el 14:55 te da tiempo de sobra para el teleférico. Horario 2026–2027 en el PDF del parque Chubu Sangaku",
       date: "2026-11-21",
       url: "https://chubusangaku.jp/ja/wp-content/uploads/sites/3/2026/05/Shinhotaka-To-Matsumoto.pdf",
     },
@@ -108,7 +107,7 @@ export const NOTES: TripNotes = {
       id: "bus-mishima",
       text: "Reservar el bus Kawaguchiko → Mishima",
       detail:
-        "Mishima-Kawaguchiko Liner de Fujikyu: ~1h30, ~¥2,260, sale cada ~2 h y recomiendan reservar. Online, por teléfono o en la ventanilla de la estación Kawaguchiko (pasás por ahí el 25 y el 26)",
+        "Mishima-Kawaguchiko Liner de Fujikyu: según Google Maps sale 9:20, 10:19, 10:54 y 11:19, y con el de 9:20 llegás a Kawana 12:05. Recomiendan reservar. Online, por teléfono o en la ventanilla de la estación Kawaguchiko (pasás por ahí el 25 y el 26)",
       date: "2026-11-27",
     },
     {

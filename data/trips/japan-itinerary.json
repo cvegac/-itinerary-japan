@@ -1014,28 +1014,29 @@
     "label": "Costa de Kii en tren → Kioto",
     "location": "Kioto",
     "category": "Logística",
-    "notes": "~4h40 en el Kuroshio, que arranca en Shingu (el check-out es de 8:30 a 9:30), con el Pacífico a la izquierda: sentate del lado del mar. Algunos siguen directo a Kioto; si no, cambiás en Shin-Osaka. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: pasá primero a hacer el check-in (cierra a las 22:00) y volvé a Kioto para la tarde",
+    "notes": "Según Google Maps (consultado el 8 nov): Nanki 4 a las 9:13 → Matsusaka 11:26, Kintetsu 12:03 → Yamato-Yagi → Kioto 14:00, ~¥8,740 en total. Es 1h30 más rápido y más barato que el Kuroshio por la costa oeste (9:42 → 15:29). Con un solo cambio: Nanki 4 hasta Nagoya (12:41) + Nozomi 12:47 → Kioto 13:21, ~¥13,510. El check-out en Shingu es de 8:30 a 9:30. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: pasá primero a hacer el check-in (cierra a las 22:00) y volvé a Kioto para la tarde",
     "weekday": "Sáb",
     "food": "Ekiben (bento de estación) en el tren",
     "transport": [
       {
         "mode": "tren",
-        "line": "Expreso limitado Kuroshio",
+        "line": "Expreso limitado Nanki 4",
         "from": "Shingu",
-        "to": "Shin-Osaka (o Kioto)",
-        "duration": "~4h20",
-        "cost": { "amount": 9000, "currency": "JPY", "max": 10500, "approx": true },
-        "pay": ["boleto"]
+        "to": "Matsusaka",
+        "duration": "2h13 (9:13 → 11:26)",
+        "cost": { "amount": 8740, "currency": "JPY", "approx": true, "detail": "en total hasta Kioto" },
+        "pay": ["boleto"],
+        "note": "Sentate del lado derecho: el mar queda a la derecha en el primer tramo"
       },
       {
         "mode": "tren",
-        "line": "JR Kyoto Line (rápido especial)",
-        "from": "Shin-Osaka",
+        "line": "Kintetsu Limited Express (cambio en Yamato-Yagi)",
+        "from": "Matsusaka",
         "to": "Kioto",
-        "duration": "~25min",
-        "cost": { "amount": 580, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Solo si tu Kuroshio no sigue a Kioto"
+        "via": ["Yamato-Yagi"],
+        "duration": "~2h (12:03 → 14:00)",
+        "pay": ["boleto"],
+        "note": "De JR a Kintetsu son ~3 min a pie dentro de Matsusaka. El boleto de expreso limitado de Kintetsu se saca en sus máquinas"
       },
       {
         "mode": "tren",
@@ -1062,7 +1063,7 @@
       { "name": "Callejón Pontocho", "coords": [35.00425, 135.77121], "night": true },
       { "name": "Gion (Hanamikoji)", "coords": [35.00265, 135.77487], "night": true }
     ],
-    "budget": "$152",
+    "budget": "$142",
     "isTransit": false,
     "activitiesDay": ["Costa del Pacífico desde el tren", "Check-in en Otsu y vuelta a Kioto (~10 min)", "Paseo por el río Kamo", "Mercado Nishiki"],
     "activitiesNight": ["Callejón Pontocho", "Gion al anochecer", "Cena barata en el Kyoto Tower Sando", "Tren a Otsu y dormir temprano"]
@@ -1355,7 +1356,7 @@
     "label": "Fushimi Inari al amanecer → los Alpes: Takayama",
     "location": "Takayama",
     "category": "Logística",
-    "notes": "Fushimi Inari abre las 24 h: salí de Otsu con la mochila ~6:00 (el check-out es de 7:00 a 10:00: avisá que salís antes) y dejala en un locker de la estación de Kioto. Subí a las 6:30, volvé a las ~9:30, retirá la mochila y salí en un tren de media mañana. Viaje de ~3h15. Opción más barata: bus directo Kioto/Osaka → Takayama (~5h, ~¥5,000–6,000). Desde acá empieza el frío: 0–10 °C y puede haber primera nieve",
+    "notes": "Fushimi Inari abre las 24 h: salí de Otsu con la mochila ~6:00 (el check-out es de 7:00 a 10:00: avisá que salís antes) y dejala en un locker de la estación de Kioto. Subí a las 6:30, volvé a las ~9:30, retirá la mochila y salí en un tren de media mañana. Según Google Maps (8 nov): Nozomi 10:36 → Nagoya 11:10 y Hida 9 → Takayama 14:14 (~3h40, ~¥11,570 en total; Google lo combina pasando por Gifu, 12:05). O el bus Hida-Takayama-go de las 11:45 desde Nagoya (lado shinkansen) → Takayama 14:20, con reserva. Opción más barata: bus directo Kioto/Osaka → Takayama (~5h, ~¥5,000–6,000). Desde acá empieza el frío: 0–10 °C y puede haber primera nieve",
     "weekday": "Mié",
     "food": "Hida-gyu (carne de Hida) en sushi o en brocheta",
     "transport": [
@@ -1385,7 +1386,7 @@
         "from": "Nagoya",
         "to": "Takayama",
         "via": ["Gifu"],
-        "duration": "~2h20",
+        "duration": "~2h30 (llega 14:14)",
         "cost": { "amount": 11000, "currency": "JPY", "max": 12000, "approx": true, "detail": "en total" },
         "pay": ["boleto"],
         "note": "Ventanilla derecha: cañón del río Hida"
@@ -1528,7 +1529,7 @@
     "label": "Teleférico de Shin-Hotaka → Matsumoto",
     "location": "Shin-Hotaka",
     "category": "Vistas",
-    "notes": "Sube a 2.156 m con los Alpes del Norte nevados enfrente. Abre todo el año, pero según revendedores cierra del 24 al 27 nov 2026: hoy (21) está abierto. Arriba hace -5 °C. Confirmá el horario de invierno del bus Hirayu → Matsumoto antes de salir",
+    "notes": "Sube a 2.156 m con los Alpes del Norte nevados enfrente. Abre todo el año, pero según revendedores cierra del 24 al 27 nov 2026: hoy (21) está abierto. Arriba hace -5 °C. Según Google Maps (8 nov): el bus a Shin-Hotaka sale a los :40 de cada hora; con el de 8:40 estás arriba a las 10:38. El bus Hirayu → Matsumoto es SOLO CON RESERVA: sale a las 12:55, 14:55, 15:55 y 17:55 (1h32)",
     "weekday": "Sáb",
     "food": "Almuerzo en la estación de arriba del teleférico",
     "transport": [
@@ -1537,7 +1538,7 @@
         "line": "Nohi Bus",
         "from": "Takayama",
         "to": "Shin-Hotaka Ropeway",
-        "duration": "~1h30",
+        "duration": "~1h30 (sale a los :40: 8:40, 9:40…)",
         "cost": { "amount": 2200, "currency": "JPY", "approx": true },
         "pay": ["tarjeta", "efectivo"]
       },
@@ -1562,11 +1563,11 @@
       },
       {
         "mode": "bus",
-        "line": "Alpico Bus",
+        "line": "Bus Matsumoto–Takayama (solo con reserva)",
         "from": "Hirayu Onsen",
         "to": "Matsumoto",
-        "duration": "~1h30",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
+        "duration": "1h32 (12:55, 14:55, 15:55 o 17:55)",
+        "cost": { "amount": 2800, "currency": "JPY", "approx": true },
         "pay": ["tarjeta", "efectivo"]
       }
     ],
@@ -1585,7 +1586,7 @@
       { "name": "Calle Nawate (Matsumoto)", "coords": [36.23461, 137.97199], "night": true },
       { "name": "Calle Nakamachi", "coords": [36.2338, 137.97146], "night": true }
     ],
-    "budget": "$124",
+    "budget": "$126",
     "isTransit": false,
     "activitiesDay": [
       "Teleférico de doble piso hasta 2.156 m",
@@ -1718,7 +1719,7 @@
     "label": "Hacia el Fuji: Kawaguchiko",
     "location": "Kawaguchiko",
     "category": "Paisaje",
-    "notes": "~3h. Bajate en Shimoyoshida para la pagoda Chureito si hay lockers (confirmalo); si no, volvé mañana. Opción más barata: tren local a Otsuki (~3h, ~¥2,700)",
+    "notes": "Según Google Maps (8 nov): Azusa 9:10 desde Matsumoto → Fujikyu-Highland 12:02 (2h52, ~¥5,430 en total). Bajate en Shimoyoshida para la pagoda Chureito si hay lockers (confirmalo); si no, volvé mañana. Opción más barata: tren local a Otsuki (~3h, ~¥2,700)",
     "weekday": "Mar",
     "food": "Hoto (fideos gruesos con calabaza), el plato de Yamanashi",
     "transport": [
@@ -1885,13 +1886,13 @@
     "label": "Del Fuji al mar: Ito, en la península de Izu",
     "location": "Ito",
     "category": "Logística",
-    "notes": "~3h30. El bus a Mishima sale cada ~2h: revisá el horario. La base es Kawana, dos paradas de Izukyu al sur de Ito. El check-in es sin recepción y solo de 16:00 a 22:00: andá primero a Kawana a dejar la mochila y después bajá a cenar a Ito. Silencio de 22:00 a 7:00",
+    "notes": "Según Google Maps (8 nov): bus Mishima-Kawaguchiko Liner 9:20 desde la estación Kawaguchiko → Kawana 12:05 (2h46, ~¥3,480 en total). Otras salidas: 10:19, 10:54 y 11:19. La base es Kawana, dos paradas de Izukyu al sur de Ito. El check-in es sin recepción y solo de 16:00 a 22:00: andá primero a Kawana a dejar la mochila y después bajá a cenar a Ito. Silencio de 22:00 a 7:00",
     "weekday": "Vie",
     "food": "Pescado seco (himono) y sushi de Ito",
     "transport": [
       {
         "mode": "bus",
-        "line": "Fujikyu Bus",
+        "line": "Mishima-Kawaguchiko Liner (Fujikyu)",
         "from": "Kawaguchiko",
         "to": "Estación de Mishima",
         "duration": "~1h30–2h",
