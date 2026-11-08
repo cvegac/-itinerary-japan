@@ -2084,7 +2084,7 @@
     "label": "Vuelta a Tokio + ginkgos de Gaien",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "~1h45 en el Odoriko (algunos paran en Kawana: si te toca uno, te ahorrás el tramo a Ito). Check-in en Hatsudai desde las 16:00. Opción más barata: trenes locales Ito → Atami → Tokio (~2h30, ~¥2,700). Avenida de ginkgos de Jingu Gaien en su punto (fines de nov – principios de dic). Comprá la maleta grande estos días: el vuelo de regreso incluye 23 kg",
+    "notes": "~1h45 en el Odoriko (algunos paran en Kawana: si te toca uno, te ahorrás el tramo a Ito). Check-in en Nippori desde las 16:00 (el minpaku queda a ~5 min a pie de la estación). Opción más barata: trenes locales Ito → Atami → Tokio (~2h30, ~¥2,700). Avenida de ginkgos de Jingu Gaien en su punto (fines de nov – principios de dic). Comprá la maleta grande estos días: el vuelo de regreso incluye 23 kg",
     "weekday": "Lun",
     "food": "Monjayaki en Tsukishima",
     "transport": [
@@ -2108,45 +2108,37 @@
       },
       {
         "mode": "tren",
-        "line": "JR Chuo Line (rápido) → Keio New Line",
+        "line": "JR Yamanote o Keihin-Tohoku",
         "from": "Tokio",
-        "to": "Hatsudai",
-        "via": ["Shinjuku"],
-        "duration": "~25min",
-        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "to": "Nippori",
+        "duration": "~10min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "Después ~5 min a pie"
       }
     ],
-    "accommodation": "Mi-Hotel Hearts Shinjuku (individual con cocina)",
-    "lodgingPlace": "Hatsudai, Tokio",
-    "zona": "A ~5 min a pie de la estación Hatsudai (Keio New Line, una parada de Shinjuku) y ~6 de Sangubashi (Odakyu). Check-in 16:00–00:00",
-    "accommodationCoords": [35.6798, 139.6894],
-    "lodgingCost": 71.33,
-    "lodgingJa": { "name": "Mi-Hotel Hearts 新宿", "address": "東京都渋谷区代々木4-41-12", "phone": "+81 3-5990-7909" },
+    "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
+    "lodgingPlace": "Nippori, Tokio",
+    "zona": "A ~5 min a pie de la estación Nippori (JR Yamanote y Keisei: el Skyliner al aeropuerto sale de acá) y ~8 de Uguisudani. Check-in 16:00–00:00, check-out hasta 10:00",
+    "accommodationCoords": [35.72625, 139.77458],
+    "lodgingCost": 53.52,
+    "lodgingJa": { "name": "格安民宿 日暮里駅から徒歩4分", "address": "東京都台東区根岸2丁目21-15", "phone": "+81 50-1807-3347" },
     "checkIn": "16:00–00:00",
-    "checkOut": "hasta 11:00",
+    "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", "coords": [35.67131, 139.72064] },
       { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
       { "name": "Calle Kappabashi", "coords": [35.71389, 139.78798] },
-      { "name": "Calle del monjayaki (Tsukishima)", "coords": [35.66428, 139.78246], "night": true },
-      { "name": "Mirador del ayuntamiento de Tokio", "coords": [35.68974, 139.693], "night": true }
+      { "name": "Calle del monjayaki (Tsukishima)", "coords": [35.66428, 139.78246], "night": true }
     ],
-    "budget": "$136",
+    "budget": "$117",
     "isTransit": false,
     "activitiesDay": [
       "Avenida de ginkgos amarillos de Jingu Gaien (Icho Namiki)",
-      "Comprar la maleta grande (Don Quijote, Ameyoko o calle Kappabashi)",
-      "Check-in en Hatsudai (desde las 16:00)",
-      "Parque Yoyogi y santuario Meiji (a ~15 min a pie)"
+      "Comprar la maleta grande (Don Quijote, Ameyoko o calle Kappabashi, a un paso de Nippori)",
+      "Check-in en Nippori (desde las 16:00)"
     ],
-    "activitiesNight": [
-      "Cena en Tsukishima o Shinjuku",
-      "Mirador gratuito del ayuntamiento de Tokio (~15 min a pie)",
-      "Golden Gai u Omoide Yokocho",
-      "Descanso"
-    ],
+    "activitiesNight": ["Cena de monjayaki en Tsukishima", "Paseo nocturno por Ameyoko", "Descanso"],
     "keepOrder": true,
     "keepOrderReason": "llegás en tren a Tokio con la valija"
   },
@@ -2161,12 +2153,12 @@
     "transport": [
       {
         "mode": "tren",
-        "line": "Keio New Line → JR Shonan-Shinjuku Line (directo)",
-        "from": "Hatsudai",
+        "line": "JR Keihin-Tohoku → JR Yokosuka Line (directo desde Tokio)",
+        "from": "Nippori",
         "to": "Kamakura",
-        "via": ["Shinjuku"],
-        "duration": "~1h10",
-        "cost": { "amount": 1100, "currency": "JPY", "approx": true },
+        "via": ["Tokio"],
+        "duration": "~1h15",
+        "cost": { "amount": 1200, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
@@ -2180,23 +2172,23 @@
       },
       {
         "mode": "tren",
-        "line": "Enoden + JR Shonan-Shinjuku Line",
+        "line": "Enoden + JR Yokosuka Line + JR Yamanote",
         "from": "Enoshima",
-        "to": "Shinjuku",
-        "via": ["Kamakura"],
-        "duration": "~1h15",
-        "cost": { "amount": 1100, "currency": "JPY", "approx": true },
+        "to": "Nippori",
+        "via": ["Kamakura", "Tokio"],
+        "duration": "~1h40",
+        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       }
     ],
-    "accommodation": "Mi-Hotel Hearts Shinjuku (individual con cocina)",
-    "lodgingPlace": "Hatsudai, Tokio",
-    "zona": "Mismo hotel en Hatsudai",
-    "accommodationCoords": [35.6798, 139.6894],
-    "lodgingCost": 71.33,
-    "lodgingJa": { "name": "Mi-Hotel Hearts 新宿", "address": "東京都渋谷区代々木4-41-12", "phone": "+81 3-5990-7909" },
+    "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
+    "lodgingPlace": "Nippori, Tokio",
+    "zona": "Mismo minpaku en Nippori",
+    "accommodationCoords": [35.72625, 139.77458],
+    "lodgingCost": 53.52,
+    "lodgingJa": { "name": "格安民宿 日暮里駅から徒歩4分", "address": "東京都台東区根岸2丁目21-15", "phone": "+81 50-1807-3347" },
     "checkIn": "16:00–00:00",
-    "checkOut": "hasta 11:00",
+    "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Templo Engaku-ji", "coords": [35.33794, 139.54782] },
       { "name": "Templo Hokoku-ji", "coords": [35.31952, 139.5689] },
@@ -2204,7 +2196,7 @@
       { "name": "Templo Hase-dera", "coords": [35.31227, 139.53331] },
       { "name": "Isla Enoshima (faro Sea Candle, cuevas al fondo)", "coords": [35.29965, 139.47858] }
     ],
-    "budget": "$138",
+    "budget": "$123",
     "isTransit": false,
     "activitiesDay": [
       "Templo Hokoku-ji y su bosque de bambú",
@@ -2213,7 +2205,7 @@
       { "text": "Templo Hase-dera y su vista al mar", "price": { "amount": 400, "currency": "JPY", "approx": true } },
       "Costa hasta Enoshima y sus cuevas"
     ],
-    "activitiesNight": ["Atardecer con el Fuji desde Enoshima (si está despejado)", "Vuelta a Tokio", "Cena en Shinjuku", "Descanso"]
+    "activitiesNight": ["Atardecer con el Fuji desde Enoshima (si está despejado)", "Vuelta a Tokio", "Cena en Ueno o Nippori", "Descanso"]
   },
   {
     "date": "2026-12-02",
@@ -2227,20 +2219,21 @@
     "transport": [
       {
         "mode": "tren",
-        "line": "Keio New Line",
-        "from": "Hatsudai",
-        "to": "Sasazuka o Meidaimae",
-        "duration": "~5–10min",
+        "line": "JR Yamanote",
+        "from": "Nippori",
+        "to": "Shinjuku",
+        "duration": "~20min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "Ahí cambiás a la Keio Line"
       },
       {
         "mode": "tren",
-        "line": "Keio Line (semi expreso)",
-        "from": "Sasazuka o Meidaimae",
+        "line": "Keio Line (semi expreso o expreso)",
+        "from": "Shinjuku",
         "to": "Takaosanguchi",
         "duration": "~50min",
-        "cost": { "amount": 430, "currency": "JPY", "approx": true, "detail": "en total" },
+        "cost": { "amount": 500, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
@@ -2251,14 +2244,14 @@
         "duration": "~1h30"
       }
     ],
-    "accommodation": "Mi-Hotel Hearts Shinjuku (individual con cocina)",
-    "lodgingPlace": "Hatsudai, Tokio",
-    "zona": "Mismo hotel en Hatsudai",
-    "accommodationCoords": [35.6798, 139.6894],
-    "lodgingCost": 71.33,
-    "lodgingJa": { "name": "Mi-Hotel Hearts 新宿", "address": "東京都渋谷区代々木4-41-12", "phone": "+81 3-5990-7909" },
+    "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
+    "lodgingPlace": "Nippori, Tokio",
+    "zona": "Mismo minpaku en Nippori",
+    "accommodationCoords": [35.72625, 139.77458],
+    "lodgingCost": 53.52,
+    "lodgingJa": { "name": "格安民宿 日暮里駅から徒歩4分", "address": "東京都台東区根岸2丁目21-15", "phone": "+81 50-1807-3347" },
     "checkIn": "16:00–00:00",
-    "checkOut": "hasta 11:00",
+    "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Estación Takaosanguchi", "coords": [35.63229, 139.26998] },
       { "name": "Templo Yakuo-in", "coords": [35.626, 139.25044] },
@@ -2266,7 +2259,7 @@
       { "name": "Monte Shiro (opcional)", "coords": [35.62987, 139.22117] },
       { "name": "Onsen Gokurakuyu", "coords": [35.63212, 139.26927] }
     ],
-    "budget": "$116",
+    "budget": "$100",
     "isTransit": false,
     "activitiesDay": [
       "Sendero 6 por el bosque y el arroyo",
@@ -2275,140 +2268,192 @@
       "Opcional: seguir hasta el monte Shiro (~1h ida)",
       { "text": "Onsen Keio Takaosan Gokurakuyu", "price": { "amount": 1100, "currency": "JPY", "approx": true } }
     ],
-    "activitiesNight": ["Vuelta a Tokio", "Última noche en Tokio: cena de despedida", "Compras en Don Quijote", "Empezar a armar la maleta"],
+    "activitiesNight": ["Vuelta a Tokio", "Cena en Omoide Yokocho (Shinjuku), de paso", "Armar la mochila: mañana te mudás al Nagomi (a ~1 km)", "Descanso"],
     "keepOrder": true,
     "keepOrderReason": "sendero del monte Takao y onsen al final"
   },
   {
     "date": "2026-12-03",
-    "label": "Jardín Rikugien → Narita-san",
-    "location": "Narita",
-    "category": "Logística",
-    "notes": "Check-out en Hatsudai hasta las 11:00: dejá la maleta en un locker o llevala a Rikugien. Tren Keisei desde Nippori al pueblo de Narita (~1h). El parque de Narita-san tiene su festival de otoño hasta principios de diciembre. Dormir en el pueblo es más barato que en Tokio y te deja a 10 min del aeropuerto",
+    "label": "Jardines de otoño + Shibuya de compras",
+    "location": "Tokio",
+    "category": "Naturaleza",
+    "notes": "Check-out del minpaku hasta las 10:00: llevá la valija al Nagomi (~12 min a pie) y pedí que te la guarden hasta el check-in (15:00). Principios de diciembre es el punto de los arces en los jardines de Tokio. Shinjuku Gyoen: última entrada 16:00, cierra 16:30 (los lunes, cerrado). Shibuya Sky: reservá online el turno del atardecer (~16:30), se agota",
     "weekday": "Jue",
-    "food": "Unagi (anguila) en la calle Omotesando de Narita",
+    "food": "Picnic de konbini en Shinjuku Gyoen y cena en Shibuya",
     "transport": [
       {
+        "mode": "caminar",
+        "from": "Minpaku (Negishi)",
+        "to": "Nagomi Hotel Nippori",
+        "duration": "~12min",
+        "note": "Con la valija, a dejarla en recepción"
+      },
+      {
         "mode": "tren",
-        "line": "Keio New Line → JR Yamanote",
-        "from": "Hatsudai",
+        "line": "JR Yamanote",
+        "from": "Nippori",
         "to": "Komagome (Rikugien)",
-        "via": ["Shinjuku"],
-        "duration": "~30min",
-        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "duration": "~5min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Del Nagomi a Nippori son ~12 min a pie"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Komagome (Rikugien)",
+        "to": "Shinjuku",
+        "duration": "~20min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~10 min a pie a la puerta Shinjuku del jardín"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Shinjuku",
+        "to": "Shibuya",
+        "duration": "~7min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
         "mode": "tren",
-        "line": "Keisei Main Line (expreso limitado)",
-        "from": "Nippori",
-        "to": "Keisei Narita",
-        "duration": "~1h",
-        "cost": { "amount": 900, "currency": "JPY", "approx": true },
+        "line": "JR Yamanote",
+        "from": "Shibuya",
+        "to": "Nippori",
+        "duration": "~30min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "De Komagome a Nippori son 3 paradas de Yamanote"
-      },
-      { "mode": "caminar", "from": "Estación Keisei Narita", "to": "Welco Narita", "duration": "~2min" }
+        "note": "Después ~12 min a pie al Nagomi"
+      }
     ],
-    "accommodation": "Welco Narita (individual)",
-    "lodgingPlace": "Estación Keisei Narita, Narita",
-    "zona": "Junto a la estación Keisei Narita (~2 min a pie) y a ~10 min de la calle Omotesando. Ya está pagado",
-    "accommodationCoords": [35.7763, 140.3148],
-    "lodgingCost": 54.28,
-    "lodgingJa": { "name": "ホテルウェルコ成田", "address": "千葉県成田市花崎町818-1", "phone": "+81 476-23-7000" },
+    "accommodation": "Nagomi Hotel Nippori (habitación japonesa con futón, baño privado)",
+    "lodgingPlace": "Higashi-Nippori, Tokio",
+    "zona": "Higashi-Nippori, a ~2 min a pie de Mikawashima (JR Joban, 1 parada de Nippori) y ~12 de Nippori. Check-in 15:00–23:00, check-out hasta 10:00. Se paga en el hotel",
+    "accommodationCoords": [35.73242, 139.77892],
+    "lodgingCost": 58.47,
+    "lodgingJa": { "name": "なごみホテル日暮里", "address": "東京都荒川区東日暮里3-41-8", "phone": "+81 3-6806-8998" },
+    "checkIn": "15:00–23:00",
+    "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463] },
-      { "name": "Templo Narita-san Shinsho-ji", "coords": [35.78633, 140.31722] },
-      { "name": "Parque de Narita-san", "coords": [35.78657, 140.32078] },
-      { "name": "Calle Omotesando de Narita", "coords": [35.78242, 140.31564], "night": true }
+      { "name": "Jardín Shinjuku Gyoen (arces y ginkgos)", "coords": [35.68507, 139.70955] },
+      { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
+      { "name": "Mirador Shibuya Sky (Scramble Square)", "coords": [35.65838, 139.70222], "night": true },
+      { "name": "Tienda Shibuya Parco (Nintendo, Pokémon, Mandarake)", "coords": [35.66193, 139.69875] },
+      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true }
     ],
-    "budget": "$99",
+    "budget": "$125",
     "isTransit": false,
     "activitiesDay": [
-      { "text": "Jardín Rikugien con su color", "price": { "amount": 300, "currency": "JPY", "approx": true } },
-      "Tren a Narita con la maleta",
-      "Templo Narita-san Shinsho-ji",
-      "Parque de Narita-san: estanques y arces"
+      "Mudanza: dejar la valija en el Nagomi",
+      { "text": "Jardín Rikugien con su color (abre 9:00)", "price": { "amount": 300, "currency": "JPY", "approx": true } },
+      { "text": "Shinjuku Gyoen: arces, ginkgos y el invernadero", "price": { "amount": 500, "currency": "JPY", "approx": true } },
+      "Compras en Shibuya: Parco (Nintendo, Pokémon, Mandarake), Loft, Shibuya 109"
     ],
-    "activitiesNight": ["Cena de unagi en Omotesando", "Calle iluminada del templo", "Bar de sake en Narita", "Descanso"],
+    "activitiesNight": [
+      { "text": "Shibuya Sky al atardecer (turno desde las 15:00)", "price": { "amount": 3400, "currency": "JPY", "approx": true } },
+      "Cruce de Shibuya iluminado",
+      "MEGA Don Quijote Shibuya (abierto las 24 h)",
+      "Vuelta a Nippori: check-in en el Nagomi"
+    ],
     "keepOrder": true,
-    "keepOrderReason": "Rikugien en Tokio, después el tren a Narita"
+    "keepOrderReason": "mudanza a la mañana, jardines de día y Shibuya al atardecer"
   },
   {
     "date": "2026-12-04",
-    "label": "Bici por Sawara y el río Tone",
-    "location": "Sawara",
-    "category": "Paisaje",
-    "notes": "Pueblo de canales de la época Edo, a ~30 min de Narita. No confirmé el alquiler de bicis: preguntá en la oficina de turismo junto a la estación de Sawara. Si no hay, el centro histórico se recorre a pie. A la noche, maleta lista (≤23 kg)",
+    "label": "Akihabara y Ginza de compras",
+    "location": "Tokio",
+    "category": "Ciudad",
+    "notes": "Último día de compras. En Akihabara las tiendas abren 10:00–11:00 (Yodobashi a las 9:30). Si pedís sin impuesto, separá los tickets de lo que vas a usar (ver \"Compras sin impuesto\"). A la noche, maleta lista (≤23 kg): mañana el check-out es hasta las 10:00",
     "weekday": "Vie",
-    "food": "Dulces y sake de las bodegas de Sawara",
+    "food": "Yakitori bajo las vías de Yurakucho (cena de despedida)",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Narita Line",
-        "from": "Narita",
-        "to": "Sawara",
-        "duration": "~30–40min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true },
+        "line": "JR Yamanote o Keihin-Tohoku",
+        "from": "Nippori",
+        "to": "Akihabara",
+        "duration": "~7min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"]
-      },
-      {
-        "mode": "bicicleta",
-        "line": "Alquiler junto a la estación de Sawara (confirmar)",
-        "from": "Sawara",
-        "to": "Canal del río Ono → ciclovía del río Tone",
-        "duration": "~20–30 km, llano",
-        "cost": { "amount": 1000, "currency": "JPY", "max": 1500, "approx": true },
-        "pay": ["efectivo", "tarjeta"]
       },
       {
         "mode": "tren",
-        "line": "JR Narita Line",
-        "from": "Sawara",
-        "to": "Narita",
-        "duration": "~30–40min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "line": "JR Yamanote o Keihin-Tohoku",
+        "from": "Akihabara",
+        "to": "Yurakucho",
+        "duration": "~5min",
+        "cost": { "amount": 160, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Ginza queda a ~5 min a pie"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Yurakucho",
+        "to": "Nippori",
+        "duration": "~17min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~12 min a pie al Nagomi"
       }
     ],
-    "accommodation": "Welco Narita (individual)",
-    "lodgingPlace": "Estación Keisei Narita, Narita",
-    "zona": "Mismo hospedaje en Narita",
-    "accommodationCoords": [35.7763, 140.3148],
-    "lodgingCost": 54.28,
-    "lodgingJa": { "name": "ホテルウェルコ成田", "address": "千葉県成田市花崎町818-1", "phone": "+81 476-23-7000" },
+    "accommodation": "Nagomi Hotel Nippori (habitación japonesa con futón, baño privado)",
+    "lodgingPlace": "Higashi-Nippori, Tokio",
+    "zona": "Mismo hotel en Higashi-Nippori",
+    "accommodationCoords": [35.73242, 139.77892],
+    "lodgingCost": 58.47,
+    "lodgingJa": { "name": "なごみホテル日暮里", "address": "東京都荒川区東日暮里3-41-8", "phone": "+81 3-6806-8998" },
+    "checkIn": "15:00–23:00",
+    "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Estación de Sawara", "coords": [35.89453, 140.49405] },
-      { "name": "Museo de Ino Tadataka (canal del río Ono)", "coords": [35.88839, 140.49716] },
-      { "name": "Estación de ruta Mizu no Sato Sawara (río Tone)", "coords": [35.89629, 140.50655] }
+      { "name": "Yodobashi Akiba", "coords": [35.6986, 139.7745], "icon": "📷" },
+      { "name": "Tienda Super Potato (videojuegos retro)", "coords": [35.69937, 139.77074] },
+      { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053] },
+      { "name": "Tiendas 2k540 Aki-Oka Artisan (bajo las vías)", "coords": [35.70358, 139.77416] },
+      { "name": "Tienda Uniqlo Ginza (la insignia, 12 pisos)", "coords": [35.6702, 139.76343] },
+      { "name": "Papelería Itoya (Ginza)", "coords": [35.67296, 139.76743] }
     ],
-    "budget": "$113",
+    "budget": "$97",
     "isTransit": false,
     "activitiesDay": [
-      "Canal del río Ono y sus casas de comerciantes",
-      { "text": "Paseo en bote por el canal (sappa-bune)", "price": { "amount": 1300, "currency": "JPY", "approx": true } },
-      "Museo de Ino Tadataka, el cartógrafo de Japón",
-      "Ciclovía junto al río Tone"
+      "Akihabara: Yodobashi Akiba, Super Potato, Mandarake",
+      "2k540 Aki-Oka Artisan: artesanías japonesas para regalar",
+      "Ginza: Uniqlo insignia, papelería Itoya y Muji"
     ],
-    "activitiesNight": ["Vuelta a Narita", "Cena de despedida", "Pesar la maleta: máximo 23 kg", "Dormir temprano"]
+    "activitiesNight": [
+      "Cena de despedida: yakitori bajo las vías de Yurakucho",
+      "Pesar la maleta: máximo 23 kg",
+      "Dormir temprano: check-out hasta las 10:00"
+    ]
   },
   {
     "date": "2026-12-05",
-    "label": "Último paseo por Narita-san → vuelo NRT 13:20",
-    "location": "Narita",
+    "label": "Nippori → Skyliner → vuelo NRT 13:20",
+    "location": "Tokio → Narita",
     "category": "Logística",
-    "notes": "Vuelo a las 13:20: llegá al aeropuerto antes de las 10:20, o a las 10:00 si tenés compras sin impuesto: primero la terminal de devolución y después el despacho de la maleta. El templo abre temprano, así que da para una última vuelta. En Seúl hay 7 h 10 de escala (15:55 → 23:05) y el vuelo a Ámsterdam es de noche",
+    "notes": "Check-out del Nagomi hasta las 10:00. Skyliner desde Nippori: 36 min, cada ~20 min; tomá uno entre 8:40 y 9:00 para llegar al aeropuerto antes de las 10:00 si tenés compras sin impuesto (primero la terminal de devolución y después el despacho de la maleta). Asiana sale de la Terminal 1: bajate en \"Narita Airport Terminal 1\". En Seúl hay 7 h 10 de escala (15:55 → 23:05) y el vuelo a Ámsterdam es de noche",
     "weekday": "Sáb",
-    "food": "Desayuno en Omotesando o en el aeropuerto",
+    "food": "Desayuno de konbini o en el aeropuerto",
     "transport": [
       {
+        "mode": "caminar",
+        "from": "Nagomi Hotel Nippori",
+        "to": "Nippori",
+        "duration": "~12min",
+        "note": "Con la valija; o 1 parada de JR Joban desde Mikawashima (a ~2 min del hotel)"
+      },
+      {
         "mode": "tren",
-        "line": "JR o Keisei",
-        "from": "Narita (pueblo)",
+        "line": "Keisei Skyliner",
+        "from": "Nippori",
         "to": "Aeropuerto de Narita",
-        "duration": "~10min",
-        "cost": { "amount": 260, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "duration": "~36min",
+        "cost": { "amount": 2580, "currency": "JPY", "approx": true },
+        "pay": ["boleto"],
+        "note": "Boleto en la máquina de la estación o online"
       },
       {
         "mode": "avión",
@@ -2430,14 +2475,11 @@
     "accommodation": "---",
     "zona": "Aeropuerto de Narita",
     "accommodationCoords": [35.772, 140.3929],
-    "pois": [
-      { "name": "Templo Narita-san Shinsho-ji", "coords": [35.78633, 140.31722] },
-      { "name": "Aeropuerto de Narita", "coords": [35.77587, 140.39331] }
-    ],
-    "budget": "$37",
+    "pois": [{ "name": "Aeropuerto de Narita", "coords": [35.77587, 140.39331] }],
+    "budget": "$51",
     "isTransit": true,
     "activitiesDay": [
-      "Templo Narita-san temprano",
+      "Skyliner desde Nippori",
       "Devolución del impuesto en la terminal (antes de despachar)",
       "Check-in y despacho de la maleta",
       "Compras libres de impuestos",

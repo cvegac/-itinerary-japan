@@ -29,7 +29,7 @@ Plan del otoño, siempre hacia el este (versión del 2026-10-21). Prioridades:
 
 `budget` = USD por persona y por día, calculado con `lib/budget.ts`: hospedaje
 real (`lodgingCost`) + tramos de transporte + entradas + comida ~$35, a ~¥157/USD.
-Total estimado: ~$3,698, sin los vuelos internacionales. Un test avisa si un día
+Total estimado: ~$3,774, sin los vuelos internacionales. Un test avisa si un día
 queda desactualizado.
 
 Verificado en línea el 2026-10-21:
@@ -48,8 +48,14 @@ Verificado en línea el 2026-10-21:
 - Koyasan sin lugar (8–10 nov): base en Kamuro, una estación antes de Kudoyama.
 
 Sin confirmar: tarifas de bici en Shimanami (¥2,000–8,000 según el local) y el
-peaje de los puentes para bicis (la exención terminó el 31 mar 2026), el alquiler
-de bicis en Sawara y los horarios de invierno del bus Takayama–Matsumoto.
+peaje de los puentes para bicis (la exención terminó el 31 mar 2026) y los
+horarios de invierno del bus Takayama–Matsumoto.
+
+2026-11-07: la última semana pasa a Nippori (minpaku 30 nov – 3 dic, Nagomi
+3–5 dic) en lugar de Hatsudai y Narita. El 3 y el 4 dic son de Tokio (jardines +
+Shibuya, Akihabara + Ginza) y el 5 se va al aeropuerto en el Skyliner. Shibuya
+Sky ~¥3,400 desde las 15:00 y Skyliner ¥2,580 según guías de 2026 (no el sitio
+oficial); Shinjuku Gyoen ¥500, cierra los lunes (Ministerio de Ambiente).
 
 Todas las noches reservadas en Booking al 2026-10-23; las coordenadas de
 hospedaje son las del lugar exacto (PDF de la reserva o GSI, contrastadas con

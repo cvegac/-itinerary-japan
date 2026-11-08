@@ -113,6 +113,7 @@ export const NOTES: TripNotes = {
         "Lemonsea Onomichi (6 nov): ¥10,000",
         "Komorebi Takayama (18 nov): ¥25,497",
         "Minka House Matsumoto (21 nov): ¥13,800",
+        "Nagomi Hotel Nippori (3 dic): ¥18,360",
         "En el resto, revisá en la app de Booking si ya está cobrado",
       ],
     },
@@ -125,6 +126,7 @@ export const NOTES: TripNotes = {
         "Otsu (14 nov): de 15:00 a 22:00",
         "Fuji (24–26 nov): todos los días hay que salir de 10:00 a 15:00",
         "Kawana (27 nov): de 16:00 a 22:00, sin recepción",
+        "Nippori (30 nov y 3 dic): check-out hasta las 10:00 en los dos",
       ],
     },
     {
@@ -214,7 +216,7 @@ export const NOTES: TripNotes = {
             "NO: la ropa del viaje, la comida que vas a comer y todo lo que vas a abrir o usar acá. Lo usado en Japón no tiene devolución: pagalo como una compra normal",
             "La aduana revisa cada ticket completo: si de un ticket falta un producto, se pierde la devolución de TODO ese ticket. Por eso, en la misma tienda hacé dos compras separadas: una normal con lo que vas a usar y otra sin impuesto con lo que vas a llevar cerrado",
             "Concentrá los regalos en pocas tiendas grandes (Don Quijote, Uniqlo, Bic Camera, Loft) para pasar los ¥5,000 de una vez",
-            "Lo más cómodo es comprar los regalos al final, en Tokio y Narita (30 nov – 4 dic): no los cargás 5 semanas y no se te arruinan en la mochila",
+            "Lo más cómodo es comprar los regalos al final, en Tokio (30 nov – 4 dic: Shibuya el 3, Akihabara y Ginza el 4): no los cargás 5 semanas y no se te arruinan en la mochila",
           ],
         },
         {
@@ -260,7 +262,7 @@ export const NOTES: TripNotes = {
             "Uniqlo, GU, Workman y mont-bell tienen el mismo precio en todo Japón: no hay un lugar más barato donde esperar",
             "3 nov, Okachimachi: ropa para Nikko, Misen y el Kumano Kodo. Ojo con el peso: el 4 nov Spring Japan te deja 7 kg en cabina y 10 kg facturados",
             "El abrigo para los Alpes (Takayama, desde el 18 nov) lo podés comprar en Kioto del 14 al 17 (hay Uniqlo en la estación): así no lo cargás en el vuelo de Spring Japan",
-            "La valija para la vuelta, en Tokio del 30 nov al 2 dic (Don Quijote o las tiendas de Shinjuku): Hatsudai queda a 1 parada de Shinjuku",
+            "La valija para la vuelta, en Tokio el 30 nov (Don Quijote, Ameyoko o la calle Kappabashi): las tres quedan a pocas paradas de Nippori",
             "La ropa que vas a usar en el viaje no tiene devolución del impuesto: está explicado en \"Compras sin impuesto\"",
           ],
         },

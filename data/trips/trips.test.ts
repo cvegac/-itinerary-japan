@@ -109,8 +109,7 @@ describe("viaje japan", () => {
   it("tiene la tarjeta para el taxista y los horarios en cada noche con cama", () => {
     const beds = japan.itinerary.filter((d) => !d.isTransit && d.accommodation !== "---");
     expect(beds.filter((d) => !d.lodgingJa?.address).map((d) => d.date)).toEqual([]);
-    // Welco no informó horarios en la confirmación
-    expect(beds.filter((d) => !d.checkIn && !d.accommodation.startsWith("Welco")).map((d) => d.date)).toEqual([]);
+    expect(beds.filter((d) => !d.checkIn).map((d) => d.date)).toEqual([]);
   });
 
   it("tiene el presupuesto de cada día al día con su desglose (lib/budget.ts)", () => {
