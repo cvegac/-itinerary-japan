@@ -649,8 +649,8 @@
         "line": "Nankai Koya Line",
         "from": "Kamuro",
         "to": "Kamikosawa",
-        "duration": "~15min (7:45 → 8:00)",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "duration": "~17min (7:30 → 7:47; o 7:54 → 8:11)",
+        "cost": { "amount": 290, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       { "mode": "caminar", "from": "Estación Kamikosawa", "to": "Unión con el Choishi-michi", "duration": "~1h de subida (8:00 → 9:00)" },
@@ -676,7 +676,7 @@
         "line": "Nankai Rinkan Bus",
         "from": "Okunoin-mae",
         "to": "Estación Koyasan",
-        "duration": "~20min (17:45 → 18:05)",
+        "duration": "~20min (bus 41: 17:58, el siguiente 18:20)",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
@@ -694,7 +694,7 @@
         "line": "Nankai Koya Line",
         "from": "Gokurakubashi",
         "to": "Kamuro",
-        "duration": "~40min (18:35 → 19:15)",
+        "duration": "~40min (llegás 19:16 con el bus de 17:58)",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       }
@@ -747,7 +747,7 @@
         "line": "Nankai Koya Line",
         "from": "Kamuro",
         "to": "Hashimoto",
-        "duration": "~7min (8:30 → 8:37)",
+        "duration": "~7min (sale 9:15)",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
@@ -764,8 +764,8 @@
         "line": "Expreso limitado Kuroshio (o local)",
         "from": "Wakayama",
         "to": "Kii-Tanabe",
-        "duration": "~1h (10:30 → 11:30)",
-        "cost": { "amount": 4000, "currency": "JPY", "approx": true, "detail": "desde Hashimoto con expreso" },
+        "duration": "~1h (llega 12:34)",
+        "cost": { "amount": 4370, "currency": "JPY", "approx": true, "detail": "con el Kuroshio" },
         "pay": ["boleto"]
       },
       { "mode": "caminar", "from": "Estación Kii-Tanabe", "to": "Tsukasa House", "duration": "~7min" }
@@ -779,7 +779,7 @@
     "checkIn": "13:30–23:00",
     "checkOut": "6:00–9:00",
     "pois": [{ "name": "Santuario Tokei-jinja", "coords": [33.72969, 135.38395] }],
-    "budget": "$87",
+    "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
       "Último paseo por el río Kino a la mañana",
@@ -809,18 +809,18 @@
         "line": "Ryujin / Meiko Bus",
         "from": "Kii-Tanabe",
         "to": "Takijiri-oji",
-        "duration": "~40min",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "duration": "~41min (8:30 → 9:10)",
+        "cost": { "amount": 970, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"],
-        "note": "Hay un bus ~8:00 (confirmar horario)"
+        "note": "Bus 95 de Meiko; o el rápido 93 de Ryujin a las 8:36 → 9:17"
       },
       { "mode": "caminar", "line": "Kumano Kodo Nakahechi", "from": "Takijiri-oji", "to": "Chikatsuyu-oji", "duration": "~5–7h, ~13 km" },
       {
         "mode": "bus",
         "from": "Chikatsuyu",
         "to": "Kii-Tanabe",
-        "duration": "~1h",
-        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "duration": "~1h (15:11, 16:07, 16:53 o 17:42)",
+        "cost": { "amount": 1410, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       }
     ],
@@ -837,7 +837,7 @@
       { "name": "Santuario de Takahara", "coords": [33.79427, 135.52933] },
       { "name": "Chikatsuyu-oji (llegada)", "coords": [33.81436, 135.60572] }
     ],
-    "budget": "$73",
+    "budget": "$75",
     "isTransit": false,
     "activitiesDay": [
       "Santuario Takijiri-oji, la entrada a la montaña sagrada",
@@ -865,8 +865,8 @@
         "line": "Ryujin / Meiko Bus",
         "from": "Kii-Tanabe",
         "to": "Hosshinmon-oji",
-        "duration": "~2h",
-        "cost": { "amount": 2000, "currency": "JPY", "approx": true, "detail": "o más" },
+        "duration": "2h14 (8:37 → 10:50, cambio de bus en el camino)",
+        "cost": { "amount": 2570, "currency": "JPY", "approx": true },
         "pay": ["efectivo", "tarjeta"]
       },
       {
@@ -881,8 +881,8 @@
         "line": "Kumano Kotsu",
         "from": "Hongu Taisha-mae",
         "to": "Shingu",
-        "duration": "~1h20",
-        "cost": { "amount": 1540, "currency": "JPY", "detail": "(o con el pase)" },
+        "duration": "~1h06 (14:45, 16:04 o 17:29: el último que llega antes de las 19:00)",
+        "cost": { "amount": 1560, "currency": "JPY", "approx": true },
         "pay": ["Pase de bus Kumano Gobo"]
       },
       {
@@ -908,7 +908,7 @@
       { "name": "Onsen Tsuboyu (Yunomine)", "coords": [33.82919, 135.75772] },
       { "name": "Kumano Hayatama Taisha", "coords": [33.7323, 135.98368], "night": true }
     ],
-    "budget": "$102",
+    "budget": "$106",
     "isTransit": false,
     "activitiesDay": [
       "Última etapa del Nakahechi: de Hosshinmon a Hongu",
@@ -947,7 +947,7 @@
         "duration": "~20min",
         "cost": { "amount": 240, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"],
-        "note": "La estación queda a ~15 min a pie del hospedaje"
+        "note": "Google Maps recomienda el Kuroshio de 8:32 (llegás a Daimonzaka 9:28); el local de 9:42 llega 10:48"
       },
       {
         "mode": "bus",
@@ -965,7 +965,8 @@
         "to": "Kii-Katsuura",
         "duration": "~25min",
         "cost": { "amount": 0, "currency": "JPY", "included": "el pase" },
-        "pay": ["Pase de bus Kumano Gobo"]
+        "pay": ["Pase de bus Kumano Gobo"],
+        "note": "Buses desde la cascada: 13:03, 13:28, 13:58…"
       },
       {
         "mode": "tren",
@@ -1083,7 +1084,7 @@
         "from": "Otsu",
         "to": "Sanjo Keihan",
         "via": ["Yamashina"],
-        "duration": "~25min",
+        "duration": "~25min (sale 7:03)",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
@@ -1101,7 +1102,7 @@
         "line": "Eizan Railway",
         "from": "Demachiyanagi",
         "to": "Kurama",
-        "duration": "~30min",
+        "duration": "~30min (llegás a Kurama 8:16)",
         "cost": { "amount": 470, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
@@ -1257,7 +1258,7 @@
         "line": "JR rápido especial (directo)",
         "from": "Otsu",
         "to": "Sannomiya",
-        "duration": "~1h",
+        "duration": "~1h (sale 8:31)",
         "cost": { "amount": 1300, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
@@ -1275,7 +1276,7 @@
         "line": "Kobe City Bus 16",
         "from": "Rokkomichi",
         "to": "Rokko Cable Shita",
-        "duration": "~20min",
+        "duration": "~20min (llegás 10:08)",
         "cost": { "amount": 230, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
@@ -1658,7 +1659,7 @@
     "label": "Nakasendo a pie: paso de Torii → Narai",
     "location": "Valle de Kiso",
     "category": "Naturaleza",
-    "notes": "Feriado (Día de Acción de Gracias por el Trabajo). Tramo del camino antiguo de Edo: ~6 km y 2h30–3h30 por bosque, sube ~400 m hasta el paso de Torii (1.197 m) y baja a Narai, el pueblo de posta más largo del Nakasendo. Los trenes locales pasan cada ~1 h: mirá el horario de vuelta desde Narai antes de salir. Llevá un cascabel para osos",
+    "notes": "Feriado (Día de Acción de Gracias por el Trabajo). Tramo del camino antiguo de Edo: ~6 km y 2h30–3h30 por bosque, sube ~400 m hasta el paso de Torii (1.197 m) y baja a Narai, el pueblo de posta más largo del Nakasendo. Los trenes locales pasan cada 1–2 h (Google Maps: 7:35 o 7:55 → Yabuhara 8:50; el siguiente recién 9:52): mirá el horario de vuelta desde Narai antes de salir. Llevá un cascabel para osos",
     "weekday": "Lun",
     "food": "Gohei-mochi y soba en Narai",
     "transport": [
@@ -1667,8 +1668,8 @@
         "line": "JR Chuo Line (local)",
         "from": "Matsumoto",
         "to": "Yabuhara",
-        "duration": "~1h",
-        "cost": { "amount": 770, "currency": "JPY", "approx": true },
+        "duration": "~55min (7:55 → 8:50)",
+        "cost": { "amount": 790, "currency": "JPY", "approx": true },
         "pay": ["boleto"],
         "note": "Pasado Shiojiri no hay IC: comprá el boleto en la máquina"
       },
@@ -1684,7 +1685,7 @@
         "line": "JR Chuo Line (local)",
         "from": "Narai",
         "to": "Matsumoto",
-        "duration": "~50min",
+        "duration": "~56min (15:52 → 16:48; antes, 14:14)",
         "cost": { "amount": 590, "currency": "JPY", "approx": true },
         "pay": ["boleto"]
       }
@@ -1824,7 +1825,7 @@
     "label": "Caminata a Mitsutoge (1.785 m) con vista al Fuji",
     "location": "Kawaguchiko",
     "category": "Naturaleza",
-    "notes": "Bus Fujikyu a las 9:40 los días laborables (28 min, ¥840; verificado en mayo 2026). Bajada hacia Kawaguchi y bus de vuelta (~¥350). Hay un puente a punto de caerse antes de Byobu-iwa en la ruta desde la estación Mitsutoge: usá el desvío. Alternativa más tranquila: bosque de Aokigahara y cuevas de lava",
+    "notes": "Bus Fujikyu a las 9:50, el ÚNICO del día (40 min, ¥840; Google Maps, 8 nov 2026). Bajada hacia Kawaguchi y bus de vuelta (~¥350). Hay un puente a punto de caerse antes de Byobu-iwa en la ruta desde la estación Mitsutoge: usá el desvío. Alternativa más tranquila: bosque de Aokigahara y cuevas de lava",
     "weekday": "Jue",
     "food": "Almuerzo en la cima (llevar de la konbini)",
     "transport": [
@@ -1843,7 +1844,7 @@
         "line": "Fujikyu Bus (Tenkachaya)",
         "from": "Kawaguchiko",
         "to": "Mitsutoge Tozanguchi",
-        "duration": "~28min",
+        "duration": "~40min (9:50 → 10:30, único bus del día)",
         "cost": { "amount": 840, "currency": "JPY" },
         "pay": ["suica", "efectivo"]
       },
@@ -1957,7 +1958,7 @@
         "from": "Kawana",
         "to": "Jogasaki-Kaigan",
         "duration": "~10min",
-        "cost": { "amount": 400, "currency": "JPY", "approx": true },
+        "cost": { "amount": 370, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       { "mode": "caminar", "line": "Sendero costero de Jogasaki", "from": "Faro de Kadowakizaki", "to": "Izu-Kogen", "duration": "~2–3h" },
@@ -1966,8 +1967,8 @@
         "line": "Tokai Bus",
         "from": "Izu-Kogen",
         "to": "Monte Omuro",
-        "duration": "~15min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "duration": "~20min (sale seguido: 12:44, 12:59, 13:44…)",
+        "cost": { "amount": 490, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
       {
@@ -1994,7 +1995,7 @@
       { "name": "Monte Omuro", "coords": [34.90314, 139.09476] },
       { "name": "Lago Ippeki-ko", "coords": [34.92889, 139.10585] }
     ],
-    "budget": "$87",
+    "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
       "Puente colgante de Kadowakizaki sobre el mar",
@@ -2071,7 +2072,7 @@
     "label": "Vuelta a Tokio + ginkgos de Gaien",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "~1h45 en el Odoriko (algunos paran en Kawana: si te toca uno, te ahorrás el tramo a Ito). Check-in en Nippori desde las 16:00 (el minpaku queda a ~5 min a pie de la estación). Opción más barata: trenes locales Ito → Atami → Tokio (~2h30, ~¥2,700). Avenida de ginkgos de Jingu Gaien en su punto (fines de nov – principios de dic). Comprá la maleta grande estos días: el vuelo de regreso incluye 23 kg",
+    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. Más barato: trenes locales, 10:03 → 13:01 (~¥2,790). Check-in en Nippori desde las 16:00 (el minpaku queda a ~5 min a pie de la estación). Avenida de ginkgos de Jingu Gaien en su punto (fines de nov – principios de dic). Comprá la maleta grande estos días: el vuelo de regreso incluye 23 kg",
     "weekday": "Lun",
     "food": "Monjayaki en Tsukishima",
     "transport": [
@@ -2140,12 +2141,12 @@
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Keihin-Tohoku → JR Yokosuka Line (directo desde Tokio)",
+        "line": "JR Joban → Tokaido → Yokosuka Line",
         "from": "Nippori",
         "to": "Kamakura",
         "via": ["Tokio"],
-        "duration": "~1h15",
-        "cost": { "amount": 1200, "currency": "JPY", "approx": true },
+        "duration": "~1h08 (8:01 → 9:09)",
+        "cost": { "amount": 1040, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
@@ -2159,13 +2160,14 @@
       },
       {
         "mode": "tren",
-        "line": "Enoden + JR Yokosuka Line + JR Yamanote",
+        "line": "Enoden hasta Fujisawa + JR Tokaido / Keihin-Tohoku",
         "from": "Enoshima",
         "to": "Nippori",
-        "via": ["Kamakura", "Tokio"],
-        "duration": "~1h40",
-        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "via": ["Fujisawa", "Tokio"],
+        "duration": "~1h17 (17:02 → 18:19)",
+        "cost": { "amount": 1260, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Por Fujisawa es más rápido que volver por Kamakura"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2183,7 +2185,7 @@
       { "name": "Templo Hase-dera", "coords": [35.31227, 139.53331] },
       { "name": "Isla Enoshima (faro Sea Candle, cuevas al fondo)", "coords": [35.29965, 139.47858] }
     ],
-    "budget": "$123",
+    "budget": "$121",
     "isTransit": false,
     "activitiesDay": [
       "Templo Hokoku-ji y su bosque de bambú",
@@ -2219,7 +2221,7 @@
         "line": "Keio Line (semi expreso o expreso)",
         "from": "Shinjuku",
         "to": "Takaosanguchi",
-        "duration": "~50min",
+        "duration": "~50min (saliendo de Nippori 7:34 llegás 9:01)",
         "cost": { "amount": 500, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },

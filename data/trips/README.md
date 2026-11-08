@@ -41,7 +41,11 @@ Verificado en línea el 2026-10-21:
 - Teleférico de Shin-Hotaka: ¥3,800 ida y vuelta; cerrado del 24 al 27 nov 2026
   según revendedores (confirmar en shinhotaka-ropeway.jp).
 - Bus Kawaguchiko → Mishima: ~¥2,500, cada ~2 h (Fujikyu).
-- Bus Kawaguchiko → inicio de Mitsutoge: ¥840, 9:40 en días laborables.
+- Bus Kawaguchiko → inicio de Mitsutoge: ¥840, 9:50, el único del día (Google Maps, 8 nov 2026).
+
+Horarios de trenes y buses del 9 nov al 2 dic revisados en Google Maps el 8 nov 2026 (con
+fecha y hora de cada día). Las caminatas NO: Google Maps no conoce los senderos (manda
+por la ruta), así que los recorridos a pie salen de OpenStreetMap.
 - Kobe (17 nov): funicular de Rokko ¥880 (mayo 2026); estuvo cerrado del 5 ene
   al 10 abr 2026 por renovación. Teleférico Rokko-Arima ~¥1,400 ida (sin fecha).
   Bus Arima → Kioto ~¥1,850–2,000, pocas salidas al día.
