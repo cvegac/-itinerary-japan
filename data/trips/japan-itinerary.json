@@ -1069,12 +1069,12 @@
   },
   {
     "date": "2026-11-15",
-    "label": "Kurama → Kibune por la montaña + Ohara",
+    "label": "Kurama → Kibune por la montaña + Higashiyama",
     "location": "Kioto",
     "category": "Naturaleza",
-    "notes": "El norte de Kioto está en su punto a mediados de noviembre. Es domingo: salí de Otsu ~7:00 para empezar en Kurama a las 8:30. Desde Kibune se baja en tren a Demachiyanagi y de ahí el bus 17 sube a Ohara. Oscurece a las ~16:50 y Sanzen-in cierra temprano: no te demores en Kibune",
+    "notes": "El norte de Kioto está en su punto a mediados de noviembre. Es domingo: salí de Otsu ~7:00 para empezar en Kurama a las 8:30. Desde Kibune bajás en tren a Demachiyanagi y la tarde es Higashiyama, de norte a sur. Eikando: entrada hasta las 16:00 (iluminación nocturna recién desde el 20 nov). Si vas justo, saltá Shimogamo. Oscurece a las ~16:50",
     "weekday": "Dom",
-    "food": "Almuerzo rápido en Kibune; pickles de Ohara (shibazuke)",
+    "food": "Almuerzo rápido en Kibune; yudofu (tofu caliente) junto a Nanzen-ji",
     "transport": [
       {
         "mode": "tren",
@@ -1114,32 +1114,28 @@
         "cost": { "amount": 470, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
+      { "mode": "caminar", "from": "Demachiyanagi", "to": "Santuario Shimogamo", "duration": "~10min" },
       {
         "mode": "bus",
-        "line": "Kyoto Bus 17",
+        "line": "Kyoto City Bus 102 o 203",
         "from": "Demachiyanagi",
-        "to": "Ohara",
-        "duration": "~35min",
-        "cost": { "amount": 500, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
+        "to": "Ginkakuji-michi",
+        "duration": "~10min",
+        "cost": { "amount": 230, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~5 min a pie a Ginkaku-ji"
       },
-      {
-        "mode": "bus",
-        "line": "Kyoto Bus 17",
-        "from": "Ohara",
-        "to": "Kioto",
-        "duration": "~1h",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
-      },
+      { "mode": "caminar", "line": "Sendero del Filósofo", "from": "Ginkaku-ji", "to": "Nanzen-ji", "duration": "~1h con paradas, ~2 km" },
       {
         "mode": "tren",
-        "line": "JR Biwako Line",
-        "from": "Kioto",
+        "line": "Metro Tozai → JR Biwako Line (cambio en Yamashina)",
+        "from": "Keage",
         "to": "Otsu",
-        "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "via": ["Yamashina"],
+        "duration": "~20min",
+        "cost": { "amount": 450, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Keage queda a ~5 min a pie de Nanzen-ji"
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1154,21 +1150,33 @@
       { "name": "Templo Kurama-dera", "coords": [35.11787, 135.77065] },
       { "name": "Santuario Kibune", "coords": [35.12189, 135.76294] },
       { "name": "Estación Demachiyanagi", "coords": [35.03067, 135.77319] },
-      { "name": "Templo Sanzen-in", "coords": [35.11964, 135.83492] },
-      { "name": "Templo Hosen-in", "coords": [35.12135, 135.834] }
+      { "name": "Santuario Shimogamo (bosque Tadasu no Mori)", "coords": [35.03699, 135.77245] },
+      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837] },
+      { "name": "Sendero del Filósofo", "coords": [35.02479, 135.79638] },
+      { "name": "Templo Eikando (Zenrin-ji)", "coords": [35.01399, 135.795] },
+      { "name": "Templo Nanzen-ji y el acueducto Suirokaku", "coords": [35.01153, 135.79272] }
     ],
-    "budget": "$117",
+    "budget": "$118",
     "isTransit": false,
     "activitiesDay": [
       { "text": "Templo Kurama-dera", "price": { "amount": 500, "currency": "JPY", "approx": true } },
       "Sendero entre raíces de cedros hasta Kibune",
       "Santuario Kibune y su escalinata de faroles rojos",
-      { "text": "Templo Sanzen-in y su jardín de musgo", "price": { "amount": 700, "currency": "JPY", "approx": true } },
-      { "text": "Hosen-in, con té en el salón, y los arrozales de Ohara", "price": { "amount": 900, "currency": "JPY", "approx": true } }
+      "Santuario Shimogamo y el bosque antiguo de Tadasu no Mori",
+      {
+        "text": "Ginkaku-ji: el Pabellón de Plata y su jardín de arena y musgo",
+        "price": { "amount": 1000, "currency": "JPY", "approx": true }
+      },
+      "Sendero del Filósofo: ~2 km junto al canal, entre arces",
+      {
+        "text": "Eikando, el templo de los arces de Kioto (exposición de otoño)",
+        "price": { "amount": 1500, "currency": "JPY", "approx": true }
+      },
+      "Nanzen-ji y el acueducto de ladrillo Suirokaku"
     ],
-    "activitiesNight": ["Vuelta a Kioto en el bus 17", "Cena cerca de la estación", "Sento en Kioto", "Preparar la bici de mañana"],
+    "activitiesNight": ["Vuelta a Otsu desde Keage", "Cena cerca de la estación de Otsu", "Sento", "Preparar la bici de mañana"],
     "keepOrder": true,
-    "keepOrderReason": "Kurama → Kibune por la montaña, después Ohara"
+    "keepOrderReason": "Kurama → Kibune por la montaña, después Higashiyama de norte a sur"
   },
   {
     "date": "2026-11-16",
@@ -1646,46 +1654,37 @@
   {
     "date": "2026-11-23",
     "hike": true,
-    "label": "Nakasendo a pie: de Tsumago a Magome",
+    "label": "Nakasendo a pie: paso de Torii → Narai",
     "location": "Valle de Kiso",
     "category": "Naturaleza",
-    "notes": "Feriado (Día de Acción de Gracias por el Trabajo): mucha gente. El camino antiguo de Edo, ~8 km por bosque, cascadas y casas de té. Opción más barata y corta: Narai (~1h en tren local, ~¥1,000)",
+    "notes": "Feriado (Día de Acción de Gracias por el Trabajo). Tramo del camino antiguo de Edo: ~6 km y 2h30–3h30 por bosque, sube ~400 m hasta el paso de Torii (1.197 m) y baja a Narai, el pueblo de posta más largo del Nakasendo. Los trenes locales pasan cada ~1 h: mirá el horario de vuelta desde Narai antes de salir. Llevá un cascabel para osos",
     "weekday": "Lun",
-    "food": "Gohei-mochi y kuri-kinton (dulce de castaña)",
+    "food": "Gohei-mochi y soba en Narai",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Chuo Line (expreso Shinano)",
+        "line": "JR Chuo Line (local)",
         "from": "Matsumoto",
-        "to": "Nagiso",
+        "to": "Yabuhara",
         "duration": "~1h",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
-        "pay": ["boleto"]
+        "cost": { "amount": 770, "currency": "JPY", "approx": true },
+        "pay": ["boleto"],
+        "note": "Pasado Shiojiri no hay IC: comprá el boleto en la máquina"
       },
       {
-        "mode": "bus",
-        "from": "Nagiso",
-        "to": "Tsumago",
-        "duration": "~10min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
-        "pay": ["efectivo"]
-      },
-      { "mode": "caminar", "line": "Nakasendo", "from": "Tsumago", "to": "Magome", "duration": "~2h30–3h, ~8 km" },
-      {
-        "mode": "bus",
-        "from": "Magome",
-        "to": "Nakatsugawa",
-        "duration": "~25min",
-        "cost": { "amount": 600, "currency": "JPY", "approx": true },
-        "pay": ["efectivo"]
+        "mode": "caminar",
+        "line": "Nakasendo",
+        "from": "Yabuhara",
+        "to": "Narai",
+        "duration": "~2h30–3h30, ~6 km, paso de Torii (1.197 m)"
       },
       {
         "mode": "tren",
-        "line": "JR Chuo Line (expreso Shinano)",
-        "from": "Nakatsugawa",
+        "line": "JR Chuo Line (local)",
+        "from": "Narai",
         "to": "Matsumoto",
-        "duration": "~1h20",
-        "cost": { "amount": 3500, "currency": "JPY", "approx": true },
+        "duration": "~50min",
+        "cost": { "amount": 590, "currency": "JPY", "approx": true },
         "pay": ["boleto"]
       }
     ],
@@ -1698,24 +1697,21 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Tsumago", "coords": [35.57699, 137.59542] },
-      { "name": "Cascadas Odaki y Medaki", "coords": [35.55492, 137.58923] },
-      { "name": "Casa de té de Tateba (Ichikokutochi)", "coords": [35.54544, 137.58617] },
-      { "name": "Paso de Magome", "coords": [35.53869, 137.58455] },
-      { "name": "Magome", "coords": [35.52655, 137.56748] }
+      { "name": "Estación Yabuhara (inicio de la caminata)", "coords": [35.93085, 137.78478] },
+      { "name": "Paso de Torii (1.197 m)", "coords": [35.95189, 137.79649] },
+      { "name": "Pueblo de posta de Narai", "coords": [35.96455, 137.81043] }
     ],
-    "budget": "$108",
+    "budget": "$73",
     "isTransit": false,
     "activitiesDay": [
-      "Pueblo de posta de Tsumago",
-      "Cascadas de Odaki y Medaki",
-      "Casa de té gratuita de Tateba en el camino",
-      "Paso de Magome y su vista al valle",
-      "Pueblo en cuesta de Magome"
+      "Pueblo de posta de Yabuhara, el de los peines de madera",
+      "Nakasendo por el bosque hasta el paso de Torii (1.197 m)",
+      "Bajada a Narai: ~1 km de casas de madera de la época Edo",
+      "Casas de té y laca de Kiso en Narai"
     ],
     "activitiesNight": ["Vuelta a Matsumoto", "Onsen urbano", "Cena de soba", "Preparar la mochila para Fuji"],
     "keepOrder": true,
-    "keepOrderReason": "Nakasendo de Tsumago a Magome"
+    "keepOrderReason": "Nakasendo de Yabuhara a Narai"
   },
   {
     "date": "2026-11-24",
@@ -2011,47 +2007,38 @@
   },
   {
     "date": "2026-11-29",
-    "label": "Shuzenji: bosque de bambú y arces",
-    "location": "Shuzenji",
+    "label": "Atami: arces del jardín Baien + santuario Kinomiya",
+    "location": "Atami",
     "category": "Naturaleza",
-    "notes": "Shuzenji está en su punto a fines de noviembre. No confirmé alquiler de bici en Izu: mejor a pie. Bus directo desde la estación de Ito por el paso de montaña (de Kawana son 2 paradas de Izukyu)",
+    "notes": "Festival de arces de Atami Baien del 14 nov al 6 dic de 2026, entrada gratis según Japan Travel: de los últimos arces de Japón. Los trenes de Kawana a Atami paran en Kinomiya (directo, ~35 min). El jardín queda a ~10 min a pie de la estación Kinomiya y el santuario a ~3",
     "weekday": "Dom",
-    "food": "Soba con wasabi de Izu",
+    "food": "Himono (pescado seco a la parrilla) y onsen manju en Atami",
     "transport": [
       {
         "mode": "tren",
-        "line": "Izukyu Line",
+        "line": "Izukyu + JR Ito Line (directo)",
         "from": "Kawana",
-        "to": "Ito",
-        "duration": "~8min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "to": "Kinomiya",
+        "via": ["Ito"],
+        "duration": "~35min",
+        "cost": { "amount": 800, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
-        "mode": "bus",
-        "line": "Tokai Bus",
-        "from": "Ito",
-        "to": "Shuzenji Onsen",
-        "duration": "~1h",
-        "cost": { "amount": 1300, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
-      },
-      {
-        "mode": "bus",
-        "line": "Tokai Bus",
-        "from": "Shuzenji Onsen",
-        "to": "Ito",
-        "duration": "~1h",
-        "cost": { "amount": 1300, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
+        "mode": "caminar",
+        "from": "Kinomiya",
+        "to": "Estación de Atami",
+        "duration": "~20min",
+        "note": "Pasando por el centro; o 1 parada de tren"
       },
       {
         "mode": "tren",
-        "line": "Izukyu Line",
-        "from": "Ito",
+        "line": "JR Ito Line + Izukyu (directo)",
+        "from": "Atami",
         "to": "Kawana",
-        "duration": "~8min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "via": ["Ito"],
+        "duration": "~40min",
+        "cost": { "amount": 850, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       }
     ],
@@ -2064,18 +2051,17 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 11:00",
     "pois": [
-      { "name": "Templo Shuzen-ji", "coords": [34.97153, 138.92757] },
-      { "name": "Sendero del bosque de bambú", "coords": [34.96972, 138.92602] },
-      { "name": "Onsen Tokko-no-yu", "coords": [34.9702, 138.92778] },
-      { "name": "Bosque de arces (Momiji Rinkan)", "coords": [34.97795, 138.91303] }
+      { "name": "Jardín Atami Baien (festival de arces)", "coords": [35.09827, 139.05896] },
+      { "name": "Santuario Kinomiya (alcanforero de 2.000 años)", "coords": [35.1001, 139.06788] },
+      { "name": "Museo MOA (vista a la bahía de Sagami)", "coords": [35.10926, 139.07533] }
     ],
-    "budget": "$97",
+    "budget": "$87",
     "isTransit": false,
     "activitiesDay": [
-      "Templo Shuzen-ji",
-      "Sendero del bosque de bambú (Chikurin no Komichi)",
-      "Bosque de arces de Shuzenji (Momiji Rinkan)",
-      "Río Katsura y el onsen Tokko-no-yu (solo pies)"
+      "Jardín Atami Baien: 380 arces, arroyo y puentecitos (gratis)",
+      "Santuario Kinomiya y su alcanforero sagrado de más de 2.000 años",
+      "Opcional: Museo MOA y su vista a la bahía (~7 min en bus desde la estación de Atami)",
+      "Paseo por la costa de Atami"
     ],
     "activitiesNight": ["Vuelta a Kawana", "Último onsen en Ito, de paso", "Cena tranquila", "Preparar la mochila para Tokio"]
   },
