@@ -44,6 +44,7 @@ import ExpenseModal from "@/components/ExpenseModal";
 import { ExpenseRow } from "@/components/ExpenseRows";
 import { localISODate } from "@/lib/trip-time";
 import { useForecast, weatherLabel } from "@/lib/weather";
+import DayWeather from "@/components/DayWeather";
 import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route-plan";
 import { placeNotes } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
@@ -164,7 +165,8 @@ export default function DayDetail({
   // "Hoy" sale del reloj del dispositivo: se calcula después de montar
   const [today, setToday] = useState<string | null>(null);
   useEffect(() => setToday(localISODate(new Date())), []);
-  const forecast = useForecast(day.date, sunPlace, today);
+  const forecastState = useForecast(day.date, sunPlace, today);
+  const forecast = forecastState?.forecast ?? null;
   // Notas compartidas: a qué lugar va la próxima ("" = todo el día) y cuáles son nuevas
   const [noteTarget, setNoteTarget] = useState("");
   useEffect(() => setNoteTarget(""), [day.date]);
@@ -244,6 +246,7 @@ export default function DayDetail({
             </span>
           )}
         </div>
+        {forecastState && <DayWeather forecast={forecastState.forecast} savedAt={forecastState.savedAt} />}
         {day.hike && (
           <p className="text-xs font-medium text-amber-700">
             Oscurece a las {sun.sunset}: calculá terminar el sendero antes.
