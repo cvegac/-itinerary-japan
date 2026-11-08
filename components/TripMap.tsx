@@ -25,6 +25,8 @@ import { hasHiResRelief } from "@/lib/map-download";
 import { TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
 
 export type MapMode = "day" | "week" | "full";
+/** En el modo día: todo, solo los tramos de tren y bus, o solo los lugares y el recorrido */
+export type DayLayer = "all" | "transit" | "route";
 
 type Props = {
   day: DayEntry | null;
@@ -43,6 +45,8 @@ type Props = {
   routes?: DayRoutes;
   /** Tramos de tren, bus, ferry y avión del día elegido, ya trazados (lib/transit.ts) */
   transit?: TransitLine[];
+  /** Qué ver en el modo día (por defecto, todo) */
+  dayLayer?: DayLayer;
 };
 
 type RouteFeature = ReturnType<typeof lineFeature>;
@@ -283,6 +287,7 @@ export default function TripMap({
   focusedPoi = null,
   routes,
   transit = NO_TRANSIT,
+  dayLayer = "all",
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -408,7 +413,7 @@ export default function TripMap({
   useEffect(() => {
     if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [day, mode, routes, transit]);
+  }, [day, mode, routes, transit, dayLayer]);
 
   // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
@@ -524,9 +529,12 @@ export default function TripMap({
 
     const r = validRoutes(d);
     const pois = d.pois ?? [];
+    // Qué ver: los tramos de tren y bus, el recorrido del día (lugares + caminos) o todo
+    const showTransit = dayLayer !== "route";
+    const showRoute = dayLayer !== "transit";
 
     // Letras en el orden de visita (el óptimo, si hay rutas al día)
-    orderedPois(d, r).forEach(({ poi, index }, position) => {
+    (showRoute ? orderedPois(d, r) : []).forEach(({ poi, index }, position) => {
       const letter = poiLetter(position);
       const icon = poiIcon(poi);
       const night = !!poi.night;
@@ -549,23 +557,23 @@ export default function TripMap({
       morning && transit.length === 0
         ? [lineFeature([morning.accommodationCoords, d.accommodationCoords], { color: TRANSFER_COLOR, dashed: true })]
         : [];
+    const dayRoute = r
+      ? r.legs.map((leg) =>
+          leg.line
+            ? lngLatFeature(leg.line, { color, dashed: false })
+            : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
+        )
+      : pois.length > 1
+        ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
+        : [];
     dayFeaturesRef.current = [
-      ...transitFeatures(transit),
-      ...transfer,
-      ...(r
-        ? r.legs.map((leg) =>
-            leg.line
-              ? lngLatFeature(leg.line, { color, dashed: false })
-              : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
-          )
-        : pois.length > 1
-          ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
-          : []),
+      ...(showTransit ? [...transitFeatures(transit), ...transfer] : []),
+      ...(showRoute ? dayRoute : []),
     ];
     setRoute(dayFeaturesRef.current);
 
-    // Sin lugares (vuelos, traslados): se encuadra el trayecto entero
-    if (!view.bounds && transit.length) {
+    // Sin lugares (vuelos, traslados) o viendo solo el transporte: se encuadra el trayecto entero
+    if ((!view.bounds || !showRoute) && transit.length && showTransit) {
       const coords = transit.flatMap((t) => t.line.map(([lng, lat]): [number, number] => [lat, lng]));
       if (hasBed(d)) coords.push(d.accommodationCoords);
       moveCamera(map, { bounds: boundsOf(coords), maxZoom: 14 }, 800);

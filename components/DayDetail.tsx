@@ -381,6 +381,12 @@ export default function DayDetail({
                   <span className="font-normal text-muted">{MODE_TEXT[r.mode]}</span>
                 </a>
               ))}
+              {day.hike && (
+                <p className="w-full text-amber-700">
+                  Ojo: Google Maps no conoce los senderos y te manda por la ruta. En la caminata seguí las señales del
+                  camino y el trazado de esta app (sale de OpenStreetMap, que sí tiene el sendero).
+                </p>
+              )}
             </div>
           )}
         </Section>

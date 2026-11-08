@@ -9,7 +9,8 @@ import { adjacentDay, localISODate, tripStatus, type Snap, type TripStatus } fro
 import { hasBed, morningLodging } from "@/lib/map-geo";
 import { expenseDates, useExpenses, useWithdrawals } from "@/lib/expenses";
 import { dayTransitLines } from "@/lib/transit";
-import type { MapMode } from "@/components/TripMap";
+import type { DayLayer, MapMode } from "@/components/TripMap";
+import DayLayerControl from "@/components/DayLayerControl";
 import TopBar from "@/components/TopBar";
 import SearchModal from "@/components/SearchModal";
 import { useBackClose } from "@/lib/use-back-close";
@@ -94,6 +95,14 @@ export default function TripApp({ tripData }: Props) {
   const expenses = useExpenses(meta.slug);
   const withdrawals = useWithdrawals(meta.slug);
   const [mapMode, setMapMode] = useState<MapMode>("day");
+  // En el mapa del día: todo, solo transporte o solo el recorrido
+  const [dayLayer, setDayLayer] = useState<DayLayer>("all");
+  const mapControls = (
+    <div className="flex flex-col items-start gap-2">
+      <MapModeControl mode={mapMode} onChange={setMapMode} />
+      {mapMode === "day" && <DayLayerControl layer={dayLayer} onChange={setDayLayer} />}
+    </div>
+  );
   const [snap, setSnap] = useState<Snap>("half");
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
   const [status, setStatus] = useState<TripStatus | null>(null);
@@ -239,6 +248,8 @@ export default function TripApp({ tripData }: Props) {
         onOpenList={openList}
         onFocusPoi={(index) => {
           setMapMode("day");
+          // Si estabas viendo solo el transporte, el lugar no se vería
+          if (dayLayer === "transit") setDayLayer("all");
           setFocusedPoi({ index, nonce: Date.now() });
           // Desde la agenda del celular, el lugar se muestra en el mapa
           if (!isDesktop && view === "agenda") setView("itinerary");
@@ -338,23 +349,24 @@ export default function TripApp({ tripData }: Props) {
             focusedPoi={focusedPoi}
             routes={dayRoutes}
             transit={dayTransit}
+            dayLayer={dayLayer}
           />
         </Suspense>
         {mapFullscreen ? (
           <div
-            className="absolute left-3 z-30 flex items-center gap-2"
+            className="absolute left-3 z-30 flex items-start gap-2"
             style={{ top: "max(0.75rem, env(safe-area-inset-top))" }}
           >
             <MapButton label="Salir de pantalla completa" onClick={exitFullscreen}>
               <Minimize2 className="size-5" />
             </MapButton>
-            <MapModeControl mode={mapMode} onChange={setMapMode} />
+            {mapControls}
           </div>
         ) : (
           isDesktop &&
           view === "itinerary" && (
-            <div className="absolute left-3 top-3 z-10 flex items-center gap-2">
-              <MapModeControl mode={mapMode} onChange={setMapMode} />
+            <div className="absolute left-3 top-3 z-10 flex items-start gap-2">
+              {mapControls}
               {fullscreenButton}
             </div>
           )
@@ -390,10 +402,10 @@ export default function TripApp({ tripData }: Props) {
           {view === "itinerary" ? (
             <>
               <div
-                className="absolute left-3 z-20 flex items-center gap-2"
+                className="absolute left-3 z-20 flex items-start gap-2"
                 style={{ top: "calc(max(0.75rem, env(safe-area-inset-top)) + 64px)" }}
               >
-                <MapModeControl mode={mapMode} onChange={setMapMode} />
+                {mapControls}
                 {fullscreenButton}
               </div>
               <BottomSheet

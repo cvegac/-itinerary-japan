@@ -355,6 +355,40 @@ describe("TripMap con trenes y vuelos", () => {
     expect(features.slice(2).every((f) => !f.properties.transit)).toBe(true);
   });
 
+  describe("elegir qué ver del día", () => {
+    const poiMarkers = () => fake.state.markers.filter((m) => m.element?.querySelector("[data-letter]"));
+
+    it("con Transporte muestra solo los tramos, sin los lugares, y encuadra el trayecto", async () => {
+      const view = render(<TripMap {...props(itinerary[0], "day")} transit={[rail]} dayLayer="transit" />);
+      await waitFor(() => expect(fake.state.maps).toHaveLength(1));
+      const map = fake.state.maps[0];
+      act(() => map.emit("style.load"));
+      expect(lastFeatures().length).toBeGreaterThan(0);
+      expect(lastFeatures().every((f) => f.properties.transit)).toBe(true);
+      expect(poiMarkers()).toHaveLength(0);
+      // Encuadra todo el tramo: de Hiroshima (132.47) a 138.7 de longitud
+      const [[west], [east]] = map.fitBounds.mock.calls.at(-1)![0] as [[number, number], [number, number]];
+      expect(west).toBeLessThanOrEqual(132.47);
+      expect(east).toBeGreaterThanOrEqual(138.7);
+      view.unmount();
+    });
+
+    it("con Recorrido muestra los lugares y el camino del día, sin los tramos", async () => {
+      render(<TripMap {...props(itinerary[0], "day")} transit={[rail]} dayLayer="route" />);
+      await waitFor(() => expect(fake.state.maps).toHaveLength(1));
+      act(() => fake.state.maps[0].emit("style.load"));
+      expect(lastFeatures().some((f) => f.properties.transit)).toBe(false);
+      expect(poiMarkers()).toHaveLength(2);
+    });
+
+    it("al cambiar de Todo a Transporte vuelve a dibujar sin los lugares", async () => {
+      const { rerender } = await renderWith(itinerary[0], [rail]);
+      expect(lastFeatures().some((f) => !f.properties.transit)).toBe(true);
+      rerender(<TripMap {...props(itinerary[0], "day")} transit={[rail]} dayLayer="transit" />);
+      expect(lastFeatures().every((f) => f.properties.transit)).toBe(true);
+    });
+  });
+
   it("con el trayecto dibujado ya no pone la recta de cama a cama", async () => {
     await renderWith(today, [rail]);
     const straight = JSON.stringify([toLngLat(yesterday.accommodationCoords), toLngLat(today.accommodationCoords)]);

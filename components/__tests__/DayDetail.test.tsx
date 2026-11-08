@@ -95,6 +95,14 @@ describe("DayDetail", () => {
     expect(screen.getByText(/Oscurece a las 1\d:\d{2}/)).toBeTruthy();
   });
 
+  it("en los días de sendero avisa que Google Maps manda por la ruta y no por el sendero", () => {
+    render(<DayDetail day={{ ...day, hike: true }} dayNumber={2} />);
+    expect(screen.getByText(/Google Maps no conoce los senderos/)).toBeTruthy();
+    cleanup();
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(screen.queryByText(/Google Maps no conoce los senderos/)).toBeNull();
+  });
+
   describe("gastos del día", () => {
     const expenses: Expense[] = [
       { id: "e1", date: "2026-11-02", amount: 1650, currency: "JPY", method: "cash", note: "Toshogu", createdAt: 1 },
