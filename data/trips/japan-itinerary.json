@@ -2198,39 +2198,49 @@
   },
   {
     "date": "2026-12-02",
-    "hike": true,
-    "label": "Caminata al monte Takao",
-    "location": "Takao",
-    "category": "Naturaleza",
-    "notes": "Principios de diciembre es el final del color en Takao. Salí temprano y en día laborable para evitar la gente. Subí por el sendero 6 (junto al arroyo) y bajá por el 1 o el de Inariyama. Al pie, onsen Gokurakuyu",
+    "label": "Tokio a pie: Nezu, Ueno, Asakusa y la Skytree",
+    "location": "Tokio",
+    "category": "Ciudad",
+    "notes": "Día de ciudad sin montaña: todo cerca de Nippori, en llano, ~7 km a pie repartidos en el día. Si te cansás, la Ginza Line une Ueno y Asakusa en 5 min. El Museo Nacional abre 9:30–17:00 (lunes cerrado). Senso-ji ya lo viste de noche el 1/11: ahora de día, con la calle Nakamise. En Tokyo Solamachi (al pie de la Skytree) hay Pokémon Center y Kirby Café para compras. Jakotsu-yu es un sento de agua termal negra en Asakusa (cierra los martes)",
     "weekday": "Mié",
-    "food": "Soba con tororo (ñame) al pie del monte",
+    "food": "Almuerzo en Asakusa (tendon o soba) y cena en Solamachi o de vuelta en Nippori",
     "transport": [
       {
-        "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Nippori",
-        "to": "Shinjuku",
-        "duration": "~20min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Ahí cambiás a la Keio Line"
+        "mode": "caminar",
+        "from": "Minpaku (Negishi)",
+        "to": "Santuario Nezu",
+        "duration": "~25min",
+        "note": "Cruzando la estación Nippori y el cementerio de Yanaka"
       },
+      { "mode": "caminar", "from": "Santuario Nezu", "to": "Parque de Ueno", "duration": "~15min" },
       {
-        "mode": "tren",
-        "line": "Keio Line (semi expreso o expreso)",
-        "from": "Shinjuku",
-        "to": "Takaosanguchi",
-        "duration": "~50min (saliendo de Nippori 7:34 llegás 9:01)",
-        "cost": { "amount": 500, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "mode": "metro",
+        "line": "Tokyo Metro Ginza Line",
+        "from": "Ueno",
+        "to": "Asakusa",
+        "duration": "~5min",
+        "cost": { "amount": 180, "currency": "JPY" },
+        "pay": ["suica"],
+        "note": "O ~30 min a pie"
       },
       {
         "mode": "caminar",
-        "line": "Sendero 6 de Takao",
-        "from": "Takaosanguchi",
-        "to": "Cima del monte Takao (599 m)",
-        "duration": "~1h30"
+        "line": "Sumida River Walk",
+        "from": "Asakusa",
+        "to": "Tokyo Skytree",
+        "duration": "~20min",
+        "note": "Por la pasarela junto a las vías, sobre el río Sumida"
+      },
+      {
+        "mode": "tren",
+        "line": "Keisei Oshiage Line → Keisei Main Line",
+        "from": "Oshiage",
+        "to": "Nippori",
+        "via": ["Aoto"],
+        "duration": "~25min",
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~5 min a pie al minpaku"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2242,24 +2252,32 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Estación Takaosanguchi", "coords": [35.63229, 139.26998] },
-      { "name": "Templo Yakuo-in", "coords": [35.626, 139.25044] },
-      { "name": "Cima del monte Takao", "coords": [35.63109, 139.25609] },
-      { "name": "Monte Shiro (opcional)", "coords": [35.62987, 139.22117] },
-      { "name": "Onsen Gokurakuyu", "coords": [35.63212, 139.26927] }
+      { "name": "Santuario Nezu (túnel de torii)", "coords": [35.72027, 139.76056] },
+      { "name": "Museo Nacional de Tokio", "coords": [35.71885, 139.77654] },
+      { "name": "Santuario Ueno Toshogu", "coords": [35.71636, 139.77089] },
+      { "name": "Templo Kiyomizu Kannon-do", "coords": [35.71265, 139.77296] },
+      { "name": "Estanque Shinobazu", "coords": [35.71188, 139.76941] },
+      { "name": "Calle Nakamise y templo Senso-ji", "coords": [35.71268, 139.79655] },
+      { "name": "Puente peatonal Sumida River Walk", "coords": [35.71035, 139.80144] },
+      { "name": "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)", "coords": [35.71006, 139.8107], "icon": "🗼" }
     ],
-    "budget": "$100",
+    "budget": "$111",
     "isTransit": false,
     "activitiesDay": [
-      "Sendero 6 por el bosque y el arroyo",
-      "Templo Yakuo-in",
-      "Vista del Fuji desde la cima",
-      "Opcional: seguir hasta el monte Shiro (~1h ida)",
-      { "text": "Onsen Keio Takaosan Gokurakuyu", "price": { "amount": 1100, "currency": "JPY", "approx": true } }
+      "Santuario Nezu y su túnel de torii rojos (gratis)",
+      { "text": "Museo Nacional de Tokio: samuráis, biombos y cerámica", "price": { "amount": 1000, "currency": "JPY" } },
+      "Parque de Ueno: Toshogu, Kiyomizu Kannon-do y el estanque Shinobazu",
+      "Asakusa de día: calle Nakamise y Senso-ji",
+      "Sumida River Walk hasta la Skytree"
     ],
-    "activitiesNight": ["Vuelta a Tokio", "Cena en Omoide Yokocho (Shinjuku), de paso", "Armar la mochila: mañana te mudás al Nagomi (a ~1 km)", "Descanso"],
+    "activitiesNight": [
+      "Compras en Tokyo Solamachi (Pokémon Center, Kirby Café)",
+      { "text": "Opcional: mirador de la Skytree de noche", "price": { "amount": 2100, "currency": "JPY", "approx": true } },
+      "Armar la mochila: mañana te mudás al Nagomi (a ~1 km)",
+      "Descanso"
+    ],
     "keepOrder": true,
-    "keepOrderReason": "sendero del monte Takao y onsen al final"
+    "keepOrderReason": "de Nippori hacia el este a pie, y vuelta en tren desde la Skytree"
   },
   {
     "date": "2026-12-03",
