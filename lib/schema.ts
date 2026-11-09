@@ -10,6 +10,7 @@ const currency = z.enum(["JPY", "USD", "COP"]);
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "fecha YYYY-MM-DD");
 const latLng = z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)]);
 const text = z.string().min(1);
+const hhmm = z.string().regex(/^([01]?\d|2[0-3]):[0-5]\d$/, "hora como 6:30");
 
 const moneyFields = {
   amount: z.number().nonnegative(),
@@ -69,6 +70,7 @@ export const DaySchema = z
     lodgingJa: z.object({ name: text, address: text, phone: text.optional() }).strict().optional(),
     checkIn: text.optional(),
     checkOut: text.optional(),
+    morning: z.object({ wake: hhmm, leave: hhmm, why: text }).strict().optional(),
     pois: z.array(PoiSchema).optional(),
     keepOrder: z.boolean().optional(),
     keepOrderReason: text.optional(),

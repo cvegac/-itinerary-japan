@@ -796,7 +796,12 @@
       "Cena de pescado del Pacífico",
       "Preparar la mochila de día y el almuerzo",
       "Dormir temprano: el bus sale ~8:00"
-    ]
+    ],
+    "morning": {
+      "wake": "7:45",
+      "leave": "8:45",
+      "why": "Check-out hasta las 9:00. Nankai a Hashimoto y el JR que siga a Wakayama: llegás a Tanabe ~12:30"
+    }
   },
   {
     "date": "2026-11-11",
@@ -855,7 +860,12 @@
     ],
     "activitiesNight": ["Sento de Tanabe", "Cena abundante en Ajikoji", "Estiramiento", "Preparar la mochila: mañana te mudás a Shingu"],
     "keepOrder": true,
-    "keepOrderReason": "sendero Nakahechi en un solo sentido"
+    "keepOrderReason": "sendero Nakahechi en un solo sentido",
+    "morning": {
+      "wake": "7:00",
+      "leave": "7:50",
+      "why": "Bus 95 de las 8:30 a Takijiri (o el 93 de 8:36). Antes, konbini: almuerzo y agua, en el sendero no hay tiendas"
+    }
   },
   {
     "date": "2026-11-12",
@@ -943,7 +953,8 @@
       "Dormir temprano"
     ],
     "keepOrder": true,
-    "keepOrderReason": "de Hosshinmon a Hongu a pie, después los onsen"
+    "keepOrderReason": "de Hosshinmon a Hongu a pie, después los onsen",
+    "morning": { "wake": "7:15", "leave": "8:10", "why": "Con la mochila y el check-out hecho: bus de las 8:37 a Hosshinmon-oji" }
   },
   {
     "date": "2026-11-13",
@@ -1024,7 +1035,12 @@
       "Preparar la mochila para Kioto"
     ],
     "keepOrder": true,
-    "keepOrderReason": "escalinata de Daimonzaka hasta la cascada"
+    "keepOrderReason": "escalinata de Daimonzaka hasta la cascada",
+    "morning": {
+      "wake": "7:20",
+      "leave": "8:10",
+      "why": "La estación está a 15 min: Kuroshio de 8:32 a Kii-Katsuura (Daimonzaka 9:28). Nachi cierra a las 16:30"
+    }
   },
   {
     "date": "2026-11-14",
@@ -1083,7 +1099,8 @@
     "budget": "$142",
     "isTransit": false,
     "activitiesDay": ["Costa del Pacífico desde el tren", "Check-in en Otsu y vuelta a Kioto (~10 min)", "Paseo por el río Kamo", "Mercado Nishiki"],
-    "activitiesNight": ["Callejón Pontocho", "Gion al anochecer", "Cena barata en el Kyoto Tower Sando", "Tren a Otsu y dormir temprano"]
+    "activitiesNight": ["Callejón Pontocho", "Gion al anochecer", "Cena barata en el Kyoto Tower Sando", "Tren a Otsu y dormir temprano"],
+    "morning": { "wake": "7:45", "leave": "8:45", "why": "Check-out desde las 8:30 y 15 min a pie con la mochila: Nanki 4 de las 9:13" }
   },
   {
     "date": "2026-11-15",
@@ -1206,7 +1223,12 @@
     ],
     "activitiesNight": ["Vuelta a Otsu desde Keage", "Cena cerca de la estación de Otsu", "Sento", "Preparar la bici de mañana"],
     "keepOrder": true,
-    "keepOrderReason": "Kurama → Kibune por la montaña, después Higashiyama de norte a sur"
+    "keepOrderReason": "Kurama → Kibune por la montaña, después Higashiyama de norte a sur",
+    "morning": {
+      "wake": "6:00",
+      "leave": "6:45",
+      "why": "Tren de 7:03 desde Otsu: Kurama a las 8:16. Kurama-dera cierra 16:15 y Eikando deja entrar hasta las 16:00"
+    }
   },
   {
     "date": "2026-11-16",
@@ -1270,7 +1292,12 @@
     ],
     "activitiesNight": ["Devolver la bici", "Cena barata cerca de la estación", "Paseo nocturno por Gion", "Descanso"],
     "keepOrder": true,
-    "keepOrderReason": "el bosque de bambú temprano, antes de la gente"
+    "keepOrderReason": "el bosque de bambú temprano, antes de la gente",
+    "morning": {
+      "wake": "7:30",
+      "leave": "8:25",
+      "why": "La bici se alquila desde ~9:00 junto a la estación de Kioto. Adashino deja entrar hasta las 16:00"
+    }
   },
   {
     "date": "2026-11-17",
@@ -1387,7 +1414,8 @@
       "Preparar la mochila: mañana te mudás a Takayama"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Kitano y el puerto, después el Rokko y Arima"
+    "keepOrderReason": "Kitano y el puerto, después el Rokko y Arima",
+    "morning": { "wake": "7:30", "leave": "8:15", "why": "Rápido especial de 8:31, directo a Sannomiya" }
   },
   {
     "date": "2026-11-18",
@@ -1455,7 +1483,12 @@
     ],
     "activitiesNight": ["Sake en una bodega de Sanmachi", "Cena de Hida-gyu", "Casco viejo iluminado", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "Fushimi Inari al amanecer y después el tren a Takayama"
+    "keepOrderReason": "Fushimi Inari al amanecer y después el tren a Takayama",
+    "morning": {
+      "wake": "5:20",
+      "leave": "6:00",
+      "why": "Con la mochila (avisá el check-out la noche anterior): locker en Kioto, Fushimi Inari a las 6:30 sin gente y Nozomi de 10:36"
+    }
   },
   {
     "date": "2026-11-19",
@@ -1506,7 +1539,12 @@
       "Puente colgante Deai-bashi",
       "Caminata entre los arrozales de la aldea"
     ],
-    "activitiesNight": ["Vuelta a Takayama", "Onsen en Takayama", "Cena de ramen de Takayama", "Confirmar la bici de mañana"]
+    "activitiesNight": ["Vuelta a Takayama", "Onsen en Takayama", "Cena de ramen de Takayama", "Confirmar la bici de mañana"],
+    "morning": {
+      "wake": "6:40",
+      "leave": "7:20",
+      "why": "Hacé fila en la Nohi Bus Center 20+ min antes del primer bus sin reserva (los que no tienen R): se llenan"
+    }
   },
   {
     "date": "2026-11-20",
@@ -1560,7 +1598,12 @@
     ],
     "activitiesNight": ["Cena en Takayama", "Preparar la mochila para el teleférico", "Ropa de invierno lista: mañana a 2.156 m", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "mercado temprano, tour en bici a la mañana en Furukawa"
+    "keepOrderReason": "mercado temprano, tour en bici a la mañana en Furukawa",
+    "morning": {
+      "wake": "6:45",
+      "leave": "7:30",
+      "why": "Mercado del Miyagawa temprano y tren a Hida-Furukawa: confirmá en la reserva a qué hora sale la bici"
+    }
   },
   {
     "date": "2026-11-21",
@@ -1648,7 +1691,8 @@
     ],
     "activitiesNight": ["Check-in en Matsumoto", "Calle Nawate y calle Nakamachi", "Soba de Shinshu", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "teleférico de camino a Matsumoto"
+    "keepOrderReason": "teleférico de camino a Matsumoto",
+    "morning": { "wake": "7:20", "leave": "8:15", "why": "Con la mochila: bus Nohi de 8:40 a Shin-Hotaka (arriba 10:38). Última bajada ~16:45" }
   },
   {
     "date": "2026-11-22",
@@ -1702,7 +1746,12 @@
     ],
     "activitiesNight": ["Castillo iluminado", "Cena de basashi o sanzoku-yaki", "Bar de sake local", "Dormir temprano: mañana el valle de Kiso"],
     "keepOrder": true,
-    "keepOrderReason": "la bici se alquila en Hotaka (en tren desde Matsumoto)"
+    "keepOrderReason": "la bici se alquila en Hotaka (en tren desde Matsumoto)",
+    "morning": {
+      "wake": "8:00",
+      "leave": "8:45",
+      "why": "En invierno las bicis de Hotaka abren a las 10:00. Volvé ~16:00 para el castillo (entrada hasta 16:30)"
+    }
   },
   {
     "date": "2026-11-23",
@@ -1768,7 +1817,12 @@
     ],
     "activitiesNight": ["Vuelta a Matsumoto", "Onsen urbano", "Cena de soba", "Preparar la mochila para Fuji"],
     "keepOrder": true,
-    "keepOrderReason": "Nakasendo de Yabuhara a Narai"
+    "keepOrderReason": "Nakasendo de Yabuhara a Narai",
+    "morning": {
+      "wake": "6:50",
+      "leave": "7:35",
+      "why": "Local de 7:55 a Yabuhara: el siguiente recién a las 9:52. El boleto se compra en la máquina"
+    }
   },
   {
     "date": "2026-11-24",
@@ -1823,7 +1877,8 @@
       "Orilla norte del lago Kawaguchi",
       "Check-in en la cápsula (desde las 15:00)"
     ],
-    "activitiesNight": ["Cena de hoto", "Onsen con vista al Fuji", "Corredor de los Arces iluminado (si sigue el festival)", "Alquilar la bici para mañana"]
+    "activitiesNight": ["Cena de hoto", "Onsen con vista al Fuji", "Corredor de los Arces iluminado (si sigue el festival)", "Alquilar la bici para mañana"],
+    "morning": { "wake": "7:50", "leave": "8:45", "why": "Con la mochila: Azusa de 9:10. La cápsula abre a las 15:00: locker hasta entonces" }
   },
   {
     "date": "2026-11-25",
@@ -1881,7 +1936,8 @@
       "Orilla del lago Saiko",
       "Vista del Fuji desde el agua"
     ],
-    "activitiesNight": ["Devolver la bici", "Onsen", "Cena de hoto o yoshida udon", "Preparar la caminata de mañana"]
+    "activitiesNight": ["Devolver la bici", "Onsen", "Cena de hoto o yoshida udon", "Preparar la caminata de mañana"],
+    "morning": { "wake": "7:45", "leave": "8:30", "why": "El Fuji se ve mejor temprano, y la cápsula se deja igual de 10:00 a 15:00" }
   },
   {
     "date": "2026-11-26",
@@ -1944,7 +2000,12 @@
     ],
     "activitiesNight": ["Onsen para las piernas", "Cena tranquila", "Preparar la mochila para Izu", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "subida a Mitsutoge desde el inicio del sendero"
+    "keepOrderReason": "subida a Mitsutoge desde el inicio del sendero",
+    "morning": {
+      "wake": "8:15",
+      "leave": "9:15",
+      "why": "Único bus a Mitsutoge, 9:50 desde Kawaguchiko. Si hacés la alternativa (Aokigahara), podés salir más tarde"
+    }
   },
   {
     "date": "2026-11-27",
@@ -2005,7 +2066,12 @@
       "Paseo por el río Matsukawa",
       "Pueblo onsen de Ito"
     ],
-    "activitiesNight": ["Baños públicos de Ito (sotoyu)", "Cena de pescado en Ito", "Tren de vuelta a Kawana (confirmá el último)", "Descanso"]
+    "activitiesNight": ["Baños públicos de Ito (sotoyu)", "Cena de pescado en Ito", "Tren de vuelta a Kawana (confirmá el último)", "Descanso"],
+    "morning": {
+      "wake": "8:00",
+      "leave": "8:50",
+      "why": "Con la mochila: bus de 9:20 desde la estación Kawaguchiko. Llegás a Kawana 12:05; el check-in es desde las 16:00"
+    }
   },
   {
     "date": "2026-11-28",
@@ -2069,7 +2135,8 @@
     ],
     "activitiesNight": ["Onsen en Ito o Izu-Kogen", "Cena de mariscos", "Paseo por el puerto de Kawana", "Descanso"],
     "keepOrder": true,
-    "keepOrderReason": "costa de Jogasaki a pie, después bus al Omuro"
+    "keepOrderReason": "costa de Jogasaki a pie, después bus al Omuro",
+    "morning": { "wake": "7:45", "leave": "8:30", "why": "Sendero de Jogasaki a la mañana y bus de 12:44 al Omuro. La telesilla sube hasta ~16:15" }
   },
   {
     "date": "2026-11-29",
@@ -2141,7 +2208,8 @@
       "Opcional: Museo MOA y su vista a la bahía (~7 min en bus desde la estación de Atami)",
       "Paseo por la costa de Atami"
     ],
-    "activitiesNight": ["Vuelta a Kawana", "Último onsen en Ito, de paso", "Cena tranquila", "Preparar la mochila para Tokio"]
+    "activitiesNight": ["Vuelta a Kawana", "Último onsen en Ito, de paso", "Cena tranquila", "Preparar la mochila para Tokio"],
+    "morning": { "wake": "8:15", "leave": "9:00", "why": "Día tranquilo. El Museo MOA deja entrar hasta las 16:00" }
   },
   {
     "date": "2026-11-30",
@@ -2204,7 +2272,8 @@
     ],
     "activitiesNight": ["Cena de monjayaki en Tsukishima", "Paseo nocturno por Ameyoko", "Descanso"],
     "keepOrder": true,
-    "keepOrderReason": "llegás en tren a Tokio con la valija"
+    "keepOrderReason": "llegás en tren a Tokio con la valija",
+    "morning": { "wake": "9:15", "leave": "10:20", "why": "Check-out hasta las 11:00: Odoriko de 10:40 → Nippori 13:06. El minpaku abre a las 16:00" }
   },
   {
     "date": "2026-12-01",
@@ -2274,7 +2343,12 @@
       { "text": "Templo Hase-dera y su vista al mar", "price": { "amount": 400, "currency": "JPY", "approx": true } },
       "Costa hasta Enoshima y sus cuevas"
     ],
-    "activitiesNight": ["Atardecer con el Fuji desde Enoshima (si está despejado)", "Vuelta a Tokio", "Cena en Ueno o Nippori", "Descanso"]
+    "activitiesNight": ["Atardecer con el Fuji desde Enoshima (si está despejado)", "Vuelta a Tokio", "Cena en Ueno o Nippori", "Descanso"],
+    "morning": {
+      "wake": "7:00",
+      "leave": "7:50",
+      "why": "Tren de 8:01 a Kamakura (9:09). En diciembre los templos cierran a las 16:00: Engaku-ji y Hokoku-ji primero"
+    }
   },
   {
     "date": "2026-12-02",
@@ -2366,7 +2440,12 @@
       "Descanso"
     ],
     "keepOrder": true,
-    "keepOrderReason": "de Nippori hacia el este a pie, y vuelta en tren desde la Skytree"
+    "keepOrderReason": "de Nippori hacia el este a pie, y vuelta en tren desde la Skytree",
+    "morning": {
+      "wake": "7:45",
+      "leave": "8:30",
+      "why": "Nezu a las 9:00 sin gente y el Museo Nacional cuando abre (9:30). Toshogu y Kannon-do cierran a las 16:00"
+    }
   },
   {
     "date": "2026-12-03",
@@ -2464,7 +2543,12 @@
       "Vuelta a Nippori: check-in en el Nagomi"
     ],
     "keepOrder": true,
-    "keepOrderReason": "mudanza a la mañana, jardines de día y Shibuya al atardecer"
+    "keepOrderReason": "mudanza a la mañana, jardines de día y Shibuya al atardecer",
+    "morning": {
+      "wake": "7:30",
+      "leave": "8:30",
+      "why": "Check-out con la valija: dejala en el Nagomi y a Rikugien temprano. Shinjuku Gyoen deja entrar hasta las 16:00"
+    }
   },
   {
     "date": "2026-12-04",
@@ -2540,7 +2624,8 @@
       "Cena de despedida: yakitori bajo las vías de Yurakucho",
       "Pesar la maleta: máximo 23 kg",
       "Dormir temprano: check-out hasta las 10:00"
-    ]
+    ],
+    "morning": { "wake": "8:30", "leave": "9:15", "why": "Yodobashi abre a las 9:30; Super Potato a las 11:00 y Mandarake recién a las 12:00" }
   },
   {
     "date": "2026-12-05",
@@ -2598,7 +2683,12 @@
       "Compras libres de impuestos",
       "Últimos KitKat de sabores"
     ],
-    "activitiesNight": ["Vuelo de regreso", "¡Hasta pronto, Japón!"]
+    "activitiesNight": ["Vuelo de regreso", "¡Hasta pronto, Japón!"],
+    "morning": {
+      "wake": "7:15",
+      "leave": "8:15",
+      "why": "Con la valija: Skyliner de 8:40–9:00 desde Nippori. Narita antes de las 10:00 (devolución de impuestos y despacho), vuelo 13:20"
+    }
   },
   {
     "date": "2026-12-06",

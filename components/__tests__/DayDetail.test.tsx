@@ -192,6 +192,14 @@ describe("DayDetail", () => {
     expect(alert.textContent).toContain("Check-in en KUMANO家-OHGi-: 15:00–19:00");
   });
 
+  it("avisa a qué hora levantarse y salir, y por qué", () => {
+    const early = { ...day, morning: { wake: "5:30", leave: "6:15", why: "para el bus de las 8:30" } };
+    render(<DayDetail day={early} dayNumber={2} />);
+    const alert = screen.getByRole("note", { name: "Horarios de hoy" });
+    expect(alert.textContent).toContain("Levantate 5:30 · salí 6:15");
+    expect(alert.textContent).toContain("para el bus de las 8:30");
+  });
+
   it("si seguís en la misma cama no avisa horarios", () => {
     render(<DayDetail day={{ ...day, checkIn: "15:00–19:00" }} dayNumber={2} />);
     expect(screen.queryByRole("note", { name: "Horarios de hoy" })).toBeNull();

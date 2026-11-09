@@ -255,7 +255,7 @@ export default function DayDetail({
       </header>
 
       {/* Horarios del hospedaje: check-out del de anoche y check-in del de hoy */}
-      {(checkOutPrev || checkInToday) && (
+      {(day.morning || checkOutPrev || checkInToday) && (
         <div
           role="note"
           aria-label="Horarios de hoy"
@@ -263,6 +263,14 @@ export default function DayDetail({
         >
           <Clock className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
           <div className="flex flex-col gap-0.5">
+            {day.morning && (
+              <p>
+                <b>
+                  Levantate {day.morning.wake} · salí {day.morning.leave}
+                </b>
+                <span className="block text-xs text-muted">{day.morning.why}</span>
+              </p>
+            )}
             {checkOutPrev && <p>Check-out de {shortName(morningLodging!.accommodation)}: <b>{checkOutPrev}</b></p>}
             {checkInToday && <p>Check-in en {shortName(day.accommodation)}: <b>{checkInToday}</b></p>}
           </div>
