@@ -835,6 +835,9 @@
     "pois": [
       { "name": "Takijiri-oji (inicio)", "coords": [33.77553, 135.50369] },
       { "name": "Santuario de Takahara", "coords": [33.79427, 135.52933] },
+      { "name": "Daimon-oji", "coords": [33.79736, 135.54705] },
+      { "name": "Jujo-oji", "coords": [33.80059, 135.55968] },
+      { "name": "Estatua de Gyuba-doji (paso Hashiori)", "coords": [33.8109, 135.6013], "icon": "🗿" },
       { "name": "Chikatsuyu-oji (llegada)", "coords": [33.81436, 135.60572] }
     ],
     "budget": "$75",
