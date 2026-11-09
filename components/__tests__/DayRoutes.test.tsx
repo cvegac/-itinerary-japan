@@ -33,7 +33,7 @@ const places = () => within(screen.getByRole("list", { name: "Lugares del día" 
 
 describe("DayDetail con rutas", () => {
   it("lista los lugares en el orden de visita, con las letras en ese orden", () => {
-    render(<DayDetail day={day} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={day} routes={routes} />);
     const names = places().getAllByRole("button").map((b) => b.textContent);
     expect(names[0]).toMatch(/^A🌉Puente/);
     expect(names[1]).toMatch(/^B🛕Templo/);
@@ -41,39 +41,39 @@ describe("DayDetail con rutas", () => {
   });
 
   it("dice cómo llegar a cada lugar desde el anterior", () => {
-    render(<DayDetail day={day} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={day} routes={routes} />);
     expect(places().getByText(/8 min a pie · 600 m/)).toBeTruthy();
     expect(places().getByText(/15 min a pie · 1,2 km/)).toBeTruthy();
     expect(places().getByText(/tren o bus/i)).toBeTruthy();
   });
 
   it("muestra el tiempo a pie desde el hospedaje en los lugares cercanos", () => {
-    render(<DayDetail day={day} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={day} routes={routes} />);
     expect(places().getByText(/hospedaje: 9 min a pie/i)).toBeTruthy();
   });
 
   it("resume el recorrido y cuánto ahorra el orden optimizado", () => {
-    render(<DayDetail day={day} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={day} routes={routes} />);
     expect(screen.getByText(/Orden optimizado: ahorra 14 min/)).toBeTruthy();
   });
 
   it("al tocar un lugar avisa su índice original (para el mapa)", async () => {
     const onFocusPoi = vi.fn();
-    render(<DayDetail day={day} dayNumber={1} routes={routes} onFocusPoi={onFocusPoi} />);
+    render(<DayDetail day={day} routes={routes} onFocusPoi={onFocusPoi} />);
     await userEvent.click(places().getAllByRole("button")[0]);
     expect(onFocusPoi).toHaveBeenCalledWith(2);
   });
 
   it("en los días de sendero avisa que los tiempos no cuentan la pendiente", () => {
-    render(<DayDetail day={{ ...day, hike: true }} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={{ ...day, hike: true }} routes={routes} />);
     expect(screen.getByText(/ritmo de llano/i)).toBeTruthy();
     cleanup();
-    render(<DayDetail day={day} dayNumber={1} routes={routes} />);
+    render(<DayDetail day={day} routes={routes} />);
     expect(screen.queryByText(/ritmo de llano/i)).toBeNull();
   });
 
   it("si los lugares del día cambiaron, ignora las rutas viejas", () => {
-    render(<DayDetail day={day} dayNumber={1} routes={{ ...routes, signature: "vieja" }} />);
+    render(<DayDetail day={day} routes={{ ...routes, signature: "vieja" }} />);
     expect(places().getAllByRole("button")[0].textContent).toMatch(/^A🛕Templo/);
     expect(screen.queryByText(/a pie ·/)).toBeNull();
   });

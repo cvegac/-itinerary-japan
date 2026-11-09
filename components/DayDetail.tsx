@@ -56,7 +56,6 @@ import type { ListTarget } from "@/components/ListModal";
 
 type Props = {
   day: DayEntry;
-  dayNumber: number;
   /** Se tocó un lugar de la lista (índice original): el mapa vuela hasta él */
   onFocusPoi?: (index: number) => void;
   /** Rutas precalculadas del día: orden de visita y cómo moverse */
@@ -131,7 +130,6 @@ const TRANSPORT_ICON: Record<string, LucideIcon> = {
 
 export default function DayDetail({
   day,
-  dayNumber,
   onFocusPoi,
   routes,
   morningLodging,
@@ -196,11 +194,6 @@ export default function DayDetail({
     <article className="flex flex-col gap-5 pb-6">
       {/* Encabezado */}
       <header className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-xs font-semibold text-muted">
-          <span>Día {dayNumber}</span>
-          <span aria-hidden>·</span>
-          <span>{formatted}</span>
-        </div>
         <div className="flex items-start justify-between gap-3">
           <h2 className="text-xl font-bold leading-tight text-balance">{day.label}</h2>
           <span className="shrink-0 rounded-full bg-accent/10 px-2.5 py-1 text-sm font-bold text-accent tabular-nums">

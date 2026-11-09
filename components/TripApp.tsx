@@ -296,7 +296,6 @@ export default function TripApp({ tripData }: Props) {
   const dayDetail = selectedDay && (
       <DayDetail
         day={selectedDay}
-        dayNumber={dayNumber}
         routes={dayRoutes}
         morningLodging={morning}
         arriving={arriving}

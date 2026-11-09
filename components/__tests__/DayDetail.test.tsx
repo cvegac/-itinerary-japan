@@ -23,16 +23,17 @@ const day = makeDay("2026-11-02", "Lun", {
 });
 
 describe("DayDetail", () => {
-  it("muestra el título, la fecha y el presupuesto", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+  it("muestra el título y el presupuesto, sin repetir la fecha (ya está en la tira de días)", () => {
+    render(<DayDetail day={day} />);
     expect(screen.getByRole("heading", { name: "Excursión a Nikko" })).toBeTruthy();
-    expect(screen.getByText(/lunes,? 2 de noviembre/i)).toBeTruthy();
+    expect(screen.queryByText(/lunes,? 2 de noviembre/i)).toBeNull();
+    expect(screen.queryByText("Día 2")).toBeNull();
     expect(screen.getByText("$110")).toBeTruthy();
   });
 
   it("lista los lugares con su letra y su ícono, y avisa cuál se tocó", async () => {
     const onFocusPoi = vi.fn();
-    render(<DayDetail day={day} dayNumber={2} onFocusPoi={onFocusPoi} />);
+    render(<DayDetail day={day} onFocusPoi={onFocusPoi} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     expect(within(places).getAllByRole("button").map((b) => b.textContent)).toEqual([
       expect.stringContaining("A⛩️Santuario Toshogu"),
@@ -49,7 +50,7 @@ describe("DayDetail", () => {
         { name: "Cena en Asakusa", coords: [35.71, 139.79], night: true },
       ],
     });
-    render(<DayDetail day={withHours} dayNumber={2} />);
+    render(<DayDetail day={withHours} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     const [toshogu, cena] = within(places).getAllByRole("button", { name: /Toshogu|Cena/ });
     expect(within(toshogu).getByLabelText("Horario").textContent).toBe("9:00–16:00 (última entrada 15:30)");
@@ -58,21 +59,21 @@ describe("DayDetail", () => {
 
   it("en un día de traslado muestra dónde amanecés y dónde dormís", () => {
     const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tokyo Ueno New Izu Hotel", zona: "Ueno" });
-    render(<DayDetail day={day} dayNumber={2} morningLodging={yesterday} />);
+    render(<DayDetail day={day} morningLodging={yesterday} />);
     expect(screen.getByText("Amanecés en")).toBeTruthy();
     expect(screen.getByText("Tokyo Ueno New Izu Hotel")).toBeTruthy();
     expect(screen.getByText("Dormís en")).toBeTruthy();
   });
 
   it("muestra a qué hora sale y se pone el sol donde está el plan del día", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(screen.getByLabelText("Amanecer").textContent).toMatch(/^\d:\d{2}$/);
     expect(screen.getByLabelText("Atardecer").textContent).toMatch(/^1\d:\d{2}$/);
   });
 
   it("en un día de vuelo fuera de Japón no muestra el sol (las horas son de Japón)", () => {
     const flight = makeDay("2026-10-30", "Vie", { accommodation: "---", isTransit: true, enRoute: true, accommodationCoords: [4.7, -74.15] });
-    render(<DayDetail day={flight} dayNumber={1} />);
+    render(<DayDetail day={flight} />);
     expect(screen.queryByLabelText("Amanecer")).toBeNull();
   });
 
@@ -85,7 +86,7 @@ describe("DayDetail", () => {
       }),
     }));
     vi.stubGlobal("fetch", fetchMock);
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     const chip = await screen.findByLabelText("Pronóstico: Lluvia");
     expect(chip.textContent).toContain("9–17 °C");
     expect(chip.textContent).toContain("70 %");
@@ -98,33 +99,33 @@ describe("DayDetail", () => {
     vi.setSystemTime(new Date("2026-09-01T10:00:00"));
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(fetchMock).not.toHaveBeenCalled();
     vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
   it("en los días de sendero avisa a qué hora oscurece", () => {
-    render(<DayDetail day={{ ...day, hike: true }} dayNumber={2} />);
+    render(<DayDetail day={{ ...day, hike: true }} />);
     expect(screen.getByText(/Oscurece a las 1\d:\d{2}/)).toBeTruthy();
   });
 
   it("en los días de sendero avisa que Google Maps manda por la ruta y no por el sendero", () => {
-    render(<DayDetail day={{ ...day, hike: true }} dayNumber={2} />);
+    render(<DayDetail day={{ ...day, hike: true }} />);
     expect(screen.getByText(/Google Maps no conoce los senderos/)).toBeTruthy();
     cleanup();
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(screen.queryByText(/Google Maps no conoce los senderos/)).toBeNull();
   });
 
   it("muestra los relatos de gente que hizo el sendero hace poco, como links", () => {
     const reports = [{ label: "YAMAP: Kurama → Kibune (oct 2026)", url: "https://yamap.com/activities/1" }];
-    render(<DayDetail day={{ ...day, trailReports: reports }} dayNumber={2} />);
+    render(<DayDetail day={{ ...day, trailReports: reports }} />);
     const list = screen.getByRole("list", { name: "Gente que fue hace poco" });
     const link = within(list).getByRole("link", { name: /Kurama → Kibune \(oct 2026\)/ });
     expect(link.getAttribute("href")).toBe("https://yamap.com/activities/1");
     cleanup();
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(screen.queryByRole("list", { name: "Gente que fue hace poco" })).toBeNull();
   });
 
@@ -135,7 +136,7 @@ describe("DayDetail", () => {
     ];
 
     it("lista lo gastado en su moneda y lo compara con el presupuesto", () => {
-      render(<DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
+      render(<DayDetail day={day} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
       const section = screen.getByRole("region", { name: "Gastos del día" });
       expect(within(section).getByText("¥1,650")).toBeTruthy();
       expect(within(section).getByText("US$2")).toBeTruthy();
@@ -145,7 +146,7 @@ describe("DayDetail", () => {
 
     it("registra un gasto de ese día desde el modal", async () => {
       const onAdd = vi.fn();
-      render(<DayDetail day={day} dayNumber={2} expenses={[]} onAddExpense={onAdd} onRemoveExpense={vi.fn()} />);
+      render(<DayDetail day={day} expenses={[]} onAddExpense={onAdd} onRemoveExpense={vi.fn()} />);
       await userEvent.click(screen.getByRole("button", { name: "Registrar" }));
       await userEvent.type(screen.getByLabelText("Monto"), "2500");
       await userEvent.type(screen.getByLabelText("En qué"), "Bici");
@@ -157,7 +158,7 @@ describe("DayDetail", () => {
     it("tocar un gasto lo abre para editarlo", async () => {
       const onUpdate = vi.fn();
       render(
-        <DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} onUpdateExpense={onUpdate} />
+        <DayDetail day={day} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} onUpdateExpense={onUpdate} />
       );
       await userEvent.click(screen.getByRole("button", { name: "Editar gasto Toshogu" }));
       await userEvent.selectOptions(screen.getByLabelText("Tipo de gasto"), "entradas");
@@ -167,7 +168,7 @@ describe("DayDetail", () => {
 
     it("un hospedaje pagado el día anterior muestra la parte de esta noche", () => {
       const paid: Expense = { id: "h", date: "2026-11-01", amount: 17000, currency: "JPY", method: "card", category: "hospedaje", nights: ["2026-11-01", "2026-11-02"], note: "New Izu", createdAt: 1, perUsd: 157 };
-      render(<DayDetail day={day} dayNumber={2} expenses={[paid]} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
+      render(<DayDetail day={day} expenses={[paid]} onAddExpense={vi.fn()} onRemoveExpense={vi.fn()} />);
       const section = screen.getByRole("region", { name: "Gastos del día" });
       expect(within(section).getByText("¥8,500")).toBeTruthy();
       expect(within(section).getByText("noche 2 de 2")).toBeTruthy();
@@ -176,7 +177,7 @@ describe("DayDetail", () => {
 
     it("quita un gasto", async () => {
       const onRemove = vi.fn();
-      render(<DayDetail day={day} dayNumber={2} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={onRemove} />);
+      render(<DayDetail day={day} expenses={expenses} onAddExpense={vi.fn()} onRemoveExpense={onRemove} />);
       await userEvent.click(screen.getByRole("button", { name: "Quitar gasto Toshogu" }));
       expect(onRemove).toHaveBeenCalledWith("e1");
     });
@@ -187,7 +188,7 @@ describe("DayDetail", () => {
       ...day,
       lodgingJa: { name: "東京上野NEW伊豆ホテル", address: "東京都台東区東上野3-13-1", phone: "+81 3-3831-8666" },
     };
-    render(<DayDetail day={withJa} dayNumber={2} />);
+    render(<DayDetail day={withJa} />);
     const card = screen.getByRole("region", { name: "Mostrar al taxista" });
     expect(within(card).getByText("東京上野NEW伊豆ホテル")).toBeTruthy();
     expect(within(card).getByText("東京都台東区東上野3-13-1")).toBeTruthy();
@@ -197,7 +198,7 @@ describe("DayDetail", () => {
   it("el día que llegás a un hospedaje avisa el horario de check-in, y el de check-out del anterior", () => {
     const arriving = { ...day, accommodation: "KUMANO家-OHGi-", checkIn: "15:00–19:00" };
     const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tsukasa House", checkOut: "6:00–9:00" });
-    render(<DayDetail day={arriving} dayNumber={2} morningLodging={yesterday} />);
+    render(<DayDetail day={arriving} morningLodging={yesterday} />);
     const alert = screen.getByRole("note", { name: "Horarios de hoy" });
     expect(alert.textContent).toContain("Check-out de Tsukasa House: 6:00–9:00");
     expect(alert.textContent).toContain("Check-in en KUMANO家-OHGi-: 15:00–19:00");
@@ -205,19 +206,19 @@ describe("DayDetail", () => {
 
   it("avisa a qué hora levantarse y salir, y por qué", () => {
     const early = { ...day, morning: { wake: "5:30", leave: "6:15", why: "para el bus de las 8:30" } };
-    render(<DayDetail day={early} dayNumber={2} />);
+    render(<DayDetail day={early} />);
     const alert = screen.getByRole("note", { name: "Horarios de hoy" });
     expect(alert.textContent).toContain("Levantate 5:30 · salí 6:15");
     expect(alert.textContent).toContain("para el bus de las 8:30");
   });
 
   it("si seguís en la misma cama no avisa horarios", () => {
-    render(<DayDetail day={{ ...day, checkIn: "15:00–19:00" }} dayNumber={2} />);
+    render(<DayDetail day={{ ...day, checkIn: "15:00–19:00" }} />);
     expect(screen.queryByRole("note", { name: "Horarios de hoy" })).toBeNull();
   });
 
   it("si seguís en la misma cama no repite dónde amanecés", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(screen.queryByText("Amanecés en")).toBeNull();
   });
 
@@ -228,7 +229,7 @@ describe("DayDetail", () => {
         { mode: "tren", line: "Tobu Nikko Line", from: "Asakusa", to: "Tobu-Nikko", pay: ["NIKKO PASS"] },
       ],
     });
-    render(<DayDetail day={paid} dayNumber={2} />);
+    render(<DayDetail day={paid} />);
     const cards = screen.getByRole("list", { name: "Tarjetas del día" });
     const rows = within(cards).getAllByRole("listitem").map((li) => li.textContent);
     expect(rows).toEqual([expect.stringContaining("Suica / PASMO"), expect.stringContaining("NIKKO PASS")]);
@@ -237,12 +238,12 @@ describe("DayDetail", () => {
   });
 
   it("no muestra las tarjetas si ningún tramo dice cómo se paga", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     expect(screen.queryByRole("list", { name: "Tarjetas del día" })).toBeNull();
   });
 
   it("muestra los tramos de transporte y las actividades", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     const transport = screen.getByRole("list", { name: "Tramos de transporte" });
     expect(within(transport).getByText("Asakusa")).toBeTruthy();
     expect(within(transport).getByText("Tobu-Nikko")).toBeTruthy();
@@ -252,7 +253,7 @@ describe("DayDetail", () => {
   });
 
   it("muestra los costos y las entradas a partir de los datos", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     const transport = screen.getByRole("list", { name: "Tramos de transporte" });
     expect(within(transport).getByText("Incluido en el NIKKO PASS (¥3,000, 2 días)")).toBeTruthy();
     const deDia = screen.getByRole("heading", { name: "De día" }).closest("section")!;
@@ -268,13 +269,13 @@ describe("DayDetail: notas compartidas", () => {
 
   it("sin sesión invita a entrar para ver y dejar notas", async () => {
     const api = shared({ status: "signed-out", me: null, trip: null });
-    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    render(<DayDetail day={day} shared={api} />);
     await userEvent.click(within(section()).getByRole("button", { name: /Iniciar sesión/ }));
     expect(api.signIn).toHaveBeenCalled();
   });
 
   it("muestra las notas del día con quién las escribió", () => {
-    render(<DayDetail day={day} dayNumber={2} shared={shared({ notes: [note("a"), note("b", { author: "cris" }), note("otro", { day: "2026-11-05" })] })} />);
+    render(<DayDetail day={day} shared={shared({ notes: [note("a"), note("b", { author: "cris" }), note("otro", { day: "2026-11-05" })] })} />);
     const list = within(section()).getByRole("list", { name: "Notas" });
     expect(within(list).getAllByRole("listitem").map((li) => li.textContent)).toEqual([
       expect.stringMatching(/Karla.*Texto a/),
@@ -284,7 +285,7 @@ describe("DayDetail: notas compartidas", () => {
 
   it("agrega una nota para todo el día", async () => {
     const api = shared();
-    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    render(<DayDetail day={day} shared={api} />);
     await userEvent.type(within(section()).getByRole("textbox", { name: "Nueva nota" }), "Llevar abrigo");
     await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
     expect(api.add).toHaveBeenCalledWith("2026-11-02", "Llevar abrigo", undefined);
@@ -292,7 +293,7 @@ describe("DayDetail: notas compartidas", () => {
 
   it("desde un lugar, la nota queda para ese lugar y se ve debajo de él", async () => {
     const api = shared({ notes: [note("l", { place: "Santuario Toshogu", text: "Ir temprano" })] });
-    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    render(<DayDetail day={day} shared={api} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     expect(within(places).getByText("Ir temprano")).toBeTruthy();
     expect(within(section()).queryByText("Ir temprano")).toBeNull();
@@ -306,7 +307,7 @@ describe("DayDetail: notas compartidas", () => {
 
   it("cada uno edita las suyas; cualquiera borra", async () => {
     const api = shared({ notes: [note("a"), note("b", { author: "cris" })] });
-    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    render(<DayDetail day={day} shared={api} />);
     const list = within(section()).getByRole("list", { name: "Notas" });
     const [theirs, mine] = within(list).getAllByRole("listitem");
     expect(within(theirs).queryByRole("button", { name: "Editar nota" })).toBeNull();
@@ -325,7 +326,7 @@ describe("DayDetail: notas compartidas", () => {
   it("marca las nuevas y las da por vistas", () => {
     const fresh = note("n");
     const api = shared({ notes: [fresh], unseen: [fresh, note("otro-dia", { day: "2026-11-05" })] });
-    render(<DayDetail day={day} dayNumber={2} shared={api} />);
+    render(<DayDetail day={day} shared={api} />);
     expect(within(section()).getByText("Nueva")).toBeTruthy();
     expect(api.markSeen).toHaveBeenCalledWith(["n"]);
   });
@@ -335,14 +336,14 @@ describe("DayDetail: Google Maps", () => {
   const places = { Asakusa: [35.71, 139.79] as [number, number], "Tobu-Nikko": [36.74, 139.62] as [number, number] };
 
   it("cada lugar se abre en Google Maps", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     const link = screen.getByRole("link", { name: "Abrir Santuario Toshogu en Google Maps" });
     expect(link.getAttribute("href")).toBe("https://www.google.com/maps/search/?api=1&query=36.758%2C139.599");
     expect(link.getAttribute("target")).toBe("_blank");
   });
 
   it("el recorrido del día vuelve al hospedaje, y lo lejano (Nikko) queda para el tren", () => {
-    render(<DayDetail day={day} dayNumber={2} />);
+    render(<DayDetail day={day} />);
     const links = screen.getAllByRole("link", { name: /^Recorrido/ });
     expect(links.map((l) => l.getAttribute("aria-label"))).toEqual(["Recorrido B → Hospedaje a pie en Google Maps"]);
     expect(links[0].getAttribute("href")).toContain("origin=35.71%2C139.79&destination=35.7119%2C139.7983");
@@ -350,14 +351,14 @@ describe("DayDetail: Google Maps", () => {
 
   it("sale del hospedaje cuando los lugares quedan cerca", () => {
     const near = makeDay("2026-11-03", "Mar", { pois: [{ name: "Ameyoko", coords: [35.71, 139.7745] }] });
-    render(<DayDetail day={near} dayNumber={3} />);
+    render(<DayDetail day={near} />);
     expect(screen.getByRole("link", { name: /^Recorrido/ }).getAttribute("aria-label")).toBe(
       "Recorrido Hospedaje → Hospedaje a pie en Google Maps"
     );
   });
 
   it("cada tramo de transporte, entre sus estaciones", () => {
-    render(<DayDetail day={day} dayNumber={2} places={places} />);
+    render(<DayDetail day={day} places={places} />);
     const link = screen.getByRole("link", { name: "Ver Asakusa → Tobu-Nikko en Google Maps" });
     expect(link.getAttribute("href")).toContain("travelmode=transit");
   });
@@ -374,7 +375,7 @@ describe("DayDetail: listas", () => {
       { id: "otro", title: "Regalos", day: "2026-12-05" },
       { id: "sin", title: "Empacar", day: null },
     ]);
-    render(<DayDetail day={day} dayNumber={2} shared={shared} onOpenList={onOpenList} />);
+    render(<DayDetail day={day} shared={shared} onOpenList={onOpenList} />);
     const section = screen.getByRole("region", { name: "Listas del día" });
     expect(within(section).queryByText("Regalos")).toBeNull();
     expect(within(section).queryByText("Empacar")).toBeNull();
@@ -384,7 +385,7 @@ describe("DayDetail: listas", () => {
 
   it("un día sin listas no muestra la sección, pero deja crear una para ese día", async () => {
     const onOpenList = vi.fn();
-    render(<DayDetail day={day} dayNumber={2} shared={sharedWithLists([])} onOpenList={onOpenList} />);
+    render(<DayDetail day={day} shared={sharedWithLists([])} onOpenList={onOpenList} />);
     expect(screen.queryByRole("region", { name: "Listas del día" })).toBeNull();
     await userEvent.click(screen.getByRole("button", { name: "Lista para este día" }));
     expect(onOpenList).toHaveBeenCalledWith({ day: "2026-11-02" });
