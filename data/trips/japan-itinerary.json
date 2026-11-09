@@ -971,7 +971,7 @@
     "label": "Hosshinmon → Hongu Taisha → Shingu",
     "location": "Kumano Hongu",
     "category": "Naturaleza",
-    "notes": "Salí con la mochila: dejala en los lockers del Kumano Hongu Heritage Center. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine",
+    "notes": "Salí con la mochila: dejala en los lockers del Kumano Hongu Heritage Center. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min",
     "weekday": "Jue",
     "food": "Almuerzo cerca de Hongu Taisha",
     "transport": [
@@ -1571,7 +1571,11 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–11:00",
     "pois": [
-      { "name": "Santuario Fushimi Inari", "coords": [34.96752, 135.77971], "hours": "Abierto siempre" },
+      { "name": "Santuario Fushimi Inari (portón Romon)", "coords": [34.96708, 135.77254], "hours": "Abierto siempre" },
+      { "name": "Túnel de torii Senbon Torii", "coords": [34.96691, 135.77483], "icon": "⛩️" },
+      { "name": "Okusha Hohaisho (piedras Omokaru)", "coords": [34.96654, 135.77558], "icon": "⛩️" },
+      { "name": "Estanque y santuario Kumataka-sha", "coords": [34.96835, 135.77862], "icon": "⛩️" },
+      { "name": "Yotsutsuji (mirador sobre Kioto)", "coords": [34.96909, 135.78142], "icon": "🏞️" },
       { "name": "Cima del monte Inari", "coords": [34.96701, 135.78553] },
       { "name": "Casco viejo Sanmachi Suji", "coords": [36.14236, 137.25925], "hours": "Tiendas ~9:00–17:00" },
       { "name": "Puente Nakabashi", "coords": [36.14001, 137.2592] }
@@ -2242,7 +2246,15 @@
         "cost": { "amount": 370, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
-      { "mode": "caminar", "line": "Sendero costero de Jogasaki", "from": "Faro de Kadowakizaki", "to": "Izu-Kogen", "duration": "~2–3h" },
+      {
+        "mode": "caminar",
+        "line": "Sendero costero de Jogasaki",
+        "from": "Puente colgante de Kadowaki",
+        "to": "Puente colgante Hashidate (Izu-Kogen)",
+        "duration": "~2–3h",
+        "via": ["Faro de Kadowakizaki", "Renchaku-ji", "Cascada de Tajima"],
+        "note": "Sendero costero señalizado entre acantilados de lava. Desde el puente Hashidate son ~10 min a pie a la estación Izu-Kogen (bus al Omuro)"
+      },
       {
         "mode": "bus",
         "line": "Tokai Bus",
@@ -2260,6 +2272,16 @@
         "duration": "~6min",
         "cost": { "amount": 1000, "currency": "JPY", "approx": true },
         "pay": ["efectivo", "tarjeta"]
+      },
+      {
+        "mode": "bus",
+        "line": "Tokai Bus I61 / I67",
+        "from": "Shaboten Koen (Monte Omuro)",
+        "to": "Lago Ippeki-ko",
+        "duration": "~14min",
+        "cost": { "amount": 440, "currency": "JPY" },
+        "pay": ["suica", "efectivo"],
+        "note": "Según Google Maps (9 nov): salidas 10:36, 11:09…; mirá el horario de la tarde en la parada"
       }
     ],
     "accommodation": "Villa FUN Kawana (habitación triple, baño compartido)",
@@ -2271,12 +2293,15 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 11:00",
     "pois": [
-      { "name": "Faro de Kadowakizaki", "coords": [34.88995, 139.1386], "hours": "9:00–16:00 (nov–feb)" },
       { "name": "Puente colgante de Kadowaki", "coords": [34.89053, 139.13875] },
-      { "name": "Monte Omuro", "coords": [34.90314, 139.09476], "hours": "Telesilla ~9:00–16:15 (última subida)" },
-      { "name": "Lago Ippeki-ko", "coords": [34.92889, 139.10585] }
+      { "name": "Faro de Kadowakizaki", "coords": [34.88995, 139.1386], "hours": "9:00–16:00 (nov–feb)" },
+      { "name": "Templo Renchaku-ji (sobre el sendero costero)", "coords": [34.88272, 139.13101] },
+      { "name": "Cascada de Tajima (mirador)", "coords": [34.87134, 139.10943], "icon": "🏞️" },
+      { "name": "Puente colgante Hashidate (fin del sendero)", "coords": [34.87088, 139.10739], "icon": "🌉" },
+      { "name": "Monte Omuro", "coords": [34.90314, 139.09476], "hours": "Telesilla ~9:00–16:15 (última subida)", "byTransit": true },
+      { "name": "Lago Ippeki-ko", "coords": [34.92889, 139.10585], "byTransit": true }
     ],
-    "budget": "$89",
+    "budget": "$91",
     "isTransit": false,
     "activitiesDay": [
       "Puente colgante de Kadowakizaki sobre el mar",
@@ -2286,7 +2311,7 @@
     ],
     "activitiesNight": ["Onsen en Ito o Izu-Kogen", "Cena de mariscos", "Paseo por el puerto de Kawana", "Descanso"],
     "keepOrder": true,
-    "keepOrderReason": "costa de Jogasaki a pie, después bus al Omuro",
+    "keepOrderReason": "El sendero costero va de norte a sur hasta Izu-Kogen; después bus al Omuro y al lago Ippeki",
     "morning": { "wake": "7:45", "leave": "8:30", "why": "Sendero de Jogasaki a la mañana y bus de 12:44 al Omuro. La telesilla sube hasta ~16:15" },
     "trailReports": [
       {
