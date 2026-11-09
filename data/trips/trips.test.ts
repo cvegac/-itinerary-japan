@@ -49,6 +49,14 @@ describe.each(getAllTrips().map((t) => [t.meta.slug, t] as const))("viaje %s", (
     });
   });
 
+  it("las tiendas de segunda mano cuelgan de un hospedaje que existe y quedan a menos de 15 km", () => {
+    for (const [place, shops] of Object.entries(trip.shops ?? {})) {
+      const day = trip.itinerary.find((d) => d.lodgingPlace === place);
+      expect(day, place).toBeDefined();
+      for (const shop of shops) expect(distanceKm(day!.accommodationCoords, shop.coords), shop.name).toBeLessThan(15);
+    }
+  });
+
   it("tiene coordenadas de hospedaje válidas", () => {
     itinerary.forEach(({ date, accommodationCoords: [lat, lng] }) => {
       expect(Math.abs(lat), date).toBeLessThanOrEqual(90);

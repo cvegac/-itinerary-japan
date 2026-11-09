@@ -4,6 +4,7 @@ import routes from "./japan-routes.json";
 import places from "./japan-places.json";
 import transit from "./japan-transit.json";
 import { NOTES } from "./japan-notes";
+import { SHOPS } from "./japan-shops";
 import type { TripData } from "@/types/Trip";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripRoutes } from "@/lib/route-plan";
@@ -31,4 +32,5 @@ export const japanTrip: TripData = {
   places: places as unknown as Places,
   // Trenes por las vías, buses por la ruta y vuelos en arco (scripts/fetch-transit.mjs)
   transit: transit as unknown as TripTransit,
+  shops: SHOPS,
 };

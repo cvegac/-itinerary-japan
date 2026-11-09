@@ -323,7 +323,7 @@ export default function TripApp({ tripData }: Props) {
         onUpdateWithdrawal={withdrawals.update}
       />
     ) : view === "lodging" ? (
-      <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} />
+      <LodgingSummaryView itinerary={itinerary} onDaySelect={openFromSummary} shops={tripData.shops} />
     ) : view === "buses" && nightBusSummary ? (
       <BusSummaryView nightBusSummary={nightBusSummary} onClose={() => setView("itinerary")} />
     ) : view === "notes" && notes ? (

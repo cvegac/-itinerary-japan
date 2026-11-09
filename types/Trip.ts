@@ -71,6 +71,16 @@ export type TripNotes = {
   topics?: TripNoteTopic[];
 };
 
+/** Tienda cerca de un hospedaje (Hard Off, Book Off, 2nd Street…) */
+export type NearbyShop = {
+  name: string;
+  /** Qué vende */
+  what: string;
+  coords: [number, number];
+  /** Cómo llegar desde el hospedaje, ej. "~10 min a pie" */
+  howFar: string;
+};
+
 export type TripData = {
   meta: TripMeta;
   itinerary: DayEntry[];
@@ -84,4 +94,6 @@ export type TripData = {
   places?: Places;
   /** Trazado de los tramos de tren, bus y avión por fecha (scripts/fetch-transit.mjs) */
   transit?: TripTransit;
+  /** Tiendas de segunda mano por hospedaje, con la clave de lodgingPlace */
+  shops?: Record<string, NearbyShop[]>;
 };

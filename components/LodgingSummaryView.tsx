@@ -1,12 +1,16 @@
 "use client";
 
-import { BedDouble, MapPin } from "lucide-react";
+import { BedDouble, MapPin, Recycle } from "lucide-react";
 import { computeLodgingSummary } from "@/lib/itinerary-utils";
+import { placeUrl } from "@/lib/google-maps";
 import type { DayEntry } from "@/types/DayEntry";
+import type { NearbyShop } from "@/types/Trip";
 
 type Props = {
   itinerary: DayEntry[];
   onDaySelect: (day: DayEntry) => void;
+  /** Tiendas de segunda mano por hospedaje (clave: lodgingPlace) */
+  shops?: Record<string, NearbyShop[]>;
 };
 
 const usd = (amount: number) => `US$${Math.round(amount).toLocaleString("en-US")}`;
@@ -15,7 +19,7 @@ function shortDate(date: string): string {
   return new Date(date + "T12:00:00").toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
 }
 
-export default function LodgingSummaryView({ itinerary, onDaySelect }: Props) {
+export default function LodgingSummaryView({ itinerary, onDaySelect, shops }: Props) {
   const stays = computeLodgingSummary(itinerary);
   const totalNights = stays.reduce((sum, s) => sum + s.nights, 0);
   const totalCost = stays.reduce((sum, s) => sum + (s.cost ?? 0), 0);
@@ -69,6 +73,28 @@ export default function LodgingSummaryView({ itinerary, onDaySelect }: Props) {
                 )}
               </span>
             </button>
+            {shops?.[s.place] && (
+              <ul aria-label={`Segunda mano cerca de ${s.place}`} className="ml-12 mt-1.5 flex flex-col gap-1">
+                {shops[s.place].map((shop) => (
+                  <li key={shop.name}>
+                    <a
+                      href={placeUrl(shop.coords)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex gap-2 rounded-xl bg-surface-2 px-3 py-2 text-sm hover:bg-line"
+                    >
+                      <Recycle className="mt-0.5 size-4 shrink-0 text-emerald-600" aria-hidden />
+                      <span className="min-w-0">
+                        <span className="block font-medium">{shop.name}</span>
+                        <span className="block text-xs text-muted">
+                          {shop.what} · {shop.howFar}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ol>
