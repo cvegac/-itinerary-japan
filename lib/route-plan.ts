@@ -17,7 +17,16 @@ export type Leg = {
   durationS: number;
   /** Sin trazado en los tramos de tren o bus (no hay ruteo libre de transporte en Japón) */
   line?: Line;
+  /** Sendero que OpenStreetMap no conoce: OSRM daba una vuelta absurda por la
+   *  carretera, así que no hay trazado y la distancia es aproximada */
+  unmapped?: boolean;
 };
+
+/** La ruta a pie de OSRM es mucho más larga que la recta: el sendero real no está
+ *  en OpenStreetMap y OSRM te manda por la carretera (pasó en Kamikosawa) */
+export function isAbsurdDetour(routeM: number, straightKm: number): boolean {
+  return routeM > Math.max(3 * straightKm * 1000, straightKm * 1000 + 3000);
+}
 
 export type LodgingRoute = { distanceM: number; durationS: number; line: Line };
 

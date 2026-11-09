@@ -3,6 +3,7 @@ import { makeDay } from "@/components/__tests__/fixtures";
 import {
   bestOrder,
   chooseOrder,
+  isAbsurdDetour,
   isBikeDay,
   isExcursion,
   legMode,
@@ -73,6 +74,17 @@ describe("chooseOrder", () => {
 
   it("mantiene el orden del plan si el día lo pide (senderos, trenes, alquileres)", () => {
     expect(chooseOrder({ ...day, keepOrder: true }, best, 9999, 3)).toEqual([0, 1, 2]);
+  });
+});
+
+describe("isAbsurdDetour", () => {
+  it("una ruta a pie mucho más larga que la recta es un sendero que OpenStreetMap no conoce", () => {
+    // Kamikosawa → Furu-toge: 1,7 km en recta, OSRM daba 20 km por la carretera
+    expect(isAbsurdDetour(20_600, 1.7)).toBe(true);
+    // Un sendero normal con curvas: el doble de la recta está bien
+    expect(isAbsurdDetour(9_300, 4.5)).toBe(false);
+    // Tramos cortos: unos cientos de metros de vuelta no son un desvío absurdo
+    expect(isAbsurdDetour(1_200, 0.3)).toBe(false);
   });
 });
 

@@ -107,6 +107,7 @@ function formatDistance(meters: number): string {
 
 function legText(leg: Leg): string {
   if (leg.mode === "transit") return `Tren o bus · ~${formatDistance(leg.distanceM)}`;
+  if (leg.unmapped) return `Sendero sin mapear · ~${formatDistance(leg.distanceM)}: seguí los carteles`;
   const how = leg.mode === "bike" ? "en bici" : "a pie";
   return `${formatDuration(leg.durationS)} ${how} · ${formatDistance(leg.distanceM)}`;
 }

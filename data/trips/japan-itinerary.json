@@ -640,7 +640,7 @@
     "label": "Choishi-michi a pie hasta Koyasan + Okunoin al anochecer",
     "location": "Koyasan",
     "category": "Naturaleza",
-    "notes": "Camino de peregrinación Patrimonio de la Humanidad, marcado con piedras cada ~109 m. Versión media: entrás por la estación Kamikosawa (~4h hasta Daimon). Versión completa: desde Jison-in a las 7:00, ~22 km y 6–8h, llegando a Daimon a las ~14:00 (sin Kongobu-ji). En noviembre oscurece a las ~16:50. El último funicular de bajada sale ~21:40 (horario de Nankai desde el 16 oct 2026, según una guía); confirmá el último bus desde Okunoin en la parada y que el desvío desde Kamikosawa esté abierto. Horas aproximadas",
+    "notes": "Camino de peregrinación Patrimonio de la Humanidad, marcado con piedras cada ~109 m. Versión media: entrás por la estación Kamikosawa, subís ~1 h por el sendero señalizado hasta Furu-toge (古峠) y ahí empalmás con el Choishi-michi: 400 m después están los dos torii de Futatsu-torii, y de ahí ~3 h hasta Daimon. El tramo Kamikosawa → Furu-toge NO está en OpenStreetMap: las apps de mapas te mandan por la carretera; seguí los carteles. En Yatate el sendero cruza la ruta 480. En noviembre oscurece a las ~16:50",
     "weekday": "Lun",
     "food": "Almuerzo de shojin ryori cerca de Danjo Garan (~¥3,000)",
     "transport": [
@@ -653,13 +653,20 @@
         "cost": { "amount": 290, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
-      { "mode": "caminar", "from": "Estación Kamikosawa", "to": "Unión con el Choishi-michi", "duration": "~1h de subida (8:00 → 9:00)" },
+      {
+        "mode": "caminar",
+        "from": "Estación Kamikosawa",
+        "to": "Furu-toge (empalme con el Choishi-michi)",
+        "duration": "~1h de subida, ~2,5 km",
+        "note": "Cruzá el puente sobre el río y subí por el sendero señalizado hacia 古峠 (Furu-toge), entre plantaciones de caqui. NO sigas la carretera: el sendero no está en OpenStreetMap y Google Maps/Organic Maps te mandan por la ruta. En Furu-toge hay un cartel verde «←上古沢駅»"
+      },
       {
         "mode": "caminar",
         "line": "Choishi-michi",
-        "from": "Unión con el camino",
+        "from": "Furu-toge",
         "to": "Gran puerta Daimon (Koyasan)",
-        "duration": "~3h (9:00 → 12:00)"
+        "via": ["Futatsu-torii", "Kanda", "Yatate"],
+        "duration": "~3h, ~11 km (piedras choishi cada 109 m)"
       },
       {
         "mode": "bus",
@@ -709,6 +716,11 @@
     "checkOut": "7:00–10:00",
     "pois": [
       { "name": "Estación Kamikosawa", "coords": [34.2575, 135.548] },
+      { "name": "Furu-toge: empalme con el Choishi-michi (cartel verde «←上古沢駅»)", "coords": [34.26304, 135.53045], "icon": "⛰️" },
+      { "name": "Futatsu-torii (dos torii y mirador)", "coords": [34.25882, 135.5274], "icon": "⛩️" },
+      { "name": "Descanso de Kanda (baños del Choishi-michi)", "coords": [34.25061, 135.52801], "icon": "🚻" },
+      { "name": "Choishi-michi, bajando a Yatate", "coords": [34.2238, 135.5371], "icon": "🪨" },
+      { "name": "Cruce de Yatate (ruta 480)", "coords": [34.21964, 135.5373], "icon": "🛣️" },
       { "name": "Gran puerta Daimon", "coords": [34.21315, 135.57286] },
       {
         "name": "Danjo Garan",
@@ -735,7 +747,18 @@
       "Descanso: fue el día más largo a pie"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Choishi-michi: de Kamikosawa a Daimon y Okunoin al anochecer"
+    "keepOrderReason": "Choishi-michi: de Kamikosawa a Daimon y Okunoin al anochecer",
+    "trailReports": [
+      {
+        "label": "YAMAP: estación Kamikosawa → Danjo Garan por el Choishi-michi (ruta y diarios)",
+        "url": "https://yamap.com/model-courses/24319"
+      },
+      {
+        "label": "Furu-toge ↔ Kamikosawa: el sendero de enlace, con fotos de los carteles",
+        "url": "https://sherpers.org/mountain-climbing-hike/20170225-4/"
+      },
+      { "label": "Visit Wakayama: el Choishi-michi tramo por tramo", "url": "https://visitwakayama.jp/en/itineraries/detail_49.html" }
+    ]
   },
   {
     "date": "2026-11-10",

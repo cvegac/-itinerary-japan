@@ -101,6 +101,11 @@ describe("recorrido con los hospedajes", () => {
     expect(names(dayStops(bus, busPois, new Map(), null))).toEqual(["Hospedaje", "A(foot)", "B(transit)", "Hospedaje(foot)"]);
   });
 
+  it("un tramo de sendero sin mapear corta el link: Google Maps te mandaría por la carretera", () => {
+    const legs = new Map([[1, { from: 0, to: 1, mode: "foot" as const, distanceM: 2500, durationS: 3600, unmapped: true }]]);
+    expect(names(dayStops(day, pois, legs, null))).toEqual(["Hospedaje", "A(foot)", "B(transit)", "Hospedaje(foot)"]);
+  });
+
   it("sin lugares no hay recorrido", () => {
     expect(dayStops({ ...day, pois: [] }, [], new Map(), null)).toEqual([]);
   });

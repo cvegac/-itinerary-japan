@@ -67,7 +67,7 @@ export function dayStops(
       coords: poi.coords,
       // Los tramos "desde el hospedaje" salen del de esta noche: en un traslado no sirven
       modeFromPrev: prev
-        ? poi.byTransit
+        ? poi.byTransit || leg?.unmapped
           ? "transit"
           : leg && leg.from !== "lodging"
             ? leg.mode

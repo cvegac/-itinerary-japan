@@ -235,6 +235,18 @@ describe("TripMap con rutas", () => {
     expect(features[2].geometry.coordinates).toEqual([toLngLat(pois[0].coords), toLngLat(pois[1].coords)]);
   });
 
+  it("un sendero sin mapear va como recta punteada (no se inventa un camino)", async () => {
+    const view = await renderLoadedMap(routedDay, "day");
+    const unmapped: DayRoutes = {
+      ...dayRoutes,
+      legs: dayRoutes.legs.map((l, i) => (i === 1 ? { ...l, line: undefined, unmapped: true } : l)),
+    };
+    view.rerender(<TripMap {...props(routedDay, "day")} routes={unmapped} />);
+    const features = fake.state.routes.at(-1)!.features as { properties: { dashed: boolean }; geometry: { coordinates: unknown } }[];
+    expect(features[1].properties.dashed).toBe(true);
+    expect(features[1].geometry.coordinates).toEqual([toLngLat(pois[2].coords), toLngLat(pois[0].coords)]);
+  });
+
   it("las letras siguen el orden de visita y cada lugar lleva su ícono", async () => {
     await renderRouted();
     const poiMarkers = fake.state.markers.slice(-3);

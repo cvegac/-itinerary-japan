@@ -47,6 +47,15 @@ describe("DayDetail con rutas", () => {
     expect(places().getByText(/tren o bus/i)).toBeTruthy();
   });
 
+  it("un sendero que OpenStreetMap no conoce avisa que sigas los carteles, sin inventar el camino", () => {
+    const unmapped: DayRoutes = {
+      ...routes,
+      legs: routes.legs.map((l) => (l.to === 0 ? { ...l, unmapped: true, line: undefined } : l)),
+    };
+    render(<DayDetail day={day} routes={unmapped} />);
+    expect(places().getByText(/Sendero sin mapear · ~1,2 km: seguí los carteles/)).toBeTruthy();
+  });
+
   it("muestra el tiempo a pie desde el hospedaje en los lugares cercanos", () => {
     render(<DayDetail day={day} routes={routes} />);
     expect(places().getByText(/hospedaje: 9 min a pie/i)).toBeTruthy();

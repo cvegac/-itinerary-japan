@@ -87,6 +87,13 @@ async function dayRoutes(day, start) {
       continue;
     }
     const r = await route(mode, fromCoords, pois[to].coords);
+    if (r && mode === "foot" && plan.isAbsurdDetour(r.distanceM, km)) {
+      // El sendero no está en OpenStreetMap: sin trazado (recta punteada) y la
+      // distancia y el tiempo estimados a ritmo de sendero (~1,4× la recta, 3 km/h)
+      console.warn(`  ⚠ ${day.date} ${from === "lodging" ? "hospedaje" : pois[from].name} → ${pois[to].name}: OSRM da ${r.distanceM} m para ${km.toFixed(1)} km en recta, sendero sin mapear`);
+      legs.push({ from, to, mode, unmapped: true, distanceM: Math.round(km * 1400), durationS: Math.round(((km * 1.4) / 3) * 3600) });
+      continue;
+    }
     legs.push(r ? { from, to, mode, ...r } : { from, to, mode: "transit", distanceM: Math.round(km * 1000), durationS: Math.round(transitSeconds(km)) });
   }
 
