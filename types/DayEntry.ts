@@ -16,6 +16,9 @@ export type PointOfInterest = {
   icon?: string;
   /** Horario de apertura y cierre, ej. "8:30–17:00 (última entrada 16:30)" */
   hours?: string;
+  /** Se llega en tren o bus aunque quede cerca (el camino a pie es por la
+   *  ruta o no conviene): el recorrido no lo marca a pie */
+  byTransit?: boolean;
 };
 
 export type DayEntry = {

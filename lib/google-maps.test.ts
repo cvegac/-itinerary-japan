@@ -95,6 +95,12 @@ describe("recorrido con los hospedajes", () => {
     expect(names(dayStops(bike, pois, new Map(), null))).toEqual(["Hospedaje", "A(bike)", "B(bike)", "Hospedaje(bike)"]);
   });
 
+  it("a un lugar marcado 'byTransit' se llega en tren o bus aunque quede cerca", () => {
+    const bus = { ...day, pois: [day.pois![0], { ...day.pois![1], byTransit: true }] };
+    const busPois = bus.pois.map((poi, index) => ({ poi, index }));
+    expect(names(dayStops(bus, busPois, new Map(), null))).toEqual(["Hospedaje", "A(foot)", "B(transit)", "Hospedaje(foot)"]);
+  });
+
   it("sin lugares no hay recorrido", () => {
     expect(dayStops({ ...day, pois: [] }, [], new Map(), null)).toEqual([]);
   });

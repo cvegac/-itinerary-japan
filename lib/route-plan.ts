@@ -64,7 +64,7 @@ export function legMode(straightKm: number, bikeDay: boolean, hikeDay = false): 
 }
 
 export function poiSignature(day: DayEntry): string {
-  return (day.pois ?? []).map((p) => `${p.name}@${p.coords.join(",")}`).join("|");
+  return (day.pois ?? []).map((p) => `${p.name}@${p.coords.join(",")}${p.byTransit ? "@bus" : ""}`).join("|");
 }
 
 /**

@@ -1941,13 +1941,12 @@
   },
   {
     "date": "2026-11-26",
-    "hike": true,
-    "label": "Caminata a Mitsutoge (1.785 m) con vista al Fuji",
+    "label": "Fuji turístico: teleférico Kachi Kachi, Oshino Hakkai y santuario de cedros",
     "location": "Kawaguchiko",
-    "category": "Naturaleza",
-    "notes": "Bus Fujikyu a las 9:50, el ÚNICO del día (40 min, ¥840; Google Maps, 8 nov 2026). Bajada hacia Kawaguchi y bus de vuelta (~¥350). Hay un puente a punto de caerse antes de Byobu-iwa en la ruta desde la estación Mitsutoge: usá el desvío. Alternativa más tranquila: bosque de Aokigahara y cuevas de lava",
+    "category": "Ciudad",
+    "notes": "Día turístico y sin sendero: todo en bus, teleférico y caminos con gente. Mitsutoge queda descartado: la bajada a Kawaguchi está cerrada desde el terremoto de junio. Teleférico temprano, cuando el Fuji suele estar despejado (se suspende con viento fuerte). Oshino Hakkai son 8 estanques de agua del Fuji, que tarda años en filtrarse por la lava: es muy turístico y antes del mediodía hay menos gente. El santuario Kitaguchi Hongu tiene una avenida de cedros gigantes; era la puerta de los peregrinos que subían al Fuji. Desde ahí son ~25 min a pie al hospedaje por calles",
     "weekday": "Jue",
-    "food": "Almuerzo en la cima (llevar de la konbini)",
+    "food": "Kusa-mochi y tofu de agua del Fuji en Oshino · hoto (fideos gruesos de Yamanashi) a la noche",
     "transport": [
       {
         "mode": "tren",
@@ -1957,26 +1956,37 @@
         "duration": "~3min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Salí antes de las 9:30 para el bus"
+        "note": "Después ~15 min a pie hasta el teleférico, junto al lago"
+      },
+      {
+        "mode": "teleférico",
+        "line": "Teleférico Kachi Kachi (Fuji Panorama Ropeway)",
+        "from": "Base del teleférico Kachi Kachi",
+        "to": "Mirador del monte Tenjo",
+        "duration": "~3min por trayecto",
+        "cost": { "amount": 900, "currency": "JPY", "approx": true, "detail": "ida y vuelta" },
+        "pay": ["efectivo", "suica"]
       },
       {
         "mode": "bus",
-        "line": "Fujikyu Bus (Tenkachaya)",
+        "line": "Fujikyu Bus (hacia Oshino / Yamanakako)",
         "from": "Kawaguchiko",
-        "to": "Mitsutoge Tozanguchi",
-        "duration": "~40min (9:50 → 10:30, único bus del día)",
-        "cost": { "amount": 840, "currency": "JPY" },
-        "pay": ["suica", "efectivo"]
+        "to": "Oshino Hakkai",
+        "duration": "~25min, 1–2 por hora",
+        "cost": { "amount": 620, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
+        "note": "Desde la parada son ~5 min a pie"
       },
-      { "mode": "caminar", "from": "Mitsutoge Tozanguchi", "to": "Cima de Mitsutoge → bajada a Kawaguchi", "duration": "~5–6h" },
       {
         "mode": "bus",
-        "from": "Kawaguchi-kyoku-mae",
-        "to": "Kawaguchiko",
+        "line": "Fujikyu Bus (hacia Fujisan / Kawaguchiko)",
+        "from": "Oshino Hakkai",
+        "to": "Sengen-jinja-mae",
         "duration": "~10min",
-        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "cost": { "amount": 400, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
-      }
+      },
+      { "mode": "caminar", "from": "Santuario Kitaguchi Hongu", "to": "Cápsula en Fujikyu-Highland", "duration": "~25min" }
     ],
     "accommodation": "Mt.Fuji Cabin & Lounge Highland Station Inn (cápsula, solo hombres)",
     "lodgingPlace": "Estación Fujikyu-Highland, Fujikawaguchiko",
@@ -1987,24 +1997,40 @@
     "checkIn": "15:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Inicio de la caminata (Mitsutoge Tozanguchi)", "coords": [35.55609, 138.79169] },
-      { "name": "Cima de Mitsutoge", "coords": [35.54916, 138.80916] }
+      {
+        "name": "Teleférico Kachi Kachi (base)",
+        "coords": [35.50378, 138.77441],
+        "hours": "~9:00–16:30 en invierno · se suspende con viento fuerte"
+      },
+      { "name": "Mirador del monte Tenjo (Fuji y lago)", "coords": [35.50364, 138.77707], "hours": "Mismo horario del teleférico" },
+      {
+        "name": "Estanques de Oshino Hakkai",
+        "coords": [35.46024, 138.8327],
+        "hours": "Estanques abiertos siempre · tiendas ~9:00–17:00",
+        "byTransit": true
+      },
+      {
+        "name": "Santuario Kitaguchi Hongu Fuji Sengen (avenida de cedros)",
+        "coords": [35.47101, 138.79264],
+        "hours": "Recinto abierto siempre · oficina ~9:00–16:00",
+        "byTransit": true
+      }
     ],
-    "budget": "$78",
+    "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
-      "Subida a Mitsutoge",
-      "Vista del Fuji y los cinco lagos desde la cima",
-      "Paredes de escalada de Byobu-iwa",
-      "Alternativa: Aokigahara + cueva de hielo de Narusawa + cueva de viento de Fugaku"
+      { "text": "Teleférico Kachi Kachi al monte Tenjo", "price": { "amount": 900, "currency": "JPY", "approx": true } },
+      "Vista del Fuji sobre el lago Kawaguchi",
+      "Aldea y estanques de Oshino Hakkai",
+      "Santuario Kitaguchi Hongu y su avenida de cedros"
     ],
     "activitiesNight": ["Onsen para las piernas", "Cena tranquila", "Preparar la mochila para Izu", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "subida a Mitsutoge desde el inicio del sendero",
+    "keepOrderReason": "El Fuji se ve mejor temprano desde el teleférico; el santuario queda de camino al hospedaje",
     "morning": {
-      "wake": "8:15",
-      "leave": "9:15",
-      "why": "Único bus a Mitsutoge, 9:50 desde Kawaguchiko. Si hacés la alternativa (Aokigahara), podés salir más tarde"
+      "wake": "7:45",
+      "leave": "8:30",
+      "why": "El Fuji se ve mejor temprano: teleférico cuando abre (~9:00). Oshino antes del mediodía, con menos gente"
     }
   },
   {

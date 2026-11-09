@@ -66,7 +66,13 @@ export function dayStops(
       name: poi.name,
       coords: poi.coords,
       // Los tramos "desde el hospedaje" salen del de esta noche: en un traslado no sirven
-      modeFromPrev: prev ? (leg && leg.from !== "lodging" ? leg.mode : byDistance(prev.coords, poi.coords)) : undefined,
+      modeFromPrev: prev
+        ? poi.byTransit
+          ? "transit"
+          : leg && leg.from !== "lodging"
+            ? leg.mode
+            : byDistance(prev.coords, poi.coords)
+        : undefined,
     });
   });
   if (hasBed(day)) {

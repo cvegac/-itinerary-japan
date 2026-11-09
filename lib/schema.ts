@@ -49,7 +49,7 @@ const ActivitySchema = z.union([
 ]);
 
 const PoiSchema = z
-  .object({ name: text, coords: latLng, night: z.boolean().optional(), icon: text.optional(), hours: text.optional() })
+  .object({ name: text, coords: latLng, night: z.boolean().optional(), icon: text.optional(), hours: text.optional(), byTransit: z.boolean().optional() })
   .strict();
 
 export const DaySchema = z

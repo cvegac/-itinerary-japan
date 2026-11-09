@@ -49,6 +49,7 @@ async function dayRoutes(day, start) {
     const j = to === "start" ? 0 : to + 1;
     const km = straight(i, j);
     // La caminata es entre los lugares del sendero; al primero se llega en tren o bus
+    if (to !== "start" && pois[to].byTransit) return transitSeconds(km);
     if (plan.legMode(km, bike, hike && from !== "start" && to !== "start") === "transit") return transitSeconds(km);
     return table?.durations?.[i]?.[j] ?? (km / (bike ? 14 : 4.5)) * 3600;
   };
@@ -80,7 +81,7 @@ async function dayRoutes(day, start) {
     const from = k === 0 ? "lodging" : order[k - 1];
     const fromCoords = from === "lodging" ? start : pois[from].coords;
     const km = distanceKm(fromCoords, pois[to].coords);
-    const mode = plan.legMode(km, bike, hike && from !== "lodging");
+    const mode = pois[to].byTransit ? "transit" : plan.legMode(km, bike, hike && from !== "lodging");
     if (mode === "transit") {
       legs.push({ from, to, mode, distanceM: Math.round(km * 1000), durationS: Math.round(transitSeconds(km)) });
       continue;
