@@ -16,6 +16,8 @@ const fake = vi.hoisted(() => {
     controls: [] as unknown[],
     markers: [] as { lngLat: unknown; element?: HTMLElement }[],
     mapOptions: [] as Record<string, unknown>[],
+    positions: [] as (string | undefined)[],
+    terrain: [] as unknown[],
   };
 
   class FakeMap {
@@ -42,8 +44,18 @@ const fake = vi.hoisted(() => {
     isStyleLoaded() {
       return false;
     }
-    addControl(control: unknown) {
+    addControl(control: unknown, position?: string) {
       state.controls.push(control);
+      state.positions.push(position);
+    }
+    setTerrain(t: unknown) {
+      state.terrain.push(t);
+    }
+    getBearing() {
+      return 0;
+    }
+    getPitch() {
+      return 0;
     }
     addSource() {}
     addLayer() {}
@@ -101,7 +113,12 @@ const fake = vi.hoisted(() => {
     }
   }
 
-  class Control {}
+  class Control {
+    constructor(public options?: Record<string, unknown>) {}
+  }
+  class NavigationControl extends Control {}
+  class TerrainControl extends Control {}
+  class AttributionControl extends Control {}
   class GeolocateControl {
     handlers: Record<string, () => void> = {};
     constructor(public options: Record<string, unknown>) {}
@@ -117,9 +134,9 @@ const fake = vi.hoisted(() => {
       Map: FakeMap,
       Marker: FakeMarker,
       Popup: FakePopup,
-      NavigationControl: Control,
-      TerrainControl: Control,
-      AttributionControl: Control,
+      NavigationControl,
+      TerrainControl,
+      AttributionControl,
       GeolocateControl,
       setWorkerUrl: () => {},
     },
@@ -150,6 +167,8 @@ afterEach(() => {
   fake.state.controls.length = 0;
   fake.state.markers.length = 0;
   fake.state.mapOptions.length = 0;
+  fake.state.positions.length = 0;
+  fake.state.terrain.length = 0;
 });
 
 /** Elementos de los marcadores de día que siguen en el mapa (los últimos dibujados) */
@@ -445,6 +464,28 @@ describe("TripMap", () => {
     rerender(<TripMap {...props(itinerary[1], "day", sheetDown)} />);
     expect(map.easeTo).toHaveBeenLastCalledWith(expect.objectContaining({ padding: sheetDown }));
     expect(map.fitBounds).not.toHaveBeenCalled();
+  });
+
+  it("sin +/− (en el celular se hace zoom con los dedos) y sin el botón de relieve: va en el menú Capas", async () => {
+    await renderLoadedMap(itinerary[0], "day");
+    const nav = fake.state.controls.find((c) => c instanceof fake.module.NavigationControl) as { options: Record<string, unknown> };
+    expect(nav.options).toMatchObject({ showZoom: false, showCompass: true });
+    expect(fake.state.controls.some((c) => c instanceof fake.module.TerrainControl)).toBe(false);
+  });
+
+  it("los créditos van arriba a la derecha, debajo de los botones, y no tapan nada", async () => {
+    await renderLoadedMap(itinerary[0], "day");
+    const i = fake.state.controls.findIndex((c) => c instanceof fake.module.AttributionControl);
+    expect(fake.state.positions[i]).toBe("top-right");
+  });
+
+  it("el relieve 3D se prende y se apaga desde afuera", async () => {
+    const { rerender } = await renderLoadedMap(itinerary[0], "day");
+    expect(fake.state.terrain.at(-1) ?? null).toBeNull();
+    rerender(<TripMap {...props(itinerary[0], "day")} terrain />);
+    expect(fake.state.terrain.at(-1)).toMatchObject({ source: "terrain" });
+    rerender(<TripMap {...props(itinerary[0], "day")} terrain={false} />);
+    expect(fake.state.terrain.at(-1)).toBeNull();
   });
 
   it("muestra los controles del mapa en español", async () => {

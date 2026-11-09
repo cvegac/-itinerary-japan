@@ -13,6 +13,8 @@ type Props = {
   /** Para descargar el mapa del viaje */
   itinerary?: DayEntry[];
   status: TripStatus | null;
+  /** Ya estás en el día de hoy: no hace falta el botón "Hoy" */
+  viewingToday?: boolean;
   onToday: () => void;
   /** Abre la búsqueda en todos los días */
   onSearch?: () => void;
@@ -20,7 +22,7 @@ type Props = {
   floating?: boolean;
 };
 
-export default function TopBar({ meta, itinerary, status, onToday, onSearch, floating = false }: Props) {
+export default function TopBar({ meta, itinerary, status, viewingToday = false, onToday, onSearch, floating = false }: Props) {
   return (
     <header
       className={
@@ -39,11 +41,12 @@ export default function TopBar({ meta, itinerary, status, onToday, onSearch, flo
       <span className="text-2xl leading-none" aria-hidden>
         {meta.emoji}
       </span>
-      <div className="min-w-0 flex-1">
-        <h1 className="truncate text-base font-bold leading-tight">{meta.title}</h1>
-        <p className="truncate text-xs text-muted">{meta.subtitle}</p>
+      {/* En el celular alcanza con la bandera: el lugar queda para los botones */}
+      <div className={floating ? "flex-1" : "min-w-0 flex-1"}>
+        <h1 className={floating ? "sr-only" : "truncate text-base font-bold leading-tight"}>{meta.title}</h1>
+        {!floating && <p className="truncate text-xs text-muted">{meta.subtitle}</p>}
       </div>
-      {status?.kind === "during" && (
+      {status?.kind === "during" && !viewingToday && (
         <button
           type="button"
           onClick={onToday}
@@ -68,7 +71,7 @@ export default function TopBar({ meta, itinerary, status, onToday, onSearch, flo
           <Search className="size-5" />
         </button>
       )}
-      <OfflineControl itinerary={itinerary} />
+      <OfflineControl itinerary={itinerary} hideWhenReady />
       <AccountControl />
     </header>
   );

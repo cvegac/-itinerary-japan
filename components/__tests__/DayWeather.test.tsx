@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { act, cleanup, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import DayWeather from "@/components/DayWeather";
 
@@ -13,8 +14,18 @@ const parts = [
 ];
 
 describe("DayWeather", () => {
-  it("muestra la temperatura y la lluvia de la mañana, el mediodía, la tarde y la noche", () => {
+  it("arranca en una sola línea con el ícono y la temperatura de cada momento", () => {
     render(<DayWeather forecast={{ code: 3, max: 14, min: 6, rain: 40, parts }} savedAt={null} />);
+    const summary = screen.getByRole("button", { name: /Clima por momento del día/ });
+    expect(summary.getAttribute("aria-expanded")).toBe("false");
+    expect(summary.textContent).toContain("9°");
+    expect(summary.textContent).toContain("8°");
+    expect(screen.queryByRole("list", { name: "Clima por momento del día" })).toBeNull();
+  });
+
+  it("al tocarla muestra la temperatura y la lluvia de la mañana, el mediodía, la tarde y la noche", async () => {
+    render(<DayWeather forecast={{ code: 3, max: 14, min: 6, rain: 40, parts }} savedAt={null} />);
+    await act(() => userEvent.click(screen.getByRole("button", { name: /Clima por momento del día/ })));
     const list = screen.getByRole("list", { name: "Clima por momento del día" });
     const items = within(list).getAllByRole("listitem");
     expect(items.map((li) => li.textContent)).toEqual([

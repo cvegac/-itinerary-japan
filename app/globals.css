@@ -58,6 +58,14 @@
   top: var(--map-inset-top, 0px);
 }
 
+/* La brújula solo aparece si giraste o inclinaste el mapa (para volver al norte) */
+.trip-map:not(.map-rotated) .maplibregl-ctrl-compass {
+  display: none;
+}
+.trip-map:not(.map-rotated) .maplibregl-ctrl-group:has(> .maplibregl-ctrl-compass:only-child) {
+  display: none;
+}
+
 .trip-map .maplibregl-popup-content {
   border-radius: 12px;
   padding: 10px 12px;

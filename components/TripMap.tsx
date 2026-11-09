@@ -51,6 +51,8 @@ type Props = {
   dayLayer?: DayLayer;
   /** Tiendas de segunda mano a mostrar (vacío o sin pasar: ninguna) */
   shops?: NearbyShop[];
+  /** Relieve 3D del terreno */
+  terrain?: boolean;
 };
 
 type RouteFeature = ReturnType<typeof lineFeature>;
@@ -256,6 +258,10 @@ function poiPopupHtml(letter: string, icon: string, name: string, night: boolean
 }
 
 // ── Capas propias (se re-agregan cada vez que cambia el estilo) ─────────────
+function applyTerrain(map: MapLibreMap, on: boolean) {
+  map.setTerrain(on ? { source: "terrain", exaggeration: 1.3 } : null);
+}
+
 function ensureOverlay(map: MapLibreMap, terrainMaxZoom: number) {
   if (!map.getSource("terrain")) {
     map.addSource("terrain", {
@@ -319,7 +325,11 @@ export default function TripMap({
   transit = NO_TRANSIT,
   dayLayer = "all",
   shops = NO_SHOPS,
+  terrain = false,
 }: Props) {
+  // El relieve se aplica también al recargar el estilo (lo borra)
+  const terrainRef = useRef(terrain);
+  terrainRef.current = terrain;
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const libRef = useRef<MapLibre | null>(null);
@@ -374,8 +384,9 @@ export default function TripMap({
       });
       mapRef.current = map;
 
-      map.addControl(new lib.AttributionControl({ compact: true }), "top-left");
-      map.addControl(new lib.NavigationControl({ visualizePitch: true }), "top-right");
+      // Sin +/− (en el celular se hace zoom con los dedos): queda la brújula, que
+      // se ve solo si giraste o inclinaste el mapa (ver la clase map-rotated)
+      map.addControl(new lib.NavigationControl({ showZoom: false, showCompass: true, visualizePitch: true }), "top-right");
       // Tu ubicación con el GPS del celular: no necesita internet, y no se
       // guarda ni se manda a ningún lado (el permiso lo pide el navegador)
       const geolocate = new lib.GeolocateControl({
@@ -387,13 +398,20 @@ export default function TripMap({
       geolocate.on("trackuserlocationstart", () => (trackingRef.current = true));
       geolocate.on("trackuserlocationend", () => (trackingRef.current = false));
       map.addControl(geolocate, "top-right");
-      map.addControl(new lib.TerrainControl({ source: "terrain", exaggeration: 1.3 }), "top-right");
+      // Créditos chiquitos debajo de los botones: arriba a la izquierda los tapaban
+      // los controles de la app. El relieve 3D se prende desde el menú Capas
+      map.addControl(new lib.AttributionControl({ compact: true }), "top-right");
+      const markRotated = () =>
+        containerRef.current?.classList.toggle("map-rotated", map.getBearing() !== 0 || map.getPitch() !== 0);
+      map.on("rotate", markRotated);
+      map.on("pitch", markRotated);
 
       // Cada cambio de estilo borra las capas propias: se vuelven a agregar.
       // La primera vez, además, se dibuja el día: con la última versión de
       // renderLayer (la de este efecto quedó con el día del arranque)
       map.on("style.load", () => {
         ensureOverlay(map, terrainMaxZoom);
+        applyTerrain(map, terrainRef.current);
         (map.getSource(ROUTE_SOURCE) as GeoJSONSource).setData({
           type: "FeatureCollection",
           features: routeRef.current,
@@ -445,6 +463,11 @@ export default function TripMap({
     if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [day, mode, routes, transit, dayLayer, shops]);
+
+  // ── Relieve 3D (desde el menú Capas) ─────────────────────────────────────
+  useEffect(() => {
+    if (mapRef.current && readyRef.current) applyTerrain(mapRef.current, terrain);
+  }, [terrain]);
 
   // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;

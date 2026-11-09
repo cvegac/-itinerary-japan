@@ -57,3 +57,22 @@ describe("OfflineControl", () => {
     await waitFor(() => expect(toggle.getAttribute("aria-checked")).toBe("false"));
   });
 });
+
+describe("OfflineControl en la barra (hideWhenReady)", () => {
+  afterEach(() => {
+    Object.defineProperty(navigator, "onLine", { value: true, configurable: true });
+  });
+
+  it("con conexión y sin problemas no ocupa lugar en la barra", async () => {
+    offline.enabled = true;
+    render(<OfflineControl hideWhenReady />);
+    await waitFor(() => expect(offline.isOfflineEnabled).toHaveBeenCalled());
+    await waitFor(() => expect(screen.queryByRole("button", { name: /sin conexión/i })).toBeNull());
+  });
+
+  it("sin conexión aparece para avisarte", async () => {
+    Object.defineProperty(navigator, "onLine", { value: false, configurable: true });
+    render(<OfflineControl hideWhenReady />);
+    await waitFor(() => expect(screen.getByRole("button", { name: /sin conexión/i })).toBeTruthy());
+  });
+});

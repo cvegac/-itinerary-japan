@@ -14,6 +14,7 @@ import TripApp from "@/components/TripApp";
 afterEach(() => {
   cleanup();
   vi.useRealTimers();
+  vi.unstubAllGlobals();
 });
 
 function renderAt(isoDate: string) {
@@ -34,12 +35,20 @@ describe("TripApp", () => {
   it("durante el viaje abre el día de hoy y el botón Hoy vuelve a él", async () => {
     renderAt("2026-11-02");
     expect(title()).toBe("Excursión a Nikko");
+    // Ya estás en hoy: el botón no hace falta
+    expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
 
     await act(() => userEvent.click(screen.getByRole("button", { name: /Día 3/ })));
     expect(title()).toBe("Vuelo a Hiroshima");
 
     await act(() => userEvent.click(screen.getByRole("button", { name: "Hoy" })));
     expect(title()).toBe("Excursión a Nikko");
+    expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
+  });
+
+  it("en el celular no hay flechas de día (la tira se desliza); en la computadora sí", async () => {
+    renderAt("2026-10-22");
+    expect(screen.queryByRole("button", { name: "Día siguiente" })).toBeNull();
   });
 
   it("después del viaje abre el último día", () => {
@@ -47,7 +56,12 @@ describe("TripApp", () => {
     expect(title()).toBe("Vuelo a Hiroshima");
   });
 
-  it("pasa al día siguiente y al anterior", async () => {
+  it("pasa al día siguiente y al anterior (computadora)", async () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("min-width: 1024px"),
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }));
     renderAt("2026-10-22");
     await act(() => userEvent.click(screen.getByRole("button", { name: "Día siguiente" })));
     expect(title()).toBe("Excursión a Nikko");
@@ -89,23 +103,29 @@ describe("TripApp", () => {
     localStorage.clear();
   });
 
-  it("el botón Segunda mano muestra u oculta las tiendas en el mapa", async () => {
+  it("sobre el mapa hay un solo botón Capas; ahí están la vista, las capas y las tiendas", async () => {
     const shop = { name: "Hard Off", what: "Usados", coords: [35.7, 139.8] as [number, number], howFar: "~5 min" };
     const shops = { "Asakusa, Tokio": [shop], "Ueno, Tokio": [shop, { ...shop, name: "Book Off" }] };
     render(<TripApp tripData={{ ...fixtureTrip, shops }} />);
-    const toggle = screen.getAllByRole("button", { name: /Segunda mano/ })[0];
+    // Nada de filas de botones sueltas sobre el mapa
+    expect(screen.queryByRole("radiogroup", { name: "Qué mostrar en el mapa" })).toBeNull();
+    expect(screen.queryByRole("radiogroup", { name: "Qué ver del día" })).toBeNull();
     const map = () => screen.getAllByTestId("map")[0].getAttribute("data-shops");
-    expect(toggle.getAttribute("aria-pressed")).toBe("false");
     expect(map()).toBe("0");
-    await act(() => userEvent.click(toggle));
-    expect(screen.getAllByRole("button", { name: /Segunda mano/ })[0].getAttribute("aria-pressed")).toBe("true");
+
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Capas del mapa" })));
+    const menu = screen.getByRole("dialog", { name: "Capas del mapa" });
+    expect(within(menu).getByRole("radiogroup", { name: "Qué mostrar en el mapa" })).toBeTruthy();
+    expect(within(menu).getByRole("button", { name: /sin conexión/i })).toBeTruthy();
+    await act(() => userEvent.click(within(menu).getByRole("switch", { name: /Segunda mano/ })));
     // Sin repetir la misma tienda aunque cuelgue de dos hospedajes
     expect(map()).toBe("2");
   });
 
-  it("sin tiendas cargadas no muestra el botón Segunda mano", () => {
+  it("sin tiendas cargadas el menú Capas no tiene el interruptor de tiendas", async () => {
     render(<TripApp tripData={fixtureTrip} />);
-    expect(screen.queryByRole("button", { name: /Segunda mano/ })).toBeNull();
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Capas del mapa" })));
+    expect(screen.queryByRole("switch", { name: /Segunda mano/ })).toBeNull();
   });
 
   describe("al reabrir después de que Android cerró la app", () => {

@@ -34,7 +34,9 @@ function formatMB(bytes: number): string {
 }
 
 /** Botón de la barra superior + panel para activar el uso sin conexión y bajar el mapa */
-export default function OfflineControl({ itinerary }: { itinerary?: DayEntry[] }) {
+/** hideWhenReady: en la barra de arriba solo aparece si hay algo que avisar (sin
+ *  conexión, guardando o con error); el resto del tiempo se usa desde el menú Capas */
+export default function OfflineControl({ itinerary, hideWhenReady = false }: { itinerary?: DayEntry[]; hideWhenReady?: boolean }) {
   const online = useOnline();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>("checking");
@@ -83,6 +85,8 @@ export default function OfflineControl({ itinerary }: { itinerary?: DayEntry[] }
       setStatus("error");
     }
   }
+
+  if (hideWhenReady && online && !open && status !== "saving" && status !== "error") return null;
 
   const Icon = !online ? CloudOff : status === "on" ? CloudCheck : Cloud;
   const iconColor = !online ? "text-amber-600" : status === "on" ? "text-emerald-600" : "text-muted";

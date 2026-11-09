@@ -10,7 +10,8 @@ import { hasBed, morningLodging } from "@/lib/map-geo";
 import { expenseDates, useExpenses, useWithdrawals } from "@/lib/expenses";
 import { dayTransitLines } from "@/lib/transit";
 import type { DayLayer, MapMode } from "@/components/TripMap";
-import DayLayerControl from "@/components/DayLayerControl";
+import MapLayersMenu from "@/components/MapLayersMenu";
+import OfflineControl from "@/components/OfflineControl";
 import TopBar from "@/components/TopBar";
 import SearchModal from "@/components/SearchModal";
 import { useBackClose } from "@/lib/use-back-close";
@@ -19,7 +20,6 @@ import ViewTabs, { type View } from "@/components/ViewTabs";
 import DayStrip from "@/components/DayStrip";
 import DayDetail from "@/components/DayDetail";
 import BottomSheet from "@/components/BottomSheet";
-import MapModeControl from "@/components/MapModeControl";
 import CostSummaryView from "@/components/CostSummaryView";
 import LodgingSummaryView from "@/components/LodgingSummaryView";
 import BusSummaryView from "@/components/BusSummaryView";
@@ -111,23 +111,25 @@ export default function TripApp({ tripData }: Props) {
     () => Array.from(new Map(Object.values(tripData.shops ?? {}).flat().map((s) => [s.name, s])).values()),
     [tripData.shops]
   );
+  const [terrain, setTerrain] = useState(false);
+  // Todo lo del mapa detrás de un solo botón, para que el mapa quede libre
   const mapControls = (
-    <div className="flex flex-col items-start gap-2">
-      <MapModeControl mode={mapMode} onChange={setMapMode} />
-      {mapMode === "day" && <DayLayerControl layer={dayLayer} onChange={setDayLayer} />}
-      {allShops.length > 0 && (
-        <button
-          type="button"
-          aria-pressed={showShops}
-          onClick={() => setShowShops((v) => !v)}
-          className={`rounded-full border px-3 py-1.5 text-xs font-semibold shadow-md backdrop-blur-md transition-colors ${
-            showShops ? "border-emerald-600 bg-emerald-600 text-white" : "border-line bg-surface/90 text-muted hover:text-fg"
-          }`}
-        >
-          ♻️ Segunda mano
-        </button>
-      )}
-    </div>
+    <MapLayersMenu
+      mode={mapMode}
+      onModeChange={setMapMode}
+      dayLayer={dayLayer}
+      onDayLayerChange={setDayLayer}
+      showShops={showShops}
+      onShowShopsChange={setShowShops}
+      hasShops={allShops.length > 0}
+      terrain={terrain}
+      onTerrainChange={setTerrain}
+    >
+      <div className="flex items-center justify-between gap-2 text-sm">
+        <span>Uso sin conexión y mapa descargado</span>
+        <OfflineControl itinerary={itinerary} />
+      </div>
+    </MapLayersMenu>
   );
   const [snap, setSnap] = useState<Snap>("half");
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
@@ -203,6 +205,8 @@ export default function TripApp({ tripData }: Props) {
     setMapMode("day");
   }
 
+  // Si ya estás mirando el día de hoy, el botón "Hoy" sobra
+  const viewingToday = status?.kind === "during" && selectedDay?.date === itinerary[status.index]?.date;
   function goToday() {
     if (status?.kind === "during") selectDay(itinerary[status.index]);
     setView(itineraryView);
@@ -398,6 +402,7 @@ export default function TripApp({ tripData }: Props) {
             transit={dayTransit}
             dayLayer={dayLayer}
             shops={showShops ? allShops : undefined}
+            terrain={terrain}
           />
         </Suspense>
         {mapFullscreen ? (
@@ -423,7 +428,14 @@ export default function TripApp({ tripData }: Props) {
 
       {mapFullscreen ? null : isDesktop ? (
         <aside className="relative z-10 order-1 flex h-full w-[440px] shrink-0 flex-col border-r border-line bg-surface">
-          <TopBar meta={meta} itinerary={itinerary} status={status} onToday={goToday} onSearch={() => openSearchWith(true)} />
+          <TopBar
+            meta={meta}
+            itinerary={itinerary}
+            status={status}
+            viewingToday={viewingToday}
+            onToday={goToday}
+            onSearch={() => openSearchWith(true)}
+          />
           {tabs("inline")}
           {view === "itinerary" ? (
             <>
@@ -443,6 +455,7 @@ export default function TripApp({ tripData }: Props) {
             meta={meta}
             itinerary={itinerary}
             status={status}
+            viewingToday={viewingToday}
             onToday={goToday}
             onSearch={() => openSearchWith(true)}
             floating
@@ -461,12 +474,7 @@ export default function TripApp({ tripData }: Props) {
                 heights={sheetHeights}
                 bottomOffset={NAV_HEIGHT}
                 onSnapChange={setSnap}
-                header={
-                  <div className="flex items-center gap-1 pr-3">
-                    <div className="min-w-0 flex-1">{strip}</div>
-                    {stepButtons}
-                  </div>
-                }
+                header={strip}
               >
                 {detail}
               </BottomSheet>
