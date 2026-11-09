@@ -14,6 +14,7 @@ import DayLayerControl from "@/components/DayLayerControl";
 import TopBar from "@/components/TopBar";
 import SearchModal from "@/components/SearchModal";
 import { useBackClose } from "@/lib/use-back-close";
+import { readSession, saveSession } from "@/lib/session-state";
 import ViewTabs, { type View } from "@/components/ViewTabs";
 import DayStrip from "@/components/DayStrip";
 import DayDetail from "@/components/DayDetail";
@@ -29,6 +30,13 @@ import { useSharedNotes } from "@/lib/use-shared-notes";
 import ListModal, { type ListTarget } from "@/components/ListModal";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
+
+const VIEWS: readonly View[] = ["itinerary", "agenda", "costs", "lodging", "buses", "notes"];
+const MAP_MODES: readonly MapMode[] = ["day", "week", "full"];
+const DAY_LAYERS: readonly DayLayer[] = ["all", "transit", "route"];
+const SNAPS: readonly Snap[] = ["peek", "half", "full"];
+const pick = <T extends string>(value: string, all: readonly T[], fallback: T): T =>
+  all.includes(value as T) ? (value as T) : fallback;
 
 // MapLibre pesa ~1 MB: que baje en paralelo con el arranque de la app, no recién
 // cuando se monta el mapa (eran ~3,5 s de espera extra en 4G lenta)
@@ -126,15 +134,36 @@ export default function TripApp({ tripData }: Props) {
     else setMapFullscreen(false);
   }
 
+  const [hydrated, setHydrated] = useState(false);
   // "Hoy" depende del reloj del dispositivo: se calcula después de montar para
   // que el HTML estático (generado al compilar) no difiera del primer render
   useEffect(() => {
     const s = tripStatus(itinerary, localISODate(new Date()));
     setStatus(s);
+    setHydrated(true);
+    // Si Android cerró la app hace poco, vuelve a donde estabas
+    const saved = readSession(meta.slug);
+    const savedDay = saved && itinerary.find((d) => d.date === saved.date);
+    if (saved && savedDay) {
+      setSelectedDay(savedDay);
+      setViewState(pick(saved.view, VIEWS, "itinerary"));
+      setItineraryView(saved.itineraryView === "agenda" ? "agenda" : "itinerary");
+      setAgendaOpen(!!saved.agendaOpen);
+      setMapMode(pick(saved.mapMode, MAP_MODES, "day"));
+      setDayLayer(pick(saved.dayLayer, DAY_LAYERS, "all"));
+      setSnap(pick(saved.snap, SNAPS, "half"));
+      return;
+    }
     // Antes del viaje queda en el primer día; durante, en el de hoy; después, en el último
     if (s.kind === "during") setSelectedDay(itinerary[s.index]);
     else if (s.kind === "after") setSelectedDay(itinerary[itinerary.length - 1] ?? null);
-  }, [itinerary]);
+  }, [itinerary, meta.slug]);
+
+  // Guarda dónde estás (después de recuperar lo anterior, para no pisarlo)
+  useEffect(() => {
+    if (!hydrated || !selectedDay) return;
+    saveSession(meta.slug, { date: selectedDay.date, view, itineraryView, agendaOpen, mapMode, dayLayer, snap });
+  }, [hydrated, meta.slug, selectedDay, view, itineraryView, agendaOpen, mapMode, dayLayer, snap]);
 
   const costTotal = computeCostSummary(itinerary, meta.startDate).total;
   const lodgingNights = computeLodgingSummary(itinerary).reduce((sum, s) => sum + s.nights, 0);

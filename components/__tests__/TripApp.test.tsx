@@ -89,6 +89,34 @@ describe("TripApp", () => {
     localStorage.clear();
   });
 
+  describe("al reabrir después de que Android cerró la app", () => {
+    afterEach(() => localStorage.clear());
+
+    it("vuelve al día y a la sección donde estabas", async () => {
+      renderAt("2026-11-02");
+      await act(() => userEvent.click(screen.getByRole("button", { name: /Día 3/ })));
+      await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
+      cleanup();
+
+      render(<TripApp tripData={fixtureTrip} />);
+      expect(screen.getByRole("heading", { name: "Costos y gastos" })).toBeTruthy();
+      await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Mapa/ })[0]));
+      expect(title()).toBe("Vuelo a Hiroshima");
+    });
+
+    it("si pasaron más de 6 horas abre el día de hoy en el mapa", async () => {
+      renderAt("2026-11-02");
+      await act(() => userEvent.click(screen.getByRole("button", { name: /Día 3/ })));
+      await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Costos/ })[0]));
+      cleanup();
+
+      vi.setSystemTime(new Date("2026-11-02T17:00:00"));
+      render(<TripApp tripData={fixtureTrip} />);
+      expect(screen.queryByRole("heading", { name: "Costos y gastos" })).toBeNull();
+      expect(title()).toBe("Excursión a Nikko");
+    });
+  });
+
   describe("mapa en pantalla completa", () => {
     const fullscreen = () => screen.queryByRole("button", { name: "Salir de pantalla completa" });
 
