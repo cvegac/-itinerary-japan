@@ -42,6 +42,20 @@ describe("DayDetail", () => {
     expect(onFocusPoi).toHaveBeenCalledWith(1);
   });
 
+  it("muestra el horario de cada lugar que tiene uno, para no llegar cerrado", () => {
+    const withHours = makeDay("2026-11-02", "Lun", {
+      pois: [
+        { name: "Santuario Toshogu", coords: [36.758, 139.599], hours: "9:00–16:00 (última entrada 15:30)" },
+        { name: "Cena en Asakusa", coords: [35.71, 139.79], night: true },
+      ],
+    });
+    render(<DayDetail day={withHours} dayNumber={2} />);
+    const places = screen.getByRole("list", { name: "Lugares del día" });
+    const [toshogu, cena] = within(places).getAllByRole("button", { name: /Toshogu|Cena/ });
+    expect(within(toshogu).getByLabelText("Horario").textContent).toBe("9:00–16:00 (última entrada 15:30)");
+    expect(within(cena).queryByLabelText("Horario")).toBeNull();
+  });
+
   it("en un día de traslado muestra dónde amanecés y dónde dormís", () => {
     const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tokyo Ueno New Izu Hotel", zona: "Ueno" });
     render(<DayDetail day={day} dayNumber={2} morningLodging={yesterday} />);

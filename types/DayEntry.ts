@@ -14,6 +14,8 @@ export type PointOfInterest = {
   night?: boolean;
   /** Ícono a mano; si falta se deduce del nombre (lib/poi-icons.ts) */
   icon?: string;
+  /** Horario de apertura y cierre, ej. "8:30–17:00 (última entrada 16:30)" */
+  hours?: string;
 };
 
 export type DayEntry = {

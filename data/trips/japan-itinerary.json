@@ -710,9 +710,13 @@
     "pois": [
       { "name": "Estación Kamikosawa", "coords": [34.2575, 135.548] },
       { "name": "Gran puerta Daimon", "coords": [34.21315, 135.57286] },
-      { "name": "Danjo Garan", "coords": [34.21344, 135.57996] },
-      { "name": "Templo Kongobu-ji", "coords": [34.21388, 135.58369] },
-      { "name": "Puente Ichinohashi (Okunoin)", "coords": [34.2135, 135.59533] },
+      {
+        "name": "Danjo Garan",
+        "coords": [34.21344, 135.57996],
+        "hours": "Recinto abierto siempre · Konpon Daito 8:30–17:00 (entrada hasta 16:30)"
+      },
+      { "name": "Templo Kongobu-ji", "coords": [34.21388, 135.58369], "hours": "8:30–17:00 (entrada hasta 16:30)" },
+      { "name": "Puente Ichinohashi (Okunoin)", "coords": [34.2135, 135.59533], "hours": "Camino abierto siempre" },
       { "name": "Mausoleo de Kobo Daishi (Okunoin)", "coords": [34.21878, 135.60537] }
     ],
     "budget": "$87",
@@ -778,7 +782,7 @@
     "lodgingJa": { "name": "TSUKASA HOUSE", "address": "和歌山県田辺市下屋敷町64-3", "phone": "+81 90-4228-4514" },
     "checkIn": "13:30–23:00",
     "checkOut": "6:00–9:00",
-    "pois": [{ "name": "Santuario Tokei-jinja", "coords": [33.72969, 135.38395] }],
+    "pois": [{ "name": "Santuario Tokei-jinja", "coords": [33.72969, 135.38395], "hours": "Recinto abierto siempre · sellos ~8:30–17:00" }],
     "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
@@ -906,10 +910,19 @@
     "checkOut": "8:30–9:30",
     "pois": [
       { "name": "Hosshinmon-oji (inicio)", "coords": [33.86175, 135.7206] },
-      { "name": "Kumano Hongu Taisha", "coords": [33.84035, 135.77363] },
+      { "name": "Kumano Hongu Taisha", "coords": [33.84035, 135.77363], "hours": "~8:00–17:00" },
       { "name": "Gran torii de Oyunohara", "coords": [33.83465, 135.77441] },
-      { "name": "Onsen Tsuboyu (Yunomine)", "coords": [33.82919, 135.75772] },
-      { "name": "Kumano Hayatama Taisha", "coords": [33.7323, 135.98368], "night": true }
+      {
+        "name": "Onsen Tsuboyu (Yunomine)",
+        "coords": [33.82919, 135.75772],
+        "hours": "6:00–21:30 · turnos de 30 min: el número se saca en la boletería"
+      },
+      {
+        "name": "Kumano Hayatama Taisha",
+        "coords": [33.7323, 135.98368],
+        "night": true,
+        "hours": "Sellos y tesoro ~9:00–16:00 · de noche solo se ve por fuera"
+      }
     ],
     "budget": "$106",
     "isTransit": false,
@@ -991,9 +1004,9 @@
     "checkOut": "8:30–9:30",
     "pois": [
       { "name": "Escalinata de Daimonzaka", "coords": [33.67061, 135.8965] },
-      { "name": "Kumano Nachi Taisha", "coords": [33.66843, 135.89044] },
-      { "name": "Templo Seiganto-ji", "coords": [33.66931, 135.88992] },
-      { "name": "Cascada de Nachi", "coords": [33.67528, 135.88763] }
+      { "name": "Kumano Nachi Taisha", "coords": [33.66843, 135.89044], "hours": "Oficina 6:00–16:30 · tesoro 8:30–16:30" },
+      { "name": "Templo Seiganto-ji", "coords": [33.66931, 135.88992], "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00" },
+      { "name": "Cascada de Nachi", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" }
     ],
     "budget": "$83",
     "isTransit": false,
@@ -1062,7 +1075,7 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Mercado Nishiki", "coords": [35.00502, 135.76557] },
+      { "name": "Mercado Nishiki", "coords": [35.00502, 135.76557], "hours": "~10:00–17:00 (muchos puestos cierran antes)" },
       { "name": "Puente Sanjo (río Kamo)", "coords": [35.00904, 135.77172] },
       { "name": "Callejón Pontocho", "coords": [35.00425, 135.77121], "night": true },
       { "name": "Gion (Hanamikoji)", "coords": [35.00265, 135.77487], "night": true }
@@ -1152,14 +1165,26 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Templo Kurama-dera", "coords": [35.11787, 135.77065] },
-      { "name": "Santuario Kibune", "coords": [35.12189, 135.76294] },
+      { "name": "Templo Kurama-dera", "coords": [35.11787, 135.77065], "hours": "Salón principal 9:00–16:15" },
+      { "name": "Santuario Kibune", "coords": [35.12189, 135.76294], "hours": "6:00–20:00 (en noviembre)" },
       { "name": "Estación Demachiyanagi", "coords": [35.03067, 135.77319] },
-      { "name": "Santuario Shimogamo (bosque Tadasu no Mori)", "coords": [35.03699, 135.77245] },
-      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837] },
+      {
+        "name": "Santuario Shimogamo (bosque Tadasu no Mori)",
+        "coords": [35.03699, 135.77245],
+        "hours": "Bosque abierto siempre · santuario ~6:30–17:00"
+      },
+      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837], "hours": "8:30–17:00" },
       { "name": "Sendero del Filósofo", "coords": [35.02479, 135.79638] },
-      { "name": "Templo Eikando (Zenrin-ji)", "coords": [35.01399, 135.795] },
-      { "name": "Templo Nanzen-ji y el acueducto Suirokaku", "coords": [35.01153, 135.79272] }
+      {
+        "name": "Templo Eikando (Zenrin-ji)",
+        "coords": [35.01399, 135.795],
+        "hours": "9:00–17:00 (entrada hasta 16:00) · iluminado de noche desde el 20/11"
+      },
+      {
+        "name": "Templo Nanzen-ji y el acueducto Suirokaku",
+        "coords": [35.01153, 135.79272],
+        "hours": "Recinto y acueducto siempre · Hojo y puerta Sanmon 8:40–17:00 (entrada hasta 16:40)"
+      }
     ],
     "budget": "$118",
     "isTransit": false,
@@ -1229,10 +1254,10 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Bosque de bambú de Arashiyama", "coords": [35.01762, 135.67444] },
-      { "name": "Templo Tenryu-ji", "coords": [35.01622, 135.67294] },
+      { "name": "Bosque de bambú de Arashiyama", "coords": [35.01762, 135.67444], "hours": "Abierto siempre (sin gente antes de las 8:00)" },
+      { "name": "Templo Tenryu-ji", "coords": [35.01622, 135.67294], "hours": "Jardín 8:30–17:00 (entrada hasta 16:50)" },
       { "name": "Puente Togetsukyo", "coords": [35.01287, 135.67776] },
-      { "name": "Adashino Nenbutsu-ji", "coords": [35.02692, 135.66463] }
+      { "name": "Adashino Nenbutsu-ji", "coords": [35.02692, 135.66463], "hours": "9:00–16:30 (entrada hasta 16:00)" }
     ],
     "budget": "$103",
     "isTransit": false,
@@ -1330,12 +1355,21 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Barrio Kitano (Casa del Gallo Veleta)", "coords": [34.70139, 135.18951] },
+      {
+        "name": "Barrio Kitano (Casa del Gallo Veleta)",
+        "coords": [34.70139, 135.18951],
+        "hours": "Casa del Gallo Veleta 9:00–18:00 (entrada hasta 17:45)"
+      },
       { "name": "Parque Meriken", "coords": [34.68331, 135.18932] },
       { "name": "Harborland", "coords": [34.67851, 135.18031] },
-      { "name": "Funicular de Rokko (estación de abajo)", "coords": [34.73733, 135.23354] },
+      { "name": "Funicular de Rokko (estación de abajo)", "coords": [34.73733, 135.23354], "hours": "7:10–21:10, cada 20 min" },
       { "name": "Cima del Rokko (Tenrandai)", "coords": [34.75196, 135.23689] },
-      { "name": "Onsen Kin-no-yu (Arima)", "coords": [34.79679, 135.24793], "night": true }
+      {
+        "name": "Onsen Kin-no-yu (Arima)",
+        "coords": [34.79679, 135.24793],
+        "night": true,
+        "hours": "8:00–22:00 (entrada hasta 21:30) · cierra el 2.º y 4.º martes: el 17 abre"
+      }
     ],
     "budget": "$129",
     "isTransit": false,
@@ -1405,9 +1439,9 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–11:00",
     "pois": [
-      { "name": "Santuario Fushimi Inari", "coords": [34.96752, 135.77971] },
+      { "name": "Santuario Fushimi Inari", "coords": [34.96752, 135.77971], "hours": "Abierto siempre" },
       { "name": "Cima del monte Inari", "coords": [34.96701, 135.78553] },
-      { "name": "Casco viejo Sanmachi Suji", "coords": [36.14236, 137.25925] },
+      { "name": "Casco viejo Sanmachi Suji", "coords": [36.14236, 137.25925], "hours": "Tiendas ~9:00–17:00" },
       { "name": "Puente Nakabashi", "coords": [36.14001, 137.2592] }
     ],
     "budget": "$165",
@@ -1461,7 +1495,7 @@
     "checkOut": "7:00–11:00",
     "pois": [
       { "name": "Mirador de Shiroyama", "coords": [36.26295, 136.90796] },
-      { "name": "Casa Wada", "coords": [36.25992, 136.90763] },
+      { "name": "Casa Wada", "coords": [36.25992, 136.90763], "hours": "9:00–17:00" },
       { "name": "Puente colgante Deai-bashi", "coords": [36.25653, 136.90378] }
     ],
     "budget": "$125",
@@ -1511,7 +1545,7 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–11:00",
     "pois": [
-      { "name": "Mercado matutino del Miyagawa", "coords": [36.14469, 137.25785] },
+      { "name": "Mercado matutino del Miyagawa", "coords": [36.14469, 137.25785], "hours": "~7:00–12:00" },
       { "name": "Estación Hida-Furukawa", "coords": [36.23673, 137.18961] },
       { "name": "Canal de las carpas (Seto-gawa)", "coords": [36.23603, 137.18599] },
       { "name": "Sendero de Higashiyama (santuario Hakusan)", "coords": [36.14608, 137.26529] }
@@ -1584,11 +1618,25 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Teleférico de Shin-Hotaka (base)", "coords": [36.28583, 137.5752] },
-      { "name": "Estación de arriba (2.156 m)", "coords": [36.26805, 137.60174] },
+      {
+        "name": "Teleférico de Shin-Hotaka (base)",
+        "coords": [36.28583, 137.5752],
+        "hours": "~8:30–16:45 · confirmá la última bajada en la boletería"
+      },
+      { "name": "Estación de arriba (2.156 m)", "coords": [36.26805, 137.60174], "hours": "Última bajada ~16:45" },
       { "name": "Hirayu Onsen", "coords": [36.19109, 137.55165] },
-      { "name": "Calle Nawate (Matsumoto)", "coords": [36.23461, 137.97199], "night": true },
-      { "name": "Calle Nakamachi", "coords": [36.2338, 137.97146], "night": true }
+      {
+        "name": "Calle Nawate (Matsumoto)",
+        "coords": [36.23461, 137.97199],
+        "night": true,
+        "hours": "Tiendas ~10:00–18:00: de noche casi todo cerrado"
+      },
+      {
+        "name": "Calle Nakamachi",
+        "coords": [36.2338, 137.97146],
+        "night": true,
+        "hours": "Tiendas ~10:00–17:00: de noche casi todo cerrado"
+      }
     ],
     "budget": "$126",
     "isTransit": false,
@@ -1640,9 +1688,9 @@
     "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Estación Hotaka (alquiler de bicis)", "coords": [36.33957, 137.88176] },
-      { "name": "Granja de wasabi Daio", "coords": [36.33863, 137.90994] },
+      { "name": "Granja de wasabi Daio", "coords": [36.33863, 137.90994], "hours": "9:00–16:30 (nov–feb)" },
       { "name": "Santuario Hotaka", "coords": [36.33862, 137.88431] },
-      { "name": "Castillo de Matsumoto", "coords": [36.23864, 137.96887] }
+      { "name": "Castillo de Matsumoto", "coords": [36.23864, 137.96887], "hours": "8:30–17:00 (entrada hasta 16:30)" }
     ],
     "budget": "$86",
     "isTransit": false,
@@ -1704,7 +1752,11 @@
     "pois": [
       { "name": "Estación Yabuhara (inicio de la caminata)", "coords": [35.93085, 137.78478] },
       { "name": "Paso de Torii (1.197 m)", "coords": [35.95189, 137.79649] },
-      { "name": "Pueblo de posta de Narai", "coords": [35.96455, 137.81043] }
+      {
+        "name": "Pueblo de posta de Narai",
+        "coords": [35.96455, 137.81043],
+        "hours": "Tiendas y casas ~9:00–17:00 (muchas cierran a las 16:00)"
+      }
     ],
     "budget": "$73",
     "isTransit": false,
@@ -1755,8 +1807,13 @@
     "checkIn": "15:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Pagoda Chureito", "coords": [35.50129, 138.80136] },
-      { "name": "Corredor de los Arces", "coords": [35.52559, 138.76244], "night": true }
+      { "name": "Pagoda Chureito", "coords": [35.50129, 138.80136], "hours": "Abierta siempre" },
+      {
+        "name": "Corredor de los Arces",
+        "coords": [35.52559, 138.76244],
+        "night": true,
+        "hours": "Iluminado del atardecer a las 21:00 (festival hasta el 29/11)"
+      }
     ],
     "budget": "$108",
     "isTransit": false,
@@ -1807,8 +1864,12 @@
     "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Parque Oishi", "coords": [35.52329, 138.74654] },
-      { "name": "Corredor de los Arces", "coords": [35.52559, 138.76244] },
-      { "name": "Saiko Iyashi no Sato Nenba", "coords": [35.5045, 138.66143] },
+      {
+        "name": "Corredor de los Arces",
+        "coords": [35.52559, 138.76244],
+        "hours": "Festival hasta el 29/11 · iluminado del atardecer a las 21:00"
+      },
+      { "name": "Saiko Iyashi no Sato Nenba", "coords": [35.5045, 138.66143], "hours": "9:00–17:00 (entrada hasta 16:30)" },
       { "name": "Lago Saiko", "coords": [35.49852, 138.68537] }
     ],
     "budget": "$88",
@@ -1934,7 +1995,7 @@
     "checkOut": "hasta 11:00",
     "pois": [
       { "name": "Paseo del río Matsukawa", "coords": [34.97041, 139.0958] },
-      { "name": "Tokaikan (ryokan histórico)", "coords": [34.97169, 139.09706] }
+      { "name": "Tokaikan (ryokan histórico)", "coords": [34.97169, 139.09706], "hours": "9:00–21:00 · cierra el 1.er y 3.er martes" }
     ],
     "budget": "$101",
     "isTransit": false,
@@ -1993,9 +2054,9 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 11:00",
     "pois": [
-      { "name": "Faro de Kadowakizaki", "coords": [34.88995, 139.1386] },
+      { "name": "Faro de Kadowakizaki", "coords": [34.88995, 139.1386], "hours": "9:00–16:00 (nov–feb)" },
       { "name": "Puente colgante de Kadowaki", "coords": [34.89053, 139.13875] },
-      { "name": "Monte Omuro", "coords": [34.90314, 139.09476] },
+      { "name": "Monte Omuro", "coords": [34.90314, 139.09476], "hours": "Telesilla ~9:00–16:15 (última subida)" },
       { "name": "Lago Ippeki-ko", "coords": [34.92889, 139.10585] }
     ],
     "budget": "$89",
@@ -2056,9 +2117,21 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 11:00",
     "pois": [
-      { "name": "Jardín Atami Baien (festival de arces)", "coords": [35.09827, 139.05896] },
-      { "name": "Santuario Kinomiya (alcanforero de 2.000 años)", "coords": [35.1001, 139.06788] },
-      { "name": "Museo MOA (vista a la bahía de Sagami)", "coords": [35.10926, 139.07533] }
+      {
+        "name": "Jardín Atami Baien (festival de arces)",
+        "coords": [35.09827, 139.05896],
+        "hours": "Abierto siempre · festival de arces hasta el 6/12"
+      },
+      {
+        "name": "Santuario Kinomiya (alcanforero de 2.000 años)",
+        "coords": [35.1001, 139.06788],
+        "hours": "Recinto abierto siempre · sellos ~9:00–17:00"
+      },
+      {
+        "name": "Museo MOA (vista a la bahía de Sagami)",
+        "coords": [35.10926, 139.07533],
+        "hours": "9:30–16:30 (entrada hasta 16:00) · cerrado los jueves"
+      }
     ],
     "budget": "$87",
     "isTransit": false,
@@ -2118,9 +2191,9 @@
     "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", "coords": [35.67131, 139.72064] },
-      { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
-      { "name": "Calle Kappabashi", "coords": [35.71389, 139.78798] },
-      { "name": "Calle del monjayaki (Tsukishima)", "coords": [35.66428, 139.78246], "night": true }
+      { "name": "Ameyoko", "coords": [35.71002, 139.77454], "hours": "~10:00–20:00" },
+      { "name": "Calle Kappabashi", "coords": [35.71389, 139.78798], "hours": "~9:00–17:00 (muchas cierran los domingos)" },
+      { "name": "Calle del monjayaki (Tsukishima)", "coords": [35.66428, 139.78246], "night": true, "hours": "~11:00–22:00" }
     ],
     "budget": "$117",
     "isTransit": false,
@@ -2182,11 +2255,15 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Templo Engaku-ji", "coords": [35.33794, 139.54782] },
-      { "name": "Templo Hokoku-ji", "coords": [35.31952, 139.5689] },
-      { "name": "Gran Buda (Kotoku-in)", "coords": [35.3165, 139.53573] },
-      { "name": "Templo Hase-dera", "coords": [35.31227, 139.53331] },
-      { "name": "Isla Enoshima (faro Sea Candle, cuevas al fondo)", "coords": [35.29965, 139.47858] }
+      { "name": "Templo Engaku-ji", "coords": [35.33794, 139.54782], "hours": "8:00–16:00 (dic–feb)" },
+      { "name": "Templo Hokoku-ji", "coords": [35.31952, 139.5689], "hours": "9:00–16:00 (té hasta 15:30)" },
+      { "name": "Gran Buda (Kotoku-in)", "coords": [35.3165, 139.53573], "hours": "8:00–16:30 (oct–mar)" },
+      { "name": "Templo Hase-dera", "coords": [35.31227, 139.53331], "hours": "8:00–16:00 (oct–feb)" },
+      {
+        "name": "Isla Enoshima (faro Sea Candle, cuevas al fondo)",
+        "coords": [35.29965, 139.47858],
+        "hours": "Sea Candle 9:00–20:00 · cuevas Iwaya 9:00–16:00 (nov–feb)"
+      }
     ],
     "budget": "$121",
     "isTransit": false,
@@ -2255,14 +2332,23 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Santuario Nezu (túnel de torii)", "coords": [35.72027, 139.76056] },
-      { "name": "Museo Nacional de Tokio", "coords": [35.71885, 139.77654] },
-      { "name": "Santuario Ueno Toshogu", "coords": [35.71636, 139.77089] },
-      { "name": "Templo Kiyomizu Kannon-do", "coords": [35.71265, 139.77296] },
+      { "name": "Santuario Nezu (túnel de torii)", "coords": [35.72027, 139.76056], "hours": "6:30–17:00 (oct–feb)" },
+      { "name": "Museo Nacional de Tokio", "coords": [35.71885, 139.77654], "hours": "9:30–17:00 (entrada hasta 16:30) · lunes cerrado" },
+      { "name": "Santuario Ueno Toshogu", "coords": [35.71636, 139.77089], "hours": "9:00–16:00 (oct–feb)" },
+      { "name": "Templo Kiyomizu Kannon-do", "coords": [35.71265, 139.77296], "hours": "9:00–16:00" },
       { "name": "Estanque Shinobazu", "coords": [35.71188, 139.76941] },
-      { "name": "Calle Nakamise y templo Senso-ji", "coords": [35.71268, 139.79655] },
+      {
+        "name": "Calle Nakamise y templo Senso-ji",
+        "coords": [35.71268, 139.79655],
+        "hours": "Recinto siempre · salón principal 6:30–17:00 · tiendas ~10:00–19:00"
+      },
       { "name": "Puente peatonal Sumida River Walk", "coords": [35.71035, 139.80144] },
-      { "name": "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)", "coords": [35.71006, 139.8107], "icon": "🗼" }
+      {
+        "name": "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)",
+        "coords": [35.71006, 139.8107],
+        "icon": "🗼",
+        "hours": "Mirador 10:00–22:00 (última entrada 21:00) · Solamachi 10:00–21:00"
+      }
     ],
     "budget": "$111",
     "isTransit": false,
@@ -2347,12 +2433,21 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463] },
-      { "name": "Jardín Shinjuku Gyoen (arces y ginkgos)", "coords": [35.68507, 139.70955] },
+      { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463], "hours": "9:00–17:00 (entrada hasta 16:30)" },
+      {
+        "name": "Jardín Shinjuku Gyoen (arces y ginkgos)",
+        "coords": [35.68507, 139.70955],
+        "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado"
+      },
       { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
-      { "name": "Mirador Shibuya Sky (Scramble Square)", "coords": [35.65838, 139.70222], "night": true },
-      { "name": "Tienda Shibuya Parco (Nintendo, Pokémon, Mandarake)", "coords": [35.66193, 139.69875] },
-      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true }
+      {
+        "name": "Mirador Shibuya Sky (Scramble Square)",
+        "coords": [35.65838, 139.70222],
+        "night": true,
+        "hours": "10:00–22:30 (última entrada 21:20)"
+      },
+      { "name": "Tienda Shibuya Parco (Nintendo, Pokémon, Mandarake)", "coords": [35.66193, 139.69875], "hours": "~10:00–21:00" },
+      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true, "hours": "Abierta las 24 h" }
     ],
     "budget": "$125",
     "isTransit": false,
@@ -2419,12 +2514,20 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Yodobashi Akiba", "coords": [35.6986, 139.7745], "icon": "📷" },
-      { "name": "Tienda Super Potato (videojuegos retro)", "coords": [35.69937, 139.77074] },
-      { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053] },
-      { "name": "Tiendas 2k540 Aki-Oka Artisan (bajo las vías)", "coords": [35.70358, 139.77416] },
-      { "name": "Tienda Uniqlo Ginza (la insignia, 12 pisos)", "coords": [35.6702, 139.76343] },
-      { "name": "Papelería Itoya (Ginza)", "coords": [35.67296, 139.76743] }
+      { "name": "Yodobashi Akiba", "coords": [35.6986, 139.7745], "icon": "📷", "hours": "9:30–22:00" },
+      {
+        "name": "Tienda Super Potato (videojuegos retro)",
+        "coords": [35.69937, 139.77074],
+        "hours": "11:00–20:00 (fines de semana desde las 10:00)"
+      },
+      { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053], "hours": "12:00–20:00" },
+      {
+        "name": "Tiendas 2k540 Aki-Oka Artisan (bajo las vías)",
+        "coords": [35.70358, 139.77416],
+        "hours": "11:00–19:00 · miércoles cerrado"
+      },
+      { "name": "Tienda Uniqlo Ginza (la insignia, 12 pisos)", "coords": [35.6702, 139.76343], "hours": "11:00–21:00" },
+      { "name": "Papelería Itoya (Ginza)", "coords": [35.67296, 139.76743], "hours": "10:00–20:00" }
     ],
     "budget": "$97",
     "isTransit": false,

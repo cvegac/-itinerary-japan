@@ -315,6 +315,11 @@ export default function DayDetail({
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium">{poi.name}</span>
+                    {poi.hours && (
+                      <span aria-label="Horario" className="block text-xs font-medium text-amber-700">
+                        {poi.hours}
+                      </span>
+                    )}
                     {leg && (
                       <span className="block text-xs text-muted">
                         {leg.from === "lodging" ? "Desde el hospedaje: " : ""}
