@@ -49,6 +49,8 @@ export type DayEntry = {
   /** A qué hora levantarse y salir del hospedaje, y por qué (el primer tren,
    *  un templo que cierra temprano, la luz del día para el sendero) */
   morning?: { wake: string; leave: string; why: string };
+  /** Relatos recientes de gente que hizo el sendero (YAMAP, blogs), con fotos y GPS */
+  trailReports?: { label: string; url: string }[];
   /** Puntos de interés del día (coordenadas verificadas con OpenStreetMap).
    *  El mapa los muestra solo en modo "día". */
   pois?: PointOfInterest[];

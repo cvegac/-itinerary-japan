@@ -865,7 +865,11 @@
       "wake": "7:00",
       "leave": "7:50",
       "why": "Bus 95 de las 8:30 a Takijiri (o el 93 de 8:36). Antes, konbini: almuerzo y agua, en el sendero no hay tiendas"
-    }
+    },
+    "trailReports": [
+      { "label": "YAMAP: Takijiri → Chikatsuyu, ruta y diarios", "url": "https://yamap.com/model-courses/22583" },
+      { "label": "YAMAP: diarios del Nakahechi, del más nuevo (muchos de oct 2026)", "url": "https://yamap.com/tags/29693/activities" }
+    ]
   },
   {
     "date": "2026-11-12",
@@ -954,7 +958,8 @@
     ],
     "keepOrder": true,
     "keepOrderReason": "de Hosshinmon a Hongu a pie, después los onsen",
-    "morning": { "wake": "7:15", "leave": "8:10", "why": "Con la mochila y el check-out hecho: bus de las 8:37 a Hosshinmon-oji" }
+    "morning": { "wake": "7:15", "leave": "8:10", "why": "Con la mochila y el check-out hecho: bus de las 8:37 a Hosshinmon-oji" },
+    "trailReports": [{ "label": "YAMAP: diarios de Hosshinmon-oji → Hongu (bajada suave)", "url": "https://yamap.com/tags/140118/activities" }]
   },
   {
     "date": "2026-11-13",
@@ -1040,7 +1045,11 @@
       "wake": "7:20",
       "leave": "8:10",
       "why": "La estación está a 15 min: Kuroshio de 8:32 a Kii-Katsuura (Daimonzaka 9:28). Nachi cierra a las 16:30"
-    }
+    },
+    "trailReports": [
+      { "label": "YAMAP: Daimonzaka → Nachi, ruta y diarios (sep–oct 2026)", "url": "https://yamap.com/model-courses/26147" },
+      { "label": "YAMAP: «no subestimes Daimonzaka» (5,1 km, 2 h)", "url": "https://yamap.com/activities/1871141" }
+    ]
   },
   {
     "date": "2026-11-14",
@@ -1228,7 +1237,8 @@
       "wake": "6:00",
       "leave": "6:45",
       "why": "Tren de 7:03 desde Otsu: Kurama a las 8:16. Kurama-dera cierra 16:15 y Eikando deja entrar hasta las 16:00"
-    }
+    },
+    "trailReports": [{ "label": "YAMAP: Kurama → Kibune, diarios de mar–sep 2026", "url": "https://yamap.com/model-courses/24123/activities" }]
   },
   {
     "date": "2026-11-16",
@@ -1488,7 +1498,11 @@
       "wake": "5:20",
       "leave": "6:00",
       "why": "Con la mochila (avisá el check-out la noche anterior): locker en Kioto, Fushimi Inari a las 6:30 sin gente y Nozomi de 10:36"
-    }
+    },
+    "trailReports": [
+      { "label": "YAMAP: Fushimi Inari hasta la cima (19 oct 2026)", "url": "https://yamap.com/activities/52122126" },
+      { "label": "YAMAP: todos los diarios de Fushimi Inari", "url": "https://yamap.com/landmarks/156620" }
+    ]
   },
   {
     "date": "2026-11-19",
@@ -1822,7 +1836,15 @@
       "wake": "6:50",
       "leave": "7:35",
       "why": "Local de 7:55 a Yabuhara: el siguiente recién a las 9:52. El boleto se compra en la máquina"
-    }
+    },
+    "trailReports": [
+      {
+        "label": "Yamakei: Yabuhara → paso de Torii → Narai (12 oct 2026)",
+        "url": "https://www.yamakei-online.com/cl_record/detail.php?id=340694"
+      },
+      { "label": "YAMAP: Yabuhara → Torii → Narai (2026)", "url": "https://yamap.com/activities/47755577" },
+      { "label": "YAMAP: todos los diarios del paso de Torii", "url": "https://yamap.com/landmarks/755" }
+    ]
   },
   {
     "date": "2026-11-24",
@@ -2022,7 +2044,12 @@
       { "text": "Teleférico Kachi Kachi al monte Tenjo", "price": { "amount": 900, "currency": "JPY", "approx": true } },
       "Vista del Fuji sobre el lago Kawaguchi",
       "Aldea y estanques de Oshino Hakkai",
-      "Santuario Kitaguchi Hongu y su avenida de cedros"
+      "Santuario Kitaguchi Hongu y su avenida de cedros",
+      {
+        "text": "Alternativa: cuevas de lava Fugaku y Narusawa (bus del lago Saiko; ~1 km de camino marcado entre las dos)",
+        "price": { "amount": 700, "currency": "JPY" },
+        "optional": true
+      }
     ],
     "activitiesNight": ["Onsen para las piernas", "Cena tranquila", "Preparar la mochila para Izu", "Dormir temprano"],
     "keepOrder": true,
@@ -2031,7 +2058,11 @@
       "wake": "7:45",
       "leave": "8:30",
       "why": "El Fuji se ve mejor temprano: teleférico cuando abre (~9:00). Oshino antes del mediodía, con menos gente"
-    }
+    },
+    "trailReports": [
+      { "label": "YAMAP (alternativa): cueva Fugaku → cueva Narusawa, diarios de sep 2026", "url": "https://yamap.com/landmarks/51764" },
+      { "label": "YAMAP (alternativa): padres con niños, Narusawa ↔ Fugaku", "url": "https://yamap.com/activities/25436258/article" }
+    ]
   },
   {
     "date": "2026-11-27",
@@ -2162,7 +2193,14 @@
     "activitiesNight": ["Onsen en Ito o Izu-Kogen", "Cena de mariscos", "Paseo por el puerto de Kawana", "Descanso"],
     "keepOrder": true,
     "keepOrderReason": "costa de Jogasaki a pie, después bus al Omuro",
-    "morning": { "wake": "7:45", "leave": "8:30", "why": "Sendero de Jogasaki a la mañana y bus de 12:44 al Omuro. La telesilla sube hasta ~16:15" }
+    "morning": { "wake": "7:45", "leave": "8:30", "why": "Sendero de Jogasaki a la mañana y bus de 12:44 al Omuro. La telesilla sube hasta ~16:15" },
+    "trailReports": [
+      {
+        "label": "Guía 2026: Jogasaki, puente colgante y faro",
+        "url": "https://shizuoka-press.com/jogasaki-kaigan-kadowaki-tsuribashi-guide/"
+      },
+      { "label": "YAMAP: mapa y diarios del sendero costero Picnical", "url": "https://yamap.com/maps/8492" }
+    ]
   },
   {
     "date": "2026-11-29",

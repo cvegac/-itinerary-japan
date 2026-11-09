@@ -117,6 +117,17 @@ describe("DayDetail", () => {
     expect(screen.queryByText(/Google Maps no conoce los senderos/)).toBeNull();
   });
 
+  it("muestra los relatos de gente que hizo el sendero hace poco, como links", () => {
+    const reports = [{ label: "YAMAP: Kurama → Kibune (oct 2026)", url: "https://yamap.com/activities/1" }];
+    render(<DayDetail day={{ ...day, trailReports: reports }} dayNumber={2} />);
+    const list = screen.getByRole("list", { name: "Gente que fue hace poco" });
+    const link = within(list).getByRole("link", { name: /Kurama → Kibune \(oct 2026\)/ });
+    expect(link.getAttribute("href")).toBe("https://yamap.com/activities/1");
+    cleanup();
+    render(<DayDetail day={day} dayNumber={2} />);
+    expect(screen.queryByRole("list", { name: "Gente que fue hace poco" })).toBeNull();
+  });
+
   describe("gastos del día", () => {
     const expenses: Expense[] = [
       { id: "e1", date: "2026-11-02", amount: 1650, currency: "JPY", method: "cash", note: "Toshogu", createdAt: 1 },

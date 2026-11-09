@@ -71,6 +71,7 @@ export const DaySchema = z
     checkIn: text.optional(),
     checkOut: text.optional(),
     morning: z.object({ wake: hhmm, leave: hhmm, why: text }).strict().optional(),
+    trailReports: z.array(z.object({ label: text, url: z.string().url() }).strict()).min(1).optional(),
     pois: z.array(PoiSchema).optional(),
     keepOrder: z.boolean().optional(),
     keepOrderReason: text.optional(),

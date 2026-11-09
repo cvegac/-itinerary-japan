@@ -285,6 +285,27 @@ export default function DayDetail({
         </div>
       )}
 
+      {/* Relatos recientes del sendero: fotos y GPS de quien ya fue */}
+      {day.trailReports && day.trailReports.length > 0 && (
+        <Section title="Gente que fue hace poco">
+          <ul aria-label="Gente que fue hace poco" className="flex flex-col gap-1.5">
+            {day.trailReports.map((r) => (
+              <li key={r.url}>
+                <a
+                  href={r.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2 text-sm font-medium text-accent hover:bg-line"
+                >
+                  <Footprints className="size-4 shrink-0" aria-hidden />
+                  {r.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       {/* Lugares del día (los mismos puntos del mapa) */}
       {pois.length > 0 && (
         <Section title={validRoutes ? "Lugares, en orden de visita" : "Lugares"}>
