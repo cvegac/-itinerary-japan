@@ -105,10 +105,28 @@ export default function TripApp({ tripData }: Props) {
   const [mapMode, setMapMode] = useState<MapMode>("day");
   // En el mapa del día: todo, solo transporte o solo el recorrido
   const [dayLayer, setDayLayer] = useState<DayLayer>("all");
+  // Tiendas de segunda mano en el mapa (todas, sin repetir las que comparten hospedajes)
+  const [showShops, setShowShops] = useState(false);
+  const allShops = useMemo(
+    () => Array.from(new Map(Object.values(tripData.shops ?? {}).flat().map((s) => [s.name, s])).values()),
+    [tripData.shops]
+  );
   const mapControls = (
     <div className="flex flex-col items-start gap-2">
       <MapModeControl mode={mapMode} onChange={setMapMode} />
       {mapMode === "day" && <DayLayerControl layer={dayLayer} onChange={setDayLayer} />}
+      {allShops.length > 0 && (
+        <button
+          type="button"
+          aria-pressed={showShops}
+          onClick={() => setShowShops((v) => !v)}
+          className={`rounded-full border px-3 py-1.5 text-xs font-semibold shadow-md backdrop-blur-md transition-colors ${
+            showShops ? "border-emerald-600 bg-emerald-600 text-white" : "border-line bg-surface/90 text-muted hover:text-fg"
+          }`}
+        >
+          ♻️ Segunda mano
+        </button>
+      )}
     </div>
   );
   const [snap, setSnap] = useState<Snap>("half");
@@ -379,6 +397,7 @@ export default function TripApp({ tripData }: Props) {
             routes={dayRoutes}
             transit={dayTransit}
             dayLayer={dayLayer}
+            shops={showShops ? allShops : undefined}
           />
         </Suspense>
         {mapFullscreen ? (

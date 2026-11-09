@@ -6,7 +6,7 @@ import { fixtureTrip } from "./fixtures";
 
 // WebGL no existe en jsdom: el mapa se reemplaza por un doble
 vi.mock("@/components/TripMap", () => ({
-  default: () => <div data-testid="map" />,
+  default: ({ shops }: { shops?: unknown[] }) => <div data-testid="map" data-shops={shops?.length ?? 0} />,
 }));
 
 import TripApp from "@/components/TripApp";
@@ -87,6 +87,25 @@ describe("TripApp", () => {
     const section = screen.getByRole("region", { name: "Gastos del día" });
     expect(within(section).getByText("¥8,500")).toBeTruthy();
     localStorage.clear();
+  });
+
+  it("el botón Segunda mano muestra u oculta las tiendas en el mapa", async () => {
+    const shop = { name: "Hard Off", what: "Usados", coords: [35.7, 139.8] as [number, number], howFar: "~5 min" };
+    const shops = { "Asakusa, Tokio": [shop], "Ueno, Tokio": [shop, { ...shop, name: "Book Off" }] };
+    render(<TripApp tripData={{ ...fixtureTrip, shops }} />);
+    const toggle = screen.getAllByRole("button", { name: /Segunda mano/ })[0];
+    const map = () => screen.getAllByTestId("map")[0].getAttribute("data-shops");
+    expect(toggle.getAttribute("aria-pressed")).toBe("false");
+    expect(map()).toBe("0");
+    await act(() => userEvent.click(toggle));
+    expect(screen.getAllByRole("button", { name: /Segunda mano/ })[0].getAttribute("aria-pressed")).toBe("true");
+    // Sin repetir la misma tienda aunque cuelgue de dos hospedajes
+    expect(map()).toBe("2");
+  });
+
+  it("sin tiendas cargadas no muestra el botón Segunda mano", () => {
+    render(<TripApp tripData={fixtureTrip} />);
+    expect(screen.queryByRole("button", { name: /Segunda mano/ })).toBeNull();
   });
 
   describe("al reabrir después de que Android cerró la app", () => {

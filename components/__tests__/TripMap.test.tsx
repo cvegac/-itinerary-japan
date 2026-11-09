@@ -503,3 +503,25 @@ describe("TripMap", () => {
     expect(fake.state.toggles).toBe(1);
   });
 });
+
+describe("TripMap: tiendas de segunda mano", () => {
+  const shops = [
+    { name: "Hard Off Matsumoto", what: "Electrónica usada", coords: [36.19, 137.96] as [number, number], howFar: "Tren + 5 min" },
+    { name: "Book Off Matsumoto", what: "Libros", coords: [36.23, 137.97] as [number, number], howFar: "~5 min a pie" },
+  ];
+  const shopMarkers = () =>
+    fake.state.markers.filter((m) => m.element?.getAttribute("aria-label")?.startsWith("Segunda mano:"));
+
+  it("con shops dibuja un ♻️ por tienda, y sin shops no", async () => {
+    const { rerender } = await renderLoadedMap(itinerary[0], "day");
+    expect(shopMarkers()).toHaveLength(0);
+    rerender(<TripMap {...props(itinerary[0], "day")} shops={shops} />);
+    const drawn = shopMarkers().slice(-2);
+    expect(drawn.map((m) => m.element?.getAttribute("aria-label"))).toEqual([
+      "Segunda mano: Hard Off Matsumoto",
+      "Segunda mano: Book Off Matsumoto",
+    ]);
+    expect(drawn[0].lngLat).toEqual(toLngLat(shops[0].coords));
+    expect(drawn[0].element?.textContent).toBe("♻️");
+  });
+});

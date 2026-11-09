@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import type { ExpressionSpecification, GeoJSONSource, Map as MapLibreMap, Marker, PaddingOptions } from "maplibre-gl";
 import type { DayEntry } from "@/types/DayEntry";
+import type { NearbyShop } from "@/types/Trip";
+import { placeUrl } from "@/lib/google-maps";
 import { WEEK_COLORS_HEX, getWeekGroup } from "@/lib/itinerary-utils";
 import {
   boundsOf,
@@ -47,6 +49,8 @@ type Props = {
   transit?: TransitLine[];
   /** Qué ver en el modo día (por defecto, todo) */
   dayLayer?: DayLayer;
+  /** Tiendas de segunda mano a mostrar (vacío o sin pasar: ninguna) */
+  shops?: NearbyShop[];
 };
 
 type RouteFeature = ReturnType<typeof lineFeature>;
@@ -75,6 +79,7 @@ const MAP_LOCALE = {
 
 const ROUTE_SOURCE = "trip-route";
 const NO_TRANSIT: TransitLine[] = [];
+const NO_SHOPS: NearbyShop[] = [];
 const DEFAULT_PADDING: PaddingOptions = { top: 60, bottom: 60, left: 60, right: 60 };
 
 /** Lo último que se encuadró, para re-encuadrar si cambia el margen */
@@ -164,6 +169,31 @@ function poiMarkerEl(color: string, letter: string, icon: string, night: boolean
     font:bold 10px/13px system-ui,sans-serif;`;
   el.append(iconEl, badge);
   return el;
+}
+
+/** Tienda de segunda mano: ♻️ chico en verde, para no competir con los lugares del día */
+function shopMarkerEl(name: string): HTMLElement {
+  const el = document.createElement("button");
+  el.type = "button";
+  el.setAttribute("aria-label", `Segunda mano: ${name}`);
+  el.style.cssText = `
+    width:26px;height:26px;border-radius:50%;cursor:pointer;
+    background:#ecfdf5;border:2px solid #059669;
+    display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;
+    box-shadow:0 1px 3px rgba(0,0,0,.3);`;
+  el.textContent = "♻️";
+  return el;
+}
+
+function shopPopupHtml(shop: NearbyShop): string {
+  return `
+    <div style="font-family:system-ui,sans-serif;line-height:1.45;min-width:170px;color:#111">
+      <div style="font-weight:700;font-size:13px">♻️ ${escapeHtml(shop.name)}</div>
+      <div style="font-size:11px;color:#555;margin:2px 0">${escapeHtml(shop.what)}</div>
+      <div style="font-size:11px;color:#555">${escapeHtml(shop.howFar)}</div>
+      <a href="${placeUrl(shop.coords)}" target="_blank" rel="noopener noreferrer"
+        style="display:inline-block;margin-top:4px;font-size:12px;font-weight:600;color:#059669">Abrir en Google Maps</a>
+    </div>`;
 }
 
 function dayPopupHtml(day: DayEntry): string {
@@ -288,6 +318,7 @@ export default function TripMap({
   routes,
   transit = NO_TRANSIT,
   dayLayer = "all",
+  shops = NO_SHOPS,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -413,7 +444,7 @@ export default function TripMap({
   useEffect(() => {
     if (mapRef.current && readyRef.current) renderLayer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [day, mode, routes, transit, dayLayer]);
+  }, [day, mode, routes, transit, dayLayer, shops]);
 
   // ── Si cambia el margen (la hoja sube o baja), re-encuadrar sin redibujar ──
   const paddingKey = `${padding.top},${padding.bottom},${padding.left},${padding.right}`;
@@ -505,6 +536,9 @@ export default function TripMap({
     if (mode === "day" && day) selected = renderDayMode(map, day);
     else if (mode === "week" && day) selected = renderWeekMode(map, day);
     else if (mode === "full") selected = renderFullMode(map, day);
+
+    // Encima de cualquier modo; no cambian el encuadre
+    for (const shop of shops) addMarker(shopMarkerEl(shop.name), toLngLat(shop.coords), shopPopupHtml(shop));
 
     // Solo en modo día se abre la ficha sola: en semana y completo taparía el mapa
     if (selected && mode === "day") {
