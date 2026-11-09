@@ -2277,42 +2277,44 @@
   },
   {
     "date": "2026-12-01",
-    "label": "Bici: Kamakura → costa → Enoshima",
-    "location": "Kamakura",
-    "category": "Naturaleza",
-    "notes": "El otoño de Kamakura llega a principios de diciembre. Bici en Kamakura Rent-a-Cycle, junto a la salida este de la estación. Alternativa a pie: Sendero del Daibutsu entre templos",
+    "label": "Tokio a pie: jardines de otoño y atardecer en Yanaka",
+    "location": "Tokio",
+    "category": "Ciudad",
+    "notes": "Día de ciudad tranquilo, sin bici: dos jardines con los arces en su punto (principios de diciembre) y vuelta a Nippori para el atardecer en Yanaka. ~5 km a pie repartidos en el día. Los Jardines del Este del Palacio cierran los lunes y viernes; hoy, martes, abren de 9:00 a 16:00 (entrada hasta 15:30) y son gratis",
     "weekday": "Mar",
-    "food": "Shirasu-don (bol de pescaditos) en Enoshima",
+    "food": "Almuerzo en la estación de Tokio (Tokyo Ramen Street) · menchi-katsu en Yanaka Ginza",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Joban → Tokaido → Yokosuka Line",
+        "line": "JR Yamanote → Sobu (cambio en Akihabara)",
         "from": "Nippori",
-        "to": "Kamakura",
-        "via": ["Tokio"],
-        "duration": "~1h08 (8:01 → 9:09)",
-        "cost": { "amount": 1040, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "to": "Iidabashi",
+        "via": ["Akihabara"],
+        "duration": "~20min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~8 min a pie al jardín"
       },
       {
-        "mode": "bicicleta",
-        "line": "Kamakura Rent-a-Cycle (salida este)",
-        "from": "Kamakura",
-        "to": "Gran Buda → costa → Enoshima",
-        "duration": "~15–20 km, llano junto al mar",
-        "cost": { "amount": 1600, "currency": "JPY", "max": 2500, "approx": true },
-        "pay": ["efectivo", "tarjeta"]
+        "mode": "metro",
+        "line": "Tokyo Metro Tozai",
+        "from": "Iidabashi",
+        "to": "Otemachi",
+        "duration": "~5min",
+        "cost": { "amount": 180, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después ~5 min a pie a la puerta Otemon"
       },
+      { "mode": "caminar", "from": "Jardines del Este", "to": "Estación de Tokio", "duration": "~15min" },
       {
         "mode": "tren",
-        "line": "Enoden hasta Fujisawa + JR Tokaido / Keihin-Tohoku",
-        "from": "Enoshima",
+        "line": "JR Yamanote o Keihin-Tohoku",
+        "from": "Tokio",
         "to": "Nippori",
-        "via": ["Fujisawa", "Tokio"],
-        "duration": "~1h17 (17:02 → 18:19)",
-        "cost": { "amount": 1260, "currency": "JPY", "approx": true },
+        "duration": "~12min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Por Fujisawa es más rápido que volver por Kamakura"
+        "note": "Salida oeste: ~5 min a pie a Yanaka Ginza"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2324,31 +2326,30 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Templo Engaku-ji", "coords": [35.33794, 139.54782], "hours": "8:00–16:00 (dic–feb)" },
-      { "name": "Templo Hokoku-ji", "coords": [35.31952, 139.5689], "hours": "9:00–16:00 (té hasta 15:30)" },
-      { "name": "Gran Buda (Kotoku-in)", "coords": [35.3165, 139.53573], "hours": "8:00–16:30 (oct–mar)" },
-      { "name": "Templo Hase-dera", "coords": [35.31227, 139.53331], "hours": "8:00–16:00 (oct–feb)" },
+      { "name": "Jardín Koishikawa Korakuen", "coords": [35.70536, 139.74915], "hours": "9:00–17:00 (entrada hasta 16:30)" },
       {
-        "name": "Isla Enoshima (faro Sea Candle, cuevas al fondo)",
-        "coords": [35.29965, 139.47858],
-        "hours": "Sea Candle 9:00–20:00 · cuevas Iwaya 9:00–16:00 (nov–feb)"
+        "name": "Jardines del Este del Palacio Imperial",
+        "coords": [35.6867, 139.7574],
+        "hours": "9:00–16:00 (entrada hasta 15:30, nov–feb) · cierra lunes y viernes"
+      },
+      { "name": "Estación de Tokio (edificio de ladrillo de Marunouchi)", "coords": [35.68115, 139.76598] },
+      {
+        "name": "Calle Yanaka Ginza y escalera Yuyake Dandan",
+        "coords": [35.72765, 139.76717],
+        "hours": "Tiendas ~10:00–18:00 · atardecer desde la escalera ~16:30"
       }
     ],
-    "budget": "$121",
+    "budget": "$94",
     "isTransit": false,
     "activitiesDay": [
-      "Templo Hokoku-ji y su bosque de bambú",
-      "Templo Engaku-ji con su color (Kita-Kamakura)",
-      { "text": "Gran Buda de Kamakura", "price": { "amount": 300, "currency": "JPY", "approx": true } },
-      { "text": "Templo Hase-dera y su vista al mar", "price": { "amount": 400, "currency": "JPY", "approx": true } },
-      "Costa hasta Enoshima y sus cuevas"
+      { "text": "Jardín Koishikawa Korakuen", "price": { "amount": 300, "currency": "JPY" } },
+      "Jardines del Este del Palacio Imperial (gratis)",
+      "Estación de Tokio y Marunouchi"
     ],
-    "activitiesNight": ["Atardecer con el Fuji desde Enoshima (si está despejado)", "Vuelta a Tokio", "Cena en Ueno o Nippori", "Descanso"],
-    "morning": {
-      "wake": "7:00",
-      "leave": "7:50",
-      "why": "Tren de 8:01 a Kamakura (9:09). En diciembre los templos cierran a las 16:00: Engaku-ji y Hokoku-ji primero"
-    }
+    "activitiesNight": ["Atardecer en la escalera Yuyake Dandan", "Yanaka Ginza: menchi-katsu y tiendas", "Descanso"],
+    "morning": { "wake": "7:45", "leave": "8:30", "why": "Koishikawa Korakuen abre a las 9:00. Los Jardines del Este dejan entrar hasta las 15:30" },
+    "keepOrder": true,
+    "keepOrderReason": "Los jardines cierran temprano y Yanaka va al atardecer, de vuelta al hospedaje"
   },
   {
     "date": "2026-12-02",
