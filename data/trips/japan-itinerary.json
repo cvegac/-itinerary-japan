@@ -762,10 +762,10 @@
   },
   {
     "date": "2026-11-10",
-    "label": "Bajada a Tanabe por los Hard Off: Sakai → Kishiwada → Sennan → Wakayama",
+    "label": "Bajada a Tanabe por los Hard Off: café internet en Sakai → Kishiwada → Sennan → Wakayama",
     "location": "Kii-Tanabe",
     "category": "Logística",
-    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Fukai ~10:30, Kishiwada ~12:45, Sennan ~14:25 (almuerzo cerca), Wakayama ~16:25. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. Si se te hace tarde, el Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). Si estás cansado, saltá Kishiwada (solo Hard Off): mañana son 13 km de sendero. En Wakayama dejá la mochila en los lockers grandes de la estación. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri",
+    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: café internet en Sakaihigashi ~9:00–10:00, Fukai ~10:30, Kishiwada ~12:45, Sennan ~14:25 (almuerzo cerca), Wakayama ~16:25. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. Si se te hace tarde, el Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). Si estás cansado, saltá Kishiwada (solo Hard Off): mañana son 13 km de sendero. En Wakayama dejá la mochila en los lockers grandes de la estación. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri",
     "weekday": "Mar",
     "food": "Izakaya en el callejón Ajikoji de Tanabe",
     "transport": [
@@ -773,10 +773,20 @@
         "mode": "tren",
         "line": "Nankai Koya Line (cambio en Hashimoto)",
         "from": "Kamuro",
-        "to": "Nakamozu",
+        "to": "Sakaihigashi",
         "via": ["Hashimoto"],
-        "duration": "~1h",
-        "cost": { "amount": 900, "currency": "JPY", "approx": true },
+        "duration": "~1h (salí 8:00)",
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "El café internet queda a 3 min a pie de la estación"
+      },
+      {
+        "mode": "tren",
+        "line": "Nankai Koya Line",
+        "from": "Sakaihigashi",
+        "to": "Nakamozu",
+        "duration": "~6min (3 paradas)",
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
@@ -851,6 +861,13 @@
     "checkOut": "6:00–9:00",
     "pois": [
       {
+        "name": "Net Cafe Popeye Sakaihigashi (piso 5, edificio Daitoku)",
+        "coords": [34.57466, 135.48366],
+        "hours": "Abierto 24 h · llevá el pasaporte: te lo piden para hacerte socio",
+        "icon": "💻",
+        "byTransit": true
+      },
+      {
         "name": "Hard Off + Hobby Off Sakai Fukai",
         "coords": [34.52637, 135.48554],
         "hours": "Abre 10:00",
@@ -879,9 +896,10 @@
         "byTransit": true
       }
     ],
-    "budget": "$106",
+    "budget": "$108",
     "isTransit": false,
     "activitiesDay": [
+      "Café internet Popeye en Sakaihigashi (con PC)",
       "Hard Off + Hobby Off de Sakai Fukai",
       "Hard Off de Kishiwada (opcional)",
       "Hard Off + Hobby Off de Sennan",
@@ -893,7 +911,11 @@
       "Preparar la mochila de día y el almuerzo del sendero",
       "Dormir temprano: el bus sale 8:30"
     ],
-    "morning": { "wake": "8:00", "leave": "8:50", "why": "Check-out hasta las 9:00. Las tiendas abren a las 10:00: llegás justo a Sakai" },
+    "morning": {
+      "wake": "7:15",
+      "leave": "8:00",
+      "why": "Café internet en Sakaihigashi ~9:00 (llevá el pasaporte) y a las 10:30 en el Hard Off de Fukai, cuando ya abrió"
+    },
     "keepOrder": true,
     "keepOrderReason": "Bajada en tren de norte a sur hasta el Kuroshio de Wakayama"
   },
