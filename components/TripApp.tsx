@@ -205,6 +205,19 @@ export default function TripApp({ tripData }: Props) {
     setMapMode("day");
   }
 
+  // La app queda viva en segundo plano: "hoy" se recalcula al volver a ella y cada
+  // minuto, así a la medianoche cambia de día sin tener que cerrarla
+  useEffect(() => {
+    const refresh = () => setStatus(tripStatus(itinerary, localISODate(new Date())));
+    const onVisible = () => document.visibilityState !== "hidden" && refresh();
+    document.addEventListener("visibilitychange", onVisible);
+    const timer = window.setInterval(refresh, 60_000);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.clearInterval(timer);
+    };
+  }, [itinerary]);
+
   // Si ya estás mirando el día de hoy, el botón "Hoy" sobra
   const viewingToday = status?.kind === "during" && selectedDay?.date === itinerary[status.index]?.date;
   function goToday() {

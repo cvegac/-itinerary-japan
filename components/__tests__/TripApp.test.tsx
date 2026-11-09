@@ -46,6 +46,19 @@ describe("TripApp", () => {
     expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
   });
 
+  it("si la app queda abierta y pasa la medianoche, al volver a ella 'Hoy' es el día nuevo", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-02T23:50:00"));
+    render(<TripApp tripData={fixtureTrip} />);
+    expect(title()).toBe("Excursión a Nikko");
+    expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
+
+    vi.setSystemTime(new Date("2026-11-03T00:10:00"));
+    act(() => document.dispatchEvent(new Event("visibilitychange")));
+    await act(() => userEvent.click(screen.getByRole("button", { name: "Hoy" })));
+    expect(title()).toBe("Vuelo a Hiroshima");
+  });
+
   it("en el celular no hay flechas de día (la tira se desliza); en la computadora sí", async () => {
     renderAt("2026-10-22");
     expect(screen.queryByRole("button", { name: "Día siguiente" })).toBeNull();
