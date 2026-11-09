@@ -8,6 +8,14 @@ export const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 /** Elevación pública de AWS (Terrarium), con CORS abierto */
 export const TERRAIN_TILES = "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
+/** Créditos obligatorios de los datos del mapa (se muestran al pie del menú Capas) */
+export const MAP_CREDITS = [
+  { label: "OpenFreeMap", url: "https://openfreemap.org" },
+  { label: "OpenMapTiles", url: "https://www.openmaptiles.org/" },
+  { label: "© colaboradores de OpenStreetMap", url: "https://www.openstreetmap.org/copyright" },
+  { label: "Relieve: Mapzen / AWS Terrain Tiles", url: "https://registry.opendata.aws/terrain-tiles/" },
+];
+
 /** Hasta qué zoom se pide el relieve; más cerca se amplía (y se ve igual) */
 export const TERRAIN_MAX_ZOOM = 12;
 

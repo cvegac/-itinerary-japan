@@ -473,10 +473,11 @@ describe("TripMap", () => {
     expect(fake.state.controls.some((c) => c instanceof fake.module.TerrainControl)).toBe(false);
   });
 
-  it("los créditos van arriba a la derecha, debajo de los botones, y no tapan nada", async () => {
+  it("sin la 'i' de créditos flotando (van en el menú Capas) y Mi ubicación abajo a la derecha", async () => {
     await renderLoadedMap(itinerary[0], "day");
-    const i = fake.state.controls.findIndex((c) => c instanceof fake.module.AttributionControl);
-    expect(fake.state.positions[i]).toBe("top-right");
+    expect(fake.state.controls.some((c) => c instanceof fake.module.AttributionControl)).toBe(false);
+    const geo = fake.state.controls.findIndex((c) => c instanceof fake.module.GeolocateControl);
+    expect(fake.state.positions[geo]).toBe("bottom-right");
   });
 
   it("el relieve 3D se prende y se apaga desde afuera", async () => {

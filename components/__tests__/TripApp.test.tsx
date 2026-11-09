@@ -135,6 +135,15 @@ describe("TripApp", () => {
     expect(map()).toBe("2");
   });
 
+  it("los botones de abajo del mapa (Mi ubicación) suben y bajan con la hoja del día", async () => {
+    render(<TripApp tripData={fixtureTrip} />);
+    const wrapper = () => screen.getAllByTestId("map")[0].parentElement!;
+    const before = wrapper().style.getPropertyValue("--map-inset-bottom");
+    expect(before).toMatch(/px$/);
+    await act(() => userEvent.click(screen.getAllByRole("tab", { name: /Mapa|Itinerario/ })[0]));
+    expect(wrapper().style.getPropertyValue("--map-inset-bottom")).toBe(before);
+  });
+
   it("sin tiendas cargadas el menú Capas no tiene el interruptor de tiendas", async () => {
     render(<TripApp tripData={fixtureTrip} />);
     await act(() => userEvent.click(screen.getByRole("button", { name: "Capas del mapa" })));

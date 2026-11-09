@@ -5,6 +5,7 @@ import { Layers, X } from "lucide-react";
 import type { DayLayer, MapMode } from "@/components/TripMap";
 import MapModeControl from "@/components/MapModeControl";
 import DayLayerControl from "@/components/DayLayerControl";
+import { MAP_CREDITS } from "@/lib/map-sources";
 
 type Props = {
   mode: MapMode;
@@ -91,6 +92,18 @@ export default function MapLayersMenu({
             </div>
 
             {children && <div className="border-t border-line pt-3">{children}</div>}
+
+            <p className="text-[10px] leading-snug text-muted">
+              Mapa:{" "}
+              {MAP_CREDITS.map((c, i) => (
+                <span key={c.url}>
+                  {i > 0 && " · "}
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="underline">
+                    {c.label}
+                  </a>
+                </span>
+              ))}
+            </p>
           </div>
         </>
       )}

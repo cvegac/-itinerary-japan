@@ -58,6 +58,16 @@ describe("MapLayersMenu", () => {
     expect(screen.queryByRole("switch", { name: /Segunda mano/ })).toBeNull();
   });
 
+  it("al pie muestra los créditos del mapa, con el link a OpenStreetMap", async () => {
+    setup();
+    await open();
+    const menu = screen.getByRole("dialog", { name: "Capas del mapa" });
+    expect(menu.textContent).toContain("OpenStreetMap");
+    expect(within(menu).getByRole("link", { name: /OpenStreetMap/ }).getAttribute("href")).toBe(
+      "https://www.openstreetmap.org/copyright"
+    );
+  });
+
   it("el punto en el botón avisa que hay algo distinto de lo normal (tiendas, relieve u otra vista)", () => {
     setup({ showShops: true });
     expect(screen.getByRole("button", { name: "Capas del mapa" }).querySelector("[data-active]")).toBeTruthy();

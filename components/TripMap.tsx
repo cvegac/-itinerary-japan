@@ -397,10 +397,9 @@ export default function TripMap({
       });
       geolocate.on("trackuserlocationstart", () => (trackingRef.current = true));
       geolocate.on("trackuserlocationend", () => (trackingRef.current = false));
-      map.addControl(geolocate, "top-right");
-      // Créditos chiquitos debajo de los botones: arriba a la izquierda los tapaban
-      // los controles de la app. El relieve 3D se prende desde el menú Capas
-      map.addControl(new lib.AttributionControl({ compact: true }), "top-right");
+      // Abajo a la derecha, justo encima de la hoja del día (--map-inset-bottom).
+      // Los créditos del mapa van al pie del menú Capas, y el relieve 3D se prende ahí
+      map.addControl(geolocate, "bottom-right");
       const markRotated = () =>
         containerRef.current?.classList.toggle("map-rotated", map.getBearing() !== 0 || map.getPitch() !== 0);
       map.on("rotate", markRotated);
@@ -430,12 +429,6 @@ export default function TripMap({
           new lib.Popup({ maxWidth: "260px", focusAfterOpen: false }).setLngLat(e.lngLat).setHTML(label).addTo(map);
         });
       }
-
-      // El aviso de créditos compacto arranca abierto: lo dejamos como botón "i"
-      const collapseAttribution = () =>
-        containerRef.current?.querySelector(".maplibregl-ctrl-attrib")?.classList.remove("maplibregl-compact-show");
-      map.on("load", collapseAttribution);
-      map.on("resize", collapseAttribution);
 
 
       const ro = new ResizeObserver(() => map.resize());

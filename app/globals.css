@@ -58,6 +58,12 @@
   top: var(--map-inset-top, 0px);
 }
 
+/* Mi ubicación: abajo a la derecha, encima de la hoja del día (la sigue al subir y bajar) */
+.trip-map .maplibregl-ctrl-bottom-right {
+  bottom: var(--map-inset-bottom, 0px);
+  transition: bottom 0.25s ease;
+}
+
 /* La brújula solo aparece si giraste o inclinaste el mapa (para volver al norte) */
 .trip-map:not(.map-rotated) .maplibregl-ctrl-compass {
   display: none;

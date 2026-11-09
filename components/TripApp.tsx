@@ -392,6 +392,10 @@ export default function TripApp({ tripData }: Props) {
       <div
         className="absolute inset-0 lg:relative lg:order-2 lg:flex-1"
         style={{
+          // Los botones de abajo del mapa (Mi ubicación) van justo encima de la hoja
+          ["--map-inset-bottom" as string]: `${
+            mapFullscreen || isDesktop ? 16 : view === "itinerary" ? sheetHeights[snap] + NAV_HEIGHT + 8 : NAV_HEIGHT + 8
+          }px`,
           ["--map-inset-top" as string]: mapFullscreen
             ? "calc(max(0.75rem, env(safe-area-inset-top)) + 52px)"
             : isDesktop
