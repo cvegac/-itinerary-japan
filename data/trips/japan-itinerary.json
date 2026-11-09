@@ -765,7 +765,7 @@
     "label": "Bajada a Tanabe por los Hard Off: café internet en Sakai → Kishiwada → Sennan → Wakayama",
     "location": "Kii-Tanabe",
     "category": "Logística",
-    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: café internet en Sakaihigashi ~9:00–10:00, Fukai ~10:30, Kishiwada ~12:45, Sennan ~14:25 (almuerzo cerca), Wakayama ~16:25. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. Si se te hace tarde, el Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). Si estás cansado, saltá Kishiwada (solo Hard Off): mañana son 13 km de sendero. En Wakayama dejá la mochila en los lockers grandes de la estación. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri",
+    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: café internet en Sakaihigashi ~9:00–10:00, EDION Nakamozu ~10:15, Fukai ~11:00, Kishiwada ~12:45, Sennan ~14:25 (almuerzo cerca), Wakayama ~16:25. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. Si se te hace tarde, el Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). Si estás cansado, saltá Kishiwada (solo Hard Off): mañana son 13 km de sendero. En Wakayama dejá la mochila en los lockers grandes de la estación. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri",
     "weekday": "Mar",
     "food": "Izakaya en el callejón Ajikoji de Tanabe",
     "transport": [
@@ -787,7 +787,8 @@
         "to": "Nakamozu",
         "duration": "~6min (3 paradas)",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "pay": ["suica"],
+        "note": "EDION (cable micro-USB) a 8 min a pie de la estación; después Semboku a Fukai"
       },
       {
         "mode": "tren",
@@ -868,6 +869,13 @@
         "byTransit": true
       },
       {
+        "name": "EDION Nakamozu (cable micro-USB)",
+        "coords": [34.55798, 135.50919],
+        "hours": "Abre 10:00 · cables en la sección de celulares: pedí «マイクロUSB ケーブル»",
+        "icon": "🔌",
+        "byTransit": true
+      },
+      {
         "name": "Hard Off + Hobby Off Sakai Fukai",
         "coords": [34.52637, 135.48554],
         "hours": "Abre 10:00",
@@ -900,6 +908,7 @@
     "isTransit": false,
     "activitiesDay": [
       "Café internet Popeye en Sakaihigashi (con PC)",
+      "Cable micro-USB en EDION Nakamozu",
       "Hard Off + Hobby Off de Sakai Fukai",
       "Hard Off de Kishiwada (opcional)",
       "Hard Off + Hobby Off de Sennan",
@@ -914,7 +923,7 @@
     "morning": {
       "wake": "7:15",
       "leave": "8:00",
-      "why": "Café internet en Sakaihigashi ~9:00 (llevá el pasaporte) y a las 10:30 en el Hard Off de Fukai, cuando ya abrió"
+      "why": "Café internet en Sakaihigashi ~9:00 (llevá el pasaporte), cable en EDION cuando abre (10:00) y Hard Off de Fukai ~11:00"
     },
     "keepOrder": true,
     "keepOrderReason": "Bajada en tren de norte a sur hasta el Kuroshio de Wakayama"
