@@ -858,7 +858,7 @@
     "label": "Kumano Kodo: de Takijiri a Chikatsuyu",
     "location": "Kumano Kodo",
     "category": "Naturaleza",
-    "notes": "La ruta Nakahechi, Patrimonio de la Humanidad. ~13 km y 5–7 h, con la primera subida empinada. Llevá efectivo, agua y almuerzo: casi no hay tiendas en el camino. Calculá llegar a Chikatsuyu antes de las 16:30",
+    "notes": "La ruta Nakahechi, Patrimonio de la Humanidad. ~13 km y 5–7 h, con la primera subida empinada. Llevá efectivo, agua y almuerzo: casi no hay tiendas en el camino. A las 7:18 el Kumano Kodo-kan de Takijiri todavía está cerrado: el mapa es el PDF (tb-kumano.jp, nakahechi-map). Sellá la credencial del Peregrino Dual en cada oji. Saliendo temprano llegás a Chikatsuyu ~13:30–14:30 y alcanzás el bus de las 15:11",
     "weekday": "Mié",
     "food": "Bento de Tanabe en el sendero",
     "transport": [
@@ -867,10 +867,10 @@
         "line": "Ryujin / Meiko Bus",
         "from": "Kii-Tanabe",
         "to": "Takijiri-oji",
-        "duration": "~41min (8:30 → 9:10)",
+        "duration": "~41min (6:37 → 7:18)",
         "cost": { "amount": 970, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"],
-        "note": "Bus 95 de Meiko; o el rápido 93 de Ryujin a las 8:36 → 9:17"
+        "note": "Bus 95 de Meiko. Si se te pasa: 6:54 (81, Kumano Kodo Express) → 7:29, o 8:29 (95) → 9:10"
       },
       { "mode": "caminar", "line": "Kumano Kodo Nakahechi", "from": "Takijiri-oji", "to": "Chikatsuyu-oji", "duration": "~5–7h, ~13 km" },
       {
@@ -911,9 +911,9 @@
     "keepOrder": true,
     "keepOrderReason": "sendero Nakahechi en un solo sentido",
     "morning": {
-      "wake": "7:00",
-      "leave": "7:50",
-      "why": "Bus 95 de las 8:30 a Takijiri (o el 93 de 8:36). Antes, konbini: almuerzo y agua, en el sendero no hay tiendas"
+      "wake": "5:45",
+      "leave": "6:15",
+      "why": "Bus 95 de las 6:37 a Takijiri (llega 7:18): más luz en el sendero. Antes, konbini cerca de la estación: almuerzo y agua, en el camino no hay tiendas"
     },
     "trailReports": [
       { "label": "YAMAP: Takijiri → Chikatsuyu, ruta y diarios", "url": "https://yamap.com/model-courses/22583" },
