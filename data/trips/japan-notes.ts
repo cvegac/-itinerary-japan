@@ -4,12 +4,6 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
-      id: "reserva-ghibli",
-      text: "Entradas del Museo Ghibli para el 3 dic (~10:00)",
-      detail: "Las de diciembre salieron el 10 nov a las 10:00 (hora de Japón) y vuelan. Solo en la web oficial (ghibli-museum.jp → Lawson Ticket): hay sitios falsos. Si no hay, el 3 dic cambiás el Ghibli por Meiji Jingū",
-      date: "2026-11-10",
-    },
-    {
       id: "reserva-shibuya-sky",
       text: "Reservar Shibuya Sky para el 30 nov (franja ~15:40)",
       detail: "Para ver el atardecer (16:28) y quedarte de noche. Online sale ~¥300 más barato que en ventanilla",

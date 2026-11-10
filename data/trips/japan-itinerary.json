@@ -2716,10 +2716,10 @@
   },
   {
     "date": "2026-12-03",
-    "label": "Museo Ghibli, Nakano Broadway y Shinjuku de noche",
+    "label": "Meiji Jingū, Shinjuku Gyoen, Nakano Broadway, Inokashira y Shinjuku de noche",
     "location": "Tokio",
     "category": "Naturaleza",
-    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. Las entradas del Ghibli de diciembre salieron el 10 nov a las 10:00 (Lawson Ticket, solo la web oficial): si no conseguiste, cambiá el Ghibli por Meiji Jingū a la mañana y seguí igual. Shinjuku Gyoen: última entrada 15:30. Kōenji (una parada antes de Nakano) tiene Hard Off y mucha ropa usada, si te sobra tiempo",
+    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. El Museo Ghibli de diciembre se agotó el mismo 10 nov, así que el día arranca en Meiji Jingū. Kōenji (entre Nakano y Kichijōji) tiene Hard Off y mucha ropa usada, si te sobra tiempo",
     "weekday": "Jue",
     "food": "Yakitori en Omoide Yokocho",
     "transport": [
@@ -2732,34 +2732,52 @@
       },
       {
         "mode": "tren",
-        "line": "JR Yamanote + Chūō Line rápida (cambio en Shinjuku)",
+        "line": "JR Yamanote",
         "from": "Nippori",
-        "to": "Mitaka",
-        "duration": "~45min",
-        "cost": { "amount": 480, "currency": "JPY", "approx": true },
+        "to": "Harajuku",
+        "duration": "~25min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "via": ["Shinjuku"],
-        "note": "Del Nagomi a Nippori son ~12 min. Desde Mitaka, bus amarillo al museo (~¥220) o 15 min a pie por el río"
+        "note": "Del Nagomi a Nippori son ~12 min. Meiji Jingū está al salir de la estación"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Harajuku",
+        "to": "Shinjuku",
+        "duration": "~5min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Shinjuku Gyoen abre a las 9:00 (puerta Shinjuku, 10 min a pie)"
       },
       {
         "mode": "tren",
         "line": "JR Chūō Line rápida",
-        "from": "Kichijoji",
+        "from": "Shinjuku",
         "to": "Nakano",
-        "duration": "~10min",
+        "duration": "~5min",
         "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Del parque Inokashira a la estación Kichijōji son 5 min"
+        "note": "Las tiendas de Nakano Broadway abren ~12:00"
       },
       {
         "mode": "tren",
         "line": "JR Chūō Line rápida",
         "from": "Nakano",
-        "to": "Shinjuku",
-        "duration": "~5min",
+        "to": "Kichijoji",
+        "duration": "~10min",
         "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Shinjuku Gyoen deja entrar hasta las 15:30"
+        "note": "El parque Inokashira queda a 5 min"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Chūō Line rápida",
+        "from": "Kichijoji",
+        "to": "Shinjuku",
+        "duration": "~15min",
+        "cost": { "amount": 230, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
@@ -2780,14 +2798,12 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
+      { "name": "Santuario Meiji Jingū (bosque y torii gigante)", "coords": [35.67484, 139.69963], "hours": "Abre al amanecer · gratis" },
       {
-        "name": "Museo Ghibli (Mitaka)",
-        "coords": [35.69625, 139.57045],
-        "icon": "🎨",
-        "byTransit": true,
-        "hours": "Solo con entrada de fecha y hora (Lawson Ticket) · cerrado los martes"
+        "name": "Jardín Shinjuku Gyoen (arces y ginkgos)",
+        "coords": [35.68507, 139.70955],
+        "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado"
       },
-      { "name": "Parque Inokashira (lago y arces)", "coords": [35.69891, 139.5787] },
       {
         "name": "Nakano Broadway (Mandarake y tiendas geek)",
         "coords": [35.70924, 139.66569],
@@ -2796,21 +2812,22 @@
         "hours": "Tiendas ~12:00–20:00"
       },
       {
-        "name": "Jardín Shinjuku Gyoen (arces y ginkgos)",
-        "coords": [35.68507, 139.70955],
-        "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado"
+        "name": "Parque Inokashira (lago y arces)",
+        "coords": [35.69891, 139.5787],
+        "byTransit": true,
+        "hours": "Atardecer 16:28 sobre el lago"
       },
       { "name": "Mirador gratis del Gobierno de Tokio (Tochō)", "coords": [35.6903, 139.69155], "hours": "Hasta ~22:00 · gratis" },
       { "name": "Omoide Yokocho (yakitori bajo las vías)", "coords": [35.69302, 139.6997], "icon": "🏮", "night": true },
       { "name": "Golden Gai y Godzilla de Kabukichō", "coords": [35.69399, 139.7047], "night": true, "icon": "🍸" }
     ],
-    "budget": "$110",
+    "budget": "$104",
     "isTransit": false,
     "activitiesDay": [
-      { "text": "Museo Ghibli (con entrada)", "price": { "amount": 1000, "currency": "JPY", "approx": true } },
-      "Paseo por el parque Inokashira y Kichijōji (ropa barata y cafés)",
+      "Santuario Meiji Jingū y su bosque",
+      { "text": "Jardín Shinjuku Gyoen", "price": { "amount": 500, "currency": "JPY", "approx": true } },
       "Nakano Broadway",
-      { "text": "Jardín Shinjuku Gyoen", "price": { "amount": 500, "currency": "JPY", "approx": true } }
+      "Kichijōji (ropa barata y cafés) y atardecer en el lago Inokashira"
     ],
     "activitiesNight": [
       "Tokio de noche desde el mirador gratis del Tochō",
@@ -2819,8 +2836,8 @@
       "Ropa en Shinjuku: Uniqlo, GU, Beams Japan"
     ],
     "keepOrder": true,
-    "keepOrderReason": "el Ghibli va con hora fija y Shinjuku Gyoen cierra a las 16:00",
-    "morning": { "wake": "7:30", "leave": "8:15", "why": "Valija al Nagomi y al Ghibli para la entrada de ~10:00" }
+    "keepOrderReason": "Meiji Jingū y Shinjuku Gyoen de mañana, Nakano cuando abren las tiendas e Inokashira al atardecer",
+    "morning": { "wake": "7:30", "leave": "8:15", "why": "Valija al Nagomi y a Meiji Jingū temprano, que es cuando está tranquilo" }
   },
   {
     "date": "2026-12-04",
