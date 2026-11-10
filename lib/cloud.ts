@@ -163,7 +163,17 @@ export function saveTrip(uid: string, slug: string, data: Record<string, unknown
 /** Cada registro es una clave de su mapa ("expenses", "withdrawals"): se agregan
  *  sin pisar los demás */
 export function saveRecord(uid: string, slug: string, field: RecordField, record: { id: string }) {
-  saveTrip(uid, slug, { [field]: { [record.id]: record } });
+  if (!services) return;
+  const s = services;
+  // mergeFields (no merge): el registro se reemplaza entero, así lo que se le
+  // quitó al editarlo (p. ej. "Sin asignar") no queda pegado en la nube
+  s.m.fs
+    .setDoc(
+      tripDoc(s, uid, slug),
+      { [field]: { [record.id]: record }, updatedAt: s.m.fs.serverTimestamp() },
+      { mergeFields: [new s.m.fs.FieldPath(field, record.id), "updatedAt"] }
+    )
+    .catch(() => {});
 }
 
 export function deleteRecord(uid: string, slug: string, field: RecordField, id: string) {

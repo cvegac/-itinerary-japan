@@ -6,6 +6,7 @@ const fb = vi.hoisted(() => ({
   loaded: false,
   authCallback: null as null | ((u: unknown) => void),
   calls: [] as string[],
+  setDocs: [] as { data: Record<string, unknown>; options: { mergeFields?: unknown[]; merge?: boolean } }[],
 }));
 
 vi.mock("firebase/app", () => {
@@ -40,7 +41,13 @@ vi.mock("firebase/firestore", () => ({
   clearIndexedDbPersistence: async () => void fb.calls.push("clearIndexedDbPersistence"),
   doc: () => ({}),
   onSnapshot: () => () => {},
-  setDoc: async () => {},
+  setDoc: async (_ref: unknown, data: Record<string, unknown>, options: { mergeFields?: unknown[]; merge?: boolean }) =>
+    void fb.setDocs.push({ data, options }),
+  FieldPath: class {
+    constructor(...segments: string[]) {
+      return { path: segments.join(".") };
+    }
+  },
   serverTimestamp: () => "ts",
 }));
 
@@ -56,6 +63,7 @@ beforeEach(() => {
   fb.loaded = false;
   fb.authCallback = null;
   fb.calls = [];
+  fb.setDocs = [];
 });
 afterEach(() => localStorage.clear());
 
@@ -111,5 +119,16 @@ describe("cloud", () => {
     );
     expect(localStorage.getItem("viajes-sesion")).toBeNull();
     expect(cloud.getCloudState()).toMatchObject({ status: "idle", user: null });
+  });
+
+  it("al guardar un gasto editado lo reemplaza entero en la nube: lo que se le quitó (Sin asignar) no queda pegado", async () => {
+    const cloud = await loadCloud();
+    await cloud.signIn();
+    const record = { id: "e1", amount: 10 };
+    cloud.saveRecord("u1", "japan", "expenses", record);
+    const last = fb.setDocs.at(-1)!;
+    expect(last.data.expenses).toEqual({ e1: { id: "e1", amount: 10 } });
+    expect(last.options.merge).toBeUndefined();
+    expect(last.options.mergeFields).toEqual([{ path: "expenses.e1" }, "updatedAt"]);
   });
 });
