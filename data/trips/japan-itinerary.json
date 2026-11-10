@@ -762,10 +762,10 @@
   },
   {
     "date": "2026-11-10",
-    "label": "Bajada a Tanabe por los Hard Off: Sakai → Kishiwada → Sennan → Wakayama",
+    "label": "Hard Off de Sakai y tren a Tanabe",
     "location": "Kii-Tanabe",
     "category": "Logística",
-    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Fukai ~10:30, estación Otori ~13:45, Sennan ~14:45, Wakayama ~16:15. Sin café internet: el idioma de la cámara (a6600 japonesa, bloqueada en japonés) se cambia en Bogotá con la PC propia. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. El Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). En Wakayama dejá la mochila en los lockers grandes de la estación. Mañana son 13 km de sendero: no te quemes. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. Kishiwada es opcional: con él el Kuroshio 21 queda justo; sin él, sobra tiempo",
+    "notes": "Plan cambiado sobre la marcha: Hard Off de Fukai a la mañana y después directo a Tanabe, para llegar descansado (mañana son 13 km de sendero). Desde Otori, JR Hanwa al sur hasta Hineno y ahí el Kuroshio, que es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. El idioma de la cámara (a6600 japonesa, bloqueada en japonés) se cambia en Bogotá con la PC propia",
     "weekday": "Mar",
     "food": "Izakaya en el callejón Ajikoji de Tanabe",
     "transport": [
@@ -802,43 +802,23 @@
       },
       {
         "mode": "tren",
-        "line": "JR Hanwa Line (local)",
+        "line": "JR Hanwa Line (rápido o local)",
         "from": "Otori",
-        "to": "Shimomatsu",
-        "duration": "~15min",
-        "cost": { "amount": 230, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Después ~16 min a pie a la tienda (Kishiwada es opcional: si lo salteás, seguí directo a Izumi-Sunagawa)"
-      },
-      {
-        "mode": "tren",
-        "line": "JR Hanwa Line",
-        "from": "Shimomatsu",
-        "to": "Izumi-Sunagawa",
+        "to": "Hineno",
         "duration": "~25min",
-        "cost": { "amount": 400, "currency": "JPY", "approx": true },
+        "cost": { "amount": 390, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Después ~18 min a pie a la tienda"
+        "note": "En Hineno para el Kuroshio: no hace falta ir hasta Wakayama"
       },
       {
         "mode": "tren",
-        "line": "JR Hanwa Line",
-        "from": "Izumi-Sunagawa",
-        "to": "Wakayama",
-        "duration": "~25min",
-        "cost": { "amount": 500, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Lockers en la estación; la tienda queda a ~14 min a pie"
-      },
-      {
-        "mode": "tren",
-        "line": "Expreso limitado Kuroshio 21 (todo con reserva)",
-        "from": "Wakayama",
+        "line": "Expreso limitado Kuroshio (todo con reserva)",
+        "from": "Hineno",
         "to": "Kii-Tanabe",
-        "duration": "18:25 → 19:40",
-        "cost": { "amount": 4370, "currency": "JPY", "approx": true },
+        "duration": "~1h40",
+        "cost": { "amount": 4800, "currency": "JPY", "approx": true },
         "pay": ["boleto"],
-        "note": "Respaldo: Kuroshio 29, 21:26 → 22:41"
+        "note": "Sacá el asiento en la máquina de JR (みどりの券売機) antes de subir; Google Maps te dice cuál es el próximo"
       },
       { "mode": "caminar", "from": "Estación Kii-Tanabe", "to": "Tsukasa House", "duration": "~7min" }
     ],
@@ -857,37 +837,11 @@
         "hours": "Abre 10:00",
         "icon": "♻️",
         "byTransit": true
-      },
-      {
-        "name": "Hard Off Kishiwada",
-        "coords": [34.46496, 135.39757],
-        "hours": "Abre 10:00 · opcional si estás cansado",
-        "icon": "♻️",
-        "byTransit": true
-      },
-      {
-        "name": "Hard Off + Hobby Off Osaka Sennan",
-        "coords": [34.36202, 135.27153],
-        "hours": "Abre 10:00",
-        "icon": "♻️",
-        "byTransit": true
-      },
-      {
-        "name": "Hard Off + Hobby Off Wakayama Nakanoshima (Konan, 2.º piso)",
-        "coords": [34.23828, 135.18939],
-        "hours": "Abre 10:00",
-        "icon": "♻️",
-        "byTransit": true
       }
     ],
-    "budget": "$105",
+    "budget": "$103",
     "isTransit": false,
-    "activitiesDay": [
-      "Hard Off + Hobby Off de Sakai Fukai",
-      "Hard Off de Kishiwada (opcional)",
-      "Hard Off + Hobby Off de Sennan",
-      "Hard Off + Hobby Off de Wakayama Nakanoshima"
-    ],
+    "activitiesDay": ["Hard Off + Hobby Off de Sakai Fukai", "Kumano Travel en Tanabe (cierra 18:00): mapa y dudas del sendero de mañana"],
     "activitiesNight": [
       "Kuroshio por la costa hasta Tanabe",
       "Cena rápida cerca de la estación (callejón Ajikoji)",

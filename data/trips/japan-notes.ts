@@ -4,6 +4,24 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
+      id: "banda-xiaomi",
+      text: "Comprar la Xiaomi Smart Band nueva (~¥5,000)",
+      detail: "En Bic Camera o Yodobashi (la de la estación de Kioto es enorme). Se integra con tu celular Xiaomi: pasos, pulso, calorías y sueño. Antes de pagar, mirá que tenga español o inglés",
+      date: "2026-11-14",
+    },
+    {
+      id: "reloj-citizen",
+      text: "Buscar un Citizen Eco-Drive con zafiro, usado (¥15,000–25,000)",
+      detail: "Sobrio, para ocasiones elegantes: acero o titanio, sin dorados (en Bogotá, nada que llame la atención). En la etiqueta: サファイア (zafiro) y 稼働品 (funcionando). Hard Off, 2nd Street o Komehyo",
+      date: "2026-12-04",
+    },
+    {
+      id: "figuras-grandes",
+      text: "Figuras grandes (Grandista, Maximatic), si todavía las querés",
+      detail: "Al final del viaje, para no cargarlas en la mochila",
+      date: "2026-12-04",
+    },
+    {
       id: "spring-confirmacion",
       text: "Revisar que Spring Japan confirme el vuelo IJ621",
       detail:
