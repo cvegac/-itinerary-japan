@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BedDouble,
@@ -15,7 +15,6 @@ import {
   ListChecks,
   MapPin,
   MessageSquare,
-  MessageSquarePlus,
   Moon,
   Navigation,
   Phone,
@@ -166,17 +165,9 @@ export default function DayDetail({
   useEffect(() => setToday(localISODate(new Date())), []);
   const forecastState = useForecast(day.date, sunPlace, today);
   const forecast = forecastState?.forecast ?? null;
-  // Notas compartidas: a qué lugar va la próxima ("" = todo el día) y cuáles son nuevas
-  const [noteTarget, setNoteTarget] = useState("");
-  useEffect(() => setNoteTarget(""), [day.date]);
-  const noteInput = useRef<HTMLTextAreaElement>(null);
+  // Notas compartidas: cuáles son nuevas
   const fresh = useFreshNotes(shared, day.date);
   const notesReady = shared?.status === "ready";
-  function noteFor(place: string) {
-    setNoteTarget(place);
-    noteInput.current?.scrollIntoView?.({ block: "center", behavior: "smooth" });
-    noteInput.current?.focus({ preventScroll: true });
-  }
   const weather = forecast && weatherLabel(forecast.code);
   const checkOutPrev = morningLodging?.checkOut;
   const checkInToday = (arriving ?? !!morningLodging) && !day.isTransit ? day.checkIn : undefined;
@@ -365,16 +356,6 @@ export default function DayDetail({
                   </span>
                   {poi.night && <Moon className="size-4 text-muted" aria-label="De noche" />}
                 </button>
-                {notesReady && (
-                  <button
-                    type="button"
-                    aria-label={`Nota para ${poi.name}`}
-                    onClick={() => noteFor(poi.name)}
-                    className="flex w-10 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-muted transition-colors hover:bg-line hover:text-fg"
-                  >
-                    <MessageSquarePlus className="size-4" />
-                  </button>
-                )}
                 <a
                   href={placeUrl(poi.coords)}
                   target="_blank"
@@ -430,10 +411,7 @@ export default function DayDetail({
           api={shared}
           date={day.date}
           places={pois.map(({ poi }) => poi.name)}
-          target={noteTarget}
-          onTargetChange={setNoteTarget}
           fresh={fresh}
-          inputRef={noteInput}
         />
       )}
 

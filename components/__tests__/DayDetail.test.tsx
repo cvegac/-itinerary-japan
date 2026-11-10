@@ -284,10 +284,16 @@ describe("DayDetail: notas compartidas", () => {
   const note = (id: string, extra: object = {}) => ({ id, day: "2026-11-02", text: `Texto ${id}`, author: "karla", createdAt: 1, ...extra });
   const section = () => screen.getByRole("region", { name: "Notas del día" });
 
-  it("sin sesión invita a entrar para ver y dejar notas", async () => {
+  const openNote = async () => {
+    await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
+    return screen.getByRole("dialog", { name: "Nueva nota" });
+  };
+
+  it("sin sesión, el botón de nota invita a entrar", async () => {
     const api = shared({ status: "signed-out", me: null, trip: null });
     render(<DayDetail day={day} shared={api} />);
-    await userEvent.click(within(section()).getByRole("button", { name: /Iniciar sesión/ }));
+    const dialog = await openNote();
+    await userEvent.click(within(dialog).getByRole("button", { name: /Iniciar sesión/ }));
     expect(api.signIn).toHaveBeenCalled();
   });
 
@@ -300,25 +306,33 @@ describe("DayDetail: notas compartidas", () => {
     ]);
   });
 
-  it("agrega una nota para todo el día", async () => {
-    const api = shared();
-    render(<DayDetail day={day} shared={api} />);
-    await userEvent.type(within(section()).getByRole("textbox", { name: "Nueva nota" }), "Llevar abrigo");
-    await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
-    expect(api.add).toHaveBeenCalledWith("2026-11-02", "Llevar abrigo", undefined);
+  it("el formulario no ocupa lugar: aparece en una ventana al tocar Nota", () => {
+    render(<DayDetail day={day} shared={shared()} />);
+    expect(screen.queryByRole("textbox", { name: "Nueva nota" })).toBeNull();
+    expect(screen.queryByRole("button", { name: /^Nota para/ })).toBeNull();
   });
 
-  it("desde un lugar, la nota queda para ese lugar y se ve debajo de él", async () => {
+  it("agrega una nota para todo el día y cierra la ventana", async () => {
+    const api = shared();
+    render(<DayDetail day={day} shared={api} />);
+    const dialog = await openNote();
+    await userEvent.type(within(dialog).getByRole("textbox", { name: "Nueva nota" }), "Llevar abrigo");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Guardar" }));
+    expect(api.add).toHaveBeenCalledWith("2026-11-02", "Llevar abrigo", undefined);
+    expect(screen.queryByRole("dialog", { name: "Nueva nota" })).toBeNull();
+  });
+
+  it("en el selector se elige un lugar: la nota queda para él y se ve debajo de él", async () => {
     const api = shared({ notes: [note("l", { place: "Santuario Toshogu", text: "Ir temprano" })] });
     render(<DayDetail day={day} shared={api} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     expect(within(places).getByText("Ir temprano")).toBeTruthy();
     expect(within(section()).queryByText("Ir temprano")).toBeNull();
 
-    await userEvent.click(within(places).getByRole("button", { name: "Nota para Santuario Toshogu" }));
-    expect((within(section()).getByRole("combobox", { name: "Sobre qué" }) as HTMLSelectElement).value).toBe("Santuario Toshogu");
-    await userEvent.type(within(section()).getByRole("textbox", { name: "Nueva nota" }), "Hay fila");
-    await userEvent.click(within(section()).getByRole("button", { name: "Agregar nota" }));
+    const dialog = await openNote();
+    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "Sobre qué" }), "Santuario Toshogu");
+    await userEvent.type(within(dialog).getByRole("textbox", { name: "Nueva nota" }), "Hay fila");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Guardar" }));
     expect(api.add).toHaveBeenCalledWith("2026-11-02", "Hay fila", "Santuario Toshogu");
   });
 

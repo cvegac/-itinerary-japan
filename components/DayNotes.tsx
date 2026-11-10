@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, type RefObject } from "react";
-import { LogIn, MessageSquare, Pencil, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { LogIn, MessageSquare, MessageSquarePlus, Pencil, Trash2, X } from "lucide-react";
 import { NOTE_MAX, generalNotes, type SharedNote } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
 import { authorColor } from "@/components/noteAuthor";
@@ -81,73 +82,116 @@ export function NoteCard({ note, api, fresh }: { note: SharedNote; api: SharedNo
   );
 }
 
-/** Notas de todo el día y el formulario para dejar una (del día o de un lugar) */
+/** Notas de todo el día y un botón que abre la ventana para dejar una (del día o de un lugar) */
 export default function DayNotes({
   api,
   date,
   places,
-  target,
-  onTargetChange,
   fresh,
-  inputRef,
 }: {
   api: SharedNotesApi;
   date: string;
   /** Lugares del día: una nota puede ser para uno de ellos */
   places: string[];
-  /** Lugar elegido para la próxima nota ("" = todo el día) */
-  target: string;
-  onTargetChange: (place: string) => void;
   fresh: Set<string>;
-  inputRef?: RefObject<HTMLTextAreaElement | null>;
+}) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => setOpen(false), [date]);
+  const notes = api.status === "ready" ? generalNotes(api.notes, date) : [];
+  if (api.status === "loading") return null;
+
+  return (
+    <section aria-label="Notas del día" className="flex flex-col gap-2">
+      {notes.length > 0 && (
+        <>
+          <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+            <MessageSquare className="size-3.5" aria-hidden />
+            Notas del día
+          </h3>
+          <ul aria-label="Notas" className="flex flex-col gap-1.5">
+            {notes.map((n) => (
+              <NoteCard key={n.id} note={n} api={api} fresh={fresh.has(n.id)} />
+            ))}
+          </ul>
+        </>
+      )}
+      <button
+        type="button"
+        aria-label="Agregar nota"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-1.5 self-start rounded-full border border-line bg-surface-2 px-3.5 py-2 text-sm font-semibold transition-colors hover:bg-line"
+      >
+        <MessageSquarePlus className="size-4" aria-hidden />
+        Nota
+      </button>
+      {open && <NewNoteModal api={api} date={date} places={places} onClose={() => setOpen(false)} />}
+    </section>
+  );
+}
+
+/** Ventana para escribir una nota: sobre todo el día o sobre un lugar. Se cierra con la X, Escape o tocando afuera */
+function NewNoteModal({
+  api,
+  date,
+  places,
+  onClose,
+}: {
+  api: SharedNotesApi;
+  date: string;
+  places: string[];
+  onClose: () => void;
 }) {
   const [text, setText] = useState("");
-  const notes = generalNotes(api.notes, date);
+  const [target, setTarget] = useState("");
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim()) return;
     api.add(date, text, target || undefined);
-    setText("");
+    onClose();
   }
 
-  return (
-    <section aria-label="Notas del día" className="flex flex-col gap-2.5 rounded-2xl bg-surface-2 p-3.5">
-      <h3 className="flex items-center gap-1.5 text-sm font-bold">
-        <MessageSquare className="size-4 text-muted" aria-hidden />
-        Notas del día
-      </h3>
-
-      {api.status === "signed-out" ? (
-        <>
-          <p className="text-sm text-muted">Entrá con Google para dejar tips y ver los de quien viaja con vos.</p>
-          <button
-            type="button"
-            onClick={api.signIn}
-            className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
-          >
-            <LogIn className="size-4" aria-hidden />
-            Iniciar sesión con Google
+  // Directo en el body, como los otros modales: si no, la barra de navegación queda encima
+  return createPortal(
+    <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40 sm:items-center" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Nueva nota"
+        onClick={(e) => e.stopPropagation()}
+        className="flex w-full max-w-lg flex-col gap-3 rounded-t-3xl bg-surface px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-3xl"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg font-bold">Nueva nota</h2>
+          <button type="button" aria-label="Cerrar" onClick={onClose} className="rounded-lg p-1 text-muted hover:bg-surface-2">
+            <X className="size-5" />
           </button>
-        </>
-      ) : api.status === "loading" ? (
-        <p className="text-sm text-muted">Cargando notas…</p>
-      ) : (
-        <>
-          {notes.length > 0 && (
-            <ul aria-label="Notas" className="flex flex-col gap-1.5">
-              {notes.map((n) => (
-                <NoteCard key={n.id} note={n} api={api} fresh={fresh.has(n.id)} />
-              ))}
-            </ul>
-          )}
-          <form onSubmit={submit} className="flex flex-col gap-1.5">
+        </div>
+        {api.status === "signed-out" ? (
+          <>
+            <p className="text-sm text-muted">Entrá con Google para dejar tips y ver los de quien viaja con vos.</p>
+            <button
+              type="button"
+              onClick={api.signIn}
+              className="inline-flex items-center gap-1.5 self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg"
+            >
+              <LogIn className="size-4" aria-hidden />
+              Iniciar sesión con Google
+            </button>
+          </>
+        ) : (
+          <form onSubmit={submit} className="flex flex-col gap-2">
             {places.length > 0 && (
               <select
                 aria-label="Sobre qué"
                 value={target}
-                onChange={(e) => onTargetChange(e.target.value)}
-                className="rounded-lg border border-line bg-surface px-2 py-1.5 text-sm"
+                onChange={(e) => setTarget(e.target.value)}
+                className="rounded-lg border border-line bg-surface px-2 py-2 text-base sm:text-sm"
               >
                 <option value="">Todo el día</option>
                 {places.map((p) => (
@@ -158,25 +202,26 @@ export default function DayNotes({
               </select>
             )}
             <textarea
-              ref={inputRef}
               aria-label="Nueva nota"
               placeholder="Un tip, una recomendación…"
+              autoFocus
               value={text}
               maxLength={NOTE_MAX}
-              rows={2}
+              rows={3}
               onChange={(e) => setText(e.target.value)}
               className="w-full rounded-lg border border-line bg-surface p-2 text-base outline-none focus:border-accent sm:text-sm"
             />
             <button
               type="submit"
               disabled={!text.trim()}
-              className="self-start rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg disabled:opacity-50"
+              className="self-end rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-fg disabled:opacity-50"
             >
-              Agregar nota
+              Guardar
             </button>
           </form>
-        </>
-      )}
-    </section>
+        )}
+      </div>
+    </div>,
+    document.body
   );
 }
