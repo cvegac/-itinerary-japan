@@ -26,7 +26,9 @@ export default function DayStrip({ itinerary, startDate, selectedDate, todayDate
   }, [selectedDate]);
 
   return (
-    <div className="no-scrollbar flex gap-1.5 overflow-x-auto px-4 py-1 snap-x">
+    // touch-pan-x: con scroll propio, Chrome dejaría pasar el gesto vertical al
+    // navegador (tirar para recargar) en vez de a la hoja que la contiene
+    <div className="no-scrollbar flex touch-pan-x gap-1.5 overflow-x-auto px-4 py-1 snap-x">
       {itinerary.map((day, i) => {
         const selected = day.date === selectedDate;
         const today = day.date === todayDate;

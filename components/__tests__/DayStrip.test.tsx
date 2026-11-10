@@ -22,6 +22,14 @@ describe("DayStrip", () => {
     expect(screen.getByRole("button", { name: /Día 1/ }).getAttribute("aria-current")).toBeNull();
   });
 
+  it("la tira solo se desliza de costado: arrastrar hacia abajo sobre las fechas mueve la hoja y no recarga la página", () => {
+    render(<DayStrip itinerary={itinerary} startDate={meta.startDate} selectedDate={null} onSelect={() => {}} />);
+    // Un contenedor con scroll horizontal resetea el touch-action de sus ancestros
+    // en Chrome: sin esto, el gesto vertical llega al navegador (tirar para recargar)
+    const scroller = screen.getAllByRole("button")[0].parentElement!;
+    expect(scroller.className).toContain("touch-pan-x");
+  });
+
   it("avisa qué día se eligió", async () => {
     const onSelect = vi.fn();
     render(<DayStrip itinerary={itinerary} startDate={meta.startDate} selectedDate={null} onSelect={onSelect} />);

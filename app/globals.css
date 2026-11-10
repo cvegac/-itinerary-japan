@@ -44,10 +44,11 @@
   html,
   body {
     height: 100%;
+    /* Sin "tirar para recargar": en Chrome lo decide el html, no el body */
+    overscroll-behavior: none;
   }
 
   body {
-    overscroll-behavior: none;
     -webkit-tap-highlight-color: transparent;
   }
 }
