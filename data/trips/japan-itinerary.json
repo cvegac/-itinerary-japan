@@ -762,10 +762,10 @@
   },
   {
     "date": "2026-11-10",
-    "label": "Bajada a Tanabe por los Hard Off: Sakai → café internet en Otori → Kishiwada → Sennan → Wakayama",
+    "label": "Bajada a Tanabe por los Hard Off: Sakai → Kishiwada → Sennan → Wakayama",
     "location": "Kii-Tanabe",
     "category": "Logística",
-    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Fukai ~10:30, Otori ~11:45 (cable, café internet y almuerzo), Sennan ~14:30, Wakayama ~16:30. El cable: primero mirá la canasta de cables ジャンク del Hard Off (barato, pero no lo podés probar); si no hay, K's Denki o el Daiso de Ario Otori, nuevos. Kishiwada (solo Hard Off) es opcional: si lo hacés, llegás a Wakayama ~17:30 y te conviene el Kuroshio 29. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. El Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). En Wakayama dejá la mochila en los lockers grandes de la estación. Mañana son 13 km de sendero: no te quemes. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. Respaldo del café internet: Kaikatsu CLUB de la estación Nankai Wakayamashi (24 h, piso 3 de Kiino, una parada de JR desde Wakayama)",
+    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Fukai ~10:30, estación Otori ~13:45, Sennan ~14:45, Wakayama ~16:15. Sin café internet: el idioma de la cámara (a6600 japonesa, bloqueada en japonés) se cambia en Bogotá con la PC propia. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. El Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). En Wakayama dejá la mochila en los lockers grandes de la estación. Mañana son 13 km de sendero: no te quemes. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. Kishiwada es opcional: con él el Kuroshio 21 queda justo; sin él, sobra tiempo",
     "weekday": "Mar",
     "food": "Izakaya en el callejón Ajikoji de Tanabe",
     "transport": [
@@ -798,7 +798,7 @@
         "duration": "~30min",
         "cost": { "amount": 410, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "La parada 八田荘団地 queda a 4 min a pie del Hard Off; pasan varias líneas, Google Maps te dice cuál sale primero. Desde Otori: 12 min a pie a Ario y 7 min al café internet"
+        "note": "La parada 八田荘団地 queda a 4 min a pie del Hard Off; pasan varias líneas (102/103 y otras), Google Maps te dice cuál sale primero"
       },
       {
         "mode": "tren",
@@ -854,22 +854,9 @@
       {
         "name": "Hard Off + Hobby Off Sakai Fukai",
         "coords": [34.52637, 135.48554],
-        "hours": "Abre 10:00 · mirá la canasta de cables «ジャンク» (¥110–330): si hay micro-USB, llevalo, aunque no lo puedas probar ahí",
+        "hours": "Abre 10:00",
         "icon": "♻️",
         "byTransit": true
-      },
-      {
-        "name": "Ario Otori: K's Denki (piso 2) y Daiso (piso 3) — cable micro-USB",
-        "coords": [34.52406, 135.45994],
-        "hours": "Abren 10:00 · solo si no hubo cable en el Hard Off. Buscá «データ通信対応» (pasa datos) y evitá «充電専用» (solo carga)",
-        "icon": "🔌",
-        "byTransit": true
-      },
-      {
-        "name": "Kaikatsu CLUB Sakai Otori (café internet con PC)",
-        "coords": [34.53231, 135.46319],
-        "hours": "Abierto 24 h · llevá el pasaporte para hacerte socio. Podés almorzar ahí (curry, sopa y helado libre)",
-        "icon": "💻"
       },
       {
         "name": "Hard Off Kishiwada",
@@ -897,8 +884,6 @@
     "isTransit": false,
     "activitiesDay": [
       "Hard Off + Hobby Off de Sakai Fukai",
-      "Cable micro-USB (Hard Off o Ario Otori)",
-      "Café internet Kaikatsu CLUB en Otori (con PC) y almuerzo",
       "Hard Off de Kishiwada (opcional)",
       "Hard Off + Hobby Off de Sennan",
       "Hard Off + Hobby Off de Wakayama Nakanoshima"
@@ -909,11 +894,7 @@
       "Preparar la mochila de día y el almuerzo del sendero",
       "Dormir temprano: el bus sale 8:30"
     ],
-    "morning": {
-      "wake": "8:15",
-      "leave": "9:00",
-      "why": "Las tiendas abren a las 10:00: Hard Off de Fukai ~10:30; cable y café internet en Otori al mediodía (llevá el pasaporte)"
-    },
+    "morning": { "wake": "8:15", "leave": "9:00", "why": "Las tiendas abren a las 10:00: Hard Off de Fukai ~10:30" },
     "keepOrder": true,
     "keepOrderReason": "Bajada en tren de norte a sur hasta el Kuroshio de Wakayama"
   },
