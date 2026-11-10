@@ -4,40 +4,30 @@ import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BedDouble,
-  Bike,
-  Bus,
-  CableCar,
   CarTaxiFront,
   Clock,
-  Coins,
   CreditCard,
   Footprints,
   ListChecks,
   MapPin,
-  MessageSquare,
   Moon,
   Navigation,
   Phone,
   Plus,
-  Plane,
-  Ship,
   StickyNote,
   Sun,
   Sunrise,
   Sunset,
-  TrainFront,
-  TramFront,
   Utensils,
   Wallet,
 } from "lucide-react";
 import type { Activity, DayEntry } from "@/types/DayEntry";
-import type { TransportSegment } from "@/types/TransportSegment";
 import { categoryStyle } from "@/lib/categories";
 import { poiLetter } from "@/lib/map-geo";
 import { poiIcon } from "@/lib/poi-icons";
 import { sunTimes } from "@/lib/sun";
 import { expenseShareUsd, type Expense, type Withdrawal } from "@/lib/expenses";
-import { formatCost, formatPrice } from "@/lib/cost";
+import { formatPrice } from "@/lib/cost";
 import { dayPayments } from "@/lib/pay";
 import ExpenseModal from "@/components/ExpenseModal";
 import { ExpenseRow } from "@/components/ExpenseRows";
@@ -48,7 +38,7 @@ import { orderedPois, poiSignature, type DayRoutes, type Leg } from "@/lib/route
 import { placeNotes } from "@/lib/shared-notes";
 import type { SharedNotesApi } from "@/lib/use-shared-notes";
 import DayNotes, { NoteCard, useFreshNotes } from "@/components/DayNotes";
-import { dayRouteLinks, dayStops, placeUrl, segmentUrl, type TravelMode } from "@/lib/google-maps";
+import { dayRouteLinks, dayStops, placeUrl, type TravelMode } from "@/lib/google-maps";
 import type { Places } from "@/lib/transit";
 import ListCards from "@/components/ListCards";
 import type { ListTarget } from "@/components/ListModal";
@@ -110,23 +100,6 @@ function legText(leg: Leg): string {
   const how = leg.mode === "bike" ? "en bici" : "a pie";
   return `${formatDuration(leg.durationS)} ${how} · ${formatDistance(leg.distanceM)}`;
 }
-
-const TRANSPORT_ICON: Record<string, LucideIcon> = {
-  tren: TrainFront,
-  metro: TramFront,
-  monorriel: TramFront,
-  tranvía: TramFront,
-  bus: Bus,
-  "bus-nocturno": Bus,
-  "bus + funicular": CableCar,
-  ferry: Ship,
-  barco: Ship,
-  teleférico: CableCar,
-  caminar: Footprints,
-  bicicleta: Bike,
-  avión: Plane,
-  taxi: CarTaxiFront,
-};
 
 export default function DayDetail({
   day,
@@ -436,13 +409,6 @@ export default function DayDetail({
         </>
       )}
 
-      {/* Transporte */}
-      {day.transport.length > 0 && (
-        <Section title="Cómo moverse">
-          <TransportTimeline segments={day.transport} places={places} />
-        </Section>
-      )}
-
       {/* Con qué se paga cada tramo */}
       <DayPayments day={day} />
 
@@ -460,10 +426,11 @@ export default function DayDetail({
             label="Amanecés en"
             value={morningLodging.accommodation}
             detail={morningLodging.lodgingPlace ?? morningLodging.zona}
+            href={placeUrl(morningLodging.accommodationCoords)}
           />
         )}
         {!day.isTransit && (
-          <InfoCard icon={BedDouble} label="Dormís en" value={day.accommodation} detail={day.zona} />
+          <InfoCard icon={BedDouble} label="Dormís en" value={day.accommodation} detail={day.zona} href={placeUrl(day.accommodationCoords)} />
         )}
         {day.food && <InfoCard icon={Utensils} label="Para comer" value={day.food} />}
       </div>
@@ -539,66 +506,6 @@ function DayPayments({ day }: { day: DayEntry }) {
         ))}
       </ul>
     </Section>
-  );
-}
-
-function TransportTimeline({ segments, places }: { segments: TransportSegment[]; places?: Places }) {
-  return (
-    <ol aria-label="Tramos de transporte" className="relative flex flex-col gap-3 pl-1">
-      {segments.map((seg, i) => {
-        const Icon = TRANSPORT_ICON[seg.mode] ?? TrainFront;
-        const last = i === segments.length - 1;
-        const mapsUrl = places && segmentUrl(seg, places);
-        return (
-          <li key={i} className="relative flex gap-3">
-            {!last && <span className="absolute left-[15px] top-8 bottom-[-12px] w-px bg-line" aria-hidden />}
-            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-2">
-              <Icon className="size-4" aria-label={seg.mode} />
-            </span>
-            <div className="min-w-0 flex-1 pt-1">
-              <div className="flex flex-wrap items-center gap-x-1.5 text-sm font-semibold">
-                <span>{seg.from}</span>
-                <span className="text-muted" aria-hidden>→</span>
-                <span>{seg.to}</span>
-              </div>
-              {seg.line && <div className="text-xs text-muted">{seg.line}</div>}
-              <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
-                {seg.duration && (
-                  <span className="inline-flex items-center gap-1 text-muted">
-                    <Clock className="size-3.5" aria-hidden />
-                    {seg.duration}
-                  </span>
-                )}
-                {seg.cost && (
-                  <span className="inline-flex items-center gap-1 font-medium text-emerald-700">
-                    <Coins className="size-3.5" aria-hidden />
-                    {formatCost(seg.cost)}
-                  </span>
-                )}
-                {mapsUrl && (
-                  <a
-                    href={mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Ver ${seg.from} → ${seg.to} en Google Maps`}
-                    className="inline-flex items-center gap-1 font-semibold text-accent"
-                  >
-                    <Navigation className="size-3.5" aria-hidden />
-                    Google Maps
-                  </a>
-                )}
-              </div>
-              {seg.note && (
-                <div className="mt-1 flex gap-1 text-xs text-amber-700">
-                  <MessageSquare className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-                  <span>{seg.note}</span>
-                </div>
-              )}
-            </div>
-          </li>
-        );
-      })}
-    </ol>
   );
 }
 
@@ -727,20 +634,37 @@ function InfoCard({
   label,
   value,
   detail,
+  href,
 }: {
   icon: LucideIcon;
   label: string;
   value: string;
   detail?: string;
+  /** Si hay, la tarjeta abre ese punto en Google Maps */
+  href?: string;
 }) {
-  return (
-    <div className="flex gap-3 rounded-2xl bg-surface-2 p-3.5">
+  const body = (
+    <>
       <Icon className="mt-0.5 size-4 shrink-0 text-muted" aria-hidden />
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         <div className="text-xs font-medium text-muted">{label}</div>
         <div className="text-sm font-semibold leading-snug">{value}</div>
         {detail && <div className="mt-0.5 text-xs text-muted">{detail}</div>}
       </div>
-    </div>
+    </>
+  );
+  return href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Abrir ${value} en Google Maps`}
+      className="flex gap-3 rounded-2xl bg-surface-2 p-3.5 transition-colors hover:bg-line"
+    >
+      {body}
+      <Navigation className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+    </a>
+  ) : (
+    <div className="flex gap-3 rounded-2xl bg-surface-2 p-3.5">{body}</div>
   );
 }

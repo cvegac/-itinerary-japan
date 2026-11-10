@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, LocateFixed, MapPin, Search } from "lucide-react";
+import { ArrowLeft, MapPin, Search } from "lucide-react";
 import type { TripMeta } from "@/types/Trip";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripStatus } from "@/lib/trip-time";
@@ -13,9 +13,6 @@ type Props = {
   /** Para descargar el mapa del viaje */
   itinerary?: DayEntry[];
   status: TripStatus | null;
-  /** Ya estás en el día de hoy: no hace falta el botón "Hoy" */
-  viewingToday?: boolean;
-  onToday: () => void;
   /** Abre la búsqueda en todos los días */
   onSearch?: () => void;
   /** En el celular flota sobre el mapa */
@@ -24,7 +21,7 @@ type Props = {
   place?: string;
 };
 
-export default function TopBar({ meta, itinerary, status, viewingToday = false, onToday, onSearch, floating = false, place }: Props) {
+export default function TopBar({ meta, itinerary, status, onSearch, floating = false, place }: Props) {
   return (
     <header
       className={
@@ -56,16 +53,6 @@ export default function TopBar({ meta, itinerary, status, viewingToday = false, 
         )}
         {!floating && <p className="truncate text-xs text-muted">{meta.subtitle}</p>}
       </div>
-      {status?.kind === "during" && !viewingToday && (
-        <button
-          type="button"
-          onClick={onToday}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-semibold text-accent-fg shadow-sm active:scale-95"
-        >
-          <LocateFixed className="size-4" aria-hidden />
-          Hoy
-        </button>
-      )}
       {status?.kind === "before" && (
         <span className="shrink-0 rounded-full bg-surface-2 px-3 py-1.5 text-xs font-semibold text-muted">
           {status.daysUntil === 1 ? "Mañana empieza" : `Faltan ${status.daysUntil} días`}

@@ -42,31 +42,30 @@ describe("TripApp", () => {
     localStorage.clear(); // la sesión recordaría el día 3 para los tests siguientes
   });
 
-  it("durante el viaje abre el día de hoy y el botón Hoy vuelve a él", async () => {
+  const todayTile = () => screen.getAllByRole("button", { name: /\(hoy\)/ });
+
+  it("durante el viaje abre el día de hoy y lo marca en la tira; sin botón Hoy arriba", async () => {
     renderAt("2026-11-02");
     expect(title()).toBe("Excursión a Nikko");
-    // Ya estás en hoy: el botón no hace falta
     expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
+    expect(todayTile().map((b) => b.getAttribute("aria-label"))).toEqual([expect.stringMatching(/^Día 2 \(hoy\)/)]);
 
     await act(() => userEvent.click(screen.getByRole("button", { name: /Día 3/ })));
     expect(title()).toBe("Vuelo a Hiroshima");
-
-    await act(() => userEvent.click(screen.getByRole("button", { name: "Hoy" })));
-    expect(title()).toBe("Excursión a Nikko");
     expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
+    expect(todayTile().map((b) => b.getAttribute("aria-label"))).toEqual([expect.stringMatching(/^Día 2 \(hoy\)/)]);
+    localStorage.clear(); // la sesión recordaría el día 3 para los tests siguientes
   });
 
-  it("si la app queda abierta y pasa la medianoche, al volver a ella 'Hoy' es el día nuevo", async () => {
+  it("si la app queda abierta y pasa la medianoche, al volver a ella la marca de hoy pasa al día nuevo", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(new Date("2026-11-02T23:50:00"));
     render(<TripApp tripData={fixtureTrip} />);
-    expect(title()).toBe("Excursión a Nikko");
-    expect(screen.queryByRole("button", { name: "Hoy" })).toBeNull();
+    expect(todayTile()[0].getAttribute("aria-label")).toMatch(/^Día 2 /);
 
     vi.setSystemTime(new Date("2026-11-03T00:10:00"));
     act(() => document.dispatchEvent(new Event("visibilitychange")));
-    await act(() => userEvent.click(screen.getByRole("button", { name: "Hoy" })));
-    expect(title()).toBe("Vuelo a Hiroshima");
+    expect(todayTile().map((b) => b.getAttribute("aria-label"))).toEqual([expect.stringMatching(/^Día 3 \(hoy\)/)]);
   });
 
   it("en el celular no hay flechas de día (la tira se desliza); en la computadora sí", async () => {

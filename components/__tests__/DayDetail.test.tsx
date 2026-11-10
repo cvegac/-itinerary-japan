@@ -259,20 +259,16 @@ describe("DayDetail", () => {
     expect(screen.queryByRole("list", { name: "Tarjetas del día" })).toBeNull();
   });
 
-  it("muestra los tramos de transporte y las actividades", () => {
+  it("no muestra la sección Cómo moverse (con Google Maps alcanza), sí las actividades", () => {
     render(<DayDetail day={day} />);
-    const transport = screen.getByRole("list", { name: "Tramos de transporte" });
-    expect(within(transport).getByText("Asakusa")).toBeTruthy();
-    expect(within(transport).getByText("Tobu-Nikko")).toBeTruthy();
-    expect(within(transport).getByText("Tobu Nikko Line")).toBeTruthy();
+    expect(screen.queryByRole("heading", { name: "Cómo moverse" })).toBeNull();
+    expect(screen.queryByRole("list", { name: "Tramos de transporte" })).toBeNull();
     expect(screen.getByText("Puente Shinkyo")).toBeTruthy();
     expect(screen.getByText("Paseo por el río")).toBeTruthy();
   });
 
-  it("muestra los costos y las entradas a partir de los datos", () => {
+  it("muestra las entradas a partir de los datos", () => {
     render(<DayDetail day={day} />);
-    const transport = screen.getByRole("list", { name: "Tramos de transporte" });
-    expect(within(transport).getByText("Incluido en el NIKKO PASS (¥3,000, 2 días)")).toBeTruthy();
     const deDia = screen.getByRole("heading", { name: "De día" }).closest("section")!;
     const toshogu = within(deDia).getByText("Santuario Toshogu").closest("li")!;
     expect(within(toshogu).getByText("~¥1,600")).toBeTruthy();
@@ -388,10 +384,16 @@ describe("DayDetail: Google Maps", () => {
     );
   });
 
-  it("cada tramo de transporte, entre sus estaciones", () => {
-    render(<DayDetail day={day} places={places} />);
-    const link = screen.getByRole("link", { name: "Ver Asakusa → Tobu-Nikko en Google Maps" });
-    expect(link.getAttribute("href")).toContain("travelmode=transit");
+  it("los hospedajes abren su punto en Google Maps", () => {
+    const yesterday = makeDay("2026-11-01", "Dom", { accommodation: "Tokyo Ueno New Izu Hotel", accommodationCoords: [35.7119, 139.7983] });
+    const today = makeDay("2026-11-02", "Lun", { accommodation: "Nikko Guesthouse", accommodationCoords: [36.75, 139.6] });
+    render(<DayDetail day={today} morningLodging={yesterday} places={places} />);
+    expect(screen.getByRole("link", { name: "Abrir Tokyo Ueno New Izu Hotel en Google Maps" }).getAttribute("href")).toBe(
+      "https://www.google.com/maps/search/?api=1&query=35.7119%2C139.7983"
+    );
+    expect(screen.getByRole("link", { name: "Abrir Nikko Guesthouse en Google Maps" }).getAttribute("href")).toBe(
+      "https://www.google.com/maps/search/?api=1&query=36.75%2C139.6"
+    );
   });
 });
 

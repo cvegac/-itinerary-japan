@@ -218,14 +218,6 @@ export default function TripApp({ tripData }: Props) {
     };
   }, [itinerary]);
 
-  // Si ya estás mirando el día de hoy, el botón "Hoy" sobra
-  const viewingToday = status?.kind === "during" && selectedDay?.date === itinerary[status.index]?.date;
-  function goToday() {
-    if (status?.kind === "during") selectDay(itinerary[status.index]);
-    setView(itineraryView);
-    setAgendaOpen(true);
-  }
-
   function step(dir: 1 | -1) {
     if (!selectedDay) return;
     const next = adjacentDay(itinerary, selectedDay.date, dir);
@@ -289,6 +281,7 @@ export default function TripApp({ tripData }: Props) {
       itinerary={itinerary}
       startDate={meta.startDate}
       selectedDate={selectedDay?.date ?? null}
+      todayDate={status?.kind === "during" ? (itinerary[status.index]?.date ?? null) : null}
       onSelect={selectDay}
     />
   );
@@ -448,8 +441,6 @@ export default function TripApp({ tripData }: Props) {
             meta={meta}
             itinerary={itinerary}
             status={status}
-            viewingToday={viewingToday}
-            onToday={goToday}
             onSearch={() => openSearchWith(true)}
           />
           {tabs("inline")}
@@ -471,8 +462,6 @@ export default function TripApp({ tripData }: Props) {
             meta={meta}
             itinerary={itinerary}
             status={status}
-            viewingToday={viewingToday}
-            onToday={goToday}
             onSearch={() => openSearchWith(true)}
             floating
             place={view === "itinerary" ? selectedDay?.location : undefined}
