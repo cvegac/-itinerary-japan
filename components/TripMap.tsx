@@ -253,8 +253,7 @@ function poiPopupHtml(letter: string, icon: string, name: string, night: boolean
   return `
     <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:140px;color:#111">
       <div style="font-weight:700;font-size:13px">${letter}. ${icon} ${escapeHtml(name)}</div>
-      <div style="font-size:11px;color:#666;margin-top:2px">${night ? "🌙 De noche" : "☀️ De día"}</div>
-    </div>`;
+${night ? `      <div style="font-size:11px;color:#666;margin-top:2px">🌙 De noche</div>\n` : ""}    </div>`;
 }
 
 // ── Capas propias (se re-agregan cada vez que cambia el estilo) ─────────────

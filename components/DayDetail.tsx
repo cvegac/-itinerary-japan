@@ -327,14 +327,22 @@ export default function DayDetail({
                   className="flex min-w-0 flex-1 items-center gap-3 rounded-xl bg-surface-2 px-3 py-2.5 text-left text-sm transition-colors hover:bg-line active:scale-[0.99]"
                 >
                   <span
-                    className={`flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                      poi.night ? "bg-slate-800 text-amber-200" : "bg-fg text-bg"
+                    data-poi-marker=""
+                    className={`relative flex size-8 shrink-0 items-center justify-center rounded-full border-2 text-base leading-none shadow-sm ${
+                      poi.night ? "border-slate-800 bg-slate-800" : "border-fg bg-bg"
                     }`}
                   >
-                    {poiLetter(position)}
-                  </span>
-                  <span className="shrink-0 text-lg leading-none" aria-hidden>
-                    {poiIcon(poi)}
+                    <span data-icon="" aria-hidden>
+                      {poiIcon(poi)}
+                    </span>
+                    <span
+                      data-letter=""
+                      className={`absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full border border-bg px-0.5 text-[10px] font-bold leading-none ${
+                        poi.night ? "bg-amber-200 text-slate-800" : "bg-fg text-bg"
+                      }`}
+                    >
+                      {poiLetter(position)}
+                    </span>
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium">{poi.name}</span>
@@ -355,11 +363,7 @@ export default function DayDetail({
                       </span>
                     )}
                   </span>
-                  {poi.night ? (
-                    <Moon className="size-4 text-muted" aria-label="De noche" />
-                  ) : (
-                    <Sun className="size-4 text-muted" aria-label="De día" />
-                  )}
+                  {poi.night && <Moon className="size-4 text-muted" aria-label="De noche" />}
                 </button>
                 {notesReady && (
                   <button

@@ -14,7 +14,7 @@ const fake = vi.hoisted(() => {
     elements: [] as HTMLElement[],
     toggles: 0,
     controls: [] as unknown[],
-    markers: [] as { lngLat: unknown; element?: HTMLElement }[],
+    markers: [] as { lngLat: unknown; element?: HTMLElement; popup?: unknown }[],
     mapOptions: [] as Record<string, unknown>[],
     positions: [] as (string | undefined)[],
     terrain: [] as unknown[],
@@ -73,7 +73,9 @@ const fake = vi.hoisted(() => {
   }
 
   class FakePopup {
-    setHTML() {
+    html = "";
+    setHTML(html: string) {
+      this.html = html;
       return this;
     }
     isOpen() {
@@ -253,6 +255,17 @@ describe("TripMap con rutas", () => {
     expect(poiMarkers.map((m) => m.element?.querySelector("[data-letter]")?.textContent)).toEqual(["A", "B", "C"]);
     expect(poiMarkers.map((m) => m.element?.querySelector("[data-icon]")?.textContent)).toEqual(["📍", "📍", "📍"]);
     expect(poiMarkers[0].lngLat).toEqual(toLngLat(pois[2].coords));
+  });
+
+  it("el globito de un lugar de día no lleva solcito; el de noche avisa que es de noche", async () => {
+    const nightDay = { ...routedDay, pois: pois.map((p, i) => (i === 0 ? { ...p, night: true } : p)) };
+    await renderLoadedMap(nightDay, "day");
+    const popups = fake.state.markers
+      .filter((m) => m.element?.querySelector("[data-letter]"))
+      .map((m) => (m.popup as { html: string } | undefined)?.html ?? "");
+    expect(popups).toHaveLength(3);
+    expect(popups.some((h) => h.includes("De día"))).toBe(false);
+    expect(popups.filter((h) => h.includes("De noche"))).toHaveLength(1);
   });
 
   it("no pisa el posicionamiento absoluto de los marcadores de MapLibre", async () => {

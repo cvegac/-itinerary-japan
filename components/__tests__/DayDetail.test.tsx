@@ -36,11 +36,28 @@ describe("DayDetail", () => {
     render(<DayDetail day={day} onFocusPoi={onFocusPoi} />);
     const places = screen.getByRole("list", { name: "Lugares del día" });
     expect(within(places).getAllByRole("button").map((b) => b.textContent)).toEqual([
-      expect.stringContaining("A⛩️Santuario Toshogu"),
-      expect.stringContaining("B📍Cena en Asakusa"),
+      expect.stringContaining("⛩️ASantuario Toshogu"),
+      expect.stringContaining("📍BCena en Asakusa"),
     ]);
     await userEvent.click(within(places).getByRole("button", { name: /Cena en Asakusa/ }));
     expect(onFocusPoi).toHaveBeenCalledWith(1);
+  });
+
+  it("cada lugar lleva un solo globito como el del mapa: el ícono con su letra en la esquina", () => {
+    render(<DayDetail day={day} />);
+    const places = screen.getByRole("list", { name: "Lugares del día" });
+    const [toshogu] = within(places).getAllByRole("button", { name: /Toshogu/ });
+    const marker = toshogu.querySelector("[data-poi-marker]")!;
+    expect(marker.querySelector("[data-icon]")?.textContent).toBe("⛩️");
+    expect(marker.querySelector("[data-letter]")?.textContent).toBe("A");
+  });
+
+  it("solo marca los lugares de noche: los de día no llevan solcito", () => {
+    render(<DayDetail day={day} />);
+    const places = screen.getByRole("list", { name: "Lugares del día" });
+    const [toshogu, cena] = within(places).getAllByRole("button", { name: /Toshogu|Cena/ });
+    expect(within(toshogu).queryByLabelText("De día")).toBeNull();
+    expect(within(cena).getByLabelText("De noche")).toBeTruthy();
   });
 
   it("muestra el horario de cada lugar que tiene uno, para no llegar cerrado", () => {
