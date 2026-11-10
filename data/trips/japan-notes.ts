@@ -4,6 +4,12 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
+      id: "akiba-electronica",
+      text: "Electrónica en Akihabara: Akizuki, Sengoku, Marutsu y aitendo",
+      detail: "秋月電子 (kits propios de ¥200–3,000 y módulos 「AE-」), 千石電商 (componentes, conectores, herramientas), マルツ y aitendo (módulos y pantallas baratos); Tokyo Radio Department y Radio Center para cables y conectores. Vale la pena: herramientas (Hozan, Engineer, Vessel), puntas Hakko, componentes Omron/Panasonic/Alps y los kits. Voltaje: solo lo que diga 「AC100-240V」. Lo que diga 「AC100V」 (Hakko FX-888D/FX-600/FX-951, goot PX) necesita un transformador 120→100 V en Colombia: mejor comprar allá la versión de 120 V. Sin problema: cautines USB-C PD (Pinecil, TS101) o a pilas (Hakko FX-901). Hard Off Akihabara 1号店 y Hobby Off quedan ahí mismo",
+      date: "2026-12-04",
+    },
+    {
       id: "banda-xiaomi",
       text: "Comprar la Xiaomi Smart Band nueva (~¥5,000)",
       detail: "En Bic Camera o Yodobashi (la de la estación de Kioto es enorme). Se integra con tu celular Xiaomi: pasos, pulso, calorías y sueño. Antes de pagar, mirá que tenga español o inglés",
