@@ -55,6 +55,9 @@ export function ExpenseRow({
           {formatMoney(e.amount / dates.length, e.currency)}
         </span>
         <span className="min-w-0 flex-1 truncate text-muted">
+          {e.review && (
+            <span className="mr-1.5 rounded bg-amber-100 px-1 text-xs font-semibold text-amber-800">Sin asignar</span>
+          )}
           {dates.length > 1 && (
             <span className="mr-1.5 rounded bg-surface-2 px-1 text-xs font-medium">{`noche ${dates.indexOf(date) + 1} de ${dates.length}`}</span>
           )}

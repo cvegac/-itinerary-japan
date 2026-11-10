@@ -150,6 +150,7 @@ function DailySummary({
   onEdit,
 }: Props & { onEdit: (editing: Editing) => void }) {
   const days = dailySummary(expenses, withdrawals);
+  const pending = expenses.filter((e) => e.review);
   if (days.length === 0) {
     return (
       <p className="rounded-2xl bg-surface-2 p-4 text-sm text-muted">
@@ -160,6 +161,29 @@ function DailySummary({
 
   return (
     <div className="flex flex-col gap-2.5">
+      {/* Cargados desde las alertas del banco: falta confirmar día o categoría */}
+      {pending.length > 0 && (
+        <section aria-label="Sin asignar" className="rounded-2xl border border-amber-300 bg-amber-50">
+          <div className="border-b border-amber-200 px-4 py-2.5">
+            <span className="block text-sm font-bold text-amber-900">Sin asignar</span>
+            <span className="block text-xs text-amber-800">
+              {pending.length === 1 ? "1 gasto para revisar" : `${pending.length} gastos para revisar`}: tocalo para
+              corregir el día o la categoría y guardalo.
+            </span>
+          </div>
+          <ul className="flex flex-col px-3 py-1.5">
+            {pending.map((e) => (
+              <ExpenseRow
+                key={e.id}
+                expense={e}
+                date={e.date}
+                onEdit={() => onEdit({ kind: "expense", record: e })}
+                onRemove={() => onRemoveExpense(e.id)}
+              />
+            ))}
+          </ul>
+        </section>
+      )}
       {days.map((d) => {
         const day = itinerary.find((it) => it.date === d.date);
         const budget = budgetUsd(day);

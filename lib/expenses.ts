@@ -36,6 +36,9 @@ export type Expense = {
   perUsd?: number;
   /** Fecha de esa cotización (YYYY-MM-DD) */
   rateDate?: string;
+  /** Sin asignar: se cargó desde las alertas del banco y falta confirmar día o
+   *  categoría. Al guardarlo editado deja de estarlo */
+  review?: boolean;
 };
 
 /** Efectivo sacado del cajero, en yenes */

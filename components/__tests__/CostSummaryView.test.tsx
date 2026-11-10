@@ -143,6 +143,32 @@ describe("CostSummaryView", () => {
     expect(screen.queryByRole("button", { name: "Exportar CSV" })).toBeNull();
   });
 
+  describe("gastos sin asignar (cargados desde las alertas del banco)", () => {
+    const fromBank: Expense = { id: "b1", date: "2026-11-02", amount: 41.22, currency: "USD", method: "card", category: "otros", note: "RAKUTENPAY HARAJUKUO", createdAt: 3, review: true };
+
+    it("los junta arriba para revisarlos, y en su día llevan la marca", () => {
+      renderView({ expenses: [...expenses, fromBank] });
+      const pending = screen.getByRole("region", { name: "Sin asignar" });
+      expect(within(pending).getByText(/1 gasto para revisar/)).toBeTruthy();
+      expect(within(pending).getByRole("button", { name: "Editar gasto RAKUTENPAY HARAJUKUO" })).toBeTruthy();
+      const day = screen.getByRole("region", { name: /2 nov/ });
+      expect(within(day).getByText("Sin asignar")).toBeTruthy();
+    });
+
+    it("sin pendientes no aparece la sección", () => {
+      renderView();
+      expect(screen.queryByRole("region", { name: "Sin asignar" })).toBeNull();
+    });
+
+    it("al guardarlo editado deja de estar sin asignar", async () => {
+      const props = renderView({ expenses: [...expenses, fromBank] });
+      const pending = screen.getByRole("region", { name: "Sin asignar" });
+      await userEvent.click(within(pending).getByRole("button", { name: "Editar gasto RAKUTENPAY HARAJUKUO" }));
+      await userEvent.click(screen.getByRole("button", { name: "Guardar" }));
+      expect(props.onUpdateExpense).toHaveBeenCalledWith("b1", expect.not.objectContaining({ review: true }));
+    });
+  });
+
   it("sin registros lo explica, y el presupuesto sigue en su pestaña", async () => {
     renderView({ expenses: [], withdrawals: [] });
     expect(screen.getByText(/Todavía no registraste gastos/)).toBeTruthy();
