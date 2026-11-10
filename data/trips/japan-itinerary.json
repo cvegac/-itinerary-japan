@@ -762,10 +762,10 @@
   },
   {
     "date": "2026-11-10",
-    "label": "Bajada a Tanabe por los Hard Off: Off House Shinkanaoka → Fukai → café internet en Otori → Sennan → Wakayama",
+    "label": "Bajada a Tanabe por los Hard Off: Sakai → café internet en Otori → Kishiwada → Sennan → Wakayama",
     "location": "Kii-Tanabe",
     "category": "Logística",
-    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Off House Shinkanaoka ~10:05, Fukai ~11:15, Otori ~12:30 (cable, café internet y almuerzo), Sennan ~15:00, Wakayama ~17:00. El cable: primero mirá la canasta de cables ジャンク del Hard Off (barato, pero no lo podés probar); si no hay, K's Denki o el Daiso de Ario Otori, nuevos. Kishiwada (solo Hard Off) es opcional: con el Off House sumado, si lo hacés vas sí o sí en el Kuroshio 29. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. El Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). En Wakayama dejá la mochila en los lockers grandes de la estación. Mañana son 13 km de sendero: no te quemes. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. Respaldo del café internet: Kaikatsu CLUB de la estación Nankai Wakayamashi (24 h, piso 3 de Kiino, una parada de JR desde Wakayama)",
+    "notes": "Todo en tren hacia el sur, cada tienda a ~15–20 min a pie de su estación (verificado en Google Maps). Abren a las 10:00. Horas aproximadas: Fukai ~10:30, Otori ~11:45 (cable, café internet y almuerzo), Sennan ~14:30, Wakayama ~16:30. El cable: primero mirá la canasta de cables ジャンク del Hard Off (barato, pero no lo podés probar); si no hay, K's Denki o el Daiso de Ario Otori, nuevos. Kishiwada (solo Hard Off) es opcional: si lo hacés, llegás a Wakayama ~17:30 y te conviene el Kuroshio 29. El Kuroshio es TODO con reserva: sacá el asiento en la máquina de JR antes de subir. El Kuroshio 29 sale de Wakayama 21:26 → Tanabe 22:41 (check-in hasta las 23:00). En Wakayama dejá la mochila en los lockers grandes de la estación. Mañana son 13 km de sendero: no te quemes. Kumano Travel (Tanabe) cierra 18:00: el bus de mañana es el 95 de las 8:30 y el mapa del sendero lo dan en el Kumano Kodo-kan de Takijiri. Respaldo del café internet: Kaikatsu CLUB de la estación Nankai Wakayamashi (24 h, piso 3 de Kiino, una parada de JR desde Wakayama)",
     "weekday": "Mar",
     "food": "Izakaya en el callejón Ajikoji de Tanabe",
     "transport": [
@@ -777,26 +777,6 @@
         "via": ["Hashimoto"],
         "duration": "~1h (salí 9:00)",
         "cost": { "amount": 900, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Si tomás el Express, cambiá en Kitanoda a un Local (el Express no para en Nakamozu)"
-      },
-      {
-        "mode": "tren",
-        "line": "Metro Midosuji Line",
-        "from": "Nakamozu",
-        "to": "Shinkanaoka",
-        "duration": "~2min (1 parada)",
-        "cost": { "amount": 190, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Después 4 min a pie al Off House"
-      },
-      {
-        "mode": "tren",
-        "line": "Metro Midosuji Line",
-        "from": "Shinkanaoka",
-        "to": "Nakamozu",
-        "duration": "~2min",
-        "cost": { "amount": 190, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "Ahí cambiás al Semboku hacia Fukai"
       },
@@ -872,13 +852,6 @@
     "checkOut": "6:00–9:00",
     "pois": [
       {
-        "name": "Off House Sakai Shinkanaoka",
-        "coords": [34.56394, 135.51381],
-        "hours": "Abre 10:00 · ropa, hogar y algo de electrónica (fijate si hay cables) · 4 min a pie del metro Shinkanaoka",
-        "icon": "♻️",
-        "byTransit": true
-      },
-      {
         "name": "Hard Off + Hobby Off Sakai Fukai",
         "coords": [34.52637, 135.48554],
         "hours": "Abre 10:00 · mirá la canasta de cables «ジャンク» (¥110–330): si hay micro-USB, llevalo, aunque no lo puedas probar ahí",
@@ -920,10 +893,9 @@
         "byTransit": true
       }
     ],
-    "budget": "$107",
+    "budget": "$105",
     "isTransit": false,
     "activitiesDay": [
-      "Off House de Sakai Shinkanaoka",
       "Hard Off + Hobby Off de Sakai Fukai",
       "Cable micro-USB (Hard Off o Ario Otori)",
       "Café internet Kaikatsu CLUB en Otori (con PC) y almuerzo",
@@ -940,7 +912,7 @@
     "morning": {
       "wake": "8:15",
       "leave": "9:00",
-      "why": "Las tiendas abren a las 10:00: Off House de Shinkanaoka ~10:05, Hard Off de Fukai ~11:15; cable y café internet en Otori al mediodía (llevá el pasaporte)"
+      "why": "Las tiendas abren a las 10:00: Hard Off de Fukai ~10:30; cable y café internet en Otori al mediodía (llevá el pasaporte)"
     },
     "keepOrder": true,
     "keepOrderReason": "Bajada en tren de norte a sur hasta el Kuroshio de Wakayama"
