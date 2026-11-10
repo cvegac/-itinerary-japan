@@ -2351,12 +2351,12 @@
   },
   {
     "date": "2026-11-30",
-    "label": "Vuelta a Tokio + ginkgos de Gaien",
+    "label": "Vuelta a Tokio: ginkgos de Gaien, Harajuku y Shibuya de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. Más barato: trenes locales, 10:03 → 13:01 (~¥2,790). Check-in en Nippori desde las 16:00 (el minpaku queda a ~5 min a pie de la estación). Avenida de ginkgos de Jingu Gaien en su punto (fines de nov – principios de dic). Comprá la maleta grande estos días: el vuelo de regreso incluye 23 kg",
+    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. El minpaku abre a las 16:00 y cierra el check-in a las 00:00: dejá la valija en los lockers de Nippori y hacé el check-in a la vuelta. Shibuya Sky va con reserva (la franja del atardecer se agota; online sale ¥300 más barato). Meiji Jingū cierra al atardecer: si querés entrar, hacelo antes de Takeshita, ~15:00. Ropa: Harajuku/Cat Street para marcas y vintage; en Shibuya Uniqlo, GU, Parco y Shibuya 109. Guardá los tickets y la ropa sin usar para el tax-free en Narita (ver el tema «Compras sin impuesto»)",
     "weekday": "Lun",
-    "food": "Monjayaki en Tsukishima",
+    "food": "Ramen en Shibuya (Ichiran o Afuri)",
     "transport": [
       {
         "mode": "tren",
@@ -2385,6 +2385,27 @@
         "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "Después ~5 min a pie"
+      },
+      {
+        "mode": "metro",
+        "line": "JR a Ueno + metro Ginza Line",
+        "from": "Nippori",
+        "to": "Gaienmae",
+        "duration": "~30min",
+        "cost": { "amount": 350, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "via": ["Ueno"],
+        "note": "Después 5 min a pie a la avenida de ginkgos"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Shibuya",
+        "to": "Nippori",
+        "duration": "~30min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Volvé antes de las 00:00 para el check-in"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2397,62 +2418,104 @@
     "checkOut": "hasta 10:00",
     "pois": [
       { "name": "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", "coords": [35.67131, 139.72064] },
-      { "name": "Ameyoko", "coords": [35.71002, 139.77454], "hours": "~10:00–20:00" },
-      { "name": "Calle Kappabashi", "coords": [35.71389, 139.78798], "hours": "~9:00–17:00 (muchas cierran los domingos)" },
-      { "name": "Calle del monjayaki (Tsukishima)", "coords": [35.66428, 139.78246], "night": true, "hours": "~11:00–22:00" }
+      { "name": "Calle Takeshita (Harajuku)", "coords": [35.67116, 139.70496], "hours": "Tiendas ~11:00–20:00" },
+      {
+        "name": "Cat Street (Omotesando): ropa de diseño y vintage",
+        "coords": [35.6655, 139.7045],
+        "icon": "👕",
+        "hours": "Tiendas ~11:00–20:00"
+      },
+      {
+        "name": "Mirador Shibuya Sky (Scramble Square)",
+        "coords": [35.65829, 139.70226],
+        "hours": "Con reserva: franja de ~15:40 para ver el atardecer (16:28) y quedarte de noche"
+      },
+      { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
+      {
+        "name": "Shibuya Parco (Nintendo Tokyo, Pokémon Center, Jump Shop)",
+        "coords": [35.66193, 139.69875],
+        "hours": "11:00–21:00",
+        "icon": "🎮"
+      },
+      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true, "hours": "Abierta las 24 h" }
     ],
-    "budget": "$117",
+    "budget": "$136",
     "isTransit": false,
     "activitiesDay": [
       "Avenida de ginkgos amarillos de Jingu Gaien (Icho Namiki)",
-      "Comprar la maleta grande (Don Quijote, Ameyoko o calle Kappabashi, a un paso de Nippori)",
-      "Check-in en Nippori (desde las 16:00)"
+      "Calle Takeshita y Omotesando caminando",
+      "Ropa: Cat Street, y en Shibuya Uniqlo, GU y Parco",
+      { "text": "Shibuya Sky al atardecer (con reserva)", "price": { "amount": 2500, "currency": "JPY", "approx": true } }
     ],
-    "activitiesNight": ["Cena de monjayaki en Tsukishima", "Paseo nocturno por Ameyoko", "Descanso"],
+    "activitiesNight": [
+      "Cruce de Shibuya y Center Gai",
+      "Nintendo Tokyo y Pokémon Center en Parco",
+      "MEGA Don Quijote",
+      "Check-in en Nippori (hasta las 00:00)"
+    ],
     "keepOrder": true,
-    "keepOrderReason": "llegás en tren a Tokio con la valija",
-    "morning": { "wake": "9:15", "leave": "10:20", "why": "Check-out hasta las 11:00: Odoriko de 10:40 → Nippori 13:06. El minpaku abre a las 16:00" }
+    "keepOrderReason": "el orden va con el atardecer en Shibuya Sky",
+    "morning": { "wake": "9:15", "leave": "10:20", "why": "Odoriko de 10:40 → Nippori 13:06; valija a los lockers y a Gaien" }
   },
   {
     "date": "2026-12-01",
-    "label": "Tokio a pie: jardines de otoño y atardecer en Yanaka",
+    "label": "Tsukiji, Ginza, teamLab y Odaiba de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Día de ciudad tranquilo, sin bici: dos jardines con los arces en su punto (principios de diciembre) y vuelta a Nippori para el atardecer en Yanaka. ~5 km a pie repartidos en el día. Los Jardines del Este del Palacio cierran los lunes y viernes; hoy, martes, abren de 9:00 a 16:00 (entrada hasta 15:30) y son gratis",
+    "notes": "Día de bahía: salí temprano, que Tsukiji es de mañana. teamLab Planets va con reserva y precio dinámico (desde ¥3,600): sacá la franja de ~14:30. Desde teamLab, la Yurikamome a Daiba llega para el atardecer (16:28). Opcional en Ginza: un acto de kabuki en el Kabuki-za (一幕見, ~¥1,000–2,000, se compra el mismo día)",
     "weekday": "Mar",
-    "food": "Almuerzo en la estación de Tokio (Tokyo Ramen Street) · menchi-katsu en Yanaka Ginza",
+    "food": "Sushi de desayuno en Tsukiji; yakitori y cerveza bajo las vías en Yūrakuchō",
     "transport": [
       {
-        "mode": "tren",
-        "line": "JR Yamanote → Sobu (cambio en Akihabara)",
+        "mode": "metro",
+        "line": "JR a Ueno + metro Hibiya Line",
         "from": "Nippori",
-        "to": "Iidabashi",
-        "via": ["Akihabara"],
-        "duration": "~20min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "to": "Tsukiji",
+        "duration": "~25min",
+        "cost": { "amount": 350, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Después ~8 min a pie al jardín"
+        "via": ["Ueno"],
+        "note": "Salida 1: el mercado está enfrente"
       },
       {
         "mode": "metro",
-        "line": "Tokyo Metro Tozai",
-        "from": "Iidabashi",
-        "to": "Otemachi",
-        "duration": "~5min",
-        "cost": { "amount": 180, "currency": "JPY", "approx": true },
+        "line": "Metro Yurakucho Line + Yurikamome (cambio en Toyosu)",
+        "from": "Ginza",
+        "to": "Shin-Toyosu",
+        "duration": "~20min",
+        "cost": { "amount": 400, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Después ~5 min a pie a la puerta Otemon"
+        "note": "teamLab queda a 1 min de Shin-Toyosu",
+        "via": ["Toyosu"]
       },
-      { "mode": "caminar", "from": "Jardines del Este", "to": "Estación de Tokio", "duration": "~15min" },
+      {
+        "mode": "tren",
+        "line": "Yurikamome",
+        "from": "Shin-Toyosu",
+        "to": "Daiba",
+        "duration": "~15min",
+        "cost": { "amount": 340, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Sentate adelante: el tren no tiene conductor y ves la bahía"
+      },
+      {
+        "mode": "tren",
+        "line": "Yurikamome",
+        "from": "Daiba",
+        "to": "Shimbashi",
+        "duration": "~15min",
+        "cost": { "amount": 340, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Cruza el Rainbow Bridge; después 10 min a pie a Yūrakuchō"
+      },
       {
         "mode": "tren",
         "line": "JR Yamanote o Keihin-Tohoku",
-        "from": "Tokio",
+        "from": "Yurakucho",
         "to": "Nippori",
-        "duration": "~12min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Salida oeste: ~5 min a pie a Yanaka Ginza"
+        "duration": "~17min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2464,76 +2527,132 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Jardín Koishikawa Korakuen", "coords": [35.70536, 139.74915], "hours": "9:00–17:00 (entrada hasta 16:30)" },
       {
-        "name": "Jardines del Este del Palacio Imperial",
-        "coords": [35.6867, 139.7574],
-        "hours": "9:00–16:00 (entrada hasta 15:30, nov–feb) · cierra lunes y viernes"
+        "name": "Mercado exterior de Tsukiji (desayuno de sushi)",
+        "coords": [35.66539, 139.77047],
+        "icon": "🍣",
+        "hours": "Desde ~7:00; muchos puestos cierran ~14:00"
       },
-      { "name": "Estación de Tokio (edificio de ladrillo de Marunouchi)", "coords": [35.68115, 139.76598] },
+      { "name": "Jardín Hama-rikyū (casa de té junto al mar)", "coords": [35.66018, 139.76382], "hours": "9:00–17:00 · ¥300" },
+      { "name": "Tienda Uniqlo Ginza (la insignia, 12 pisos)", "coords": [35.6702, 139.76343], "hours": "11:00–21:00" },
+      { "name": "Papelería Itoya (Ginza)", "coords": [35.67296, 139.76743], "hours": "10:00–20:00" },
       {
-        "name": "Calle Yanaka Ginza y escalera Yuyake Dandan",
-        "coords": [35.72765, 139.76717],
-        "hours": "Tiendas ~10:00–18:00 · atardecer desde la escalera ~16:30"
-      }
+        "name": "teamLab Planets (Toyosu)",
+        "coords": [35.64938, 139.78973],
+        "icon": "🌌",
+        "hours": "Con reserva (franja ~14:30). Caminás descalzo: llevá ropa que se pueda arremangar"
+      },
+      { "name": "Parque Odaiba Kaihin: Rainbow Bridge al atardecer", "coords": [35.63108, 139.77735], "hours": "Atardecer 16:28" },
+      { "name": "Gundam Unicorn de tamaño real (DiverCity)", "coords": [35.62444, 139.77549], "icon": "🤖", "hours": "De noche se ilumina" },
+      { "name": "Yūrakuchō Sanchoku Yokocho (izakayas bajo las vías)", "coords": [35.67213, 139.76033], "icon": "🏮", "night": true }
     ],
-    "budget": "$94",
+    "budget": "$129",
     "isTransit": false,
     "activitiesDay": [
-      { "text": "Jardín Koishikawa Korakuen", "price": { "amount": 300, "currency": "JPY" } },
-      "Jardines del Este del Palacio Imperial (gratis)",
-      "Estación de Tokio y Marunouchi"
+      "Desayuno de sushi y tamagoyaki en Tsukiji",
+      { "text": "Jardín Hama-rikyū y té matcha en la casa de té", "price": { "amount": 1100, "currency": "JPY", "approx": true } },
+      "Ropa en Ginza: Uniqlo (12 pisos), GU y Muji; papelería Itoya",
+      { "text": "teamLab Planets (con reserva)", "price": { "amount": 3600, "currency": "JPY", "approx": true } }
     ],
-    "activitiesNight": ["Atardecer en la escalera Yuyake Dandan", "Yanaka Ginza: menchi-katsu y tiendas", "Descanso"],
-    "morning": { "wake": "7:45", "leave": "8:30", "why": "Koishikawa Korakuen abre a las 9:00. Los Jardines del Este dejan entrar hasta las 15:30" },
+    "activitiesNight": ["Atardecer con el Rainbow Bridge en Odaiba", "Gundam Unicorn iluminado", "Cena en las izakayas bajo las vías de Yūrakuchō"],
+    "morning": { "wake": "6:30", "leave": "7:15", "why": "Tsukiji es de mañana; Hama-rikyū abre a las 9:00" },
     "keepOrder": true,
-    "keepOrderReason": "Los jardines cierran temprano y Yanaka va al atardecer, de vuelta al hospedaje"
+    "keepOrderReason": "va con los horarios: Tsukiji de mañana, teamLab con reserva, Odaiba al atardecer"
   },
   {
     "date": "2026-12-02",
-    "label": "Tokio a pie: Nezu, Ueno, Asakusa y la Skytree",
+    "label": "Rikugien, día Hard Off en Chiba y atardecer en Yanaka",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Día de ciudad sin montaña: todo cerca de Nippori, en llano, ~7 km a pie repartidos en el día. Si te cansás, la Ginza Line une Ueno y Asakusa en 5 min. El Museo Nacional abre 9:30–17:00 (lunes cerrado). Senso-ji ya lo viste de noche el 1/11: ahora de día, con la calle Nakamise. En Tokyo Solamachi (al pie de la Skytree) hay Pokémon Center y Kirby Café para compras. Jakotsu-yu es un sento de agua termal negra en Asakusa (cierra los martes)",
+    "notes": "El único día de Hard Off afuera: Chiba por la JR Jōban, directo desde Nippori. Las ubicaciones salen de OpenStreetMap y los horarios son los típicos de la cadena (~10:00–20:00): confirmalos en Google Maps la noche anterior. Ropa: Off House de Takayanagi (usada) y a la noche Ameyoko y Okachimachi (mont-bell y Art Sports para outdoor)",
     "weekday": "Mié",
-    "food": "Almuerzo en Asakusa (tendon o soba) y cena en Solamachi o de vuelta en Nippori",
+    "food": "Almuerzo en Kashiwa; izakaya en Ueno a la noche",
     "transport": [
       {
-        "mode": "caminar",
-        "from": "Minpaku (Negishi)",
-        "to": "Santuario Nezu",
-        "duration": "~25min",
-        "note": "Cruzando la estación Nippori y el cementerio de Yanaka"
-      },
-      { "mode": "caminar", "from": "Santuario Nezu", "to": "Parque de Ueno", "duration": "~15min" },
-      {
-        "mode": "metro",
-        "line": "Tokyo Metro Ginza Line",
-        "from": "Ueno",
-        "to": "Asakusa",
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Nippori",
+        "to": "Komagome (Rikugien)",
         "duration": "~5min",
-        "cost": { "amount": 180, "currency": "JPY" },
-        "pay": ["suica"],
-        "note": "O ~30 min a pie"
-      },
-      {
-        "mode": "caminar",
-        "line": "Sumida River Walk",
-        "from": "Asakusa",
-        "to": "Tokyo Skytree",
-        "duration": "~20min",
-        "note": "Por la pasarela junto a las vías, sobre el río Sumida"
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
       {
         "mode": "tren",
-        "line": "Keisei Oshiage Line → Keisei Main Line",
-        "from": "Oshiage",
+        "line": "JR Yamanote",
+        "from": "Komagome (Rikugien)",
         "to": "Nippori",
-        "via": ["Aoto"],
-        "duration": "~25min",
-        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "duration": "~5min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Después ~5 min a pie al minpaku"
+        "note": "Ahí cambiás a la Jōban"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Jōban Line (rápido)",
+        "from": "Nippori",
+        "to": "Matsudo",
+        "duration": "~20min",
+        "cost": { "amount": 240, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      {
+        "mode": "tren",
+        "line": "JR Jōban Line (rápido)",
+        "from": "Matsudo",
+        "to": "Kashiwa",
+        "duration": "~10min",
+        "cost": { "amount": 220, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      {
+        "mode": "tren",
+        "line": "Tobu Urban Park Line",
+        "from": "Kashiwa",
+        "to": "Toyoshiki",
+        "duration": "~3min",
+        "cost": { "amount": 160, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Opcional: si vas justo de tiempo, salteá Toyoshiki"
+      },
+      {
+        "mode": "tren",
+        "line": "Tobu Urban Park Line",
+        "from": "Toyoshiki",
+        "to": "Takayanagi",
+        "duration": "~15min",
+        "cost": { "amount": 260, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "via": ["Kashiwa"]
+      },
+      {
+        "mode": "tren",
+        "line": "Tobu Urban Park Line",
+        "from": "Takayanagi",
+        "to": "Kashiwa",
+        "duration": "~12min",
+        "cost": { "amount": 230, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      {
+        "mode": "tren",
+        "line": "JR Jōban Line (rápido)",
+        "from": "Kashiwa",
+        "to": "Nippori",
+        "duration": "~30min",
+        "cost": { "amount": 480, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Volvé ~15:45 para el atardecer en Yanaka (16:28)"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Nippori",
+        "to": "Ueno",
+        "duration": "~4min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "O caminando ~25 min desde Yanaka"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2545,55 +2664,64 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Santuario Nezu (túnel de torii)", "coords": [35.72027, 139.76056], "hours": "6:30–17:00 (oct–feb)" },
-      { "name": "Museo Nacional de Tokio", "coords": [35.71885, 139.77654], "hours": "9:30–17:00 (entrada hasta 16:30) · lunes cerrado" },
-      { "name": "Santuario Ueno Toshogu", "coords": [35.71636, 139.77089], "hours": "9:00–16:00 (oct–feb)" },
-      { "name": "Templo Kiyomizu Kannon-do", "coords": [35.71265, 139.77296], "hours": "9:00–16:00" },
-      { "name": "Estanque Shinobazu", "coords": [35.71188, 139.76941] },
+      { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463], "hours": "9:00–17:00 (entrada hasta 16:30)" },
       {
-        "name": "Calle Nakamise y templo Senso-ji",
-        "coords": [35.71268, 139.79655],
-        "hours": "Recinto siempre · salón principal 6:30–17:00 · tiendas ~10:00–19:00"
+        "name": "Hard Off Matsudo",
+        "coords": [35.7962, 139.8971],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "Abre ~10:00 (confirmalo) · ~17 min a pie de la estación Matsudo"
       },
-      { "name": "Puente peatonal Sumida River Walk", "coords": [35.71035, 139.80144] },
       {
-        "name": "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)",
-        "coords": [35.71006, 139.8107],
-        "icon": "🗼",
-        "hours": "Mirador 10:00–22:00 (última entrada 21:00) · Solamachi 10:00–21:00"
-      }
+        "name": "Hobby Off Kashiwa (junto a la estación)",
+        "coords": [35.8606, 139.9714],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "Abre ~10:00 (confirmalo)"
+      },
+      {
+        "name": "Hard Off Kashiwa Toyoshiki (opcional)",
+        "coords": [35.8641, 139.948],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "~11 min a pie de la estación Toyoshiki"
+      },
+      {
+        "name": "Hard Off + Off House Kashiwa Takayanagi",
+        "coords": [35.808, 139.9984],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "Al lado de la estación Takayanagi · Off House: ropa usada"
+      },
+      {
+        "name": "Escalera Yūyake Dandan y calle Yanaka Ginza",
+        "coords": [35.72765, 139.76717],
+        "byTransit": true,
+        "hours": "Atardecer 16:28; las tiendas cierran ~18:00"
+      },
+      { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
+      { "name": "Hard Off + Hobby Off Ueno-Okachimachi", "coords": [35.7087, 139.7741], "icon": "♻️", "night": true }
     ],
-    "budget": "$111",
+    "budget": "$104",
     "isTransit": false,
     "activitiesDay": [
-      "Santuario Nezu y su túnel de torii rojos (gratis)",
-      { "text": "Museo Nacional de Tokio: samuráis, biombos y cerámica", "price": { "amount": 1000, "currency": "JPY" } },
-      "Parque de Ueno: Toshogu, Kiyomizu Kannon-do y el estanque Shinobazu",
-      "Asakusa de día: calle Nakamise y Senso-ji",
-      "Sumida River Walk hasta la Skytree"
+      { "text": "Jardín Rikugien con los arces", "price": { "amount": 300, "currency": "JPY", "approx": true } },
+      "Hard Off de Matsudo y Hobby Off de Kashiwa",
+      "Hard Off + Off House de Takayanagi (ropa usada en Off House)"
     ],
-    "activitiesNight": [
-      "Compras en Tokyo Solamachi (Pokémon Center, Kirby Café)",
-      { "text": "Opcional: mirador de la Skytree de noche", "price": { "amount": 2100, "currency": "JPY", "approx": true } },
-      "Armar la mochila: mañana te mudás al Nagomi (a ~1 km)",
-      "Descanso"
-    ],
+    "activitiesNight": ["Atardecer en la escalera Yūyake Dandan", "Ameyoko: puestos, ropa outdoor y Hard Off de Okachimachi", "Izakaya en Ueno"],
     "keepOrder": true,
-    "keepOrderReason": "de Nippori hacia el este a pie, y vuelta en tren desde la Skytree",
-    "morning": {
-      "wake": "7:45",
-      "leave": "8:30",
-      "why": "Nezu a las 9:00 sin gente y el Museo Nacional cuando abre (9:30). Toshogu y Kannon-do cierran a las 16:00"
-    }
+    "keepOrderReason": "Rikugien abre a las 9:00, las tiendas a las 10:00 y Yanaka va al atardecer",
+    "morning": { "wake": "7:45", "leave": "8:30", "why": "Rikugien abre a las 9:00 y a las 10:30 ya estás en el Hard Off de Matsudo" }
   },
   {
     "date": "2026-12-03",
-    "label": "Jardines de otoño + Shibuya de compras",
+    "label": "Museo Ghibli, Nakano Broadway y Shinjuku de noche",
     "location": "Tokio",
     "category": "Naturaleza",
-    "notes": "Check-out del minpaku hasta las 10:00: llevá la valija al Nagomi (~12 min a pie) y pedí que te la guarden hasta el check-in (15:00). Principios de diciembre es el punto de los arces en los jardines de Tokio. Shinjuku Gyoen: última entrada 16:00, cierra 16:30 (los lunes, cerrado). Shibuya Sky: reservá online el turno del atardecer (~16:30), se agota",
+    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. Las entradas del Ghibli de diciembre salieron el 10 nov a las 10:00 (Lawson Ticket, solo la web oficial): si no conseguiste, cambiá el Ghibli por Meiji Jingū a la mañana y seguí igual. Shinjuku Gyoen: última entrada 15:30. Kōenji (una parada antes de Nakano) tiene Hard Off y mucha ropa usada, si te sobra tiempo",
     "weekday": "Jue",
-    "food": "Picnic de konbini en Shinjuku Gyoen y cena en Shibuya",
+    "food": "Yakitori en Omoide Yokocho",
     "transport": [
       {
         "mode": "caminar",
@@ -2604,42 +2732,43 @@
       },
       {
         "mode": "tren",
-        "line": "JR Yamanote",
+        "line": "JR Yamanote + Chūō Line rápida (cambio en Shinjuku)",
         "from": "Nippori",
-        "to": "Komagome (Rikugien)",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "to": "Mitaka",
+        "duration": "~45min",
+        "cost": { "amount": 480, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Del Nagomi a Nippori son ~12 min a pie"
+        "via": ["Shinjuku"],
+        "note": "Del Nagomi a Nippori son ~12 min. Desde Mitaka, bus amarillo al museo (~¥220) o 15 min a pie por el río"
       },
       {
         "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Komagome (Rikugien)",
-        "to": "Shinjuku",
-        "duration": "~20min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "line": "JR Chūō Line rápida",
+        "from": "Kichijoji",
+        "to": "Nakano",
+        "duration": "~10min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Después ~10 min a pie a la puerta Shinjuku del jardín"
+        "note": "Del parque Inokashira a la estación Kichijōji son 5 min"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Chūō Line rápida",
+        "from": "Nakano",
+        "to": "Shinjuku",
+        "duration": "~5min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Shinjuku Gyoen deja entrar hasta las 15:30"
       },
       {
         "mode": "tren",
         "line": "JR Yamanote",
         "from": "Shinjuku",
-        "to": "Shibuya",
-        "duration": "~7min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Shibuya",
         "to": "Nippori",
-        "duration": "~30min",
+        "duration": "~25min",
         "cost": { "amount": 210, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Después ~12 min a pie al Nagomi"
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Nagomi Hotel Nippori (habitación japonesa con futón, baño privado)",
@@ -2651,81 +2780,94 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463], "hours": "9:00–17:00 (entrada hasta 16:30)" },
+      {
+        "name": "Museo Ghibli (Mitaka)",
+        "coords": [35.69625, 139.57045],
+        "icon": "🎨",
+        "byTransit": true,
+        "hours": "Solo con entrada de fecha y hora (Lawson Ticket) · cerrado los martes"
+      },
+      { "name": "Parque Inokashira (lago y arces)", "coords": [35.69891, 139.5787] },
+      {
+        "name": "Nakano Broadway (Mandarake y tiendas geek)",
+        "coords": [35.70924, 139.66569],
+        "icon": "🤓",
+        "byTransit": true,
+        "hours": "Tiendas ~12:00–20:00"
+      },
       {
         "name": "Jardín Shinjuku Gyoen (arces y ginkgos)",
         "coords": [35.68507, 139.70955],
         "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado"
       },
-      { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
-      {
-        "name": "Mirador Shibuya Sky (Scramble Square)",
-        "coords": [35.65838, 139.70222],
-        "night": true,
-        "hours": "10:00–22:30 (última entrada 21:20)"
-      },
-      { "name": "Tienda Shibuya Parco (Nintendo, Pokémon, Mandarake)", "coords": [35.66193, 139.69875], "hours": "~10:00–21:00" },
-      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true, "hours": "Abierta las 24 h" }
+      { "name": "Mirador gratis del Gobierno de Tokio (Tochō)", "coords": [35.6903, 139.69155], "hours": "Hasta ~22:00 · gratis" },
+      { "name": "Omoide Yokocho (yakitori bajo las vías)", "coords": [35.69302, 139.6997], "icon": "🏮", "night": true },
+      { "name": "Golden Gai y Godzilla de Kabukichō", "coords": [35.69399, 139.7047], "night": true, "icon": "🍸" }
     ],
-    "budget": "$125",
+    "budget": "$110",
     "isTransit": false,
     "activitiesDay": [
-      "Mudanza: dejar la valija en el Nagomi",
-      { "text": "Jardín Rikugien con su color (abre 9:00)", "price": { "amount": 300, "currency": "JPY", "approx": true } },
-      { "text": "Shinjuku Gyoen: arces, ginkgos y el invernadero", "price": { "amount": 500, "currency": "JPY", "approx": true } },
-      "Compras en Shibuya: Parco (Nintendo, Pokémon, Mandarake), Loft, Shibuya 109"
+      { "text": "Museo Ghibli (con entrada)", "price": { "amount": 1000, "currency": "JPY", "approx": true } },
+      "Paseo por el parque Inokashira y Kichijōji (ropa barata y cafés)",
+      "Nakano Broadway",
+      { "text": "Jardín Shinjuku Gyoen", "price": { "amount": 500, "currency": "JPY", "approx": true } }
     ],
     "activitiesNight": [
-      { "text": "Shibuya Sky al atardecer (turno desde las 15:00)", "price": { "amount": 3400, "currency": "JPY", "approx": true } },
-      "Cruce de Shibuya iluminado",
-      "MEGA Don Quijote Shibuya (abierto las 24 h)",
-      "Vuelta a Nippori: check-in en el Nagomi"
+      "Tokio de noche desde el mirador gratis del Tochō",
+      "Yakitori en Omoide Yokocho",
+      "Golden Gai y Kabukichō",
+      "Ropa en Shinjuku: Uniqlo, GU, Beams Japan"
     ],
     "keepOrder": true,
-    "keepOrderReason": "mudanza a la mañana, jardines de día y Shibuya al atardecer",
-    "morning": {
-      "wake": "7:30",
-      "leave": "8:30",
-      "why": "Check-out con la valija: dejala en el Nagomi y a Rikugien temprano. Shinjuku Gyoen deja entrar hasta las 16:00"
-    }
+    "keepOrderReason": "el Ghibli va con hora fija y Shinjuku Gyoen cierra a las 16:00",
+    "morning": { "wake": "7:30", "leave": "8:15", "why": "Valija al Nagomi y al Ghibli para la entrada de ~10:00" }
   },
   {
     "date": "2026-12-04",
-    "label": "Akihabara y Ginza de compras",
+    "label": "Akihabara electrónica, Asakusa y la Skytree de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Último día de compras. En Akihabara las tiendas abren 10:00–11:00 (Yodobashi a las 9:30). Si pedís sin impuesto, separá los tickets de lo que vas a usar (ver \"Compras sin impuesto\"). A la noche, maleta lista (≤23 kg): mañana el check-out es hasta las 10:00",
+    "notes": "Último día completo: las compras de electrónica y el reloj quedan para hoy (ver tareas del 4 dic). Hard Off y Mandarake de Akihabara quedan a pasos de Akizuki. Asakusa de tarde y noche: Nakamise cierra ~19:00 pero el templo iluminado es lo mejor. De ahí, 20 min a pie por el río a la Skytree. Mañana el vuelo: armá la maleta esta noche",
     "weekday": "Vie",
-    "food": "Yakitori bajo las vías de Yurakucho (cena de despedida)",
+    "food": "Melon pan en Asakusa; cena en Solamachi",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Yamanote o Keihin-Tohoku",
+        "line": "JR Yamanote + Chūō-Sōbu (cambio en Ochanomizu)",
         "from": "Nippori",
+        "to": "Iidabashi",
+        "duration": "~20min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Del Nagomi a Nippori son ~12 min"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Chūō-Sōbu Line",
+        "from": "Iidabashi",
         "to": "Akihabara",
-        "duration": "~7min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "duration": "~6min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
       {
-        "mode": "tren",
-        "line": "JR Yamanote o Keihin-Tohoku",
+        "mode": "metro",
+        "line": "Metro Ginza Line (desde Suehirochō)",
         "from": "Akihabara",
-        "to": "Yurakucho",
-        "duration": "~5min",
-        "cost": { "amount": 160, "currency": "JPY", "approx": true },
+        "to": "Tawaramachi",
+        "duration": "~8min",
+        "cost": { "amount": 180, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Ginza queda a ~5 min a pie"
+        "note": "Kappabashi queda a 5 min de Tawaramachi"
       },
       {
         "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Yurakucho",
+        "line": "Keisei / Toei Asakusa Line",
+        "from": "Oshiage",
         "to": "Nippori",
-        "duration": "~17min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Después ~12 min a pie al Nagomi"
+        "duration": "~25min",
+        "cost": { "amount": 300, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       }
     ],
     "accommodation": "Nagomi Hotel Nippori (habitación japonesa con futón, baño privado)",
@@ -2737,34 +2879,37 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Yodobashi Akiba", "coords": [35.6986, 139.7745], "icon": "📷", "hours": "9:30–22:00" },
-      {
-        "name": "Tienda Super Potato (videojuegos retro)",
-        "coords": [35.69937, 139.77074],
-        "hours": "11:00–20:00 (fines de semana desde las 10:00)"
-      },
+      { "name": "Jardín Koishikawa Kōrakuen", "coords": [35.70536, 139.74915], "hours": "9:00–17:00 · ¥300" },
+      { "name": "Yodobashi Akiba y Kitamura Camera (usados)", "coords": [35.6986, 139.7745], "icon": "📷" },
+      { "name": "Akizuki Denshi (秋月電子通商)", "coords": [35.69935, 139.76981], "icon": "🔌", "hours": "Abre ~11:00 (confirmalo)" },
+      { "name": "Sengoku Densho (千石電商)", "coords": [35.69933, 139.77022], "icon": "🔌" },
+      { "name": "Hard Off Akihabara 1号店", "coords": [35.7005, 139.7705], "icon": "♻️" },
       { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053], "hours": "12:00–20:00" },
+      { "name": "Calle Kappabashi (utensilios de cocina)", "coords": [35.71306, 139.7885], "hours": "Tiendas ~9:00–17:00" },
       {
-        "name": "Tiendas 2k540 Aki-Oka Artisan (bajo las vías)",
-        "coords": [35.70358, 139.77416],
-        "hours": "11:00–19:00 · miércoles cerrado"
+        "name": "Calle Nakamise y templo Sensō-ji (iluminado de noche)",
+        "coords": [35.7134, 139.79553],
+        "hours": "Nakamise cierra ~19:00; el templo se ilumina de noche"
       },
-      { "name": "Tienda Uniqlo Ginza (la insignia, 12 pisos)", "coords": [35.6702, 139.76343], "hours": "11:00–21:00" },
-      { "name": "Papelería Itoya (Ginza)", "coords": [35.67296, 139.76743], "hours": "10:00–20:00" }
+      {
+        "name": "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)",
+        "coords": [35.71006, 139.8107],
+        "icon": "🗼",
+        "hours": "Mirador 10:00–22:00 (última entrada 21:00) · Solamachi 10:00–21:00"
+      }
     ],
-    "budget": "$97",
+    "budget": "$101",
     "isTransit": false,
     "activitiesDay": [
-      "Akihabara: Yodobashi Akiba, Super Potato, Mandarake",
-      "2k540 Aki-Oka Artisan: artesanías japonesas para regalar",
-      "Ginza: Uniqlo insignia, papelería Itoya y Muji"
+      { "text": "Jardín Koishikawa Kōrakuen", "price": { "amount": 300, "currency": "JPY", "approx": true } },
+      "Akihabara: Akizuki, Sengoku, Yodobashi, Hard Off y Mandarake",
+      "Reloj Citizen y figuras grandes, si todavía las querés",
+      "Calle Kappabashi"
     ],
-    "activitiesNight": [
-      "Cena de despedida: yakitori bajo las vías de Yurakucho",
-      "Pesar la maleta: máximo 23 kg",
-      "Dormir temprano: check-out hasta las 10:00"
-    ],
-    "morning": { "wake": "8:30", "leave": "9:15", "why": "Yodobashi abre a las 9:30; Super Potato a las 11:00 y Mandarake recién a las 12:00" }
+    "activitiesNight": ["Sensō-ji iluminado", "Paseo por el río Sumida", "Tokyo Skytree y Solamachi (Pokémon Center, Kirby Café)"],
+    "morning": { "wake": "8:00", "leave": "8:40", "why": "Kōrakuen abre a las 9:00 y después Akihabara cuando abren las tiendas" },
+    "keepOrder": true,
+    "keepOrderReason": "Kōrakuen abre a las 9:00, Akihabara de día y Asakusa de noche"
   },
   {
     "date": "2026-12-05",

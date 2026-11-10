@@ -4,6 +4,24 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
+      id: "reserva-ghibli",
+      text: "Entradas del Museo Ghibli para el 3 dic (~10:00)",
+      detail: "Las de diciembre salieron el 10 nov a las 10:00 (hora de Japón) y vuelan. Solo en la web oficial (ghibli-museum.jp → Lawson Ticket): hay sitios falsos. Si no hay, el 3 dic cambiás el Ghibli por Meiji Jingū",
+      date: "2026-11-10",
+    },
+    {
+      id: "reserva-shibuya-sky",
+      text: "Reservar Shibuya Sky para el 30 nov (franja ~15:40)",
+      detail: "Para ver el atardecer (16:28) y quedarte de noche. Online sale ~¥300 más barato que en ventanilla",
+      date: "2026-11-10",
+    },
+    {
+      id: "reserva-teamlab",
+      text: "Reservar teamLab Planets para el 1 dic (franja ~14:30)",
+      detail: "Precio dinámico, desde ~¥3,600. Conviene sacarla 1–2 semanas antes",
+      date: "2026-11-10",
+    },
+    {
       id: "akiba-electronica",
       text: "Electrónica en Akihabara: Akizuki, Sengoku, Marutsu y aitendo",
       detail: "秋月電子 (kits propios de ¥200–3,000 y módulos 「AE-」), 千石電商 (componentes, conectores, herramientas), マルツ y aitendo (módulos y pantallas baratos); Tokyo Radio Department y Radio Center para cables y conectores. Vale la pena: herramientas (Hozan, Engineer, Vessel), puntas Hakko, componentes Omron/Panasonic/Alps y los kits. Voltaje: solo lo que diga 「AC100-240V」. Lo que diga 「AC100V」 (Hakko FX-888D/FX-600/FX-951, goot PX) necesita un transformador 120→100 V en Colombia: mejor comprar allá la versión de 120 V. Sin problema: cautines USB-C PD (Pinecil, TS101) o a pilas (Hakko FX-901). Hard Off Akihabara 1号店 y Hobby Off quedan ahí mismo",
