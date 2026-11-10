@@ -32,6 +32,16 @@ describe("TripApp", () => {
     expect(title()).toBe("Llegada a Asakusa");
   });
 
+  it("en el celular, la barra de arriba muestra dónde es el día que estás viendo", async () => {
+    renderAt("2026-11-02");
+    const bar = screen.getByRole("link", { name: "Volver a mis viajes" }).closest("header")!;
+    expect(within(bar).getByLabelText("Lugar del día").textContent).toBe("Nikko");
+
+    await act(() => userEvent.click(screen.getByRole("button", { name: /Día 3/ })));
+    expect(within(bar).getByLabelText("Lugar del día").textContent).toBe("Tokio");
+    localStorage.clear(); // la sesión recordaría el día 3 para los tests siguientes
+  });
+
   it("durante el viaje abre el día de hoy y el botón Hoy vuelve a él", async () => {
     renderAt("2026-11-02");
     expect(title()).toBe("Excursión a Nikko");

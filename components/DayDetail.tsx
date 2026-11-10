@@ -196,7 +196,8 @@ export default function DayDetail({
           <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${categoryStyle(day.category).chip}`}>
             {day.category}
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium">
+          {/* En el celular el lugar ya va en la barra de arriba */}
+          <span className="hidden items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium lg:inline-flex">
             <MapPin className="size-3.5 text-muted" aria-hidden />
             {day.location}
           </span>

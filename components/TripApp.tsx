@@ -475,6 +475,7 @@ export default function TripApp({ tripData }: Props) {
             onToday={goToday}
             onSearch={() => openSearchWith(true)}
             floating
+            place={view === "itinerary" ? selectedDay?.location : undefined}
           />
           {view === "itinerary" ? (
             <>

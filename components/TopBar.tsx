@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, LocateFixed, Search } from "lucide-react";
+import { ArrowLeft, LocateFixed, MapPin, Search } from "lucide-react";
 import type { TripMeta } from "@/types/Trip";
 import type { DayEntry } from "@/types/DayEntry";
 import type { TripStatus } from "@/lib/trip-time";
@@ -20,9 +20,11 @@ type Props = {
   onSearch?: () => void;
   /** En el celular flota sobre el mapa */
   floating?: boolean;
+  /** Dónde es el día que estás viendo: en el celular va en el lugar del título */
+  place?: string;
 };
 
-export default function TopBar({ meta, itinerary, status, viewingToday = false, onToday, onSearch, floating = false }: Props) {
+export default function TopBar({ meta, itinerary, status, viewingToday = false, onToday, onSearch, floating = false, place }: Props) {
   return (
     <header
       className={
@@ -42,8 +44,16 @@ export default function TopBar({ meta, itinerary, status, viewingToday = false, 
         {meta.emoji}
       </span>
       {/* En el celular alcanza con la bandera: el lugar queda para los botones */}
-      <div className={floating ? "flex-1" : "min-w-0 flex-1"}>
+      <div className="min-w-0 flex-1">
         <h1 className={floating ? "sr-only" : "truncate text-base font-bold leading-tight"}>{meta.title}</h1>
+        {floating && place && (
+          <span className="inline-flex max-w-full items-center gap-1 rounded-full bg-surface-2 px-2.5 py-1 text-sm font-medium">
+            <MapPin className="size-4 shrink-0 text-muted" aria-hidden />
+            <span aria-label="Lugar del día" className="truncate">
+              {place}
+            </span>
+          </span>
+        )}
         {!floating && <p className="truncate text-xs text-muted">{meta.subtitle}</p>}
       </div>
       {status?.kind === "during" && !viewingToday && (
