@@ -926,7 +926,7 @@
     "label": "Hosshinmon → Hongu Taisha → Shingu",
     "location": "Kumano Hongu",
     "category": "Naturaleza",
-    "notes": "Salí con la mochila: dejala en los lockers del Kumano Hongu Heritage Center. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min",
+    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min",
     "weekday": "Jue",
     "food": "Almuerzo cerca de Hongu Taisha",
     "transport": [
@@ -937,7 +937,8 @@
         "to": "Hosshinmon-oji",
         "duration": "2h14 (8:37 → 10:50, cambio de bus en el camino)",
         "cost": { "amount": 2570, "currency": "JPY", "approx": true },
-        "pay": ["efectivo", "tarjeta"]
+        "pay": ["efectivo", "tarjeta"],
+        "note": "Bajate en Hongu Taisha-mae (no sigas directo a Hosshinmon): dejá la mochila en los lockers y tomá ahí el bus que sube a Hosshinmon-oji (~15 min)"
       },
       {
         "mode": "caminar",
