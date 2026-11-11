@@ -891,12 +891,14 @@
     "checkIn": "13:30–23:00",
     "checkOut": "6:00–9:00",
     "pois": [
-      { "name": "Takijiri-oji (inicio)", "coords": [33.77553, 135.50369] },
-      { "name": "Santuario de Takahara", "coords": [33.79427, 135.52933] },
-      { "name": "Daimon-oji", "coords": [33.79736, 135.54705] },
-      { "name": "Jujo-oji", "coords": [33.80059, 135.55968] },
-      { "name": "Estatua de Gyuba-doji (paso Hashiori)", "coords": [33.8109, 135.6013], "icon": "🗿" },
-      { "name": "Chikatsuyu-oji (llegada)", "coords": [33.81436, 135.60572] }
+      { "name": "Takijiri-oji (inicio) · sello 4", "coords": [33.77553, 135.50369] },
+      { "name": "Nezu-oji · sello 5", "coords": [33.77695, 135.50605] },
+      { "name": "Santuario de Takahara · sello 6", "coords": [33.79427, 135.52933] },
+      { "name": "Daimon-oji · sello 7", "coords": [33.79736, 135.54705] },
+      { "name": "Jujo-oji · sello 8", "coords": [33.80059, 135.55968] },
+      { "name": "Osakamoto-oji · sello 9", "coords": [33.8144, 135.58851] },
+      { "name": "Estatua de Gyuba-doji (paso Hashiori) · sello 10", "coords": [33.8109, 135.6013], "icon": "🗿" },
+      { "name": "Chikatsuyu-oji (llegada) · sello 11", "coords": [33.81436, 135.60572] }
     ],
     "budget": "$75",
     "isTransit": false,
@@ -905,7 +907,7 @@
       "Roca Tainai-kuguri (para pasar gateando)",
       "Aldea Takahara con vista de las montañas",
       "Bosque de cedros hasta Chikatsuyu",
-      "Sellos de los oji en la credencial del peregrino"
+      "Sellos 4 a 11 de la libreta del Nakahechi (y en la credencial dual): cada oji tiene su cajita con el sello"
     ],
     "activitiesNight": ["Sento de Tanabe", "Cena abundante en Ajikoji", "Estiramiento", "Preparar la mochila: mañana te mudás a Shingu"],
     "keepOrder": true,
@@ -926,7 +928,7 @@
     "label": "Hosshinmon → Hongu Taisha → Shingu",
     "location": "Kumano Hongu",
     "category": "Naturaleza",
-    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min",
+    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min. Libreta del Nakahechi: sellos 17 a 23 en el sendero y Hongu, 24 en el Kumano-gawa River Boat Center (道の駅 熊野川, sobre la ruta del bus a Shingu) y 25 en el Hayatama. El 26 (Kamikura, 538 escalones) y el 27 (Asuka, cerca de la estación) quedan en Shingu, para la tarde o mañana",
     "weekday": "Jue",
     "food": "Almuerzo cerca de Hongu Taisha",
     "transport": [
@@ -973,16 +975,20 @@
     "checkIn": "15:00–19:00",
     "checkOut": "8:30–9:30",
     "pois": [
-      { "name": "Hosshinmon-oji (inicio)", "coords": [33.86175, 135.7206] },
-      { "name": "Kumano Hongu Taisha", "coords": [33.84035, 135.77363], "hours": "~8:00–17:00" },
-      { "name": "Gran torii de Oyunohara", "coords": [33.83465, 135.77441] },
+      { "name": "Hosshinmon-oji (inicio) · sello 17", "coords": [33.86175, 135.7206] },
+      { "name": "Mizunomi-oji · sello 18", "coords": [33.85843, 135.73698] },
+      { "name": "Fushiogami-oji · sello 19", "coords": [33.8602, 135.75682] },
+      { "name": "Haraido-oji · sello 20", "coords": [33.8401, 135.77331] },
+      { "name": "Kumano Hongu Taisha · sello 21", "coords": [33.84035, 135.77363], "hours": "~8:00–17:00" },
+      { "name": "Gran torii de Oyunohara · sello 22", "coords": [33.83465, 135.77441] },
+      { "name": "Yunomine-oji · sello 23", "coords": [33.82933, 135.75808] },
       {
         "name": "Onsen Tsuboyu (Yunomine)",
         "coords": [33.82919, 135.75772],
         "hours": "6:00–21:30 · turnos de 30 min: el número se saca en la boletería"
       },
       {
-        "name": "Kumano Hayatama Taisha",
+        "name": "Kumano Hayatama Taisha · sello 25",
         "coords": [33.7323, 135.98368],
         "night": true,
         "hours": "Sellos y tesoro ~9:00–16:00 · de noche solo se ve por fuera"
@@ -1017,7 +1023,7 @@
     "label": "Daimonzaka → santuario y cascada de Nachi",
     "location": "Nachi",
     "category": "Naturaleza",
-    "notes": "La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Desde Shingu: tren a Kii-Katsuura (~20 min) y ahí el bus a Daimonzaka. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren",
+    "notes": "La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Desde Shingu: tren a Kii-Katsuura (~20 min) y ahí el bus a Daimonzaka. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
     "weekday": "Vie",
     "food": "Maguro-don (bol de atún) en el puerto",
     "transport": [
@@ -1069,10 +1075,15 @@
     "checkIn": "15:00–19:00",
     "checkOut": "8:30–9:30",
     "pois": [
-      { "name": "Escalinata de Daimonzaka", "coords": [33.67061, 135.8965] },
-      { "name": "Kumano Nachi Taisha", "coords": [33.66843, 135.89044], "hours": "Oficina 6:00–16:30 · tesoro 8:30–16:30" },
-      { "name": "Templo Seiganto-ji", "coords": [33.66931, 135.88992], "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00" },
-      { "name": "Cascada de Nachi", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" }
+      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] },
+      { "name": "Escalinata de Daimonzaka · sello 33", "coords": [33.67061, 135.8965] },
+      { "name": "Kumano Nachi Taisha · sello 35", "coords": [33.66843, 135.89044], "hours": "Oficina 6:00–16:30 · tesoro 8:30–16:30" },
+      {
+        "name": "Templo Seiganto-ji · sello 36",
+        "coords": [33.66931, 135.88992],
+        "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00"
+      },
+      { "name": "Cascada de Nachi · sello 34", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" }
     ],
     "budget": "$83",
     "isTransit": false,
