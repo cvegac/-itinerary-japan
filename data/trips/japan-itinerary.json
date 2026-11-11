@@ -928,7 +928,7 @@
     "label": "Hosshinmon → Hongu Taisha → Shingu",
     "location": "Kumano Hongu",
     "category": "Naturaleza",
-    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min. Libreta del Nakahechi: sellos 17 a 23 en el sendero y Hongu, 24 en el Kumano-gawa River Boat Center (道の駅 熊野川, sobre la ruta del bus a Shingu) y 25 en el Hayatama. El 26 (Kamikura, 538 escalones) y el 27 (Asuka, cerca de la estación) quedan en Shingu, para la tarde o mañana. Ojo: los sellos y goshuin del Hayatama cierran ~16:00 y el bus de las 17:29 llega a Shingu ~18:35: si vas a Yunomine, el Hayatama queda para mañana temprano, antes de Nachi",
+    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine, en bus desde la misma parada Hongu Taisha-mae: el que dice 湯の峰 (~10 min, ~¥300, más o menos uno por hora; a la mañana sacale foto al cartel de horarios). Para volver por la mochila, el que dice 本宮大社前. El sendero Dainichi-goe (3,4 km, ~1h30, con subida) es solo si te sobran piernas. Libreta del Nakahechi: sellos 17 a 23 en el sendero y Hongu, 24 en el Kumano-gawa River Boat Center (道の駅 熊野川, sobre la ruta del bus a Shingu) y 25 en el Hayatama. El 26 (Kamikura, 538 escalones) y el 27 (Asuka, cerca de la estación) quedan en Shingu, para la tarde o mañana. Ojo: los sellos y goshuin del Hayatama cierran ~16:00 y el bus de las 17:29 llega a Shingu ~18:35: si vas a Yunomine, el Hayatama queda para mañana temprano, antes de Nachi",
     "weekday": "Jue",
     "food": "Almuerzo cerca de Hongu Taisha",
     "transport": [
@@ -991,7 +991,7 @@
       { "name": "Haraido-oji · sello 20", "coords": [33.8401, 135.77331] },
       { "name": "Kumano Hongu Taisha · sello 21", "coords": [33.84035, 135.77363], "hours": "~8:00–17:00" },
       { "name": "Gran torii de Oyunohara · sello 22", "coords": [33.83465, 135.77441] },
-      { "name": "Yunomine-oji · sello 23", "coords": [33.82933, 135.75808] },
+      { "name": "Yunomine-oji · sello 23", "coords": [33.82933, 135.75808], "byTransit": true },
       {
         "name": "Onsen Tsuboyu (Yunomine)",
         "coords": [33.82919, 135.75772],
