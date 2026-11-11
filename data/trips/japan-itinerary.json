@@ -928,19 +928,29 @@
     "label": "Hosshinmon → Hongu Taisha → Shingu",
     "location": "Kumano Hongu",
     "category": "Naturaleza",
-    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min. Libreta del Nakahechi: sellos 17 a 23 en el sendero y Hongu, 24 en el Kumano-gawa River Boat Center (道の駅 熊野川, sobre la ruta del bus a Shingu) y 25 en el Hayatama. El 26 (Kamikura, 538 escalones) y el 27 (Asuka, cerca de la estación) quedan en Shingu, para la tarde o mañana",
+    "notes": "La mochila: bajate primero en Hongu Taisha-mae y dejala en los lockers de Karasuya, a 1 min del Kumano Hongu Heritage Center (8:00–18:00, 22 lockers; si están llenos, preguntá en el Heritage Center). Después subís en bus a Hosshinmon-oji y caminás de vuelta sin peso. Retirala antes de las 18:00. Comprá ahí el pase de bus Kumano Gobo (~¥3,500 por 2 días): cubre los buses de hoy desde Hongu y los de mañana a Nachi. Check-out en Tanabe hasta las 9:00 y el check-in en Shingu cierra a las 19:00: tomá un bus desde Hongu que llegue antes y, si no da el tiempo, dejá el onsen de Yunomine. A Yunomine se llega a pie por el Dainichi-goe, un sendero oficial del Kumano Kodo (~3,4 km, ~1h30, con subida): sale al lado del gran torii de Oyunohara, seguí los carteles «大日越». Si estás cansado, el bus Hongu → Yunomine tarda ~10 min. Libreta del Nakahechi: sellos 17 a 23 en el sendero y Hongu, 24 en el Kumano-gawa River Boat Center (道の駅 熊野川, sobre la ruta del bus a Shingu) y 25 en el Hayatama. El 26 (Kamikura, 538 escalones) y el 27 (Asuka, cerca de la estación) quedan en Shingu, para la tarde o mañana. Ojo: los sellos y goshuin del Hayatama cierran ~16:00 y el bus de las 17:29 llega a Shingu ~18:35: si vas a Yunomine, el Hayatama queda para mañana temprano, antes de Nachi",
     "weekday": "Jue",
     "food": "Almuerzo cerca de Hongu Taisha",
     "transport": [
       {
         "mode": "bus",
-        "line": "Ryujin / Meiko Bus",
+        "line": "Ryujin Bus 93 rápido (Kumano Kodo)",
         "from": "Kii-Tanabe",
+        "to": "Hongu Taisha-mae",
+        "duration": "1h36 (8:37 → 10:12)",
+        "cost": { "amount": 2100, "currency": "JPY" },
+        "pay": ["efectivo", "suica"],
+        "note": "Bajate en Hongu Taisha-mae: mochila al locker (Karasuya, 1 min a pie) y volvé a la misma parada"
+      },
+      {
+        "mode": "bus",
+        "line": "Kumano Hongu Line 81",
+        "from": "Hongu Taisha-mae",
         "to": "Hosshinmon-oji",
-        "duration": "2h14 (8:37 → 10:50, cambio de bus en el camino)",
-        "cost": { "amount": 2570, "currency": "JPY", "approx": true },
-        "pay": ["efectivo", "tarjeta"],
-        "note": "Bajate en Hongu Taisha-mae (no sigas directo a Hosshinmon): dejá la mochila en los lockers y tomá ahí el bus que sube a Hosshinmon-oji (~15 min)"
+        "duration": "20min (10:30 → 10:50)",
+        "cost": { "amount": 470, "currency": "JPY" },
+        "pay": ["efectivo"],
+        "note": "Si lo perdés, el siguiente es 12:15"
       },
       {
         "mode": "caminar",
@@ -1014,7 +1024,7 @@
     ],
     "keepOrder": true,
     "keepOrderReason": "de Hosshinmon a Hongu a pie, después los onsen",
-    "morning": { "wake": "7:15", "leave": "8:10", "why": "Con la mochila y el check-out hecho: bus de las 8:37 a Hosshinmon-oji" },
+    "morning": { "wake": "7:15", "leave": "8:10", "why": "Check-out y konbini (almuerzo y agua) antes del bus 93 de las 8:37 a Hongu" },
     "trailReports": [{ "label": "YAMAP: diarios de Hosshinmon-oji → Hongu (bajada suave)", "url": "https://yamap.com/tags/140118/activities" }]
   },
   {
