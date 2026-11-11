@@ -23,8 +23,8 @@ export const NOTES: TripNotes = {
     },
     {
       id: "banda-xiaomi",
-      text: "Comprar la Xiaomi Smart Band nueva (~¥5,000)",
-      detail: "En Bic Camera o Yodobashi (la de la estación de Kioto es enorme). Se integra con tu celular Xiaomi: pasos, pulso, calorías y sueño. Antes de pagar, mirá que tenga español o inglés",
+      text: "Comprar la Xiaomi Smart Band 11 (¥7,980) o la 11 Active (¥3,980)",
+      detail: "Band 11 (salió en Japón el 4 nov 2026): pantalla AMOLED de 1,72\" y 2.000 nits, 15,6 g, hasta 21 días de batería, ¥7,980 (cerámica ¥10,800). Band 11 Active: ¥3,980, 18 g, 5ATM (sirve para nadar), pantalla más simple. Con GPS propio: Band 10 Pro, ¥10,800. Todas miden pasos, pulso, sueño y SpO2 con la app Mi Fitness, en tu Xiaomi o en cualquier celular. En Bic Camera o Yodobashi (la de la estación de Kioto es enorme). Electrónica: con tax-free la podés usar, pero llevala en la mochila de mano para el control de Narita",
       date: "2026-11-14",
     },
     {
