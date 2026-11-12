@@ -1060,12 +1060,13 @@
       },
       {
         "mode": "bus",
-        "line": "Kumano Kotsu",
+        "line": "Kumano Gobo Nankai (línea Nachisan)",
         "from": "Kii-Katsuura",
         "to": "Daimonzaka",
         "duration": "~20min",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase Kumano Gobo" },
-        "pay": ["Pase de bus Kumano Gobo"]
+        "cost": { "amount": 520, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"],
+        "note": "Sin pase: pagás al bajar. Llevá monedas o billetes de ¥1,000 (la máquina del bus cambia)"
       },
       { "mode": "caminar", "from": "Daimonzaka", "to": "Santuario Kumano Nachi Taisha", "duration": "~30–40min de escalones de piedra" },
       {
@@ -1073,9 +1074,10 @@
         "from": "Cascada de Nachi",
         "to": "Kii-Katsuura",
         "duration": "~25min",
-        "cost": { "amount": 0, "currency": "JPY", "included": "el pase" },
-        "pay": ["Pase de bus Kumano Gobo"],
-        "note": "Buses desde la cascada: 13:03, 13:28, 13:58…"
+        "cost": { "amount": 630, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"],
+        "note": "Buses desde la cascada: 13:03, 13:28, 13:58… Bajate en la estación JR Nachi para los sellos 30 y 31 y tomá el tren ahí",
+        "line": "Kumano Gobo Nankai (línea Nachisan)"
       },
       {
         "mode": "tren",
@@ -1106,7 +1108,7 @@
       },
       { "name": "Cascada de Nachi · sello 34", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" }
     ],
-    "budget": "$83",
+    "budget": "$90",
     "isTransit": false,
     "activitiesDay": [
       "Subasta del mercado de atún (7:00, opcional)",
@@ -1124,9 +1126,9 @@
     "keepOrder": true,
     "keepOrderReason": "escalinata de Daimonzaka hasta la cascada",
     "morning": {
-      "wake": "7:20",
+      "wake": "6:50",
       "leave": "8:10",
-      "why": "La estación está a 15 min: Kuroshio de 8:32 a Kii-Katsuura (Daimonzaka 9:28). Nachi cierra a las 16:30"
+      "why": "Antes del tren, Hayatama Taisha (sello 25) enfrente del alojamiento. Estación a 15 min: tren de 8:32 a Kii-Katsuura. Nachi cierra a las 16:30"
     },
     "trailReports": [
       { "label": "YAMAP: Daimonzaka → Nachi, ruta y diarios (sep–oct 2026)", "url": "https://yamap.com/model-courses/26147" },
