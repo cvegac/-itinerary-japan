@@ -1044,7 +1044,7 @@
     "label": "Daimonzaka → santuario y cascada de Nachi",
     "location": "Nachi",
     "category": "Naturaleza",
-    "notes": "La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Desde Shingu: tren a Kii-Katsuura (~20 min) y ahí el bus a Daimonzaka. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
+    "notes": "Tarde: de vuelta en Shingu (~14:30), Kamikura-jinja (sello 26) a 15 min caminando del alojamiento. Subida empinada de 15–20 min: ir a las 15:00 para bajar con luz. La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Desde Shingu: tren a Kii-Katsuura (~20 min) y ahí el bus a Daimonzaka. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
     "weekday": "Vie",
     "food": "Maguro-don (bol de atún) en el puerto",
     "transport": [
@@ -1115,7 +1115,12 @@
         "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00"
       },
       { "name": "Cascada de Nachi · sello 34", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" },
-      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] }
+      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] },
+      {
+        "name": "Kamikura-jinja · sello 26",
+        "coords": [33.72425, 135.98411],
+        "hours": "Subí antes de las 16:00: atardece ~16:55 y los 538 escalones no tienen luz"
+      }
     ],
     "budget": "$90",
     "isTransit": false,
@@ -1124,7 +1129,8 @@
       "Escalinata de Daimonzaka entre cedros",
       "Kumano Nachi Taisha y el templo Seiganto-ji",
       "Cascada de Nachi y su mirador",
-      "Tarde de onsen junto al mar"
+      "Tarde de onsen junto al mar",
+      "Kamikura-jinja: 538 escalones hasta la roca Gotobiki-iwa (sello 26)"
     ],
     "activitiesNight": [
       "Onsen en una cueva frente al mar (Katsuura), antes del tren a Shingu",
