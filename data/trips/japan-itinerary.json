@@ -1152,7 +1152,7 @@
     "activitiesNight": [
       "Onsen en una cueva frente al mar (Katsuura), antes del tren a Shingu",
       "Última cena de mariscos",
-      "Escribirle a 嘉翔の家 (Otsu) para dejar la mochila antes del check-in y confirmar en Booking la salida a las 6:00",
+      "Comprar en la estación de Shingu el boleto del Nanki 4 de mañana (9:13, hasta Matsusaka)",
       "Preparar la mochila para Kioto"
     ],
     "keepOrder": true,
@@ -1172,19 +1172,19 @@
     "label": "Costa de Kii en tren → Kioto",
     "location": "Kioto",
     "category": "Logística",
-    "notes": "Salida temprano: Nanki 2 a las 6:20 → Matsusaka 8:26 y Kintetsu (cambio en Yamato-Yagi) → Kioto ~10:45, ~¥8,740 en total, lo mismo que con el de las 9:13 (horario JR, octubre 2026). Con un solo cambio y más caro: Nanki 2 hasta Nagoya (9:42) + Nozomi → Kioto ~10:20, ~¥13,510. La mochila: escribile la noche anterior a 嘉翔の家 para dejarla antes del check-in (Otsu está a 10 min de Kioto); si no, locker en la estación de Kioto, que un sábado de koyo se llenan temprano. El check-out en Shingu es de 8:30 a 9:30: con caja de llaves se puede salir antes, pero confirmalo. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: pasá primero a dejar la mochila y volvé a Kioto liviano (el check-in cierra a las 22:00)",
+    "notes": "Según Google Maps (consultado el 8 nov): Nanki 4 a las 9:13 → Matsusaka 11:26, Kintetsu 12:03 → Yamato-Yagi → Kioto 14:00, ~¥8,740 en total. Es 1h30 más rápido y más barato que el Kuroshio por la costa oeste (9:42 → 15:29). Con un solo cambio: Nanki 4 hasta Nagoya (12:41) + Nozomi 12:47 → Kioto 13:21, ~¥13,510. El check-out en Shingu es de 8:30 a 9:30. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: pasá primero a hacer el check-in (cierra a las 22:00) y volvé a Kioto para la tarde",
     "weekday": "Sáb",
     "food": "Ekiben (bento de estación) en el tren",
     "transport": [
       {
         "mode": "tren",
-        "line": "Expreso limitado Nanki 2",
+        "line": "Expreso limitado Nanki 4",
         "from": "Shingu",
         "to": "Matsusaka",
-        "duration": "2h06 (6:20 → 8:26)",
+        "duration": "2h13 (9:13 → 11:26)",
         "cost": { "amount": 8740, "currency": "JPY", "approx": true, "detail": "en total hasta Kioto" },
         "pay": ["boleto"],
-        "note": "Sentate del lado derecho: el mar queda a la derecha en el primer tramo. Plan B si se pasa: Nanki 4 de las 9:13 (→ Matsusaka 11:26, Kintetsu 12:03 → Kioto 14:00)"
+        "note": "Sentate del lado derecho: el mar queda a la derecha en el primer tramo"
       },
       {
         "mode": "tren",
@@ -1192,9 +1192,9 @@
         "from": "Matsusaka",
         "to": "Kioto",
         "via": ["Yamato-Yagi"],
-        "duration": "~2h (~8:40 → ~10:45)",
+        "duration": "~2h (12:03 → 14:00)",
         "pay": ["boleto"],
-        "note": "De JR a Kintetsu son ~3 min a pie dentro de Matsusaka. El boleto de expreso limitado de Kintetsu se saca en sus máquinas: tomá el primero que salga hacia Kioto"
+        "note": "De JR a Kintetsu son ~3 min a pie dentro de Matsusaka. El boleto de expreso limitado de Kintetsu se saca en sus máquinas"
       },
       {
         "mode": "tren",
@@ -1204,7 +1204,7 @@
         "duration": "~10min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Para dejar la mochila (o hacer el check-in a la tarde); después volvés a Kioto y a la noche otra vez a Otsu"
+        "note": "Para el check-in; después volvés a Kioto y a la noche otra vez a Otsu"
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1223,18 +1223,9 @@
     ],
     "budget": "$142",
     "isTransit": false,
-    "activitiesDay": [
-      "Costa del Pacífico desde el tren",
-      "Dejar la mochila en Otsu (preguntale antes al alojamiento) o en un locker de Kioto, y a pasear liviano",
-      "Paseo por el río Kamo",
-      "Mercado Nishiki"
-    ],
+    "activitiesDay": ["Costa del Pacífico desde el tren", "Check-in en Otsu y vuelta a Kioto (~10 min)", "Paseo por el río Kamo", "Mercado Nishiki"],
     "activitiesNight": ["Callejón Pontocho", "Gion al anochecer", "Cena barata en el Kyoto Tower Sando", "Tren a Otsu y dormir temprano"],
-    "morning": {
-      "wake": "5:20",
-      "leave": "5:50",
-      "why": "Nanki 2 de las 6:20: llegás a Kioto ~10:45, 3 h antes que con el de las 9:13 y por el mismo precio. Salís 5:50 para comprar el boleto en la máquina de la estación (si no vende el 特急券, el suplemento se paga al revisor). Llave en la caja y 15 min a pie con la mochila"
-    }
+    "morning": { "wake": "7:45", "leave": "8:45", "why": "Check-out desde las 8:30 y 15 min a pie con la mochila: Nanki 4 de las 9:13" }
   },
   {
     "date": "2026-11-15",
