@@ -1044,57 +1044,77 @@
     "label": "Daimonzaka → santuario y cascada de Nachi",
     "location": "Nachi",
     "category": "Naturaleza",
-    "notes": "Tarde: de vuelta en Shingu (~14:30), Kamikura-jinja (sello 26) a 15 min caminando del alojamiento. Subida empinada de 15–20 min: ir a las 15:00 para bajar con luz. La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Desde Shingu: tren a Kii-Katsuura (~20 min) y ahí el bus a Daimonzaka. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
+    "notes": "Tarde: de vuelta en Shingu (~14:30), Kamikura-jinja (sello 26) a 15 min caminando del alojamiento. Subida empinada de 15–20 min: ir a las 15:00 para bajar con luz. La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Orden real: tren a la estación JR Nachi, sellos 30 y 31, bus a Daimonzaka y de ahí todo a pie hasta la cascada; la vuelta en bus a Katsuura. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
     "weekday": "Vie",
     "food": "Maguro-don (bol de atún) en el puerto",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Kisei Line (local)",
+        "line": "JR Kisei Line",
         "from": "Shingu",
-        "to": "Kii-Katsuura",
-        "duration": "~20min",
-        "cost": { "amount": 240, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"],
-        "note": "Google Maps recomienda el Kuroshio de 8:32 (llegás a Daimonzaka 9:28); el local de 9:42 llega 10:48"
-      },
-      {
-        "mode": "bus",
-        "line": "Kumano Gobo Nankai (línea Nachisan)",
-        "from": "Kii-Katsuura",
-        "to": "Daimonzaka",
-        "duration": "~20min",
-        "cost": { "amount": 520, "currency": "JPY", "approx": true },
-        "pay": ["efectivo"],
-        "note": "Sin pase: pagás al bajar. Llevá monedas o billetes de ¥1,000 (la máquina del bus cambia)"
-      },
-      { "mode": "caminar", "from": "Daimonzaka", "to": "Santuario Kumano Nachi Taisha", "duration": "~30–40min de escalones de piedra" },
-      {
-        "mode": "bus",
-        "line": "Kumano Gobo Nankai (línea Nachisan)",
-        "from": "Cascada de Nachi",
         "to": "Estación de Nachi",
-        "duration": "~20min",
-        "cost": { "amount": 580, "currency": "JPY", "approx": true },
-        "pay": ["efectivo"],
-        "note": "Buses desde la cascada: 13:03, 13:28, 13:58… Bajate en 那智駅 (estación Nachi), una parada antes de Katsuura"
+        "duration": "~25min",
+        "cost": { "amount": 330, "currency": "JPY", "approx": true },
+        "pay": ["suica", "efectivo"],
+        "note": "Bajada en 那智駅 (estación Nachi), una antes de Kii-Katsuura, para hacer primero los sellos 30 y 31"
       },
       {
         "mode": "caminar",
         "from": "Estación de Nachi",
         "to": "Fudarakusan-ji",
         "duration": "~3min",
-        "note": "Sellos 30 y 31: el templo Fudarakusan-ji y, pegado, el santuario Hamanomiya-oji"
+        "note": "Sellos 30 (Fudarakusan-ji, el del barco) y 31 (Hamanomiya-oji, el del árbol), en la misma caseta"
+      },
+      {
+        "mode": "bus",
+        "line": "Kumano Gobo Nankai (línea Nachisan)",
+        "pay": ["efectivo"],
+        "from": "Estación de Nachi",
+        "to": "Daimonzaka",
+        "duration": "~15min",
+        "cost": { "amount": 480, "currency": "JPY", "approx": true },
+        "note": "Bajate en Daimonzaka (大門坂), no sigas hasta arriba: ahí arranca la escalinata. Pagás al bajar según el número de tu ticket"
+      },
+      {
+        "mode": "caminar",
+        "from": "Daimonzaka",
+        "to": "Kumano Nachi Taisha",
+        "duration": "~30–40min de escalones de piedra",
+        "note": "Sello 33 al pie de la cuesta, junto a los cedros Meoto-sugi"
+      },
+      {
+        "mode": "caminar",
+        "from": "Kumano Nachi Taisha",
+        "to": "Seiganto-ji",
+        "duration": "~2min",
+        "note": "Pegados: sello 35 en el santuario y 36 en el templo"
+      },
+      {
+        "mode": "caminar",
+        "from": "Seiganto-ji",
+        "to": "Cascada de Nachi",
+        "duration": "~15min bajando",
+        "note": "Pasás por la pagoda roja (la foto clásica) y bajás por escalones hasta Hiro-jinja, al pie de la cascada (sello 34)"
+      },
+      {
+        "mode": "bus",
+        "line": "Kumano Gobo Nankai (línea Nachisan)",
+        "pay": ["efectivo"],
+        "from": "Cascada de Nachi",
+        "to": "Kii-Katsuura",
+        "duration": "~25min",
+        "cost": { "amount": 630, "currency": "JPY", "approx": true },
+        "note": "Parada 滝前 (Takimae) frente a la cascada: buses 13:03, 13:28, 13:58… Bajate en la terminal de Katsuura"
       },
       {
         "mode": "tren",
         "line": "JR Kisei Line (local)",
-        "from": "Estación de Nachi",
+        "from": "Kii-Katsuura",
         "to": "Shingu",
-        "duration": "~25min",
-        "cost": { "amount": 330, "currency": "JPY", "approx": true },
+        "duration": "~20min",
+        "cost": { "amount": 240, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"],
-        "note": "Locales cada ~1 hora: mirá el próximo en Google Maps antes de ir a los sellos"
+        "note": "Antes, maguro-don en el puerto. Locales cada ~1 hora: mirá el próximo en Google Maps"
       }
     ],
     "accommodation": "KUMANO家-OHGi- (individual con tatami, baño compartido)",
@@ -1107,6 +1127,7 @@
     "checkOut": "8:30–9:30",
     "pois": [
       { "name": "Kumano Hayatama Taisha · sello 25", "coords": [33.73226, 135.98365] },
+      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] },
       { "name": "Escalinata de Daimonzaka · sello 33", "coords": [33.67061, 135.8965] },
       { "name": "Kumano Nachi Taisha · sello 35", "coords": [33.66843, 135.89044], "hours": "Oficina 6:00–16:30 · tesoro 8:30–16:30" },
       {
@@ -1115,7 +1136,6 @@
         "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00"
       },
       { "name": "Cascada de Nachi · sello 34", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" },
-      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] },
       {
         "name": "Kamikura-jinja · sello 26",
         "coords": [33.72425, 135.98411],
@@ -1143,7 +1163,7 @@
     "morning": {
       "wake": "6:50",
       "leave": "8:10",
-      "why": "Antes del tren, Hayatama Taisha (sello 25) enfrente del alojamiento. Estación a 15 min: tren de 8:32 a Kii-Katsuura. Nachi cierra a las 16:30"
+      "why": "Antes del tren, Hayatama Taisha (sello 25) enfrente del alojamiento. Tren a la estación Nachi (sellos 30 y 31) y bus a Daimonzaka. Nachi cierra a las 16:30"
     },
     "trailReports": [
       { "label": "YAMAP: Daimonzaka → Nachi, ruta y diarios (sep–oct 2026)", "url": "https://yamap.com/model-courses/26147" },
