@@ -21,6 +21,8 @@ export type TransportSegment = {
   pay?: string[];
   /** No forma parte del plan base: no suma al presupuesto */
   optional?: boolean;
+  /** Tramo de regreso (en la capa Transporte del mapa va en rojo; la ida, en azul) */
+  vuelta?: boolean;
   /** Notas adicionales */
   note?: string;
 };

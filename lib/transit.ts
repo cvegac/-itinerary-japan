@@ -113,3 +113,16 @@ export const TRANSIT_STYLE: Record<TransitKind, { color: string; dashed: boolean
   straight: { color: "#0891b2", dashed: true, label: "Ferry o teleférico" },
   flight: { color: "#475569", dashed: true, label: "Vuelo" },
 };
+
+export type TransitDirection = "ida" | "vuelta";
+
+/** Un tramo es de vuelta solo si el itinerario lo marca (`vuelta: true`) */
+export function transitDirection(segment: TransportSegment): TransitDirection {
+  return segment.vuelta ? "vuelta" : "ida";
+}
+
+/** En la capa Transporte del mapa: la ida en azul, la vuelta en rojo */
+export const DIRECTION_STYLE: Record<TransitDirection, { color: string; label: string; icon: string }> = {
+  ida: { color: "#2563eb", label: "Ida", icon: "➡️" },
+  vuelta: { color: "#dc2626", label: "Vuelta", icon: "↩️" },
+};

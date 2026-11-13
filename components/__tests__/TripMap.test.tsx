@@ -150,7 +150,7 @@ vi.mock("maplibre-gl", () => fake.module);
 import TripMap, { type MapMode } from "@/components/TripMap";
 import { poiSignature, type DayRoutes } from "@/lib/route-plan";
 import { toLngLat } from "@/lib/map-geo";
-import { TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
+import { DIRECTION_STYLE, TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
 
 beforeAll(() => {
   globalThis.ResizeObserver ??= class {
@@ -415,6 +415,18 @@ describe("TripMap con trenes y vuelos", () => {
       expect(west).toBeLessThanOrEqual(132.47);
       expect(east).toBeGreaterThanOrEqual(138.7);
       view.unmount();
+    });
+
+    it("con Transporte separa la ida (azul) de la vuelta (rojo); con Todo cada medio tiene su color", async () => {
+      const back: TransitLine = { ...rail, index: 1, segment: { ...rail.segment, from: "Hiroshima", to: "Fukuyama", vuelta: true } };
+      const { rerender } = await renderWith(itinerary[0], [rail, back]);
+      expect(lastFeatures().slice(0, 2).map((f) => f.properties.color)).toEqual([TRANSIT_STYLE.rail.color, TRANSIT_STYLE.rail.color]);
+      rerender(<TripMap {...props(itinerary[0], "day")} transit={[rail, back]} dayLayer="transit" />);
+      const [ida, vuelta] = lastFeatures() as (Feature & { properties: { label: string } })[];
+      expect(ida.properties.color).toBe(DIRECTION_STYLE.ida.color);
+      expect(vuelta.properties.color).toBe(DIRECTION_STYLE.vuelta.color);
+      expect(ida.properties.label).toContain("Ida");
+      expect(vuelta.properties.label).toContain("Vuelta");
     });
 
     it("con Recorrido muestra los lugares y el camino del día, sin los tramos", async () => {

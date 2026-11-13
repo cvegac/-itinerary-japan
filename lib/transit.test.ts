@@ -1,7 +1,17 @@
 import { describe, expect, it } from "vitest";
 import type { DayEntry } from "@/types/DayEntry";
 import { WEEK_COLORS_HEX } from "@/lib/itinerary-utils";
-import { TRANSIT_STYLE, dayTransitLines, greatCircle, transitKind, transitLegs, transitSignature, type Places } from "./transit";
+import {
+  DIRECTION_STYLE,
+  TRANSIT_STYLE,
+  dayTransitLines,
+  greatCircle,
+  transitDirection,
+  transitKind,
+  transitLegs,
+  transitSignature,
+  type Places,
+} from "./transit";
 
 const places: Places = {
   Fukuyama: [34.4891, 133.3621],
@@ -124,5 +134,17 @@ describe("TRANSIT_STYLE", () => {
   it("no usa los colores de las semanas (son los de las rutas a pie)", () => {
     const weeks = new Set<string>(WEEK_COLORS_HEX);
     Object.values(TRANSIT_STYLE).forEach((s) => expect(weeks.has(s.color), s.label).toBe(false));
+  });
+});
+
+describe("transitDirection", () => {
+  it("un tramo es de vuelta solo si lo dice; si no, es de ida", () => {
+    expect(transitDirection({ mode: "bus", from: "A", to: "B" })).toBe("ida");
+    expect(transitDirection({ mode: "bus", from: "B", to: "A", vuelta: true })).toBe("vuelta");
+  });
+
+  it("la ida va en azul y la vuelta en rojo", () => {
+    expect(DIRECTION_STYLE.ida).toMatchObject({ color: "#2563eb", label: "Ida" });
+    expect(DIRECTION_STYLE.vuelta).toMatchObject({ color: "#dc2626", label: "Vuelta" });
   });
 });

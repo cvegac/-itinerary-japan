@@ -24,7 +24,7 @@ import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/rout
 import { poiIcon } from "@/lib/poi-icons";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 import { hasHiResRelief } from "@/lib/map-download";
-import { TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
+import { DIRECTION_STYLE, TRANSIT_STYLE, transitDirection, type TransitLine } from "@/lib/transit";
 
 export type MapMode = "day" | "week" | "full";
 /** En el modo día: todo, solo los tramos de tren y bus, o solo los lugares y el recorrido */
@@ -230,21 +230,29 @@ const MODE_ICONS: Record<string, string> = {
   avión: "✈️",
 };
 
-function transitPopupHtml({ segment }: TransitLine): string {
+function transitPopupHtml({ segment }: TransitLine, byDirection: boolean): string {
   const via = segment.via?.length ? ` <span style="color:#666">(por ${segment.via.map(escapeHtml).join(", ")})</span>` : "";
+  const dir = DIRECTION_STYLE[transitDirection(segment)];
+  const dirHtml = byDirection
+    ? `<div style="font-size:11px;font-weight:700;color:${dir.color};margin-bottom:2px">${dir.icon} ${dir.label}</div>`
+    : "";
   return `
     <div style="font-family:system-ui,sans-serif;line-height:1.4;min-width:150px;color:#111">
+      ${dirHtml}
       <div style="font-weight:700;font-size:13px">${MODE_ICONS[segment.mode] ?? "🚆"} ${escapeHtml(segment.line ?? segment.mode)}</div>
       <div style="font-size:12px">${escapeHtml(segment.from)} → ${escapeHtml(segment.to)}${via}</div>
       ${segment.duration ? `<div style="font-size:11px;color:#666;margin-top:2px">⏱ ${escapeHtml(segment.duration)}</div>` : ""}
     </div>`;
 }
 
-/** Tramos del día: por encima del mapa y debajo de las rutas a pie */
-function transitFeatures(transit: TransitLine[]): RouteFeature[] {
-  return transit.map((t) =>
-    lngLatFeature(t.line, { ...TRANSIT_STYLE[t.kind], transit: true, label: transitPopupHtml(t) })
-  );
+/** Tramos del día: por encima del mapa y debajo de las rutas a pie. Con
+ *  `byDirection` (capa Transporte) el color dice si es la ida o la vuelta */
+function transitFeatures(transit: TransitLine[], byDirection = false): RouteFeature[] {
+  return transit.map((t) => {
+    const style = TRANSIT_STYLE[t.kind];
+    const color = byDirection ? DIRECTION_STYLE[transitDirection(t.segment)].color : style.color;
+    return lngLatFeature(t.line, { ...style, color, transit: true, label: transitPopupHtml(t, byDirection) });
+  });
 }
 
 const ROUTE_WIDTH: ExpressionSpecification = ["case", ["==", ["get", "transit"], true], 4.5, 3];
@@ -616,7 +624,7 @@ export default function TripMap({
         ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
         : [];
     dayFeaturesRef.current = [
-      ...(showTransit ? [...transitFeatures(transit), ...transfer] : []),
+      ...(showTransit ? [...transitFeatures(transit, dayLayer === "transit"), ...transfer] : []),
       ...(showRoute ? dayRoute : []),
     ];
     setRoute(dayFeaturesRef.current);
