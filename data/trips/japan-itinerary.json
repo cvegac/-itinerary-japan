@@ -1127,8 +1127,8 @@
     "checkOut": "8:30–9:30",
     "pois": [
       { "name": "Kumano Hayatama Taisha · sello 25", "coords": [33.73226, 135.98365] },
-      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442] },
-      { "name": "Escalinata de Daimonzaka · sello 33", "coords": [33.67061, 135.8965] },
+      { "name": "Fudarakusan-ji y Hamanomiya-oji · sellos 30 y 31", "coords": [33.64473, 135.93442], "byTransit": true },
+      { "name": "Escalinata de Daimonzaka · sello 33", "coords": [33.67061, 135.8965], "byTransit": true },
       { "name": "Kumano Nachi Taisha · sello 35", "coords": [33.66843, 135.89044], "hours": "Oficina 6:00–16:30 · tesoro 8:30–16:30" },
       {
         "name": "Templo Seiganto-ji · sello 36",
@@ -1139,7 +1139,8 @@
       {
         "name": "Kamikura-jinja · sello 26",
         "coords": [33.72425, 135.98411],
-        "hours": "Subí antes de las 16:00: atardece ~16:55 y los 538 escalones no tienen luz"
+        "hours": "Subí antes de las 16:00: atardece ~16:55 y los 538 escalones no tienen luz",
+        "byTransit": true
       }
     ],
     "budget": "$90",
