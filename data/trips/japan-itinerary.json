@@ -1049,7 +1049,7 @@
     "label": "Daimonzaka → santuario y cascada de Nachi",
     "location": "Nachi",
     "category": "Naturaleza",
-    "notes": "Tarde: de vuelta en Shingu (~14:30), Kamikura-jinja (sello 26) a 15 min caminando del alojamiento. Subida empinada de 15–20 min: ir a las 15:00 para bajar con luz. La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Orden real: tren a la estación JR Nachi, sellos 30 y 31, bus a Daimonzaka y de ahí todo a pie hasta la cascada; la vuelta en bus a Katsuura. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
+    "notes": "Tarde: de vuelta en Shingu (~14:30), Kamikura-jinja (sello 26) a 15 min caminando del alojamiento. Subida empinada de 15–20 min: ir a las 15:00 para bajar con luz. La foto clásica de Kumano: la pagoda roja con la cascada de 133 m atrás, la más alta de Japón. Orden real: tren a la estación JR Nachi, sellos 30 y 31, bus a Daimonzaka y de ahí todo a pie hasta la cascada; la vuelta en bus directo a Shingu. El 32 (Ichinono-oji) quedó sin sellar. La subasta de atún de Katsuura (7:00) queda difícil: necesitarías el primer tren. Libreta del Nakahechi: 30 y 31 al lado de la estación JR Nachi (Fudarakusan-ji y Hamanomiya-oji), 32 Ichinono-oji en el camino a Daimonzaka, 33 Daimonzaka, 34 la cascada (Hiro-jinja), 35 Nachi Taisha y 36 Seiganto-ji",
     "weekday": "Vie",
     "food": "Maguro-don (bol de atún) en el puerto",
     "transport": [
@@ -1103,36 +1103,14 @@
       },
       {
         "mode": "bus",
-        "line": "Kumano Gobo Nankai (línea Nachisan)",
+        "line": "Bus directo Nachisan–Shingu",
         "pay": ["efectivo"],
         "from": "Cascada de Nachi",
-        "to": "Ichinono-oji",
-        "duration": "~12min",
-        "cost": { "amount": 450, "currency": "JPY", "approx": true },
-        "vuelta": true,
-        "note": "Parada 滝前 (Takimae): buses 13:03, 13:28, 13:58… Mostrale al chofer 市野々王子 para que te avise dónde bajar (después de Daimonzaka, ~1,3 km más abajo). Sello 32 junto a la carretera"
-      },
-      {
-        "mode": "bus",
-        "line": "Kumano Gobo Nankai (línea Nachisan)",
-        "pay": ["efectivo"],
-        "from": "Ichinono-oji",
-        "to": "Kii-Katsuura",
-        "duration": "~15min",
-        "cost": { "amount": 400, "currency": "JPY", "approx": true },
-        "vuelta": true,
-        "note": "El bus siguiente (~30 min), del lado de la carretera que baja a Katsuura. Es otro boleto: ticket nuevo al subir y pagás al bajar"
-      },
-      {
-        "mode": "tren",
-        "line": "JR Kisei Line (local)",
-        "from": "Kii-Katsuura",
         "to": "Shingu",
-        "duration": "~20min",
-        "cost": { "amount": 240, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"],
+        "duration": "~1h",
+        "cost": { "amount": 1000, "currency": "JPY", "approx": true },
         "vuelta": true,
-        "note": "Antes, maguro-don en el puerto. Locales cada ~1 hora: mirá el próximo en Google Maps"
+        "note": "Desde la parada 滝前 (Takimae) derecho hasta Shingu, sin bajar en Ichinono-oji ni en Katsuura. Pagás al bajar según el número de tu ticket"
       }
     ],
     "accommodation": "KUMANO家-OHGi- (individual con tatami, baño compartido)",
@@ -1154,7 +1132,6 @@
         "hours": "Recinto abierto siempre · pagoda de 3 pisos ~8:30–16:00"
       },
       { "name": "Cascada de Nachi · sello 34", "coords": [33.67528, 135.88763], "hours": "Mirador al pie (¥300) ~7:00–16:30" },
-      { "name": "Ichinono-oji · sello 32", "coords": [33.66268, 135.91141], "byTransit": true },
       {
         "name": "Kamikura-jinja · sello 26",
         "coords": [33.72425, 135.98411],
@@ -1162,7 +1139,7 @@
         "byTransit": true
       }
     ],
-    "budget": "$92",
+    "budget": "$91",
     "isTransit": false,
     "activitiesDay": [
       "Subasta del mercado de atún (7:00, opcional)",
