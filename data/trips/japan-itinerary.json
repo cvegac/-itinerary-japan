@@ -1240,52 +1240,45 @@
   },
   {
     "date": "2026-11-15",
-    "label": "Higashiyama sin apuro: Nanzen-ji → Sendero del Filósofo → Shimogamo",
+    "label": "Kioto cultural: Eigamura, Museo del Manga, galerías y Gion",
     "location": "Kioto",
-    "category": "Naturaleza",
-    "notes": "Día tranquilo después del largo 14 (a dormir tarde): sin Kurama–Kibune, que se sacó del viaje. Todo llano y al revés que el plan original, de sur a norte: el metro Tozai te deja en Keage, al lado de Nanzen-ji, sin cambiar a Keihan. Eikando: entrada hasta las 16:00 (iluminación nocturna recién desde el 20 nov). Ginkaku-ji cierra a las 17:00. El bosque de Shimogamo está siempre abierto: queda para el atardecer. Oscurece a las ~16:50. Sin datos: mapa de Kioto descargado sin conexión; la SIM se compra mañana en Yodobashi (abre 9:30)",
+    "category": "Ciudad",
+    "notes": "Día liviano y sin templos (el cuerpo pide descanso después de tanta montaña): sin Kurama–Kibune, que se sacó del viaje. Toei Uzumasa Eigamura es un pueblo de la época Edo armado como set de cine, con espectáculos de samuráis y ninjas; hasta el 29 nov está el festival de yokai, y los fines de semana hay desfile de monstruos a las 17:30 (no llegás si vas al Manga). Museo Internacional del Manga: abre de 10:00 a 17:00 (última entrada 16:30), cierra los miércoles; ¥1,200, y adentro hay ~50.000 mangas para leer en los pasillos. Gion es mejor al anochecer, cuando se prenden los faroles. Precios de terceros, confirmá en la entrada. Sin datos: mapa de Kioto descargado sin conexión; la SIM se compra mañana en Yodobashi (abre 9:30)",
     "weekday": "Dom",
-    "food": "Yudofu (tofu caliente) junto a Nanzen-ji al mediodía",
+    "food": "Almuerzo en Eigamura o en el camino; a la noche, cena en Pontocho o en las galerías de Shijo",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Biwako Line → metro Tozai (cambio en Yamashina)",
+        "line": "JR Biwako Line",
         "from": "Otsu",
-        "to": "Keage",
-        "via": ["Yamashina"],
-        "duration": "~25min",
-        "cost": { "amount": 450, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Keage queda a ~5 min a pie de Nanzen-ji"
-      },
-      {
-        "mode": "caminar",
-        "line": "Sendero del Filósofo",
-        "from": "Nanzen-ji",
-        "to": "Ginkaku-ji",
-        "duration": "~1h con paradas, ~2 km (pasando por Eikando)"
-      },
-      {
-        "mode": "bus",
-        "line": "Kyoto City Bus 102 o 203",
-        "from": "Ginkakuji-michi",
-        "to": "Demachiyanagi",
+        "to": "Kioto",
         "duration": "~10min",
-        "cost": { "amount": 230, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "~5 min a pie desde Ginkaku-ji hasta la parada"
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
       },
-      { "mode": "caminar", "from": "Demachiyanagi", "to": "Santuario Shimogamo", "duration": "~10min" },
       {
         "mode": "tren",
-        "line": "Keihan Oto Line",
-        "from": "Demachiyanagi",
-        "to": "Sanjo",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "line": "JR Sagano Line",
+        "from": "Kioto",
+        "to": "Uzumasa",
+        "duration": "~12min",
+        "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "vuelta": true
+        "note": "~10 min a pie hasta la entrada de Eigamura"
       },
+      {
+        "mode": "tren",
+        "line": "JR Sagano Line → metro Tozai",
+        "from": "Uzumasa",
+        "to": "Karasuma Oike",
+        "via": ["Nijo"],
+        "duration": "~15min",
+        "cost": { "amount": 400, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Cambio en Nijo; el Museo del Manga está en la salida 2 de Karasuma Oike"
+      },
+      { "mode": "caminar", "from": "Karasuma Oike", "to": "Teramachi y Shinkyogoku", "duration": "~15min" },
+      { "mode": "caminar", "from": "Teramachi y Shinkyogoku", "to": "Gion: Hanamikoji", "duration": "~15min, cruzando el puente de Shijo" },
       {
         "mode": "tren",
         "line": "Metro Tozai → JR Biwako Line (cambio en Yamashina)",
@@ -1295,7 +1288,8 @@
         "duration": "~25min",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "vuelta": true
+        "vuelta": true,
+        "note": "Sanjo queda a ~5 min a pie de Pontocho"
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1308,47 +1302,50 @@
     "checkOut": "7:00–10:00",
     "pois": [
       {
-        "name": "Templo Nanzen-ji y el acueducto Suirokaku",
-        "coords": [35.01153, 135.79272],
-        "hours": "Recinto y acueducto siempre · Hojo y puerta Sanmon 8:40–17:00 (entrada hasta 16:40)"
+        "name": "Toei Uzumasa Eigamura (pueblo Edo y set de cine)",
+        "coords": [35.01646, 135.70821],
+        "hours": "9:00–17:00 (entrada hasta las 16:00)"
       },
       {
-        "name": "Templo Eikando (Zenrin-ji)",
-        "coords": [35.01399, 135.795],
-        "hours": "9:00–17:00 (entrada hasta 16:00) · iluminado de noche desde el 20/11"
+        "name": "Museo Internacional del Manga de Kioto",
+        "coords": [35.0117, 135.75918],
+        "hours": "10:00–17:00 (entrada hasta 16:30) · cierra los miércoles"
       },
-      { "name": "Sendero del Filósofo", "coords": [35.02479, 135.79638] },
-      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837], "hours": "8:30–17:00" },
-      { "name": "Estación Demachiyanagi", "coords": [35.03067, 135.77319] },
+      { "name": "Teramachi y Shinkyogoku: calles techadas de tiendas", "coords": [35.00503, 135.76771], "hours": "Tiendas ~10:00–20:00" },
+      { "name": "Takashimaya: mercado de comida del subsuelo (depachika)", "coords": [35.00307, 135.76843], "hours": "10:00–20:00" },
       {
-        "name": "Santuario Shimogamo (bosque Tadasu no Mori)",
-        "coords": [35.03699, 135.77245],
-        "hours": "Bosque abierto siempre · santuario ~6:30–17:00"
-      }
+        "name": "Gion: calle Hanamikoji y santuario Yasaka",
+        "coords": [35.0036, 135.77826],
+        "hours": "Yasaka abierto siempre, iluminado de noche"
+      },
+      { "name": "Callejón de Pontocho", "coords": [35.00425, 135.77121] }
     ],
-    "budget": "$109",
+    "budget": "$118",
     "isTransit": false,
     "activitiesDay": [
-      "Nanzen-ji y el acueducto de ladrillo Suirokaku",
       {
-        "text": "Eikando, el templo de los arces de Kioto (exposición de otoño)",
-        "price": { "amount": 1500, "currency": "JPY", "approx": true }
+        "text": "Toei Uzumasa Eigamura: pueblo Edo, espectáculo de samuráis y ninjas, festival de yokai",
+        "price": { "amount": 2800, "currency": "JPY", "approx": true }
       },
-      "Sendero del Filósofo: ~2 km junto al canal, entre arces, hacia el norte",
       {
-        "text": "Ginkaku-ji: el Pabellón de Plata y su jardín de arena y musgo",
-        "price": { "amount": 1000, "currency": "JPY", "approx": true }
+        "text": "Museo Internacional del Manga (una escuela de 1869 llena de mangas para leer)",
+        "price": { "amount": 1200, "currency": "JPY", "approx": true }
       },
-      "Bosque antiguo de Tadasu no Mori (Shimogamo) al atardecer",
-      "Delta del río Kamo y sus piedras para cruzar"
+      "Galerías techadas de Teramachi y Shinkyogoku: tiendas, ropa, recuerdos",
+      "Subsuelo de comida de Takashimaya: probadas y dulces japoneses"
     ],
-    "activitiesNight": ["Vuelta a Otsu por Sanjo", "Cena cerca de la estación de Otsu", "Sento", "Preparar la bici de mañana"],
+    "activitiesNight": [
+      "Gion al anochecer: calle Hanamikoji, faroles y casas de té, y el santuario Yasaka iluminado",
+      "Cena en el callejón de Pontocho, junto al río Kamo",
+      "Vuelta a Otsu desde Sanjo",
+      "Preparar la bici de mañana"
+    ],
     "keepOrder": true,
-    "keepOrderReason": "Higashiyama de sur a norte: entrás por Keage con el metro y terminás en Demachiyanagi al atardecer",
+    "keepOrderReason": "De oeste a este: Eigamura temprano, el Manga antes de las 16:30 y Gion de noche",
     "morning": {
       "wake": "9:00",
-      "leave": "10:15",
-      "why": "Día de descanso: a dormir pasada la 1:30 después del largo 14. Eikando deja entrar hasta las 16:00"
+      "leave": "10:00",
+      "why": "Día de descanso: a dormir pasada la 1:30 después del largo 14. Eigamura abre a las 9:00 y deja entrar hasta las 16:00"
     }
   },
   {
