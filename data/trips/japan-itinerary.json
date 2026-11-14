@@ -1240,76 +1240,62 @@
   },
   {
     "date": "2026-11-15",
-    "label": "Kurama → Kibune por la montaña + Higashiyama",
+    "label": "Higashiyama sin apuro: Nanzen-ji → Sendero del Filósofo → Shimogamo",
     "location": "Kioto",
     "category": "Naturaleza",
-    "notes": "El norte de Kioto está en su punto a mediados de noviembre. Es domingo: salí de Otsu ~7:00 para empezar en Kurama a las 8:30. Desde Kibune bajás en tren a Demachiyanagi y la tarde es Higashiyama, de norte a sur. Eikando: entrada hasta las 16:00 (iluminación nocturna recién desde el 20 nov). Si vas justo, saltá Shimogamo. Oscurece a las ~16:50",
+    "notes": "Día tranquilo después del largo 14 (a dormir tarde): sin Kurama–Kibune, que se sacó del viaje. Todo llano y al revés que el plan original, de sur a norte: el metro Tozai te deja en Keage, al lado de Nanzen-ji, sin cambiar a Keihan. Eikando: entrada hasta las 16:00 (iluminación nocturna recién desde el 20 nov). Ginkaku-ji cierra a las 17:00. El bosque de Shimogamo está siempre abierto: queda para el atardecer. Oscurece a las ~16:50. Sin datos: mapa de Kioto descargado sin conexión; la SIM se compra mañana en Yodobashi (abre 9:30)",
     "weekday": "Dom",
-    "food": "Almuerzo rápido en Kibune; yudofu (tofu caliente) junto a Nanzen-ji",
+    "food": "Yudofu (tofu caliente) junto a Nanzen-ji al mediodía",
     "transport": [
       {
         "mode": "tren",
         "line": "JR Biwako Line → metro Tozai (cambio en Yamashina)",
         "from": "Otsu",
-        "to": "Sanjo Keihan",
+        "to": "Keage",
         "via": ["Yamashina"],
-        "duration": "~25min (sale 7:03)",
+        "duration": "~25min",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "pay": ["suica"],
+        "note": "Keage queda a ~5 min a pie de Nanzen-ji"
       },
       {
-        "mode": "tren",
-        "line": "Keihan Oto Line",
-        "from": "Sanjo",
-        "to": "Demachiyanagi",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "mode": "caminar",
+        "line": "Sendero del Filósofo",
+        "from": "Nanzen-ji",
+        "to": "Ginkaku-ji",
+        "duration": "~1h con paradas, ~2 km (pasando por Eikando)"
       },
-      {
-        "mode": "tren",
-        "line": "Eizan Railway",
-        "from": "Demachiyanagi",
-        "to": "Kurama",
-        "duration": "~30min (llegás a Kurama 8:16)",
-        "cost": { "amount": 470, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
-      },
-      { "mode": "caminar", "from": "Kurama-dera", "to": "Santuario Kibune", "duration": "~2h por la montaña" },
-      {
-        "mode": "tren",
-        "line": "Eizan Railway",
-        "from": "Kibuneguchi",
-        "to": "Demachiyanagi",
-        "duration": "~30min",
-        "cost": { "amount": 470, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"],
-        "vuelta": true
-      },
-      { "mode": "caminar", "from": "Demachiyanagi", "to": "Santuario Shimogamo", "duration": "~10min" },
       {
         "mode": "bus",
         "line": "Kyoto City Bus 102 o 203",
-        "from": "Demachiyanagi",
-        "to": "Ginkakuji-michi",
+        "from": "Ginkakuji-michi",
+        "to": "Demachiyanagi",
         "duration": "~10min",
         "cost": { "amount": 230, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "vuelta": true,
-        "note": "Después ~5 min a pie a Ginkaku-ji"
+        "note": "~5 min a pie desde Ginkaku-ji hasta la parada"
       },
-      { "mode": "caminar", "line": "Sendero del Filósofo", "from": "Ginkaku-ji", "to": "Nanzen-ji", "duration": "~1h con paradas, ~2 km" },
+      { "mode": "caminar", "from": "Demachiyanagi", "to": "Santuario Shimogamo", "duration": "~10min" },
+      {
+        "mode": "tren",
+        "line": "Keihan Oto Line",
+        "from": "Demachiyanagi",
+        "to": "Sanjo",
+        "duration": "~5min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "vuelta": true
+      },
       {
         "mode": "tren",
         "line": "Metro Tozai → JR Biwako Line (cambio en Yamashina)",
-        "from": "Keage",
+        "from": "Sanjo Keihan",
         "to": "Otsu",
         "via": ["Yamashina"],
-        "duration": "~20min",
+        "duration": "~25min",
         "cost": { "amount": 450, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "vuelta": true,
-        "note": "Keage queda a ~5 min a pie de Nanzen-ji"
+        "vuelta": true
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1321,54 +1307,49 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Templo Kurama-dera", "coords": [35.11787, 135.77065], "hours": "Salón principal 9:00–16:15" },
-      { "name": "Santuario Kibune", "coords": [35.12189, 135.76294], "hours": "6:00–20:00 (en noviembre)" },
-      { "name": "Estación Demachiyanagi", "coords": [35.03067, 135.77319] },
       {
-        "name": "Santuario Shimogamo (bosque Tadasu no Mori)",
-        "coords": [35.03699, 135.77245],
-        "hours": "Bosque abierto siempre · santuario ~6:30–17:00"
+        "name": "Templo Nanzen-ji y el acueducto Suirokaku",
+        "coords": [35.01153, 135.79272],
+        "hours": "Recinto y acueducto siempre · Hojo y puerta Sanmon 8:40–17:00 (entrada hasta 16:40)"
       },
-      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837], "hours": "8:30–17:00" },
-      { "name": "Sendero del Filósofo", "coords": [35.02479, 135.79638] },
       {
         "name": "Templo Eikando (Zenrin-ji)",
         "coords": [35.01399, 135.795],
         "hours": "9:00–17:00 (entrada hasta 16:00) · iluminado de noche desde el 20/11"
       },
+      { "name": "Sendero del Filósofo", "coords": [35.02479, 135.79638] },
+      { "name": "Templo Ginkaku-ji (Pabellón de Plata)", "coords": [35.0269, 135.79837], "hours": "8:30–17:00" },
+      { "name": "Estación Demachiyanagi", "coords": [35.03067, 135.77319] },
       {
-        "name": "Templo Nanzen-ji y el acueducto Suirokaku",
-        "coords": [35.01153, 135.79272],
-        "hours": "Recinto y acueducto siempre · Hojo y puerta Sanmon 8:40–17:00 (entrada hasta 16:40)"
+        "name": "Santuario Shimogamo (bosque Tadasu no Mori)",
+        "coords": [35.03699, 135.77245],
+        "hours": "Bosque abierto siempre · santuario ~6:30–17:00"
       }
     ],
-    "budget": "$118",
+    "budget": "$109",
     "isTransit": false,
     "activitiesDay": [
-      { "text": "Templo Kurama-dera", "price": { "amount": 500, "currency": "JPY", "approx": true } },
-      "Sendero entre raíces de cedros hasta Kibune",
-      "Santuario Kibune y su escalinata de faroles rojos",
-      "Santuario Shimogamo y el bosque antiguo de Tadasu no Mori",
-      {
-        "text": "Ginkaku-ji: el Pabellón de Plata y su jardín de arena y musgo",
-        "price": { "amount": 1000, "currency": "JPY", "approx": true }
-      },
-      "Sendero del Filósofo: ~2 km junto al canal, entre arces",
+      "Nanzen-ji y el acueducto de ladrillo Suirokaku",
       {
         "text": "Eikando, el templo de los arces de Kioto (exposición de otoño)",
         "price": { "amount": 1500, "currency": "JPY", "approx": true }
       },
-      "Nanzen-ji y el acueducto de ladrillo Suirokaku"
+      "Sendero del Filósofo: ~2 km junto al canal, entre arces, hacia el norte",
+      {
+        "text": "Ginkaku-ji: el Pabellón de Plata y su jardín de arena y musgo",
+        "price": { "amount": 1000, "currency": "JPY", "approx": true }
+      },
+      "Bosque antiguo de Tadasu no Mori (Shimogamo) al atardecer",
+      "Delta del río Kamo y sus piedras para cruzar"
     ],
-    "activitiesNight": ["Vuelta a Otsu desde Keage", "Cena cerca de la estación de Otsu", "Sento", "Preparar la bici de mañana"],
+    "activitiesNight": ["Vuelta a Otsu por Sanjo", "Cena cerca de la estación de Otsu", "Sento", "Preparar la bici de mañana"],
     "keepOrder": true,
-    "keepOrderReason": "Kurama → Kibune por la montaña, después Higashiyama de norte a sur",
+    "keepOrderReason": "Higashiyama de sur a norte: entrás por Keage con el metro y terminás en Demachiyanagi al atardecer",
     "morning": {
-      "wake": "6:00",
-      "leave": "6:45",
-      "why": "Tren de 7:03 desde Otsu: Kurama a las 8:16. Kurama-dera cierra 16:15 y Eikando deja entrar hasta las 16:00"
-    },
-    "trailReports": [{ "label": "YAMAP: Kurama → Kibune, diarios de mar–sep 2026", "url": "https://yamap.com/model-courses/24123/activities" }]
+      "wake": "9:00",
+      "leave": "10:15",
+      "why": "Día de descanso: a dormir pasada la 1:30 después del largo 14. Eikando deja entrar hasta las 16:00"
+    }
   },
   {
     "date": "2026-11-16",
@@ -1425,6 +1406,7 @@
     "budget": "$103",
     "isTransit": false,
     "activitiesDay": [
+      "Comprar la SIM de datos en Yodobashi (abre 9:30)",
       "Bosque de bambú de Arashiyama, temprano",
       { "text": "Jardín del templo Tenryu-ji", "price": { "amount": 500, "currency": "JPY", "approx": true } },
       "Puente Togetsukyo y el río Hozu",
