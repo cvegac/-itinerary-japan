@@ -1172,7 +1172,7 @@
     "label": "Costa de Kii en tren → Kioto",
     "location": "Kioto",
     "category": "Logística",
-    "notes": "Según Google Maps (consultado el 8 nov): Nanki 4 a las 9:13 → Matsusaka 11:26, Kintetsu 12:03 → Yamato-Yagi → Kioto 14:00, ~¥8,740 en total. Es 1h30 más rápido y más barato que el Kuroshio por la costa oeste (9:42 → 15:29). Con un solo cambio: Nanki 4 hasta Nagoya (12:41) + Nozomi 12:47 → Kioto 13:21, ~¥13,510. El check-out en Shingu es de 8:30 a 9:30. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: pasá primero a hacer el check-in (cierra a las 22:00) y volvé a Kioto para la tarde",
+    "notes": "Real: ¥8,010 en total (JR ¥4,500 + Kintetsu ¥3,510). Según Google Maps (consultado el 8 nov): Nanki 4 a las 9:13 → Matsusaka 11:26, Kintetsu 12:03 → Yamato-Yagi → Kioto 14:00, ~¥8,740 en total. Es 1h30 más rápido y más barato que el Kuroshio por la costa oeste (9:42 → 15:29). Con un solo cambio: Nanki 4 hasta Nagoya (12:41) + Nozomi 12:47 → Kioto 13:21, ~¥13,510. El check-out en Shingu es de 8:30 a 9:30. A mediados de noviembre el norte de Kioto está en su punto y el centro empezando. Dormís en Otsu, a 2 paradas de JR: la maleta quedó en un casillero de la estación de Kioto para aprovechar Nishiki de día, y el check-in (hasta las 22:00) se hace a la noche",
     "weekday": "Sáb",
     "food": "Ekiben (bento de estación) en el tren",
     "transport": [
@@ -1182,7 +1182,7 @@
         "from": "Shingu",
         "to": "Matsusaka",
         "duration": "2h13 (9:13 → 11:26)",
-        "cost": { "amount": 8740, "currency": "JPY", "approx": true, "detail": "en total hasta Kioto" },
+        "cost": { "amount": 4500, "currency": "JPY", "detail": "pasaje ¥2,640 + expreso sin reserva ¥1,860" },
         "pay": ["boleto"],
         "note": "Sentate del lado derecho: el mar queda a la derecha en el primer tramo"
       },
@@ -1194,7 +1194,8 @@
         "via": ["Yamato-Yagi"],
         "duration": "~2h (12:03 → 14:00)",
         "pay": ["boleto"],
-        "note": "De JR a Kintetsu son ~3 min a pie dentro de Matsusaka. El boleto de expreso limitado de Kintetsu se saca en sus máquinas"
+        "note": "En Matsusaka el boleto de Kintetsu se compra en sus máquinas o ventanilla, al lado de las de JR (las de JR no lo venden). En Yamato-Yagi el cambio es por dentro: la línea Kashihara está en otro nivel",
+        "cost": { "amount": 3510, "currency": "JPY", "detail": "pasaje ¥2,170 + expreso ¥1,340, asiento reservado en los dos tramos" }
       },
       {
         "mode": "tren",
@@ -1204,7 +1205,7 @@
         "duration": "~10min",
         "cost": { "amount": 200, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Para el check-in; después volvés a Kioto y a la noche otra vez a Otsu"
+        "note": "A la noche, después de sacar la maleta del casillero de la estación de Kioto"
       }
     ],
     "accommodation": "嘉翔の家 (habitación con 2 camas, baño compartido)",
@@ -1221,10 +1222,20 @@
       { "name": "Callejón Pontocho", "coords": [35.00425, 135.77121], "night": true },
       { "name": "Gion (Hanamikoji)", "coords": [35.00265, 135.77487], "night": true }
     ],
-    "budget": "$142",
+    "budget": "$137",
     "isTransit": false,
-    "activitiesDay": ["Costa del Pacífico desde el tren", "Check-in en Otsu y vuelta a Kioto (~10 min)", "Paseo por el río Kamo", "Mercado Nishiki"],
-    "activitiesNight": ["Callejón Pontocho", "Gion al anochecer", "Cena barata en el Kyoto Tower Sando", "Tren a Otsu y dormir temprano"],
+    "activitiesDay": [
+      "Costa del Pacífico desde el tren",
+      "Maleta en un casillero de la estación de Kioto",
+      "Mercado Nishiki (cierra entre las 17 y las 18)",
+      "Paseo por el río Kamo"
+    ],
+    "activitiesNight": [
+      "Callejón Pontocho",
+      "Gion al anochecer",
+      "Cena barata en el Kyoto Tower Sando",
+      "Sacar la maleta del casillero, tren a Otsu (check-in hasta las 22:00) y dormir"
+    ],
     "morning": { "wake": "7:45", "leave": "8:45", "why": "Check-out desde las 8:30 y 15 min a pie con la mochila: Nanki 4 de las 9:13" }
   },
   {
