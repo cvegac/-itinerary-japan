@@ -1350,12 +1350,12 @@
   },
   {
     "date": "2026-11-16",
-    "label": "Bici: río Kamo → Arashiyama",
+    "label": "Bici: Museo del Ferrocarril → Arashiyama → Sagano",
     "location": "Kioto",
     "category": "Naturaleza",
-    "notes": "Lunes laborable: menos gente que el fin de semana. Desde Otsu son ~10 min de JR hasta la estación de Kioto. Llegá al bosque de bambú antes de las 8:30. La ciclovía del río Kamo es llana y sin autos",
+    "notes": "Verificado el 15 nov. Pronóstico (JMA): nublado con sol a la mañana y a la tarde, 10–20% de lluvia, 14–17 °C. Bici: Kyoto Cycling Tour Project, terminal de la estación de Kioto (5 min a pie de la salida central, lado norte: doblá a la izquierda, pasá el correo central y el APA Hotel, seguí por la calle de ladrillo y doblá a la derecha al final). Abre de 9:00 a 18:00 y se devuelve ahí mismo antes de las 18:00. Sin app: la reserva online es con 2 días de anticipación, así que se va directo (por orden de llegada; tienen ~400 bicis). Pagás con efectivo, tarjeta o Suica. Precio por día: ¥1,500 la de 5 cambios, ¥1,700 la Ginrin de 8 cambios, ¥2,700 la eléctrica (si las piernas están cansadas). Casco gratis y candado con clave incluidos. Reglas (multas desde abril 2026): nada de celular ni paraguas mientras pedaleás, por la calle a la izquierda y no por la vereda salvo que haya cartel, de noche con luz. Estacioná solo en estacionamientos de bicis (駐輪場): en la calle se la llevan y cobran ¥3,500. En el bosque de bambú bajate y caminá. La SIM de Yodobashi (9:30–22:00) pide el pasaporte. Oscurece a las ~16:50: salí de Arashiyama a las ~16:45 para devolver la bici a tiempo (son ~45 min)",
     "weekday": "Lun",
-    "food": "Tofu yudofu en Arashiyama",
+    "food": "Almuerzo en Arashiyama (yudofu o lo que encuentres); el Museo del Ferrocarril tiene restaurante",
     "transport": [
       {
         "mode": "tren",
@@ -1368,12 +1368,13 @@
       },
       {
         "mode": "bicicleta",
-        "line": "Kyoto Cycling Tour Project (a 5 min de la estación)",
+        "line": "Kyoto Cycling Tour Project, terminal de la estación de Kioto (9:00–18:00)",
         "from": "Kioto",
-        "to": "Río Kamo → Arashiyama → Sagano",
-        "duration": "~20–25 km, llano",
-        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por día" },
-        "pay": ["tarjeta", "efectivo"]
+        "to": "Museo del Ferrocarril → Arashiyama → Sagano",
+        "duration": "~25 km ida y vuelta, llano",
+        "cost": { "amount": 1500, "currency": "JPY", "max": 2700, "detail": "por día: ¥1,500 la de 5 cambios, ¥2,700 la eléctrica" },
+        "pay": ["tarjeta", "efectivo", "suica"],
+        "note": "Sin reserva: por orden de llegada. Devolución en el mismo lugar antes de las 18:00"
       },
       {
         "mode": "tren",
@@ -1395,28 +1396,40 @@
     "checkIn": "15:00–22:00",
     "checkOut": "7:00–10:00",
     "pois": [
-      { "name": "Bosque de bambú de Arashiyama", "coords": [35.01762, 135.67444], "hours": "Abierto siempre (sin gente antes de las 8:00)" },
-      { "name": "Templo Tenryu-ji", "coords": [35.01622, 135.67294], "hours": "Jardín 8:30–17:00 (entrada hasta 16:50)" },
+      {
+        "name": "Museo del Ferrocarril de Kioto",
+        "coords": [34.98649, 135.7427],
+        "hours": "10:00–17:00 (entrada hasta 16:30) · cierra los miércoles"
+      },
       { "name": "Puente Togetsukyo", "coords": [35.01287, 135.67776] },
-      { "name": "Adashino Nenbutsu-ji", "coords": [35.02692, 135.66463], "hours": "9:00–16:30 (entrada hasta 16:00)" }
+      { "name": "Templo Tenryu-ji", "coords": [35.01622, 135.67294], "hours": "Jardín 8:30–17:00 (entrada hasta 16:50)" },
+      { "name": "Bosque de bambú de Arashiyama", "coords": [35.01762, 135.67444], "hours": "Abierto siempre · bajate de la bici y caminá" },
+      { "name": "Adashino Nenbutsu-ji", "coords": [35.02692, 135.66463], "hours": "9:00–16:30 (entrada hasta 16:30)" }
     ],
-    "budget": "$103",
+    "budget": "$117",
     "isTransit": false,
     "activitiesDay": [
-      "Comprar la SIM de datos en Yodobashi (abre 9:30)",
-      "Bosque de bambú de Arashiyama, temprano",
-      { "text": "Jardín del templo Tenryu-ji", "price": { "amount": 500, "currency": "JPY", "approx": true } },
+      "Comprar la SIM de datos en Yodobashi (abre 9:30; llevá el pasaporte)",
+      "Alquilar la bici en Kyoto Cycling Tour Project, al lado de la estación",
+      {
+        "text": "Museo del Ferrocarril de Kioto: locomotoras a vapor, trenes bala y la rotonda de máquinas",
+        "price": { "amount": 1500, "currency": "JPY" }
+      },
       "Puente Togetsukyo y el río Hozu",
-      "Barrio rural de Sagano y Adashino Nenbutsu-ji",
-      "Vuelta por el río Kamo al atardecer"
+      { "text": "Jardín del templo Tenryu-ji", "price": { "amount": 500, "currency": "JPY" } },
+      "Bosque de bambú de Arashiyama, caminando con la bici al lado",
+      {
+        "text": "Calle antigua de Saga-Toriimoto y Adashino Nenbutsu-ji (si te dan las ganas)",
+        "price": { "amount": 500, "currency": "JPY" }
+      }
     ],
-    "activitiesNight": ["Devolver la bici", "Cena barata cerca de la estación", "Paseo nocturno por Gion", "Descanso"],
+    "activitiesNight": ["Devolver la bici antes de las 18:00, con la luz prendida", "Cena barata cerca de la estación de Kioto", "Tren a Otsu y descanso"],
     "keepOrder": true,
-    "keepOrderReason": "el bosque de bambú temprano, antes de la gente",
+    "keepOrderReason": "El Museo del Ferrocarril queda de camino y abre a las 10:00; Arashiyama a la tarde y la bici devuelta antes de las 18:00",
     "morning": {
-      "wake": "7:30",
-      "leave": "8:25",
-      "why": "La bici se alquila desde ~9:00 junto a la estación de Kioto. Adashino deja entrar hasta las 16:00"
+      "wake": "8:00",
+      "leave": "9:00",
+      "why": "Yodobashi abre a las 9:30 (SIM), las bicis desde las 9:00 y el Museo del Ferrocarril a las 10:00"
     }
   },
   {
