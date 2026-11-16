@@ -1353,7 +1353,7 @@
     "label": "Bici: Museo del Ferrocarril → Arashiyama → Sagano",
     "location": "Kioto",
     "category": "Naturaleza",
-    "notes": "Verificado el 15 nov. Pronóstico (JMA): nublado con sol a la mañana y a la tarde, 10–20% de lluvia, 14–17 °C. Bici: Kyoto Cycling Tour Project, terminal de la estación de Kioto (5 min a pie de la salida central, lado norte: doblá a la izquierda, pasá el correo central y el APA Hotel, seguí por la calle de ladrillo y doblá a la derecha al final). Abre de 9:00 a 18:00 y se devuelve ahí mismo antes de las 18:00. Sin app: la reserva online es con 2 días de anticipación, así que se va directo (por orden de llegada; tienen ~400 bicis). Pagás con efectivo, tarjeta o Suica. Precio por día: ¥1,500 la de 5 cambios, ¥1,700 la Ginrin de 8 cambios, ¥2,700 la eléctrica (si las piernas están cansadas). Casco gratis y candado con clave incluidos. Reglas (multas desde abril 2026): nada de celular ni paraguas mientras pedaleás, por la calle a la izquierda y no por la vereda salvo que haya cartel, de noche con luz. Estacioná solo en estacionamientos de bicis (駐輪場): en la calle se la llevan y cobran ¥3,500. En el bosque de bambú bajate y caminá. La SIM de Yodobashi (9:30–22:00) pide el pasaporte. Oscurece a las ~16:50: salí de Arashiyama a las ~16:45 para devolver la bici a tiempo (son ~45 min)",
+    "notes": "Verificado el 15 nov. Pronóstico (JMA): nublado con sol a la mañana y a la tarde, 10–20% de lluvia, 14–17 °C. Bici: Kyoto Cycling Tour Project, terminal de la estación de Kioto (5 min a pie de la salida central, lado norte: doblá a la izquierda, pasá el correo central y el APA Hotel, seguí por la calle de ladrillo y doblá a la derecha al final). Abre de 9:00 a 18:00 y se devuelve ahí mismo antes de las 18:00. Sin app: la reserva online es con 2 días de anticipación, así que se va directo (por orden de llegada; tienen ~400 bicis). Pagás con efectivo, tarjeta o Suica. Precio por día: ¥1,500 la de 5 cambios, ¥1,700 la Ginrin de 8 cambios, ¥2,700 la eléctrica (si las piernas están cansadas). Casco gratis y candado con clave incluidos. Reglas (multas desde abril 2026): nada de celular ni paraguas mientras pedaleás, por la calle a la izquierda y no por la vereda salvo que haya cartel, de noche con luz. Estacioná solo en estacionamientos de bicis (駐輪場): en la calle se la llevan y cobran ¥3,500. En el bosque de bambú bajate y caminá. Oscurece a las ~16:50: salí de Arashiyama a las ~16:45 para devolver la bici a tiempo (son ~45 min)",
     "weekday": "Lun",
     "food": "Almuerzo en Arashiyama (yudofu o lo que encuentres); el Museo del Ferrocarril tiene restaurante",
     "transport": [
@@ -1409,7 +1409,6 @@
     "budget": "$117",
     "isTransit": false,
     "activitiesDay": [
-      "Comprar la SIM de datos en Yodobashi (abre 9:30; llevá el pasaporte)",
       "Alquilar la bici en Kyoto Cycling Tour Project, al lado de la estación",
       {
         "text": "Museo del Ferrocarril de Kioto: locomotoras a vapor, trenes bala y la rotonda de máquinas",
@@ -1426,11 +1425,7 @@
     "activitiesNight": ["Devolver la bici antes de las 18:00, con la luz prendida", "Cena barata cerca de la estación de Kioto", "Tren a Otsu y descanso"],
     "keepOrder": true,
     "keepOrderReason": "El Museo del Ferrocarril queda de camino y abre a las 10:00; Arashiyama a la tarde y la bici devuelta antes de las 18:00",
-    "morning": {
-      "wake": "8:00",
-      "leave": "9:00",
-      "why": "Yodobashi abre a las 9:30 (SIM), las bicis desde las 9:00 y el Museo del Ferrocarril a las 10:00"
-    }
+    "morning": { "wake": "8:30", "leave": "9:40", "why": "La SIM ya está comprada; las bicis desde las 9:00 y el Museo del Ferrocarril a las 10:00" }
   },
   {
     "date": "2026-11-17",
