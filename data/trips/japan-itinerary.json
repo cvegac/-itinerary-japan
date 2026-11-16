@@ -1432,7 +1432,7 @@
     "label": "Kobe: Kitano, puerto, monte Rokko y onsen de Arima",
     "location": "Kobe",
     "category": "Vistas",
-    "notes": "El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º. El bus directo Arima → Kioto tiene pocas salidas: reservalo",
+    "notes": "El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º.. Hay que estar en Otsu a las 19:00 para la lavadora (lavado y secado, 4 h, hasta las 23:00): el tren de las 17:09 desde Arima llega a las 18:55 (Yahoo, ¥2,180 con Suica). El onsen va a la tarde, antes del tren",
     "weekday": "Mar",
     "food": "Almuerzo de carne de Kobe en Sannomiya",
     "transport": [
@@ -1482,23 +1482,23 @@
         "pay": ["efectivo", "tarjeta"]
       },
       {
-        "mode": "bus",
-        "line": "Bus directo Keihan / Hankyu",
+        "mode": "tren",
+        "line": "Shintetsu Arima → metro Hokushin / Seishin (cambios en Arima-guchi y Tanigami)",
         "from": "Arima Onsen",
-        "to": "Kioto",
-        "duration": "~1h10",
-        "cost": { "amount": 1850, "currency": "JPY", "max": 2000, "approx": true },
-        "pay": ["tarjeta", "efectivo"],
+        "to": "Sannomiya",
+        "duration": "~30min (sale 17:09)",
+        "cost": { "amount": 720, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
         "vuelta": true,
-        "note": "Si lo perdés: tren Shintetsu a Sannomiya + JR a Kioto (~1h30)"
+        "note": "~2 min a pie del metro Sannomiya a la estación JR"
       },
       {
         "mode": "tren",
-        "line": "JR Biwako Line",
-        "from": "Kioto",
+        "line": "JR rápido especial (directo)",
+        "from": "Sannomiya",
         "to": "Otsu",
-        "duration": "~10min",
-        "cost": { "amount": 200, "currency": "JPY", "approx": true },
+        "duration": "~1h (sale 17:52, llegás 18:55)",
+        "cost": { "amount": 1460, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "vuelta": true
       }
@@ -1524,7 +1524,6 @@
       {
         "name": "Onsen Kin-no-yu (Arima)",
         "coords": [34.79679, 135.24793],
-        "night": true,
         "hours": "8:00–22:00 (entrada hasta 21:30) · cierra el 2.º y 4.º martes: el 17 abre"
       }
     ],
@@ -1535,16 +1534,19 @@
       "Puerto de Kobe: parque Meriken y Harborland",
       "Almuerzo de carne de Kobe",
       "Vista de la bahía de Osaka desde el monte Rokko (931 m)",
-      "Teleférico bajando entre bosques a Arima"
+      "Teleférico bajando entre bosques a Arima",
+      {
+        "text": "Onsen Kin-no-yu, de aguas rojizas, y los callejones de Arima",
+        "price": { "amount": 650, "currency": "JPY", "max": 800, "approx": true }
+      }
     ],
     "activitiesNight": [
-      { "text": "Onsen Kin-no-yu, de aguas rojizas", "price": { "amount": 650, "currency": "JPY", "max": 800, "approx": true } },
-      "Callejones de Arima",
-      "Bus a Kioto y JR a Otsu",
+      "Tren de las 17:09 desde Arima: llegás a Otsu a las 18:55",
+      "Lavadora a las 19:00 (lavado y secado, 4 h: termina antes de las 23:00)",
       "Preparar la mochila: mañana te mudás a Takayama"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Kitano y el puerto, después el Rokko y Arima",
+    "keepOrderReason": "Kitano y el puerto, después el Rokko y Arima; el tren de las 17:09 para estar en Otsu a las 19:00",
     "morning": { "wake": "7:30", "leave": "8:15", "why": "Rápido especial de 8:31, directo a Sannomiya" }
   },
   {
