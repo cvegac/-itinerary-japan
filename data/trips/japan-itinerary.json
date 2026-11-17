@@ -1432,7 +1432,7 @@
     "label": "Kobe: Kitano, puerto, monte Rokko y onsen de Arima",
     "location": "Kobe",
     "category": "Vistas",
-    "notes": "El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º.. Hay que estar en Otsu a las 19:00 para la lavadora (lavado y secado, 4 h, hasta las 23:00): el tren de las 17:09 desde Arima llega a las 18:55 (Yahoo, ¥2,180 con Suica). El onsen va a la tarde, antes del tren",
+    "notes": "La Casa del Gallo Veleta (Kazamidori) cierra el 3.º martes de cada mes y hoy es el 3.º: se ve por fuera desde la plaza de Kitano; la Casa Moegi, la verde de al lado, abre (cierra solo en febrero). El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º.. Hay que estar en Otsu a las 19:00 para la lavadora (lavado y secado, 4 h, hasta las 23:00): el tren de las 17:09 desde Arima llega a las 18:55 (Yahoo, ¥2,180 con Suica). El onsen va a la tarde, antes del tren",
     "weekday": "Mar",
     "food": "Almuerzo de carne de Kobe en Sannomiya",
     "transport": [
@@ -1513,9 +1513,9 @@
     "checkOut": "7:00–10:00",
     "pois": [
       {
-        "name": "Barrio Kitano (Casa del Gallo Veleta)",
+        "name": "Barrio Kitano (Casa Moegi)",
         "coords": [34.70139, 135.18951],
-        "hours": "Casa del Gallo Veleta 9:00–18:00 (entrada hasta 17:45)"
+        "hours": "Casa Moegi 9:00–17:00 (entrada hasta 16:45), ¥500 · la Casa del Gallo Veleta cierra el 3.º martes de cada mes: hoy cerrada"
       },
       { "name": "Parque Meriken", "coords": [34.68331, 135.18932] },
       { "name": "Harborland", "coords": [34.67851, 135.18031] },
