@@ -1434,7 +1434,7 @@
     "category": "Vistas",
     "notes": "La Casa del Gallo Veleta (Kazamidori) cierra el 3.º martes de cada mes y hoy es el 3.º: se ve por fuera desde la plaza de Kitano; la Casa Moegi, la verde de al lado, abre (cierra solo en febrero). El transporte del día sale ~¥6,500 (~$41), no ~$15: el tren a Sannomiya es solo una parte. Comer carne de Kobe al almuerzo es más barato que a la cena (~¥5,000–10,000). El funicular y el teleférico de Rokko se suspenden con viento fuerte o nieve, y el funicular estuvo cerrado de enero a abril de 2026 por renovación: confirmá que esté funcionando. Kin-no-yu cierra el 2.º y 4.º martes; hoy es el 3.º.. Hay que estar en Otsu a las 19:00 para la lavadora (lavado y secado, 4 h, hasta las 23:00): el tren de las 17:09 desde Arima llega a las 18:55 (Yahoo, ¥2,180 con Suica). El onsen va a la tarde, antes del tren",
     "weekday": "Mar",
-    "food": "Almuerzo de carne de Kobe en Sannomiya",
+    "food": "Almuerzo en Nankinmachi (barrio chino) o carne de Kobe en Motomachi, de camino al puerto",
     "transport": [
       {
         "mode": "tren",
@@ -1445,21 +1445,25 @@
         "cost": { "amount": 1300, "currency": "JPY", "approx": true },
         "pay": ["suica"]
       },
+      { "mode": "caminar", "from": "Sannomiya", "to": "Barrio Kitano", "duration": "~15min de subida" },
+      { "mode": "caminar", "from": "Barrio Kitano", "to": "Parque Meriken", "duration": "~30min de bajada, por Nankinmachi (barrio chino)" },
+      { "mode": "caminar", "from": "Parque Meriken", "to": "JR Kobe", "duration": "~15min, pasando por Harborland" },
       {
         "mode": "tren",
-        "line": "JR Kobe Line (local)",
-        "from": "Sannomiya",
+        "line": "JR Kobe Line (rápido a Yasu o local)",
+        "from": "JR Kobe",
         "to": "Rokkomichi",
-        "duration": "~10min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
+        "duration": "~8min",
+        "cost": { "amount": 200, "currency": "JPY" },
+        "pay": ["suica"],
+        "note": "Sin bajarte en Sannomiya: el rápido (快速) para en Rokkomichi; el especial rápido (新快速) no"
       },
       {
         "mode": "bus",
         "line": "Kobe City Bus 16",
         "from": "Rokkomichi",
         "to": "Rokko Cable Shita",
-        "duration": "~20min (llegás 10:08)",
+        "duration": "~20min",
         "cost": { "amount": 230, "currency": "JPY", "approx": true },
         "pay": ["suica", "efectivo"]
       },
@@ -1531,8 +1535,8 @@
     "isTransit": false,
     "activitiesDay": [
       "Barrio Kitano y sus casas de comerciantes extranjeros",
-      "Puerto de Kobe: parque Meriken y Harborland",
-      "Almuerzo de carne de Kobe",
+      "Almuerzo en Nankinmachi o carne de Kobe en Motomachi",
+      "Puerto de Kobe: parque Meriken, el muelle del terremoto de 1995 y Harborland",
       "Vista de la bahía de Osaka desde el monte Rokko (931 m)",
       "Teleférico bajando entre bosques a Arima",
       {
@@ -1546,7 +1550,7 @@
       "Preparar la mochila: mañana te mudás a Takayama"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Kitano y el puerto, después el Rokko y Arima; el tren de las 17:09 para estar en Otsu a las 19:00",
+    "keepOrderReason": "Kitano primero y todo en bajada hasta el puerto; el tren sale de la estación Kobe (Harborland) sin volver a Sannomiya, y el de las 17:09 desde Arima para estar en Otsu a las 19:00",
     "morning": { "wake": "7:30", "leave": "8:15", "why": "Rápido especial de 8:31, directo a Sannomiya" }
   },
   {
