@@ -1555,10 +1555,10 @@
   },
   {
     "date": "2026-11-18",
-    "label": "Fushimi Inari al amanecer → los Alpes: Takayama",
+    "label": "Fushimi Inari corto → los Alpes: Takayama",
     "location": "Takayama",
     "category": "Logística",
-    "notes": "Fushimi Inari abre las 24 h: salí de Otsu con la mochila ~6:00 (el check-out es de 7:00 a 10:00: avisá que salís antes) y dejala en un locker de la estación de Kioto. Subí a las 6:30, volvé a las ~9:30, retirá la mochila y salí en un tren de media mañana. Según Google Maps (8 nov): Nozomi 10:36 → Nagoya 11:10 y Hida 9 → Takayama 14:14 (~3h40, ~¥11,570 en total; Google lo combina pasando por Gifu, 12:05). O el bus Hida-Takayama-go de las 11:45 desde Nagoya (lado shinkansen) → Takayama 14:20, con reserva. Opción más barata: bus directo Kioto/Osaka → Takayama (~5h, ~¥5,000–6,000). Desde acá empieza el frío: 0–10 °C y puede haber primera nieve",
+    "notes": "Pronóstico (17 nov a la noche): en Kioto llueve de madrugada y la mañana es lo más seco (30% de 6 a 12); en Takayama nublado con lluvia (80%), sobre todo de tarde, 8–16 °C. Fushimi Inari solo la parte baja (portón, Senbon Torii y piedras Omokaru, ~1 h), sin la cima: los escalones van a estar mojados y el cuerpo pide menos subidas. Salí de Otsu con la mochila a las 7:45 (el check-out es de 7:00 a 10:00) y dejala en un locker de la estación de Kioto; volvé a las ~9:45 para el Nozomi de 10:36 → Nagoya 11:10 y el expreso Hida → Takayama 14:14 (~3 h sentado, ~¥11,570; Google lo combina pasando por Gifu). Sentate del lado derecho del Hida para ver el cañón del río. Llevá paraguas y abrigo: desde acá empieza el frío",
     "weekday": "Mié",
     "food": "Hida-gyu (carne de Hida) en sushi o en brocheta",
     "transport": [
@@ -1580,7 +1580,6 @@
         "cost": { "amount": 150, "currency": "JPY", "perLeg": true },
         "pay": ["suica"]
       },
-      { "mode": "caminar", "from": "Santuario Fushimi Inari", "to": "Cima del monte Inari", "duration": "~2–3h ida y vuelta" },
       { "mode": "tren", "line": "Tokaido Shinkansen", "from": "Kioto", "to": "Nagoya", "duration": "~35min", "pay": ["boleto"] },
       {
         "mode": "tren",
@@ -1606,33 +1605,27 @@
       { "name": "Santuario Fushimi Inari (portón Romon)", "coords": [34.96708, 135.77254], "hours": "Abierto siempre" },
       { "name": "Túnel de torii Senbon Torii", "coords": [34.96691, 135.77483], "icon": "⛩️" },
       { "name": "Okusha Hohaisho (piedras Omokaru)", "coords": [34.96654, 135.77558], "icon": "⛩️" },
-      { "name": "Estanque y santuario Kumataka-sha", "coords": [34.96835, 135.77862], "icon": "⛩️" },
-      { "name": "Yotsutsuji (mirador sobre Kioto)", "coords": [34.96909, 135.78142], "icon": "🏞️" },
-      { "name": "Cima del monte Inari", "coords": [34.96701, 135.78553] },
       { "name": "Casco viejo Sanmachi Suji", "coords": [36.14236, 137.25925], "hours": "Tiendas ~9:00–17:00" },
       { "name": "Puente Nakabashi", "coords": [36.14001, 137.2592] }
     ],
     "budget": "$165",
     "isTransit": false,
     "activitiesDay": [
-      "Fushimi Inari: miles de torii hasta la cima, sin gente",
-      "Cañón del río Hida desde el tren",
-      "Casco viejo de Sanmachi Suji",
+      "Fushimi Inari, la parte baja: portón Romon, túnel de torii Senbon Torii y las piedras Omokaru",
+      "Cañón del río Hida desde el tren (lado derecho)",
+      "Bodegas de sake de Sanmachi Suji (la bola de cedro en la puerta): degustación bajo techo",
+      "Museo retro de la era Showa en Sanmachi, si llueve (horario sin confirmar)",
       "Puente rojo Nakabashi",
       "Mirar en la Nohi Bus Center la primera salida sin reserva de mañana"
     ],
-    "activitiesNight": ["Sake en una bodega de Sanmachi", "Cena de Hida-gyu", "Casco viejo iluminado", "Dormir temprano"],
+    "activitiesNight": ["Cena de Hida-gyu", "Casco viejo iluminado, si no llueve", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "Fushimi Inari al amanecer y después el tren a Takayama",
+    "keepOrderReason": "Fushimi Inari en la mañana, la franja más seca, y el tren de 10:36 a Takayama; la tarde lluviosa bajo techo",
     "morning": {
-      "wake": "5:20",
-      "leave": "6:00",
-      "why": "Con la mochila (avisá el check-out la noche anterior): locker en Kioto, Fushimi Inari a las 6:30 sin gente y Nozomi de 10:36"
-    },
-    "trailReports": [
-      { "label": "YAMAP: Fushimi Inari hasta la cima (19 oct 2026)", "url": "https://yamap.com/activities/52122126" },
-      { "label": "YAMAP: todos los diarios de Fushimi Inari", "url": "https://yamap.com/landmarks/156620" }
-    ]
+      "wake": "7:00",
+      "leave": "7:45",
+      "why": "Lavadora hasta tarde: ~7 h de sueño. Locker en Kioto, Fushimi Inari de 8:15 a 9:30 y Nozomi de 10:36"
+    }
   },
   {
     "date": "2026-11-19",
