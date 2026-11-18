@@ -1555,10 +1555,10 @@
   },
   {
     "date": "2026-11-18",
-    "label": "Kioto con sol → tren de la tarde a Takayama",
+    "label": "Kioto con sol → Nagoya → Takayama de noche",
     "location": "Takayama",
     "category": "Logística",
-    "notes": "Al final la mañana amaneció con sol en Kioto, así que se aprovechó ahí: el templo de los dos dragones en el techo, compras en EDION, sushi de cinta en Gion-Shijo y el Hard Off, con las maletas en el locker. Se perdió el Hida de las 16:03, así que va el siguiente: Nozomi de las ~17:20 → Nagoya y expreso Hida 17 de las 18:12 → Takayama 20:51 (~¥11,570). El último es el Hida 19 (20:17 → 22:49), pero llega después del check-in. Cená en la estación de Nagoya: a las 21:00 Takayama ya está cerrado. El bus Kintetsu se descartó: acepta una sola pieza en el maletero de hasta 100 cm sumando los lados y 10 kg, y la maleta de cabina suma 121 cm. El check-in es en el Relax Hotel, frente a la estación, hasta las 22:00. Llevá paraguas y abrigo: en Takayama llueve y hace 8–16 °C",
+    "notes": "Al final la mañana amaneció con sol en Kioto, así que se aprovechó ahí: el templo de los dos dragones en el techo, compras en EDION, sushi de cinta en Gion-Shijo y el Hard Off, con las maletas en el locker. Se perdieron el Hida 17 (18:12) y el bus de las 18:45 (la venta online cierra antes de la salida), así que: Shinkansen sin reserva Kioto → Nagoya (¥5,170), cena en Nagoya y expreso Hida 19 de las 20:17 → Takayama 22:49 (¥6,140, asiento reservado en la ventanilla). El bus Nagoya–Takayama (Meitetsu/Nohi/JR Tokai) acepta 1 maleta de hasta 250 cm en el maletero, a diferencia del bus Kintetsu (100 cm y 10 kg). Check-in tarde avisado al hostel: el Relax Hotel, frente a la estación, atiende hasta las 22:00. Llevá paraguas y abrigo: en Takayama llueve y hace 8–16 °C",
     "weekday": "Mié",
     "food": "Hida-gyu (carne de Hida) en sushi o en brocheta",
     "transport": [
@@ -1576,8 +1576,9 @@
         "line": "Tokaido Shinkansen",
         "from": "Kioto",
         "to": "Nagoya",
-        "duration": "~35min (Nozomi de las ~17:20)",
-        "pay": ["boleto"]
+        "duration": "~35min (sin reserva, ~18:00)",
+        "pay": ["boleto"],
+        "cost": { "amount": 5170, "currency": "JPY" }
       },
       {
         "mode": "tren",
@@ -1585,10 +1586,10 @@
         "from": "Nagoya",
         "to": "Takayama",
         "via": ["Gifu"],
-        "duration": "~2h40 (Hida 17: sale 18:12, llega 20:51)",
-        "cost": { "amount": 11000, "currency": "JPY", "max": 12000, "approx": true, "detail": "en total" },
+        "duration": "~2h30 (Hida 19: sale 20:17, llega 22:49)",
+        "cost": { "amount": 6140, "currency": "JPY" },
         "pay": ["boleto"],
-        "note": "Ya es de noche: el cañón no se ve"
+        "note": "Asiento reservado comprado en la ventanilla de Nagoya"
       }
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
@@ -1603,16 +1604,20 @@
       { "name": "Casco viejo Sanmachi Suji", "coords": [36.14236, 137.25925], "hours": "Tiendas ~9:00–17:00" },
       { "name": "Puente Nakabashi", "coords": [36.14001, 137.2592] }
     ],
-    "budget": "$164",
+    "budget": "$162",
     "isTransit": false,
     "activitiesDay": [
       "Kioto con sol: el templo de los dos dragones en el techo",
-      "Paseo libre por Kioto con las maletas en el locker: sushi de cinta y Hard Off",
-      "Nozomi de las ~17:20 a Nagoya, cena en la estación y expreso Hida de las 18:12"
+      "Paseo libre por Kioto con las maletas en el locker: EDION, sushi de cinta y Hard Off",
+      "Shinkansen de las ~18:00 a Nagoya"
     ],
-    "activitiesNight": ["Check-in en el Relax Hotel, frente a la estación (hasta las 22:00), y caminar ~5 min a Komorebi", "Dormir temprano"],
+    "activitiesNight": [
+      "Cena en la estación de Nagoya: misokatsu en Yabaton (ESCA) o Umaimon-dori",
+      "Expreso Hida 19 de las 20:17 → Takayama 22:49",
+      "Check-in tarde (avisado) y a dormir"
+    ],
     "keepOrder": true,
-    "keepOrderReason": "La tarde en Kioto y el tren de la noche: el Hida de las 18:12 llega a las 20:51, antes del cierre del check-in",
+    "keepOrderReason": "La tarde en Kioto y el tren de la noche: se perdieron el Hida 17 y el bus de las 18:45, así que se cena en Nagoya y se toma el Hida 19",
     "morning": {
       "wake": "7:00",
       "leave": "7:45",
