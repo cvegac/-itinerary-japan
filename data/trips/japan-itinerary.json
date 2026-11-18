@@ -1626,10 +1626,10 @@
   },
   {
     "date": "2026-11-19",
-    "label": "Shirakawa-go y su mirador",
+    "label": "Shirakawa-go bajo la lluvia",
     "location": "Shirakawa-go",
     "category": "Paisaje",
-    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. A fines de noviembre puede tocarte la primera nieve. Sin reserva (se agotaron): el bus Nohi tiene salidas sin reserva, las que NO tienen \"R\" en el horario, por orden de llegada. Estate en la fila de la Nohi Bus Center 20+ min antes y comprá ahí el boleto (¥2,800). Si se llena, va el siguiente; la vuelta también puede ser sin reserva",
+    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. Pronóstico (JMA, 18 nov): lluvia todo el día en Shirakawa-go, 25–54 mm y 3–9 °C. Igual es mejor que el viernes, que llueve más y hace 2–4 °C. Llevá impermeable o paraguas, zapatos que no se mojen y medias de repuesto: las calles de la aldea son de tierra y grava. La casa Wada y la casa Kanda son por dentro. Los techos con niebla salen muy bien en las fotos. Subí al mirador de Shiroyama solo si desde abajo se ven bien los techos: con la nube baja, arriba no se ve nada. Hay un bus lanzadera (~¥200) para no subir a pie. Sin reserva (se agotaron): el bus Nohi tiene salidas sin reserva, las que NO tienen \"R\" en el horario, por orden de llegada. Estate en la fila de la Nohi Bus Center 20+ min antes y comprá ahí el boleto (¥2,800). Si se llena, va el siguiente; la vuelta también puede ser sin reserva",
     "weekday": "Jue",
     "food": "Soba y gohei-mochi en Shirakawa-go",
     "transport": [
@@ -1669,12 +1669,12 @@
     "budget": "$125",
     "isTransit": false,
     "activitiesDay": [
-      "Mirador de Shiroyama (subida a pie de ~20 min)",
-      "Casa Wada por dentro",
+      "Casa Wada y casa Kanda por dentro (para secarte)",
+      "Caminata entre los techos de paja con niebla",
       "Puente colgante Deai-bashi",
-      "Caminata entre los arrozales de la aldea"
+      "Mirador de Shiroyama, solo si se ve (bus lanzadera)"
     ],
-    "activitiesNight": ["Vuelta a Takayama", "Onsen en Takayama", "Cena de ramen de Takayama", "Confirmar la bici de mañana"],
+    "activitiesNight": ["Vuelta a Takayama", "Onsen en Takayama para entrar en calor", "Cena de ramen de Takayama", "Dormir temprano"],
     "morning": {
       "wake": "6:40",
       "leave": "7:20",
@@ -1683,32 +1683,13 @@
   },
   {
     "date": "2026-11-20",
-    "label": "Bici por el campo de Hida-Furukawa",
-    "location": "Hida-Furukawa",
-    "category": "Naturaleza",
-    "notes": "Recorrido guiado de ~22 km por arrozales y aldeas. Precios de Satoyama Experience sin confirmar para 2026: ~¥7,600 la ruta estándar y ~¥4,900 la corta (listado viejo). Por ~¥2,000 alquilás la bici sin guía",
+    "label": "Takayama bajo techo: casco viejo, sake y museos",
+    "location": "Takayama",
+    "category": "Ciudad",
+    "notes": "Se descartó la bici por el campo de Hida-Furukawa: pronóstico (JMA, 18 nov) nublado con nieve o lluvia, 0–4 °C. No estaba reservada. Día de Takayama a pie y bajo techo: mercado del Miyagawa, Takayama Jinya (la antigua oficina del gobierno, ¥440), el casco viejo de Sanmachi con las bodegas de sake (la bola de cedro en la puerta; la degustación cuesta unos cientos de yenes), el museo retro Showa y la casa Kusakabe (museo de artesanía). Si nieva, Sanmachi queda de postal. A la noche revisá el clima de mañana: el sábado también hay lluvia o nieve y arriba del teleférico puede estar tapado",
     "weekday": "Vie",
-    "food": "Mercado matutino del río Miyagawa (Takayama)",
-    "transport": [
-      {
-        "mode": "tren",
-        "line": "JR Takayama Line",
-        "from": "Takayama",
-        "to": "Hida-Furukawa",
-        "duration": "~15–20min",
-        "cost": { "amount": 250, "currency": "JPY", "approx": true },
-        "pay": ["boleto"]
-      },
-      {
-        "mode": "bicicleta",
-        "line": "Satoyama Experience (con guía)",
-        "from": "Hida-Furukawa",
-        "to": "Arrozales y aldeas de Hida",
-        "duration": "~3h30, ~22 km, fácil",
-        "cost": { "amount": 4900, "currency": "JPY", "max": 7600, "approx": true },
-        "pay": ["tarjeta"]
-      }
-    ],
+    "food": "Mercado matutino del Miyagawa y Hida-gyu en el casco viejo",
+    "transport": [],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
     "lodgingPlace": "Centro, Takayama",
     "zona": "Check-in en el Relax Hotel, frente a la estación JR Takayama (1 min a pie): decí que te quedás en Komorebi. El hostel queda a ~5 min a pie y no tiene personal. Check-in 15:00–22:00 (si llegás después de las 22:00, avisá antes). Takayama cobra impuesto de alojamiento al hacer el check-in: llevá efectivo",
@@ -1719,26 +1700,25 @@
     "checkOut": "7:00–11:00",
     "pois": [
       { "name": "Mercado matutino del Miyagawa", "coords": [36.14469, 137.25785], "hours": "~7:00–12:00" },
-      { "name": "Estación Hida-Furukawa", "coords": [36.23673, 137.18961] },
-      { "name": "Canal de las carpas (Seto-gawa)", "coords": [36.23603, 137.18599] },
-      { "name": "Sendero de Higashiyama (santuario Hakusan)", "coords": [36.14608, 137.26529] }
+      { "name": "Takayama Jinya", "coords": [36.13969, 137.25762] },
+      { "name": "Casco viejo de Sanmachi", "coords": [36.14236, 137.25925] },
+      { "name": "Casa Kusakabe (museo de artesanía)", "coords": [36.14644, 137.25846] }
     ],
-    "budget": "$130",
+    "budget": "$89",
     "isTransit": false,
     "activitiesDay": [
-      "Mercado matutino del Miyagawa",
-      "Recorrido guiado en bici por el campo de Hida",
-      "Canal de las carpas de Hida-Furukawa",
-      "Tarde: casco viejo de Sanmachi, bodegas de sake (la bola de cedro en la puerta) y el museo retro Showa; o el sendero de Higashiyama, si te dan las ganas"
+      "Mercado matutino del Miyagawa, sin apuro",
+      "Takayama Jinya",
+      "Casco viejo de Sanmachi y degustación en las bodegas de sake",
+      "Museo retro Showa y casa Kusakabe"
     ],
-    "activitiesNight": ["Cena en Takayama", "Preparar la mochila para el teleférico", "Ropa de invierno lista: mañana a 2.156 m", "Dormir temprano"],
-    "keepOrder": true,
-    "keepOrderReason": "mercado temprano, tour en bici a la mañana en Furukawa",
-    "morning": {
-      "wake": "6:45",
-      "leave": "7:30",
-      "why": "Mercado del Miyagawa temprano y tren a Hida-Furukawa: confirmá en la reserva a qué hora sale la bici"
-    }
+    "activitiesNight": [
+      "Cena de Hida-gyu en Takayama",
+      "Revisar el clima del teleférico de mañana",
+      "Ropa de invierno lista: mañana a 2.156 m",
+      "Dormir temprano"
+    ],
+    "morning": { "wake": "7:30", "leave": "8:30", "why": "Sin tren ni tour: el mercado del Miyagawa va de ~7:00 a 12:00 y está a pocos minutos a pie" }
   },
   {
     "date": "2026-11-21",

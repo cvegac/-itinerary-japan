@@ -23,7 +23,7 @@ const RULES: [RegExp, string][] = [
   [/ cima|^cima|^monte|paso de|colina/, "⛰️"],
   [/cascada|abismo/, "💧"],
   [/paz|bomba at[oó]mica/, "🕊️"],
-  [/museo|tokaikan/, "🏛️"],
+  [/museo|tokaikan|jinya/, "🏛️"],
   [/casa de t[eé]/, "🍵"],
   [/casa wada/, "🛖"],
   [/granja/, "🌱"],
