@@ -1629,7 +1629,7 @@
     "label": "Shirakawa-go bajo la lluvia",
     "location": "Shirakawa-go",
     "category": "Paisaje",
-    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. Pronóstico (JMA, 18 nov): lluvia todo el día en Shirakawa-go, 25–54 mm y 3–9 °C. Igual es mejor que el viernes, que llueve más y hace 2–4 °C. Llevá impermeable o paraguas, zapatos que no se mojen y medias de repuesto: las calles de la aldea son de tierra y grava. La casa Wada y la casa Kanda son por dentro. Los techos con niebla salen muy bien en las fotos. Subí al mirador de Shiroyama solo si desde abajo se ven bien los techos: con la nube baja, arriba no se ve nada. Hay un bus lanzadera (~¥200) para no subir a pie. Sin reserva (se agotaron): el bus Nohi tiene salidas sin reserva, las que NO tienen \"R\" en el horario, por orden de llegada. Estate en la fila de la Nohi Bus Center 20+ min antes y comprá ahí el boleto (¥2,800). Si se llena, va el siguiente; la vuelta también puede ser sin reserva",
+    "notes": "Aldea de casas gassho-zukuri (techos de paja) en un valle de montaña. Pronóstico (JMA, 18 nov): lluvia todo el día en Shirakawa-go, 25–54 mm y 3–9 °C. Igual es mejor que el viernes, que llueve más y hace 2–4 °C. Llevá impermeable o paraguas, zapatos que no se mojen y medias de repuesto: las calles de la aldea son de tierra y grava. La casa Wada y la casa Kanda son por dentro. Los techos con niebla salen muy bien en las fotos. Subí al mirador de Shiroyama solo si desde abajo se ven bien los techos: con la nube baja, arriba no se ve nada. Hay un bus lanzadera (~¥200) para no subir a pie. Sin reserva (se agotaron): el bus Nohi tiene salidas sin reserva, las que NO tienen \"R\" en el horario, por orden de llegada. Estate en la fila de la Nohi Bus Center 20+ min antes y comprá ahí el boleto (¥2,800). Si se llena, va el siguiente; la vuelta también puede ser sin reserva. Buses sin reserva (nov 2026): ida 8:50, 10:50, 11:50, 13:50; vuelta 15:15, 16:15 y 17:30 (llegan a Takayama 16:05, 17:20 y 18:35). Pueden atrasarse por el estacionamiento de Shirakawa-go",
     "weekday": "Jue",
     "food": "Soba y gohei-mochi en Shirakawa-go",
     "transport": [
@@ -1676,9 +1676,9 @@
     ],
     "activitiesNight": ["Vuelta a Takayama", "Onsen en Takayama para entrar en calor", "Cena de ramen de Takayama", "Dormir temprano"],
     "morning": {
-      "wake": "6:40",
-      "leave": "7:20",
-      "why": "Hacé fila en la Nohi Bus Center 20+ min antes del primer bus sin reserva (los que no tienen R): se llenan"
+      "wake": "8:20",
+      "leave": "10:15",
+      "why": "Te levantaste tarde: va el bus sin reserva de las 10:50 (llega 11:40). Hacé la fila en la Nohi Bus Center desde las ~10:20"
     }
   },
   {
