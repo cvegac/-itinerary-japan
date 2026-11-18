@@ -1558,7 +1558,7 @@
     "label": "Kioto con sol → tren de la tarde a Takayama",
     "location": "Takayama",
     "category": "Logística",
-    "notes": "Al final la mañana amaneció con sol en Kioto (nublado y seco hasta las 16:00, 20%), así que se aprovechó ahí: el templo de los dos dragones en el techo y paseo libre, con las maletas en el locker. Tren de la tarde: Nozomi de las ~15:15 → Nagoya ~15:50 y el expreso Hida 15 de las 16:03 → Takayama 18:45 (~¥11,570). El cañón del río ya se ve de noche. El bus Kintetsu de las 15:50 (¥6,500, llega 20:12) se descartó: acepta una sola pieza en el maletero de hasta 100 cm sumando los lados y 10 kg, y la maleta de cabina suma 121 cm. En el tren no hay drama: las dos maletas suman menos de 160 cm, sin reserva de equipaje grande en el Shinkansen. Check-in del hostel hasta las 22:00. Llevá paraguas y abrigo: en Takayama llueve y hace 8–16 °C",
+    "notes": "Al final la mañana amaneció con sol en Kioto, así que se aprovechó ahí: el templo de los dos dragones en el techo, compras en EDION, sushi de cinta en Gion-Shijo y el Hard Off, con las maletas en el locker. Se perdió el Hida de las 16:03, así que va el siguiente: Nozomi de las ~17:20 → Nagoya y expreso Hida 17 de las 18:12 → Takayama 20:51 (~¥11,570). El último es el Hida 19 (20:17 → 22:49), pero llega después del check-in. Cená en la estación de Nagoya: a las 21:00 Takayama ya está cerrado. El bus Kintetsu se descartó: acepta una sola pieza en el maletero de hasta 100 cm sumando los lados y 10 kg, y la maleta de cabina suma 121 cm. El check-in es en el Relax Hotel, frente a la estación, hasta las 22:00. Llevá paraguas y abrigo: en Takayama llueve y hace 8–16 °C",
     "weekday": "Mié",
     "food": "Hida-gyu (carne de Hida) en sushi o en brocheta",
     "transport": [
@@ -1576,7 +1576,7 @@
         "line": "Tokaido Shinkansen",
         "from": "Kioto",
         "to": "Nagoya",
-        "duration": "~35min (salí a las ~15:15)",
+        "duration": "~35min (Nozomi de las ~17:20)",
         "pay": ["boleto"]
       },
       {
@@ -1585,15 +1585,15 @@
         "from": "Nagoya",
         "to": "Takayama",
         "via": ["Gifu"],
-        "duration": "~2h45 (Hida 15: sale 16:03, llega 18:45)",
+        "duration": "~2h40 (Hida 17: sale 18:12, llega 20:51)",
         "cost": { "amount": 11000, "currency": "JPY", "max": 12000, "approx": true, "detail": "en total" },
         "pay": ["boleto"],
-        "note": "Oscurece a las ~16:50: el cañón casi no se ve"
+        "note": "Ya es de noche: el cañón no se ve"
       }
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
     "lodgingPlace": "Centro, Takayama",
-    "zona": "A ~5 min a pie de la estación JR Takayama y ~10 min del casco viejo. Check-in 15:00–22:00",
+    "zona": "Check-in en el Relax Hotel, frente a la estación JR Takayama (1 min a pie): decí que te quedás en Komorebi. El hostel queda a ~5 min a pie y no tiene personal. Check-in 15:00–22:00 (si llegás después de las 22:00, avisá antes). Takayama cobra impuesto de alojamiento al hacer el check-in: llevá efectivo",
     "accommodationCoords": [36.1406, 137.2549],
     "lodgingCost": 54,
     "lodgingJa": { "name": "KOMOREBI HOSTEL", "address": "岐阜県高山市名田町5-52", "phone": "+81 80-4098-0470" },
@@ -1607,17 +1607,12 @@
     "isTransit": false,
     "activitiesDay": [
       "Kioto con sol: el templo de los dos dragones en el techo",
-      "Paseo libre por Kioto hasta las ~15:00, con las maletas en el locker",
-      "Nozomi de las ~15:15 a Nagoya y expreso Hida de las 16:03"
+      "Paseo libre por Kioto con las maletas en el locker: sushi de cinta y Hard Off",
+      "Nozomi de las ~17:20 a Nagoya, cena en la estación y expreso Hida de las 18:12"
     ],
-    "activitiesNight": [
-      "Check-in en Komorebi (hasta las 22:00)",
-      "Cena de Hida-gyu",
-      "Puente Nakabashi y el casco viejo iluminado, si no llueve",
-      "Dormir temprano"
-    ],
+    "activitiesNight": ["Check-in en el Relax Hotel, frente a la estación (hasta las 22:00), y caminar ~5 min a Komorebi", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "La mañana de sol en Kioto y el tren de la tarde: el Hida de las 16:03 llega a las 18:45, a tiempo para cenar",
+    "keepOrderReason": "La tarde en Kioto y el tren de la noche: el Hida de las 18:12 llega a las 20:51, antes del cierre del check-in",
     "morning": {
       "wake": "7:00",
       "leave": "7:45",
@@ -1655,7 +1650,7 @@
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
     "lodgingPlace": "Centro, Takayama",
-    "zona": "Mismo hostal en Takayama",
+    "zona": "Check-in en el Relax Hotel, frente a la estación JR Takayama (1 min a pie): decí que te quedás en Komorebi. El hostel queda a ~5 min a pie y no tiene personal. Check-in 15:00–22:00 (si llegás después de las 22:00, avisá antes). Takayama cobra impuesto de alojamiento al hacer el check-in: llevá efectivo",
     "accommodationCoords": [36.1406, 137.2549],
     "lodgingCost": 54,
     "lodgingJa": { "name": "KOMOREBI HOSTEL", "address": "岐阜県高山市名田町5-52", "phone": "+81 80-4098-0470" },
@@ -1711,7 +1706,7 @@
     ],
     "accommodation": "Komorebi Hostel (habitación de tatami, baño compartido)",
     "lodgingPlace": "Centro, Takayama",
-    "zona": "Mismo hostal en Takayama",
+    "zona": "Check-in en el Relax Hotel, frente a la estación JR Takayama (1 min a pie): decí que te quedás en Komorebi. El hostel queda a ~5 min a pie y no tiene personal. Check-in 15:00–22:00 (si llegás después de las 22:00, avisá antes). Takayama cobra impuesto de alojamiento al hacer el check-in: llevá efectivo",
     "accommodationCoords": [36.1406, 137.2549],
     "lodgingCost": 54,
     "lodgingJa": { "name": "KOMOREBI HOSTEL", "address": "岐阜県高山市名田町5-52", "phone": "+81 80-4098-0470" },
