@@ -2614,33 +2614,13 @@
   },
   {
     "date": "2026-12-02",
-    "label": "Rikugien, día Hard Off en Chiba y atardecer en Yanaka",
+    "label": "Día Hard Off en Chiba, atardecer en Yanaka y Rikugien iluminado",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "El único día de Hard Off afuera: Chiba por la JR Jōban, directo desde Nippori. Las ubicaciones salen de OpenStreetMap y los horarios son los típicos de la cadena (~10:00–20:00): confirmalos en Google Maps la noche anterior. Ropa: Off House de Takayanagi (usada) y a la noche Ameyoko y Okachimachi (mont-bell y Art Sports para outdoor)",
+    "notes": "El único día de Hard Off afuera: Chiba por la JR Jōban, directo desde Nippori. Las ubicaciones salen de OpenStreetMap y los horarios son los típicos de la cadena (~10:00–20:00): confirmalos en Google Maps la noche anterior. Ropa: Off House de Takayanagi (usada) y a la noche Ameyoko y Okachimachi (mont-bell y Art Sports para outdoor). Rikugien va de noche: visita especial con los arces iluminados del 25 nov al 6 dic (18:00–20:30, última entrada 19:30, ¥1.200 en ventanilla solo efectivo o ¥1.000 comprando antes online). Entre las 17:00 y las 18:00 cierran el jardín, así que no vayas antes",
     "weekday": "Mié",
     "food": "Almuerzo en Kashiwa; izakaya en Ueno a la noche",
     "transport": [
-      {
-        "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Nippori",
-        "to": "Komagome (Rikugien)",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Komagome (Rikugien)",
-        "to": "Nippori",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "vuelta": true,
-        "note": "Ahí cambiás a la Jōban"
-      },
       {
         "mode": "tren",
         "line": "JR Jōban Line (rápido)",
@@ -2704,11 +2684,21 @@
         "mode": "tren",
         "line": "JR Yamanote",
         "from": "Nippori",
-        "to": "Ueno",
-        "duration": "~4min",
-        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "to": "Komagome (Rikugien)",
+        "duration": "~5min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "O caminando ~25 min desde Yanaka"
+        "note": "Después del atardecer en Yanaka, para entrar a las 18:00"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Komagome (Rikugien)",
+        "to": "Okachimachi",
+        "duration": "~12min",
+        "cost": { "amount": 180, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Para Ameyoko y el izakaya de Ueno"
       }
     ],
     "accommodation": "Minpaku de Negishi, junto a Nippori (habitación triple, baño privado)",
@@ -2720,7 +2710,6 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Jardín Rikugien", "coords": [35.7334, 139.7463], "hours": "9:00–17:00 (entrada hasta 16:30)" },
       {
         "name": "Hard Off Matsudo",
         "coords": [35.7962, 139.8971],
@@ -2755,20 +2744,28 @@
         "byTransit": true,
         "hours": "Atardecer 16:28; las tiendas cierran ~18:00"
       },
+      {
+        "name": "Jardín Rikugien (iluminado de noche)",
+        "coords": [35.7334, 139.7463],
+        "hours": "Iluminación 18:00–20:30 (última entrada 19:30) · 25 nov–6 dic",
+        "night": true,
+        "byTransit": true
+      },
       { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
       { "name": "Hard Off + Hobby Off Ueno-Okachimachi", "coords": [35.7087, 139.7741], "icon": "♻️", "night": true }
     ],
-    "budget": "$104",
+    "budget": "$109",
     "isTransit": false,
-    "activitiesDay": [
-      { "text": "Jardín Rikugien con los arces", "price": { "amount": 300, "currency": "JPY", "approx": true } },
-      "Hard Off de Matsudo y Hobby Off de Kashiwa",
-      "Hard Off + Off House de Takayanagi (ropa usada en Off House)"
+    "activitiesDay": ["Hard Off de Matsudo y Hobby Off de Kashiwa", "Hard Off + Off House de Takayanagi (ropa usada en Off House)"],
+    "activitiesNight": [
+      "Atardecer en la escalera Yūyake Dandan",
+      { "text": "Rikugien iluminado: arces de noche", "price": { "amount": 1200, "currency": "JPY" } },
+      "Ameyoko: puestos, ropa outdoor y Hard Off de Okachimachi",
+      "Izakaya en Ueno"
     ],
-    "activitiesNight": ["Atardecer en la escalera Yūyake Dandan", "Ameyoko: puestos, ropa outdoor y Hard Off de Okachimachi", "Izakaya en Ueno"],
     "keepOrder": true,
-    "keepOrderReason": "Rikugien abre a las 9:00, las tiendas a las 10:00 y Yanaka va al atardecer",
-    "morning": { "wake": "7:45", "leave": "8:30", "why": "Rikugien abre a las 9:00 y a las 10:30 ya estás en el Hard Off de Matsudo" }
+    "keepOrderReason": "Las tiendas abren a las 10:00, Yanaka va al atardecer y Rikugien iluminado abre a las 18:00",
+    "morning": { "wake": "8:30", "leave": "9:20", "why": "Sin Rikugien a la mañana: a las ~10:00 estás en el Hard Off de Matsudo" }
   },
   {
     "date": "2026-12-03",
