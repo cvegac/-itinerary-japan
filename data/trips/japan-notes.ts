@@ -127,7 +127,7 @@ export const NOTES: TripNotes = {
       id: "bus-hirayu",
       text: "Reservar el bus Hirayu → Matsumoto",
       detail:
-        "Según Google Maps es SOLO CON RESERVA: sale a las 12:55, 14:55, 15:55 y 17:55, tarda 1h32 y cuesta ~¥2,800. Con el 14:55 te da tiempo de sobra para el teleférico. Horario 2026–2027 en el PDF del parque Chubu Sangaku",
+        "RESERVADO (20 nov): bus de las 15:55 desde Hirayu Onsen, llega 17:23 a la Matsumoto Bus Terminal. ¥3,000 ya pagado, ventanilla izquierda. Mostrá el correo de confirmación al subir. Horario 2026–2027 en el PDF del parque Chubu Sangaku",
       date: "2026-11-21",
       url: "https://chubusangaku.jp/ja/wp-content/uploads/sites/3/2026/05/Shinhotaka-To-Matsumoto.pdf",
     },
