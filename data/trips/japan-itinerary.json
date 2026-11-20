@@ -1683,10 +1683,10 @@
   },
   {
     "date": "2026-11-20",
-    "label": "Takayama bajo techo: casco viejo, sake y museos",
+    "label": "Takayama bajo techo: carrozas, casas de mercaderes y museos",
     "location": "Takayama",
     "category": "Ciudad",
-    "notes": "Se descartó la bici por el campo de Hida-Furukawa: pronóstico (JMA, 18 nov) nublado con nieve o lluvia, 0–4 °C. No estaba reservada. Día de Takayama a pie y bajo techo: mercado del Miyagawa, Takayama Jinya (la antigua oficina del gobierno, ¥440), el casco viejo de Sanmachi con las bodegas de sake (la bola de cedro en la puerta; la degustación cuesta unos cientos de yenes), el museo retro Showa y la casa Kusakabe (museo de artesanía). Si nieva, Sanmachi queda de postal. A la noche revisá el clima de mañana: el sábado también hay lluvia o nieve y arriba del teleférico puede estar tapado",
+    "notes": "Se descartó la bici por el campo de Hida-Furukawa: pronóstico (JMA, 18 nov) nublado con nieve o lluvia, 0–4 °C. No estaba reservada. Día de museos a pie, de norte a sur: mercado del Miyagawa, Yatai Kaikan (4 de las carrozas del festival de Takayama más las maquetas de Nikkō, en el mismo ticket), las casas de mercaderes Yoshijima y Kusakabe (pegadas; te sacás los zapatos), Sanmachi con las bodegas de sake, Takayama Jinya (en invierno cierra ~16:30) y, cuando más llueve (15–16), el museo Showa y el museo de arte popular Hirata. Para cerrar, el museo de la ciudad (まちの博物館): gratis y abierto hasta las 19:00. Precios y horarios de guías de 2026: confirmalos en la puerta. A la noche revisá el clima de mañana: el sábado también hay lluvia o nieve y arriba del teleférico puede estar tapado",
     "weekday": "Vie",
     "food": "Mercado matutino del Miyagawa y Hida-gyu en el casco viejo",
     "transport": [],
@@ -1700,17 +1700,25 @@
     "checkOut": "7:00–11:00",
     "pois": [
       { "name": "Mercado matutino del Miyagawa", "coords": [36.14469, 137.25785], "hours": "~7:00–12:00" },
-      { "name": "Takayama Jinya", "coords": [36.13969, 137.25762] },
+      { "name": "Museo de las carrozas (Yatai Kaikan)", "coords": [36.148, 137.2607], "hours": "~8:30–17:00" },
+      { "name": "Casa Yoshijima (museo de mercaderes)", "coords": [36.14664, 137.25843], "hours": "9:00–17:00" },
+      { "name": "Casa Kusakabe (museo de artesanía)", "coords": [36.14644, 137.25846] },
       { "name": "Casco viejo de Sanmachi", "coords": [36.14236, 137.25925] },
-      { "name": "Casa Kusakabe (museo de artesanía)", "coords": [36.14644, 137.25846] }
+      { "name": "Takayama Jinya", "coords": [36.13969, 137.25762], "hours": "Invierno: hasta ~16:30" },
+      { "name": "Museo retro Showa", "coords": [36.14406, 137.26002] },
+      { "name": "Museo de arte popular Hirata", "coords": [36.14249, 137.25993], "hours": "9:00–17:00" },
+      { "name": "Museo de la ciudad (まちの博物館)", "coords": [36.14216, 137.26128], "hours": "9:00–19:00 · gratis" }
     ],
-    "budget": "$89",
+    "budget": "$113",
     "isTransit": false,
     "activitiesDay": [
       "Mercado matutino del Miyagawa, sin apuro",
-      "Takayama Jinya",
+      { "text": "Yatai Kaikan: carrozas del festival y maquetas de Nikkō", "price": { "amount": 1000, "currency": "JPY", "approx": true } },
+      { "text": "Casas de mercaderes Yoshijima y Kusakabe", "price": { "amount": 1000, "currency": "JPY" } },
       "Casco viejo de Sanmachi y degustación en las bodegas de sake",
-      "Museo retro Showa y casa Kusakabe"
+      { "text": "Takayama Jinya", "price": { "amount": 440, "currency": "JPY" } },
+      { "text": "Museo retro Showa y museo de arte popular Hirata", "price": { "amount": 1300, "currency": "JPY", "approx": true } },
+      "Museo de la ciudad: gratis, hasta las 19:00"
     ],
     "activitiesNight": [
       "Cena de Hida-gyu en Takayama",
@@ -1718,7 +1726,9 @@
       "Ropa de invierno lista: mañana a 2.156 m",
       "Dormir temprano"
     ],
-    "morning": { "wake": "7:30", "leave": "8:30", "why": "Sin tren ni tour: el mercado del Miyagawa va de ~7:00 a 12:00 y está a pocos minutos a pie" }
+    "morning": { "wake": "7:30", "leave": "8:30", "why": "Sin tren ni tour: el mercado del Miyagawa va de ~7:00 a 12:00 y está a pocos minutos a pie" },
+    "keepOrder": true,
+    "keepOrderReason": "De norte a sur: afuera entre las 11 y las 13, cuando menos llueve, y en los museos con la lluvia fuerte de las 15–16"
   },
   {
     "date": "2026-11-21",
