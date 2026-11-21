@@ -1794,65 +1794,65 @@
     "label": "Monos de la nieve en Jigokudani",
     "location": "Jigokudani",
     "category": "Naturaleza",
-    "notes": "Los monos que se bañan en el onsen, en el parque Jigokudani Yaen-koen (Yamanouchi, Nagano). Pronóstico para hoy: nevando y ~0 °C, justo lo que los manda al agua; igual el parque avisa que en otoño aparecen de forma irregular: mirá la cámara en vivo de su web antes de salir. Ida: tren local JR de Matsumoto a Nagano (~1h15), Nagaden expreso a Yudanaka (~40–45 min), bus local a la parada Snow Monkey Park (~10 min) y ~35 min a pie por el sendero del bosque (1,6 km, sin pavimentar: con nieve puede haber hielo, llevá el calzado impermeable). Parque: 9:00–16:00 en invierno, entrá antes de las 15:30. Entrada ¥800 hasta el 30 nov (desde el 1 dic sube); acepta tarjeta. Las entradas online y con turno son recién desde diciembre. El Snow Monkey Pass no se vende en noviembre: pagás cada tramo. Alternativa: bus expreso Nagaden desde la salida este de Nagano (andén 24, ~41 min directo a la parada): en invierno es con reserva previa, confirmá si corre ese día. Las tarifas de tren y bus son aproximadas: confirmalas en Google Maps la noche antes",
+    "notes": "Los monos que se bañan en el onsen, en el parque Jigokudani Yaen-koen (Yamanouchi, Nagano). Clima: nieva de 8 a 10 (−1 °C, sensación −4 °C) y se despeja al mediodía con ráfagas de hasta 30 km/h; máx. 1,5 °C. El parque avisa que en otoño los monos aparecen de forma irregular (bajan ~9–10 y se van ~14:30–15:30): mirá la cámara en vivo antes de salir. IDA (horarios oficiales, domingo): JR rápido de las 8:12 en Matsumoto → Nagano 9:11, directo. En Nagano bajá al Nagaden por la salida Zenkōji (subsuelo, ~15 min de transbordo) y sacá en la máquina el pase de 1 día de Nagaden (長電フリー乗車券, ¥2.820, incluye el expreso sin reserva; se vende hasta el 30 nov): sale más barato que ida y vuelta sueltas (¥1.760 c/u). La Suica no pasa por el molinete de Nagaden, solo sirve para pagar en la máquina. Expreso A Snow Monkey de las 9:53 → Yudanaka 10:37 (no subas al vagón 1: es con reserva, ¥300). Bus 上林線 de las 10:48 frente a la estación → Snow Monkey Park 10:58, ¥390 en efectivo (llevá monedas). Del bus al parque: ~10 min de subida hasta la entrada del sendero y 25–30 min por el bosque (1,6 km, puede haber hielo: calzado impermeable). Llegás ~11:40. Parque: 9:00–16:00, entrá antes de las 15:30. ¥800 (sube el 1 dic), acepta tarjeta. Prohibido el palo de selfie y dar o mostrar comida. VUELTA, dos opciones con buses oficiales del 上林線: (1) bus 13:50 → Yudanaka 14:04, local de las 14:16 (transbordo en Shinshu-Nakano) → Nagano 15:36, JR local 16:06 → Matsumoto 17:22. (2) Salí del parque ~15:25: bus 16:15 → Yudanaka 16:29, expreso 16:45 → Nagano 17:34, JR local 18:17 → Matsumoto 19:37 (o el expreso Shinano de las 18:11 → 19:06, más caro). El bus 志賀高原線 tiene además 14:44 y 15:54 desde el parque, pero no está confirmado que corra en domingo. Alternativa más temprana: JR local de las 7:30 → Nagano 8:45 y bus expreso de las 9:00 desde la salida este (parada ㉓) → parque 9:50, ¥2.000, sin reserva; los fines de semana puede ser solo sin efectivo (tarjeta)",
     "weekday": "Dom",
-    "food": "Oyaki (empanadas de Nagano) en la estación y almuerzo en Kanbayashi Onsen, al lado de la parada",
+    "food": "Oyaki (empanadas de Nagano) en la estación de Nagano y almuerzo en Kanbayashi Onsen o el café de la entrada del sendero",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Shinonoi Line (local)",
+        "line": "JR rápido (Shinonoi Line)",
         "from": "Matsumoto",
         "to": "Nagano",
-        "duration": "~1h15",
-        "cost": { "amount": 1170, "currency": "JPY", "approx": true },
+        "duration": "59min (8:12 → 9:11)",
+        "cost": { "amount": 1230, "currency": "JPY" },
         "pay": ["suica"]
       },
       {
         "mode": "tren",
-        "line": "Nagaden (expreso)",
+        "line": "Nagaden expreso A Snow Monkey",
         "from": "Nagano",
         "to": "Yudanaka",
-        "duration": "~40–45min",
-        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
-        "pay": ["boleto"]
+        "duration": "44min (9:53 → 10:37)",
+        "cost": { "amount": 2820, "currency": "JPY" },
+        "pay": ["boleto"],
+        "note": "Pase de 1 día en la máquina: cubre ida y vuelta con expreso"
       },
       {
         "mode": "bus",
-        "line": "Nagaden Bus (Kanbayashi / Shiga Kogen)",
+        "line": "Nagaden Bus 上林線",
         "from": "Yudanaka",
         "to": "Snow Monkey Park",
-        "duration": "~10min",
-        "cost": { "amount": 310, "currency": "JPY", "approx": true },
+        "duration": "10min (10:48 → 10:58)",
+        "cost": { "amount": 390, "currency": "JPY" },
         "pay": ["efectivo"]
       },
-      { "mode": "caminar", "line": "Sendero Yumichi", "from": "Snow Monkey Park", "to": "Jigokudani", "duration": "~35min, 1,6 km por el bosque" },
+      { "mode": "caminar", "line": "Sendero Yumichi", "from": "Snow Monkey Park", "to": "Jigokudani", "duration": "~40min (subida + 1,6 km por el bosque)" },
       {
         "mode": "bus",
-        "line": "Nagaden Bus",
+        "line": "Nagaden Bus 上林線",
         "from": "Snow Monkey Park",
         "to": "Yudanaka",
-        "duration": "~10min",
-        "cost": { "amount": 310, "currency": "JPY", "approx": true },
+        "duration": "14min (13:50 o 16:15)",
+        "cost": { "amount": 390, "currency": "JPY" },
         "pay": ["efectivo"],
         "vuelta": true
       },
       {
         "mode": "tren",
-        "line": "Nagaden (expreso)",
+        "line": "Nagaden (con el pase)",
         "from": "Yudanaka",
         "to": "Nagano",
-        "duration": "~40–45min",
-        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
+        "duration": "14:16 → 15:36 o 16:45 → 17:34",
         "pay": ["boleto"],
         "vuelta": true
       },
       {
         "mode": "tren",
-        "line": "JR Shinonoi Line (local)",
+        "line": "JR local (Shinonoi Line)",
         "from": "Nagano",
         "to": "Matsumoto",
-        "duration": "~1h15",
-        "cost": { "amount": 1170, "currency": "JPY", "approx": true },
+        "duration": "16:06 → 17:22 o 18:17 → 19:37",
+        "cost": { "amount": 1230, "currency": "JPY" },
         "pay": ["suica"],
         "vuelta": true
       }
@@ -1871,21 +1871,21 @@
       { "name": "Parada Snow Monkey Park (inicio del sendero)", "coords": [36.72744, 138.44408], "hours": "~35 min a pie hasta el parque" },
       { "name": "Parque de los monos de la nieve (Jigokudani)", "coords": [36.73281, 138.46232], "hours": "9:00–16:00 · ¥800" }
     ],
-    "budget": "$107",
+    "budget": "$108",
     "isTransit": false,
     "activitiesDay": [
-      "Tren a Nagano y Nagaden a Yudanaka",
+      "JR de las 8:12 a Nagano y expreso Nagaden de las 9:53 a Yudanaka",
       "Sendero por el bosque nevado hasta el parque",
       { "text": "Monos de la nieve bañándose en el onsen", "price": { "amount": 800, "currency": "JPY" } },
       "Almuerzo en Kanbayashi Onsen"
     ],
     "activitiesNight": ["Lavar la ropa en Minka House (lavadora y secadora)", "Cena de soba de Shinshu", "Dormir temprano: mañana bici por Azumino"],
     "keepOrder": true,
-    "keepOrderReason": "tren a Nagano, Nagaden a Yudanaka, bus y sendero hasta el parque",
+    "keepOrderReason": "JR 8:12 a Nagano, Nagaden 9:53 a Yudanaka, bus 10:48 y sendero hasta el parque",
     "morning": {
       "wake": "7:00",
-      "leave": "7:40",
-      "why": "Son ~2h30 hasta el parque (tren a Nagano, Nagaden y bus + 35 min a pie). El parque cierra a las 16:00: entrá antes de las 15:30. Mirá la cámara en vivo antes de salir"
+      "leave": "7:45",
+      "why": "JR rápido de las 8:12 en Matsumoto (~10 min a pie) → Nagano 9:11 → expreso Nagaden 9:53 → bus 10:48: al parque ~11:40. Mirá la cámara en vivo antes de salir"
     }
   },
   {
