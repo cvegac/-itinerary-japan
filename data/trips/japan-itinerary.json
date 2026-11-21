@@ -1735,19 +1735,19 @@
     "label": "Onsen bajo la nieve en Hirayu → Matsumoto",
     "location": "Hirayu Onsen",
     "category": "Paisaje",
-    "notes": "Se descartó el teleférico de Shin-Hotaka: el 20 nov lo pararon por viento fuerte y para hoy había nieve, ráfagas de 45–60 km/h y ~200 m de visibilidad arriba (-14 °C de sensación). Plan B: bus Nohi H02 de las 12:40 desde el Nohi Bus Center (o 12:41 en Kokubunji) → Hirayu Onsen 13:38, ¥1.600 en efectivo al bajar (sacá el 整理券 al subir por atrás). OJO: el bus 【Reserved】 Matsumoto–Takayama no sirve para ir a Hirayu: es con reserva y en esa dirección Hirayu es solo para subir. En Hirayu, onsen al aire libre en Hirayu no Mori (~¥700, a ~3 min de la parada). Bus Hirayu → Matsumoto RESERVADO: 15:55 → 17:23 (Matsumoto Bus Terminal, junto a la estación), ¥3.000, ventanilla izquierda para ver el río. Mostrá el correo de confirmación al subir. Estate en la terminal de Hirayu a las 15:40. Las tiendas de Nawate y Nakamachi ya están cerradas cuando llegás: van mañana, después del castillo",
+    "notes": "Se descartó el teleférico de Shin-Hotaka: el 20 nov lo pararon por viento fuerte y para hoy había nieve, ráfagas de 45–60 km/h y ~200 m de visibilidad arriba (-14 °C de sensación). Plan B: bus Nohi de las 13:40 desde el Nohi Bus Center → Hirayu Onsen 14:38, ¥1.600: el boleto se compra ANTES de subir en el mostrador o la máquina de la terminal (el de las 12:40 se fue por eso). OJO: el bus 【Reserved】 Matsumoto–Takayama no sirve para ir a Hirayu: es con reserva y en esa dirección Hirayu es solo para subir. En Hirayu queda ~1h15: onsen rápido al aire libre en Hirayu no Mori (~¥700, a ~3 min de la parada), alarma a las 15:25. Comprá la comida antes en Takayama. Bus Hirayu → Matsumoto RESERVADO: 15:55 → 17:23 (Matsumoto Bus Terminal, junto a la estación), ¥3.000, ventanilla izquierda para ver el río. Mostrá el correo de confirmación al subir. Estate en la terminal de Hirayu a las 15:40. Las tiendas de Nawate y Nakamachi ya están cerradas cuando llegás: van mañana, después del castillo",
     "weekday": "Sáb",
-    "food": "Almuerzo en Hirayu (restaurante de Hirayu no Mori o la terminal)",
+    "food": "Comprá algo en Takayama antes del bus: en Hirayu solo da para el onsen",
     "transport": [
       {
         "mode": "bus",
-        "line": "Nohi Bus H02 (sin reserva)",
+        "line": "Nohi Bus (sin reserva)",
         "from": "Takayama",
         "to": "Hirayu Onsen",
-        "duration": "58min (12:40 → 13:38)",
+        "duration": "58min (13:40 → 14:38)",
         "cost": { "amount": 1600, "currency": "JPY" },
-        "pay": ["efectivo"],
-        "note": "No es el 【Reserved】 Matsumoto–Takayama"
+        "pay": ["efectivo", "tarjeta"],
+        "note": "Boleto antes de subir. No es el 【Reserved】 Matsumoto–Takayama"
       },
       {
         "mode": "bus",
@@ -1769,7 +1769,7 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Estación de buses Nohi (bus de las 12:40)", "coords": [36.14108, 137.25137], "hours": "H02 a Hirayu 12:40" },
+      { "name": "Estación de buses Nohi (bus de las 13:40)", "coords": [36.14108, 137.25137], "hours": "Bus a Hirayu 13:40 · boleto antes de subir" },
       { "name": "Onsen Hirayu no Mori (ひらゆの森)", "coords": [36.18916, 137.55133], "hours": "~¥700 · a ~3 min de la parada" },
       { "name": "Hirayu Onsen", "coords": [36.19109, 137.55165], "hours": "Bus a Matsumoto 15:55 (reservado)" }
     ],
@@ -1778,15 +1778,15 @@
     "activitiesDay": [
       "Check-out del hostel (hasta las 11:00) y caminata al Nohi Bus Center",
       { "text": "Onsen al aire libre bajo la nieve en Hirayu no Mori", "price": { "amount": 700, "currency": "JPY", "approx": true } },
-      "Almuerzo en Hirayu"
+      "Comida comprada en Takayama"
     ],
     "activitiesNight": ["Check-in en Matsumoto (llegás 17:23, a ~10 min a pie)", "Soba de Shinshu", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "bus de las 12:40 a Hirayu y el reservado de las 15:55 a Matsumoto",
+    "keepOrderReason": "bus de las 13:40 a Hirayu y el reservado de las 15:55 a Matsumoto",
     "morning": {
       "wake": "9:00",
       "leave": "11:00",
-      "why": "Teleférico descartado por viento y nieve. Bus Nohi H02 de las 12:40 a Hirayu (llega 13:38). Bus a Matsumoto reservado: 15:55 desde Hirayu"
+      "why": "Teleférico descartado por viento y nieve. Bus Nohi de las 13:40 a Hirayu (llega 14:38), boleto antes de subir. Bus a Matsumoto reservado: 15:55 desde Hirayu"
     }
   },
   {
