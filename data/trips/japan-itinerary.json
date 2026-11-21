@@ -1791,11 +1791,110 @@
   },
   {
     "date": "2026-11-22",
-    "label": "Bici por Azumino: granja de wasabi y Alpes",
+    "label": "Monos de la nieve en Jigokudani",
+    "location": "Jigokudani",
+    "category": "Naturaleza",
+    "notes": "Los monos que se bañan en el onsen, en el parque Jigokudani Yaen-koen (Yamanouchi, Nagano). Pronóstico para hoy: nevando y ~0 °C, justo lo que los manda al agua; igual el parque avisa que en otoño aparecen de forma irregular: mirá la cámara en vivo de su web antes de salir. Ida: tren local JR de Matsumoto a Nagano (~1h15), Nagaden expreso a Yudanaka (~40–45 min), bus local a la parada Snow Monkey Park (~10 min) y ~35 min a pie por el sendero del bosque (1,6 km, sin pavimentar: con nieve puede haber hielo, llevá el calzado impermeable). Parque: 9:00–16:00 en invierno, entrá antes de las 15:30. Entrada ¥800 hasta el 30 nov (desde el 1 dic sube); acepta tarjeta. Las entradas online y con turno son recién desde diciembre. El Snow Monkey Pass no se vende en noviembre: pagás cada tramo. Alternativa: bus expreso Nagaden desde la salida este de Nagano (andén 24, ~41 min directo a la parada): en invierno es con reserva previa, confirmá si corre ese día. Las tarifas de tren y bus son aproximadas: confirmalas en Google Maps la noche antes",
+    "weekday": "Dom",
+    "food": "Oyaki (empanadas de Nagano) en la estación y almuerzo en Kanbayashi Onsen, al lado de la parada",
+    "transport": [
+      {
+        "mode": "tren",
+        "line": "JR Shinonoi Line (local)",
+        "from": "Matsumoto",
+        "to": "Nagano",
+        "duration": "~1h15",
+        "cost": { "amount": 1170, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      {
+        "mode": "tren",
+        "line": "Nagaden (expreso)",
+        "from": "Nagano",
+        "to": "Yudanaka",
+        "duration": "~40–45min",
+        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
+        "pay": ["boleto"]
+      },
+      {
+        "mode": "bus",
+        "line": "Nagaden Bus (Kanbayashi / Shiga Kogen)",
+        "from": "Yudanaka",
+        "to": "Snow Monkey Park",
+        "duration": "~10min",
+        "cost": { "amount": 310, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"]
+      },
+      { "mode": "caminar", "line": "Sendero Yumichi", "from": "Snow Monkey Park", "to": "Jigokudani", "duration": "~35min, 1,6 km por el bosque" },
+      {
+        "mode": "bus",
+        "line": "Nagaden Bus",
+        "from": "Snow Monkey Park",
+        "to": "Yudanaka",
+        "duration": "~10min",
+        "cost": { "amount": 310, "currency": "JPY", "approx": true },
+        "pay": ["efectivo"],
+        "vuelta": true
+      },
+      {
+        "mode": "tren",
+        "line": "Nagaden (expreso)",
+        "from": "Yudanaka",
+        "to": "Nagano",
+        "duration": "~40–45min",
+        "cost": { "amount": 1500, "currency": "JPY", "approx": true },
+        "pay": ["boleto"],
+        "vuelta": true
+      },
+      {
+        "mode": "tren",
+        "line": "JR Shinonoi Line (local)",
+        "from": "Nagano",
+        "to": "Matsumoto",
+        "duration": "~1h15",
+        "cost": { "amount": 1170, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "vuelta": true
+      }
+    ],
+    "accommodation": "Minka House (litera en dormitorio mixto)",
+    "lodgingPlace": "Centro, Matsumoto",
+    "zona": "Mismo hospedaje en Matsumoto",
+    "accommodationCoords": [36.2309, 137.9724],
+    "lodgingCost": 29.33,
+    "lodgingJa": { "name": "ミンカハウス", "address": "長野県松本市深志3-1-7", "phone": "+81 90-6745-9428" },
+    "checkIn": "16:00–22:00",
+    "checkOut": "hasta 10:00",
+    "pois": [
+      { "name": "Estación Nagano", "coords": [36.6436, 138.18791], "hours": "Nagaden: andenes subterráneos" },
+      { "name": "Estación Yudanaka", "coords": [36.74173, 138.41461], "hours": "Bus a Snow Monkey Park" },
+      { "name": "Parada Snow Monkey Park (inicio del sendero)", "coords": [36.72744, 138.44408], "hours": "~35 min a pie hasta el parque" },
+      { "name": "Parque de los monos de la nieve (Jigokudani)", "coords": [36.73281, 138.46232], "hours": "9:00–16:00 · ¥800" }
+    ],
+    "budget": "$107",
+    "isTransit": false,
+    "activitiesDay": [
+      "Tren a Nagano y Nagaden a Yudanaka",
+      "Sendero por el bosque nevado hasta el parque",
+      { "text": "Monos de la nieve bañándose en el onsen", "price": { "amount": 800, "currency": "JPY" } },
+      "Almuerzo en Kanbayashi Onsen"
+    ],
+    "activitiesNight": ["Lavar la ropa en Minka House (lavadora y secadora)", "Cena de soba de Shinshu", "Dormir temprano: mañana bici por Azumino"],
+    "keepOrder": true,
+    "keepOrderReason": "tren a Nagano, Nagaden a Yudanaka, bus y sendero hasta el parque",
+    "morning": {
+      "wake": "7:00",
+      "leave": "7:40",
+      "why": "Son ~2h30 hasta el parque (tren a Nagano, Nagaden y bus + 35 min a pie). El parque cierra a las 16:00: entrá antes de las 15:30. Mirá la cámara en vivo antes de salir"
+    }
+  },
+  {
+    "date": "2026-11-23",
+    "label": "Bici por Azumino con sol + castillo de Matsumoto",
     "location": "Azumino",
     "category": "Naturaleza",
-    "notes": "Llano y con los Alpes nevados de fondo. Las bicis se alquilan por hora junto a la estación de Hotaka (~¥200–400 la hora; en invierno, 10:00–17:00). A la vuelta, el castillo de Matsumoto. Saliendo del castillo, las calles Nawate y Nakamachi (las tiendas cierran ~17:00–18:00)",
-    "weekday": "Dom",
+    "notes": "Llano y con los Alpes nevados de fondo. Las bicis se alquilan por hora junto a la estación de Hotaka (~¥200–400 la hora; en invierno, 10:00–17:00). A la vuelta, el castillo de Matsumoto. Saliendo del castillo, las calles Nawate y Nakamachi (las tiendas cierran ~17:00–18:00). Se pasó del 22 al 23 por el clima: el 22 había ráfagas de ~52 km/h y hoy hay sol y hasta 11 °C. Es feriado (Día de Acción de Gracias por el Trabajo): el castillo va a estar lleno, llegá antes de las 16:00. El Nakasendo (paso de Torii → Narai) se descartó: con la nieve del 22 y -7 °C a la mañana el paso iba a estar congelado",
+    "weekday": "Lun",
     "food": "Soba con wasabi fresco y helado de wasabi en Daio",
     "transport": [
       {
@@ -1845,8 +1944,7 @@
       "Calles Nawate y Nakamachi saliendo del castillo",
       "Castillo iluminado",
       "Cena de basashi o sanzoku-yaki",
-      "Bar de sake local",
-      "Dormir temprano: mañana el valle de Kiso"
+      "Preparar la mochila para Fuji"
     ],
     "keepOrder": true,
     "keepOrderReason": "la bici se alquila en Hotaka (en tren desde Matsumoto)",
@@ -1855,86 +1953,6 @@
       "leave": "8:45",
       "why": "En invierno las bicis de Hotaka abren a las 10:00. Volvé ~16:00 para el castillo (entrada hasta 16:30) y después Nawate"
     }
-  },
-  {
-    "date": "2026-11-23",
-    "hike": true,
-    "label": "Nakasendo a pie: paso de Torii → Narai",
-    "location": "Valle de Kiso",
-    "category": "Naturaleza",
-    "notes": "Feriado (Día de Acción de Gracias por el Trabajo). Tramo del camino antiguo de Edo: ~6 km y 2h30–3h30 por bosque, sube ~400 m hasta el paso de Torii (1.197 m) y baja a Narai, el pueblo de posta más largo del Nakasendo. Los trenes locales pasan cada 1–2 h (Google Maps: 7:35 o 7:55 → Yabuhara 8:50; el siguiente recién 9:52): mirá el horario de vuelta desde Narai antes de salir. Llevá un cascabel para osos",
-    "weekday": "Lun",
-    "food": "Gohei-mochi y soba en Narai",
-    "transport": [
-      {
-        "mode": "tren",
-        "line": "JR Chuo Line (local)",
-        "from": "Matsumoto",
-        "to": "Yabuhara",
-        "duration": "~55min (7:55 → 8:50)",
-        "cost": { "amount": 790, "currency": "JPY", "approx": true },
-        "pay": ["boleto"],
-        "note": "Pasado Shiojiri no hay IC: comprá el boleto en la máquina"
-      },
-      {
-        "mode": "caminar",
-        "line": "Nakasendo",
-        "from": "Yabuhara",
-        "to": "Narai",
-        "duration": "~2h30–3h30, ~6 km, paso de Torii (1.197 m)"
-      },
-      {
-        "mode": "tren",
-        "line": "JR Chuo Line (local)",
-        "from": "Narai",
-        "to": "Matsumoto",
-        "duration": "~56min (15:52 → 16:48; antes, 14:14)",
-        "cost": { "amount": 590, "currency": "JPY", "approx": true },
-        "pay": ["boleto"],
-        "vuelta": true
-      }
-    ],
-    "accommodation": "Minka House (litera en dormitorio mixto)",
-    "lodgingPlace": "Centro, Matsumoto",
-    "zona": "Mismo hospedaje en Matsumoto",
-    "accommodationCoords": [36.2309, 137.9724],
-    "lodgingCost": 29.33,
-    "lodgingJa": { "name": "ミンカハウス", "address": "長野県松本市深志3-1-7", "phone": "+81 90-6745-9428" },
-    "checkIn": "16:00–22:00",
-    "checkOut": "hasta 10:00",
-    "pois": [
-      { "name": "Estación Yabuhara (inicio de la caminata)", "coords": [35.93085, 137.78478] },
-      { "name": "Paso de Torii (1.197 m)", "coords": [35.95189, 137.79649] },
-      {
-        "name": "Pueblo de posta de Narai",
-        "coords": [35.96455, 137.81043],
-        "hours": "Tiendas y casas ~9:00–17:00 (muchas cierran a las 16:00)"
-      }
-    ],
-    "budget": "$73",
-    "isTransit": false,
-    "activitiesDay": [
-      "Pueblo de posta de Yabuhara, el de los peines de madera",
-      "Nakasendo por el bosque hasta el paso de Torii (1.197 m)",
-      "Bajada a Narai: ~1 km de casas de madera de la época Edo",
-      "Casas de té y laca de Kiso en Narai"
-    ],
-    "activitiesNight": ["Vuelta a Matsumoto", "Onsen urbano", "Cena de soba", "Preparar la mochila para Fuji"],
-    "keepOrder": true,
-    "keepOrderReason": "Nakasendo de Yabuhara a Narai",
-    "morning": {
-      "wake": "6:50",
-      "leave": "7:35",
-      "why": "Local de 7:55 a Yabuhara: el siguiente recién a las 9:52. El boleto se compra en la máquina"
-    },
-    "trailReports": [
-      {
-        "label": "Yamakei: Yabuhara → paso de Torii → Narai (12 oct 2026)",
-        "url": "https://www.yamakei-online.com/cl_record/detail.php?id=340694"
-      },
-      { "label": "YAMAP: Yabuhara → Torii → Narai (2026)", "url": "https://yamap.com/activities/47755577" },
-      { "label": "YAMAP: todos los diarios del paso de Torii", "url": "https://yamap.com/landmarks/755" }
-    ]
   },
   {
     "date": "2026-11-24",
