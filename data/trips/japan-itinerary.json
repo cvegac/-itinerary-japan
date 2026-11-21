@@ -1732,40 +1732,22 @@
   },
   {
     "date": "2026-11-21",
-    "label": "Teleférico de Shin-Hotaka → Matsumoto",
-    "location": "Shin-Hotaka",
-    "category": "Vistas",
-    "notes": "Sube a 2.156 m con los Alpes del Norte nevados enfrente. Abre todo el año, pero según revendedores cierra del 24 al 27 nov 2026: hoy (21) está abierto. Arriba hace -5 °C. Según Google Maps (8 nov): el bus a Shin-Hotaka sale a los :40 de cada hora; con el de 8:40 estás arriba a las 10:38. Bus Hirayu → Matsumoto RESERVADO: 15:55 → 17:23 (Matsumoto Bus Terminal, junto a la estación), ¥3.000, ventanilla izquierda para ver el río. Mostrá el correo de confirmación al subir. Bajá del teleférico con tiempo: tenés que estar en la terminal de Hirayu antes de las ~15:40. Las tiendas de Nawate y Nakamachi ya están cerradas cuando llegás: van mañana, después del castillo",
+    "label": "Onsen bajo la nieve en Hirayu → Matsumoto",
+    "location": "Hirayu Onsen",
+    "category": "Paisaje",
+    "notes": "Se descartó el teleférico de Shin-Hotaka: el 20 nov lo pararon por viento fuerte y para hoy había nieve, ráfagas de 45–60 km/h y ~200 m de visibilidad arriba (-14 °C de sensación). Plan B: bus Nohi H02 de las 12:40 desde el Nohi Bus Center (o 12:41 en Kokubunji) → Hirayu Onsen 13:38, ¥1.600 en efectivo al bajar (sacá el 整理券 al subir por atrás). OJO: el bus 【Reserved】 Matsumoto–Takayama no sirve para ir a Hirayu: es con reserva y en esa dirección Hirayu es solo para subir. En Hirayu, onsen al aire libre en Hirayu no Mori (~¥700, a ~3 min de la parada). Bus Hirayu → Matsumoto RESERVADO: 15:55 → 17:23 (Matsumoto Bus Terminal, junto a la estación), ¥3.000, ventanilla izquierda para ver el río. Mostrá el correo de confirmación al subir. Estate en la terminal de Hirayu a las 15:40. Las tiendas de Nawate y Nakamachi ya están cerradas cuando llegás: van mañana, después del castillo",
     "weekday": "Sáb",
-    "food": "Almuerzo en la estación de arriba del teleférico",
+    "food": "Almuerzo en Hirayu (restaurante de Hirayu no Mori o la terminal)",
     "transport": [
       {
         "mode": "bus",
-        "line": "Nohi Bus",
+        "line": "Nohi Bus H02 (sin reserva)",
         "from": "Takayama",
-        "to": "Shin-Hotaka Ropeway",
-        "duration": "~1h30 (sale a los :40: 8:40, 9:40…)",
-        "cost": { "amount": 2200, "currency": "JPY", "approx": true },
-        "pay": ["tarjeta", "efectivo"]
-      },
-      {
-        "mode": "teleférico",
-        "line": "Shinhotaka Ropeway (líneas 1 y 2)",
-        "from": "Shin-Hotaka Onsen",
-        "to": "Nishi-Hotakaguchi (2.156 m)",
-        "via": ["Shirakabadaira"],
-        "duration": "~25min por trayecto",
-        "cost": { "amount": 3800, "currency": "JPY", "detail": "ida y vuelta" },
-        "pay": ["tarjeta", "efectivo"]
-      },
-      {
-        "mode": "bus",
-        "line": "Nohi Bus",
-        "from": "Shin-Hotaka",
         "to": "Hirayu Onsen",
-        "duration": "~35–45min",
-        "cost": { "amount": 910, "currency": "JPY" },
-        "pay": ["efectivo"]
+        "duration": "58min (12:40 → 13:38)",
+        "cost": { "amount": 1600, "currency": "JPY" },
+        "pay": ["efectivo"],
+        "note": "No es el 【Reserved】 Matsumoto–Takayama"
       },
       {
         "mode": "bus",
@@ -1787,25 +1769,24 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Teleférico de Shin-Hotaka (base)", "coords": [36.28583, 137.5752], "hours": "~8:30–16:45 · confirmá la última bajada en la boletería" },
-      { "name": "Estación de arriba (2.156 m)", "coords": [36.26805, 137.60174], "hours": "Última bajada ~16:45" },
+      { "name": "Estación de buses Nohi (bus de las 12:40)", "coords": [36.14108, 137.25137], "hours": "H02 a Hirayu 12:40" },
+      { "name": "Onsen Hirayu no Mori (ひらゆの森)", "coords": [36.18916, 137.55133], "hours": "~¥700 · a ~3 min de la parada" },
       { "name": "Hirayu Onsen", "coords": [36.19109, 137.55165], "hours": "Bus a Matsumoto 15:55 (reservado)" }
     ],
-    "budget": "$127",
+    "budget": "$98",
     "isTransit": false,
     "activitiesDay": [
-      "Teleférico de doble piso hasta 2.156 m",
-      "Mirador de los Alpes del Norte (Yarigatake y Hotaka)",
-      "Caminata corta en la nieve, arriba",
-      "Onsen en Hirayu mientras esperás el bus de las 15:55 (opcional)"
+      "Check-out del hostel (hasta las 11:00) y caminata al Nohi Bus Center",
+      { "text": "Onsen al aire libre bajo la nieve en Hirayu no Mori", "price": { "amount": 700, "currency": "JPY", "approx": true } },
+      "Almuerzo en Hirayu"
     ],
     "activitiesNight": ["Check-in en Matsumoto (llegás 17:23, a ~10 min a pie)", "Soba de Shinshu", "Dormir temprano"],
     "keepOrder": true,
-    "keepOrderReason": "teleférico de camino a Matsumoto",
+    "keepOrderReason": "bus de las 12:40 a Hirayu y el reservado de las 15:55 a Matsumoto",
     "morning": {
-      "wake": "7:20",
-      "leave": "8:15",
-      "why": "Con la mochila: bus Nohi de 8:40 a Shin-Hotaka (arriba 10:38). Bus a Matsumoto reservado: 15:55 desde Hirayu"
+      "wake": "9:00",
+      "leave": "11:00",
+      "why": "Teleférico descartado por viento y nieve. Bus Nohi H02 de las 12:40 a Hirayu (llega 13:38). Bus a Matsumoto reservado: 15:55 desde Hirayu"
     }
   },
   {
