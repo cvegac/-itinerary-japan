@@ -1893,7 +1893,7 @@
     "label": "Bici por Azumino con sol + castillo de Matsumoto",
     "location": "Azumino",
     "category": "Naturaleza",
-    "notes": "Llano y con los Alpes nevados de fondo. Bici: HELLO CYCLING, la bici compartida que se saca con la app (registrate la noche antes con tarjeta de crédito). Hay puerto frente a la estación de Hotaka, abierto las 24 horas: no hay que esperar a que abran las tiendas. Tarifa vieja de Azumino: ¥100 cada 15 min, tope ¥1.500 por 12 h (la e-bike, ¥300 la primera media hora y tope ¥2.000): confirmala en la app. Es feriado: mirá en la app que haya bicis en el puerto antes de salir y devolvela en un puerto con lugar libre. Plan B: Shinano-an o Hitsujiya, frente a la estación (desde las 10:00). A la vuelta, el castillo de Matsumoto. Saliendo del castillo, las calles Nawate y Nakamachi (las tiendas cierran ~17:00–18:00). Se pasó del 22 al 23 por el clima: el 22 había ráfagas de ~52 km/h y hoy hay sol y hasta 11 °C. Es feriado (Día de Acción de Gracias por el Trabajo): el castillo va a estar lleno, llegá antes de las 16:00. El Nakasendo (paso de Torii → Narai) se descartó: con la nieve del 22 y -7 °C a la mañana el paso iba a estar congelado",
+    "notes": "Llano y con los Alpes nevados de fondo. Las bicis se alquilan por hora junto a la estación de Hotaka (~¥200–400 la hora; en invierno, 10:00–17:00). HELLO CYCLING (la bici compartida con app) no sirve: el registro pide un SMS a un número de Japón, EE. UU. o Asia, y Colombia no está en la lista. A la vuelta, el castillo de Matsumoto. Saliendo del castillo, las calles Nawate y Nakamachi (las tiendas cierran ~17:00–18:00). Se pasó del 22 al 23 por el clima: el 22 había ráfagas de ~52 km/h y hoy hay sol y hasta 11 °C. Es feriado (Día de Acción de Gracias por el Trabajo): el castillo va a estar lleno, llegá antes de las 16:00. El Nakasendo (paso de Torii → Narai) se descartó: con la nieve del 22 y -7 °C a la mañana el paso iba a estar congelado",
     "weekday": "Lun",
     "food": "Soba con wasabi fresco y helado de wasabi en Daio",
     "transport": [
@@ -1908,12 +1908,12 @@
       },
       {
         "mode": "bicicleta",
-        "line": "HELLO CYCLING (app, puerto frente a la estación)",
+        "line": "Shinano-an / Hitsujiya (frente a la estación)",
         "from": "Hotaka",
         "to": "Granja Daio → ríos de Azumino",
         "duration": "~20–30 km, llano",
-        "cost": { "amount": 1500, "currency": "JPY", "max": 2000, "approx": true, "detail": "tope por 12 h" },
-        "pay": ["tarjeta"]
+        "cost": { "amount": 1500, "currency": "JPY", "max": 2500, "approx": true, "detail": "por el día" },
+        "pay": ["efectivo", "tarjeta"]
       }
     ],
     "accommodation": "Minka House (litera en dormitorio mixto)",
@@ -1925,14 +1925,14 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Estación Hotaka (puerto HELLO CYCLING)", "coords": [36.33957, 137.88176], "hours": "24 h, con la app" },
+      { "name": "Estación Hotaka (alquiler de bicis)", "coords": [36.33957, 137.88176] },
       { "name": "Granja de wasabi Daio", "coords": [36.33863, 137.90994], "hours": "9:00–16:30 (nov–feb)" },
       { "name": "Santuario Hotaka", "coords": [36.33862, 137.88431] },
       { "name": "Castillo de Matsumoto", "coords": [36.23864, 137.96887], "hours": "8:30–17:00 (entrada hasta 16:30)" },
       { "name": "Calle Nawate (Matsumoto)", "coords": [36.23461, 137.97199], "hours": "Tiendas ~10:00–18:00: de noche casi todo cerrado" },
       { "name": "Calle Nakamachi", "coords": [36.2338, 137.97146], "hours": "Tiendas ~10:00–17:00: de noche casi todo cerrado" }
     ],
-    "budget": "$84",
+    "budget": "$86",
     "isTransit": false,
     "activitiesDay": [
       "Granja de wasabi Daio y sus molinos de agua (gratis)",
@@ -1947,11 +1947,11 @@
       "Preparar la mochila para Fuji"
     ],
     "keepOrder": true,
-    "keepOrderReason": "la bici HELLO CYCLING se saca en Hotaka (en tren desde Matsumoto)",
+    "keepOrderReason": "la bici se alquila en Hotaka (en tren desde Matsumoto)",
     "morning": {
       "wake": "8:00",
       "leave": "8:45",
-      "why": "HELLO CYCLING funciona las 24 horas: no hay que esperar a las 10:00. Volvé ~16:00 para el castillo (entrada hasta 16:30) y después Nawate"
+      "why": "En invierno las bicis de Hotaka abren a las 10:00. Volvé ~16:00 para el castillo (entrada hasta 16:30) y después Nawate"
     }
   },
   {
