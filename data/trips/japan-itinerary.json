@@ -2623,7 +2623,7 @@
     "label": "Meiji Jingū, Shinjuku Gyoen, atardecer en Yanaka y Rikugien iluminado",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Se sacó el día de Hard Off en Chiba: en Hard Off y Book Off hay poco junk y precios de turista. La segunda mano local va mañana (las tienditas de Nishi-Ogikubo abren de jueves a domingo). Meiji Jingū temprano, cuando está tranquilo, y Shinjuku Gyoen desde las 9:00 (cierra los lunes, hoy abre). A la tarde, de vuelta a Nippori para la calle Yanaka Ginza y el atardecer en la escalera Yūyake Dandan (16:28). Rikugien va de noche: visita especial con los arces iluminados del 25 nov al 6 dic (18:00–20:30, última entrada 19:30, ¥1.200 en ventanilla solo efectivo o ¥1.000 comprando antes online). Entre las 17:00 y las 18:00 cierran el jardín, así que no vayas antes",
+    "notes": "Se sacó el día de Hard Off en Chiba: en Hard Off y Book Off hay poco junk y precios de turista. La segunda mano local va mañana a la mañana, antes del Chichibu Yomatsuri. Meiji Jingū temprano, cuando está tranquilo, y Shinjuku Gyoen desde las 9:00 (cierra los lunes, hoy abre). A la tarde, de vuelta a Nippori para la calle Yanaka Ginza y el atardecer en la escalera Yūyake Dandan (16:28). Rikugien va de noche: visita especial con los arces iluminados del 25 nov al 6 dic (18:00–20:30, última entrada 19:30, ¥1.200 en ventanilla solo efectivo o ¥1.000 comprando antes online). Entre las 17:00 y las 18:00 cierran el jardín, así que no vayas antes",
     "weekday": "Mié",
     "food": "Almuerzo en Shinjuku; izakaya en Ueno a la noche",
     "transport": [
@@ -2724,12 +2724,12 @@
   },
   {
     "date": "2026-12-03",
-    "label": "Segunda mano local: Kōenji, Nakano Broadway, Nishi-Ogikubo, Inokashira y Shinjuku de noche",
+    "label": "Segunda mano en Kōenji y Nakano, y fuegos artificiales del Chichibu Yomatsuri",
     "location": "Tokio",
     "category": "Naturaleza",
-    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. Día de segunda mano local por la línea Chūō, en vez de Hard Off: tiendas de barrio con más junk y precios de local. Kōenji: Shirouto no Ran (素人の乱, reciclaje de barrio con varias sucursales; en su blog, sillas a ¥30 y lotes a ¥300), Gonnosuke (古道具 権ノ助, muebles y objetos de la era Shōwa, ~10:00–20:00, cierra algunos lunes y miércoles) y ropa usada barata como PAPER MOON (cerca de la calle Pal, se sube por una escalera). Nakano Broadway: además de Mandarake, las tienditas chicas de los pisos 2 a 4. Nishi-Ogikubo: calle de antigüedades y objetos viejos; varias abren solo de jueves a domingo (Higurashi Koguten, 12:30–19:00, a 2 min de la salida sur). Los horarios son de guías: confirmalos en Google Maps la noche antes. Entre semana la Chūō rápida para en Kōenji y Nishi-Ogikubo",
+    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. A la mañana, segunda mano local: Kōenji (Shirouto no Ran, reciclaje de barrio; Gonnosuke, objetos de la era Shōwa, ~10:00–20:00; ropa usada barata como PAPER MOON) y las tienditas chicas de Nakano Broadway (abren ~12:00). Volvé a Nippori para el check-in de las 15:00: la recepción del Nagomi cierra a las 23:00 y esta noche volvés pasada la medianoche. A la tarde, Chichibu Yomatsuri: uno de los 3 grandes festivales de carrozas de Japón (patrimonio de la UNESCO), con carrozas gigantes iluminadas y ~5.000 fuegos artificiales de 19:30 a 22:00 (final 21:50) desde el parque Hitsujiyama. Seibu agrega Laview extra ese día: ida en el むさし23号 (Ikebukuro 16:00 → Seibu-Chichibu 17:31) y vuelta en el むさし64号 (22:24 → Ikebukuro 23:44), el ÚLTIMO a Ikebukuro. Todos los asientos son reservados: comprá ida y vuelta YA en Smooz (la web de Seibu) o en una máquina de Seibu; se agotan. Expreso ¥900 por tramo + boleto ¥800. Mirá los fuegos del lado de la estación Seibu-Chichibu y salí 21:55 para llegar al tren; si lo perdés, el 92号 de las 23:04 solo llega a Tokorozawa. Abrigate: a la noche hace ~0 °C",
     "weekday": "Jue",
-    "food": "Almuerzo en Kōenji; yakitori en Omoide Yokocho",
+    "food": "Almuerzo en Kōenji; puestos del festival en Chichibu (yakisoba, amazake caliente)",
     "transport": [
       { "mode": "caminar", "from": "Minpaku (Negishi)", "to": "Nagomi Hotel Nippori", "duration": "~12min", "note": "Con la valija, a dejarla en recepción" },
       {
@@ -2750,45 +2750,58 @@
         "duration": "~3min",
         "cost": { "amount": 150, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Las tiendas de Nakano Broadway abren ~12:00"
+        "note": "Las tiendas de Nakano Broadway abren ~12:00. Salí ~14:15"
       },
       {
         "mode": "tren",
-        "line": "JR Chūō Line rápida",
+        "line": "JR Chūō rápida + Yamanote (cambio en Shinjuku)",
         "from": "Nakano",
-        "to": "Nishi-Ogikubo",
-        "duration": "~8min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "tren",
-        "line": "JR Chūō Line",
-        "from": "Nishi-Ogikubo",
-        "to": "Kichijoji",
-        "duration": "~2min",
-        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "to": "Nippori",
+        "duration": "~35min",
+        "cost": { "amount": 260, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "El parque Inokashira queda a 5 min"
+        "note": "Check-in en el Nagomi a las 15:00 (12 min a pie de Nippori)"
       },
       {
         "mode": "tren",
-        "line": "JR Chūō Line rápida",
-        "from": "Kichijoji",
-        "to": "Shinjuku",
+        "line": "JR Yamanote",
+        "from": "Nippori",
+        "to": "Ikebukuro",
         "duration": "~15min",
-        "cost": { "amount": 230, "currency": "JPY", "approx": true },
+        "cost": { "amount": 180, "currency": "JPY", "approx": true },
         "pay": ["suica"],
+        "note": "Llegá 15:45 al andén del Seibu"
+      },
+      {
+        "mode": "tren",
+        "line": "Seibu Laview むさし23号 (asiento reservado)",
+        "from": "Ikebukuro",
+        "to": "Seibu-Chichibu",
+        "duration": "1h31 (16:00 → 17:31)",
+        "cost": { "amount": 1700, "currency": "JPY", "detail": "boleto ¥800 + expreso ¥900" },
+        "pay": ["suica", "tarjeta"],
+        "note": "Expreso reservado en Smooz o en la máquina de Seibu. Plan B: ちちぶ21号 15:30 → 16:54"
+      },
+      {
+        "mode": "tren",
+        "line": "Seibu Laview むさし64号 (asiento reservado)",
+        "from": "Seibu-Chichibu",
+        "to": "Ikebukuro",
+        "duration": "1h20 (22:24 → 23:44)",
+        "cost": { "amount": 1700, "currency": "JPY", "detail": "boleto ¥800 + expreso ¥900" },
+        "pay": ["suica", "tarjeta"],
+        "note": "El ÚLTIMO a Ikebukuro. El anterior: ちちぶ60号 21:24 → 22:46",
         "vuelta": true
       },
       {
         "mode": "tren",
         "line": "JR Yamanote",
-        "from": "Shinjuku",
+        "from": "Ikebukuro",
         "to": "Nippori",
-        "duration": "~25min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "duration": "~15min",
+        "cost": { "amount": 180, "currency": "JPY", "approx": true },
         "pay": ["suica"],
+        "note": "Llegás ~0:05; al Nagomi son 12 min a pie",
         "vuelta": true
       }
     ],
@@ -2823,34 +2836,35 @@
         "hours": "Tiendas ~12:00–20:00"
       },
       {
-        "name": "Calle de antigüedades de Nishi-Ogikubo",
-        "coords": [35.7025, 139.6002],
-        "icon": "♻️",
-        "byTransit": true,
-        "hours": "Varias abren jue–dom · Higurashi Koguten 12:30–19:00"
+        "name": "Santuario Chichibu: carrozas del Yomatsuri",
+        "coords": [35.99758, 139.08424],
+        "icon": "🏮",
+        "night": true,
+        "hours": "Carrozas iluminadas de tarde y noche"
       },
-      { "name": "Parque Inokashira (lago y arces)", "coords": [35.69891, 139.5787], "byTransit": true, "hours": "Atardecer 16:28 sobre el lago" },
-      { "name": "Mirador gratis del Gobierno de Tokio (Tochō)", "coords": [35.6903, 139.69155], "hours": "Hasta ~22:00 · gratis" },
-      { "name": "Omoide Yokocho (yakitori bajo las vías)", "coords": [35.69302, 139.6997], "icon": "🏮", "night": true },
-      { "name": "Golden Gai y Godzilla de Kabukichō", "coords": [35.69399, 139.7047], "night": true, "icon": "🍸" }
+      {
+        "name": "Fuegos artificiales del Chichibu Yomatsuri (parque Hitsujiyama)",
+        "coords": [35.98532, 139.08831],
+        "icon": "🎆",
+        "night": true,
+        "hours": "19:30–22:00 · final 21:50 · ~5.000 fuegos"
+      }
     ],
-    "budget": "$101",
+    "budget": "$122",
     "isTransit": false,
     "activitiesDay": [
       "Kōenji: Shirouto no Ran, Gonnosuke y ropa usada barata",
       "Nakano Broadway: las tienditas chicas, no solo Mandarake",
-      "Nishi-Ogikubo: antigüedades y objetos viejos",
-      "Atardecer en el lago Inokashira (Kichijōji)"
+      "Check-in en el Nagomi a las 15:00"
     ],
-    "activitiesNight": [
-      "Tokio de noche desde el mirador gratis del Tochō",
-      "Yakitori en Omoide Yokocho",
-      "Golden Gai y Kabukichō",
-      "Ropa en Shinjuku: Uniqlo, GU, Beams Japan"
-    ],
+    "activitiesNight": ["Chichibu Yomatsuri: carrozas gigantes con faroles", "Fuegos artificiales de invierno (19:30–22:00)", "Puestos de comida del festival"],
     "keepOrder": true,
-    "keepOrderReason": "Kōenji cuando abren las tiendas, Nakano Broadway desde las 12:00, Nishi-Ogikubo (abre 12:30) e Inokashira al atardecer",
-    "morning": { "wake": "8:30", "leave": "9:30", "why": "Valija al Nagomi y a Kōenji para cuando abren las tiendas (~11:00)" }
+    "keepOrderReason": "Kōenji cuando abren las tiendas, Nakano Broadway desde las 12:00, check-in a las 15:00 y el Laview de las 16:00 a Chichibu",
+    "morning": {
+      "wake": "8:30",
+      "leave": "9:30",
+      "why": "Valija al Nagomi y a Kōenji para cuando abren las tiendas (~11:00); a las 14:15 hay que volver para el check-in"
+    }
   },
   {
     "date": "2026-12-04",
