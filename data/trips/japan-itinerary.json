@@ -2620,71 +2620,42 @@
   },
   {
     "date": "2026-12-02",
-    "label": "Día Hard Off en Chiba, atardecer en Yanaka y Rikugien iluminado",
+    "label": "Meiji Jingū, Shinjuku Gyoen, atardecer en Yanaka y Rikugien iluminado",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "El único día de Hard Off afuera: Chiba por la JR Jōban, directo desde Nippori. Las ubicaciones salen de OpenStreetMap y los horarios son los típicos de la cadena (~10:00–20:00): confirmalos en Google Maps la noche anterior. Ropa: Off House de Takayanagi (usada) y a la noche Ameyoko y Okachimachi (mont-bell y Art Sports para outdoor). Rikugien va de noche: visita especial con los arces iluminados del 25 nov al 6 dic (18:00–20:30, última entrada 19:30, ¥1.200 en ventanilla solo efectivo o ¥1.000 comprando antes online). Entre las 17:00 y las 18:00 cierran el jardín, así que no vayas antes",
+    "notes": "Se sacó el día de Hard Off en Chiba: en Hard Off y Book Off hay poco junk y precios de turista. La segunda mano local va mañana (las tienditas de Nishi-Ogikubo abren de jueves a domingo). Meiji Jingū temprano, cuando está tranquilo, y Shinjuku Gyoen desde las 9:00 (cierra los lunes, hoy abre). A la tarde, de vuelta a Nippori para la calle Yanaka Ginza y el atardecer en la escalera Yūyake Dandan (16:28). Rikugien va de noche: visita especial con los arces iluminados del 25 nov al 6 dic (18:00–20:30, última entrada 19:30, ¥1.200 en ventanilla solo efectivo o ¥1.000 comprando antes online). Entre las 17:00 y las 18:00 cierran el jardín, así que no vayas antes",
     "weekday": "Mié",
-    "food": "Almuerzo en Kashiwa; izakaya en Ueno a la noche",
+    "food": "Almuerzo en Shinjuku; izakaya en Ueno a la noche",
     "transport": [
       {
         "mode": "tren",
-        "line": "JR Jōban Line (rápido)",
+        "line": "JR Yamanote",
         "from": "Nippori",
-        "to": "Matsudo",
-        "duration": "~20min",
-        "cost": { "amount": 240, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "tren",
-        "line": "JR Jōban Line (rápido)",
-        "from": "Matsudo",
-        "to": "Kashiwa",
-        "duration": "~10min",
-        "cost": { "amount": 220, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "tren",
-        "line": "Tobu Urban Park Line",
-        "from": "Kashiwa",
-        "to": "Toyoshiki",
-        "duration": "~3min",
-        "cost": { "amount": 160, "currency": "JPY", "approx": true },
+        "to": "Harajuku",
+        "duration": "~25min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Opcional: si vas justo de tiempo, salteá Toyoshiki"
+        "note": "Meiji Jingū está al salir de la estación"
       },
       {
         "mode": "tren",
-        "line": "Tobu Urban Park Line",
-        "from": "Toyoshiki",
-        "to": "Takayanagi",
-        "duration": "~15min",
-        "cost": { "amount": 260, "currency": "JPY", "approx": true },
+        "line": "JR Yamanote",
+        "from": "Harajuku",
+        "to": "Shinjuku",
+        "duration": "~5min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "via": ["Kashiwa"]
+        "note": "Shinjuku Gyoen abre a las 9:00 (puerta Shinjuku, 10 min a pie)"
       },
       {
         "mode": "tren",
-        "line": "Tobu Urban Park Line",
-        "from": "Takayanagi",
-        "to": "Kashiwa",
-        "duration": "~12min",
-        "cost": { "amount": 230, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "vuelta": true
-      },
-      {
-        "mode": "tren",
-        "line": "JR Jōban Line (rápido)",
-        "from": "Kashiwa",
+        "line": "JR Yamanote",
+        "from": "Shinjuku",
         "to": "Nippori",
-        "duration": "~30min",
-        "cost": { "amount": 480, "currency": "JPY", "approx": true },
+        "duration": "~25min",
+        "cost": { "amount": 210, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "vuelta": true,
-        "note": "Volvé ~15:45 para el atardecer en Yanaka (16:28)"
+        "note": "Volvé ~15:30 para Yanaka Ginza y el atardecer (16:28)"
       },
       {
         "mode": "tren",
@@ -2716,34 +2687,8 @@
     "checkIn": "16:00–00:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      {
-        "name": "Hard Off Matsudo",
-        "coords": [35.7962, 139.8971],
-        "icon": "♻️",
-        "byTransit": true,
-        "hours": "Abre ~10:00 (confirmalo) · ~17 min a pie de la estación Matsudo"
-      },
-      {
-        "name": "Hobby Off Kashiwa (junto a la estación)",
-        "coords": [35.8606, 139.9714],
-        "icon": "♻️",
-        "byTransit": true,
-        "hours": "Abre ~10:00 (confirmalo)"
-      },
-      {
-        "name": "Hard Off Kashiwa Toyoshiki (opcional)",
-        "coords": [35.8641, 139.948],
-        "icon": "♻️",
-        "byTransit": true,
-        "hours": "~11 min a pie de la estación Toyoshiki"
-      },
-      {
-        "name": "Hard Off + Off House Kashiwa Takayanagi",
-        "coords": [35.808, 139.9984],
-        "icon": "♻️",
-        "byTransit": true,
-        "hours": "Al lado de la estación Takayanagi · Off House: ropa usada"
-      },
+      { "name": "Santuario Meiji Jingū (bosque y torii gigante)", "coords": [35.67484, 139.69963], "hours": "Abre al amanecer · gratis" },
+      { "name": "Jardín Shinjuku Gyoen (arces y ginkgos)", "coords": [35.68507, 139.70955], "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado" },
       {
         "name": "Escalera Yūyake Dandan y calle Yanaka Ginza",
         "coords": [35.72765, 139.76717],
@@ -2757,65 +2702,53 @@
         "night": true,
         "byTransit": true
       },
-      { "name": "Ameyoko", "coords": [35.71002, 139.77454] },
-      { "name": "Hard Off + Hobby Off Ueno-Okachimachi", "coords": [35.7087, 139.7741], "icon": "♻️", "night": true }
+      { "name": "Ameyoko", "coords": [35.71002, 139.77454] }
     ],
-    "budget": "$109",
+    "budget": "$105",
     "isTransit": false,
-    "activitiesDay": ["Hard Off de Matsudo y Hobby Off de Kashiwa", "Hard Off + Off House de Takayanagi (ropa usada en Off House)"],
+    "activitiesDay": [
+      "Santuario Meiji Jingū y su bosque",
+      { "text": "Jardín Shinjuku Gyoen", "price": { "amount": 500, "currency": "JPY", "approx": true } },
+      "Almuerzo en Shinjuku",
+      "Calle Yanaka Ginza y sus tienditas"
+    ],
     "activitiesNight": [
       "Atardecer en la escalera Yūyake Dandan",
       { "text": "Rikugien iluminado: arces de noche", "price": { "amount": 1200, "currency": "JPY" } },
-      "Ameyoko: puestos, ropa outdoor y Hard Off de Okachimachi",
+      "Ameyoko: puestos y ropa outdoor (mont-bell, Art Sports)",
       "Izakaya en Ueno"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Las tiendas abren a las 10:00, Yanaka va al atardecer y Rikugien iluminado abre a las 18:00",
-    "morning": { "wake": "8:30", "leave": "9:20", "why": "Sin Rikugien a la mañana: a las ~10:00 estás en el Hard Off de Matsudo" }
+    "keepOrderReason": "Meiji Jingū y Shinjuku Gyoen de mañana, Yanaka al atardecer y Rikugien iluminado abre a las 18:00",
+    "morning": { "wake": "7:30", "leave": "8:15", "why": "Meiji Jingū temprano, que es cuando está tranquilo, y Shinjuku Gyoen cuando abre a las 9:00" }
   },
   {
     "date": "2026-12-03",
-    "label": "Meiji Jingū, Shinjuku Gyoen, Nakano Broadway, Inokashira y Shinjuku de noche",
+    "label": "Segunda mano local: Kōenji, Nakano Broadway, Nishi-Ogikubo, Inokashira y Shinjuku de noche",
     "location": "Tokio",
     "category": "Naturaleza",
-    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. El Museo Ghibli de diciembre se agotó el mismo 10 nov, así que el día arranca en Meiji Jingū. Kōenji (entre Nakano y Kichijōji) tiene Hard Off y mucha ropa usada, si te sobra tiempo",
+    "notes": "Cambio de hospedaje: dejá la valija en el Nagomi temprano. Día de segunda mano local por la línea Chūō, en vez de Hard Off: tiendas de barrio con más junk y precios de local. Kōenji: Shirouto no Ran (素人の乱, reciclaje de barrio con varias sucursales; en su blog, sillas a ¥30 y lotes a ¥300), Gonnosuke (古道具 権ノ助, muebles y objetos de la era Shōwa, ~10:00–20:00, cierra algunos lunes y miércoles) y ropa usada barata como PAPER MOON (cerca de la calle Pal, se sube por una escalera). Nakano Broadway: además de Mandarake, las tienditas chicas de los pisos 2 a 4. Nishi-Ogikubo: calle de antigüedades y objetos viejos; varias abren solo de jueves a domingo (Higurashi Koguten, 12:30–19:00, a 2 min de la salida sur). Los horarios son de guías: confirmalos en Google Maps la noche antes. Entre semana la Chūō rápida para en Kōenji y Nishi-Ogikubo",
     "weekday": "Jue",
-    "food": "Yakitori en Omoide Yokocho",
+    "food": "Almuerzo en Kōenji; yakitori en Omoide Yokocho",
     "transport": [
-      {
-        "mode": "caminar",
-        "from": "Minpaku (Negishi)",
-        "to": "Nagomi Hotel Nippori",
-        "duration": "~12min",
-        "note": "Con la valija, a dejarla en recepción"
-      },
+      { "mode": "caminar", "from": "Minpaku (Negishi)", "to": "Nagomi Hotel Nippori", "duration": "~12min", "note": "Con la valija, a dejarla en recepción" },
       {
         "mode": "tren",
-        "line": "JR Yamanote",
+        "line": "JR Yamanote + Chūō rápida (cambio en Shinjuku)",
         "from": "Nippori",
-        "to": "Harajuku",
-        "duration": "~25min",
-        "cost": { "amount": 210, "currency": "JPY", "approx": true },
+        "to": "Kōenji",
+        "duration": "~40min",
+        "cost": { "amount": 310, "currency": "JPY", "approx": true },
         "pay": ["suica"],
-        "note": "Del Nagomi a Nippori son ~12 min. Meiji Jingū está al salir de la estación"
+        "note": "Del Nagomi a Nippori son ~12 min"
       },
       {
         "mode": "tren",
-        "line": "JR Yamanote",
-        "from": "Harajuku",
-        "to": "Shinjuku",
-        "duration": "~5min",
-        "cost": { "amount": 150, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "note": "Shinjuku Gyoen abre a las 9:00 (puerta Shinjuku, 10 min a pie)"
-      },
-      {
-        "mode": "tren",
-        "line": "JR Chūō Line rápida",
-        "from": "Shinjuku",
+        "line": "JR Chūō Line",
+        "from": "Kōenji",
         "to": "Nakano",
-        "duration": "~5min",
-        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "duration": "~3min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "Las tiendas de Nakano Broadway abren ~12:00"
       },
@@ -2823,9 +2756,18 @@
         "mode": "tren",
         "line": "JR Chūō Line rápida",
         "from": "Nakano",
-        "to": "Kichijoji",
-        "duration": "~10min",
+        "to": "Nishi-Ogikubo",
+        "duration": "~8min",
         "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      {
+        "mode": "tren",
+        "line": "JR Chūō Line",
+        "from": "Nishi-Ogikubo",
+        "to": "Kichijoji",
+        "duration": "~2min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
         "pay": ["suica"],
         "note": "El parque Inokashira queda a 5 min"
       },
@@ -2859,36 +2801,46 @@
     "checkIn": "15:00–23:00",
     "checkOut": "hasta 10:00",
     "pois": [
-      { "name": "Santuario Meiji Jingū (bosque y torii gigante)", "coords": [35.67484, 139.69963], "hours": "Abre al amanecer · gratis" },
       {
-        "name": "Jardín Shinjuku Gyoen (arces y ginkgos)",
-        "coords": [35.68507, 139.70955],
-        "hours": "9:00–16:30 (entrada hasta 16:00) · lunes cerrado"
+        "name": "Shirouto no Ran (reciclaje de barrio, Kōenji)",
+        "coords": [35.70686, 139.64608],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "Varias sucursales en la zona norte"
       },
       {
-        "name": "Nakano Broadway (Mandarake y tiendas geek)",
+        "name": "Gonnosuke (古道具 権ノ助, objetos de la era Shōwa)",
+        "coords": [35.70621, 139.65118],
+        "icon": "♻️",
+        "byTransit": true,
+        "hours": "~10:00–20:00 · cierra algunos lun y mié"
+      },
+      {
+        "name": "Nakano Broadway (Mandarake y tienditas chicas)",
         "coords": [35.70924, 139.66569],
         "icon": "🤓",
         "byTransit": true,
         "hours": "Tiendas ~12:00–20:00"
       },
       {
-        "name": "Parque Inokashira (lago y arces)",
-        "coords": [35.69891, 139.5787],
+        "name": "Calle de antigüedades de Nishi-Ogikubo",
+        "coords": [35.7025, 139.6002],
+        "icon": "♻️",
         "byTransit": true,
-        "hours": "Atardecer 16:28 sobre el lago"
+        "hours": "Varias abren jue–dom · Higurashi Koguten 12:30–19:00"
       },
+      { "name": "Parque Inokashira (lago y arces)", "coords": [35.69891, 139.5787], "byTransit": true, "hours": "Atardecer 16:28 sobre el lago" },
       { "name": "Mirador gratis del Gobierno de Tokio (Tochō)", "coords": [35.6903, 139.69155], "hours": "Hasta ~22:00 · gratis" },
       { "name": "Omoide Yokocho (yakitori bajo las vías)", "coords": [35.69302, 139.6997], "icon": "🏮", "night": true },
       { "name": "Golden Gai y Godzilla de Kabukichō", "coords": [35.69399, 139.7047], "night": true, "icon": "🍸" }
     ],
-    "budget": "$104",
+    "budget": "$101",
     "isTransit": false,
     "activitiesDay": [
-      "Santuario Meiji Jingū y su bosque",
-      { "text": "Jardín Shinjuku Gyoen", "price": { "amount": 500, "currency": "JPY", "approx": true } },
-      "Nakano Broadway",
-      "Kichijōji (ropa barata y cafés) y atardecer en el lago Inokashira"
+      "Kōenji: Shirouto no Ran, Gonnosuke y ropa usada barata",
+      "Nakano Broadway: las tienditas chicas, no solo Mandarake",
+      "Nishi-Ogikubo: antigüedades y objetos viejos",
+      "Atardecer en el lago Inokashira (Kichijōji)"
     ],
     "activitiesNight": [
       "Tokio de noche desde el mirador gratis del Tochō",
@@ -2897,15 +2849,15 @@
       "Ropa en Shinjuku: Uniqlo, GU, Beams Japan"
     ],
     "keepOrder": true,
-    "keepOrderReason": "Meiji Jingū y Shinjuku Gyoen de mañana, Nakano cuando abren las tiendas e Inokashira al atardecer",
-    "morning": { "wake": "7:30", "leave": "8:15", "why": "Valija al Nagomi y a Meiji Jingū temprano, que es cuando está tranquilo" }
+    "keepOrderReason": "Kōenji cuando abren las tiendas, Nakano Broadway desde las 12:00, Nishi-Ogikubo (abre 12:30) e Inokashira al atardecer",
+    "morning": { "wake": "8:30", "leave": "9:30", "why": "Valija al Nagomi y a Kōenji para cuando abren las tiendas (~11:00)" }
   },
   {
     "date": "2026-12-04",
     "label": "Akihabara electrónica, Asakusa y la Skytree de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Último día completo: las compras de electrónica y el reloj quedan para hoy (ver tareas del 4 dic). Hard Off y Mandarake de Akihabara quedan a pasos de Akizuki. Asakusa de tarde y noche: Nakamise cierra ~19:00 pero el templo iluminado es lo mejor. De ahí, 20 min a pie por el río a la Skytree. Mañana el vuelo: armá la maleta esta noche",
+    "notes": "Último día completo: las compras de electrónica y el reloj quedan para hoy (ver tareas del 4 dic). Suruga-ya (Honkan, Ekimae y Game-kan; lun–vie 11:00–21:00) y Mandarake quedan a pasos de Akizuki: Suruga-ya tiene más junk y mejores precios que Hard Off. Asakusa de tarde y noche: Nakamise cierra ~19:00 pero el templo iluminado es lo mejor. De ahí, 20 min a pie por el río a la Skytree. Mañana el vuelo: armá la maleta esta noche",
     "weekday": "Vie",
     "food": "Melon pan en Asakusa; cena en Solamachi",
     "transport": [
@@ -2962,7 +2914,7 @@
       { "name": "Yodobashi Akiba y Kitamura Camera (usados)", "coords": [35.6986, 139.7745], "icon": "📷" },
       { "name": "Akizuki Denshi (秋月電子通商)", "coords": [35.69935, 139.76981], "icon": "🔌", "hours": "Abre ~11:00 (confirmalo)" },
       { "name": "Sengoku Densho (千石電商)", "coords": [35.69933, 139.77022], "icon": "🔌" },
-      { "name": "Hard Off Akihabara 1号店", "coords": [35.7005, 139.7705], "icon": "♻️" },
+      { "name": "Suruga-ya Akihabara Honkan (también Ekimae y Game-kan)", "coords": [35.70156, 139.77183], "icon": "♻️", "hours": "Lun–vie 11:00–21:00" },
       { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053], "hours": "12:00–20:00" },
       { "name": "Calle Kappabashi (utensilios de cocina)", "coords": [35.71306, 139.7885], "hours": "Tiendas ~9:00–17:00" },
       {
@@ -2981,7 +2933,7 @@
     "isTransit": false,
     "activitiesDay": [
       { "text": "Jardín Koishikawa Kōrakuen", "price": { "amount": 300, "currency": "JPY", "approx": true } },
-      "Akihabara: Akizuki, Sengoku, Yodobashi, Hard Off y Mandarake",
+      "Akihabara: Akizuki, Sengoku, Yodobashi, Suruga-ya y Mandarake",
       "Reloj Citizen y figuras grandes, si todavía las querés",
       "Calle Kappabashi"
     ],
