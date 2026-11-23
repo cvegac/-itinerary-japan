@@ -2857,7 +2857,7 @@
     "label": "Akihabara electrónica, Asakusa y la Skytree de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Último día completo: las compras de electrónica y el reloj quedan para hoy (ver tareas del 4 dic). Suruga-ya (Honkan, Ekimae y Game-kan; lun–vie 11:00–21:00) y Mandarake quedan a pasos de Akizuki: Suruga-ya tiene más junk y mejores precios que Hard Off. Asakusa de tarde y noche: Nakamise cierra ~19:00 pero el templo iluminado es lo mejor. De ahí, 20 min a pie por el río a la Skytree. Mañana el vuelo: armá la maleta esta noche",
+    "notes": "Último día completo: las compras de electrónica y el reloj quedan para hoy (ver tareas del 4 dic). Suruga-ya (Honkan, Ekimae y Game-kan; lun–vie 11:00–21:00) y Mandarake quedan a pasos de Akizuki: Suruga-ya tiene más junk y mejores precios que Hard Off. Asakusa de tarde y noche: Nakamise cierra ~19:00 pero el templo iluminado es lo mejor. De ahí, 20 min a pie por el río a la Skytree. Mañana el vuelo: armá la maleta esta noche. Arcades de Akihabara (los de experiencia, no grúas): GiGO tiene varios edificios y Taito Station abre hasta tarde. Buscá GITADORA (guitarra y batería), Taiko no Tatsujin, maimai y Sound Voltex, juegos de disparos, Mario Kart Arcade y las cabinas de Gundam (Senjō no Kizuna). En Taito HEY están los retro. Casi todo cuesta ¥100–200 la partida",
     "weekday": "Vie",
     "food": "Melon pan en Asakusa; cena en Solamachi",
     "transport": [
@@ -2915,6 +2915,13 @@
       { "name": "Akizuki Denshi (秋月電子通商)", "coords": [35.69935, 139.76981], "icon": "🔌", "hours": "Abre ~11:00 (confirmalo)" },
       { "name": "Sengoku Densho (千石電商)", "coords": [35.69933, 139.77022], "icon": "🔌" },
       { "name": "Suruga-ya Akihabara Honkan (también Ekimae y Game-kan)", "coords": [35.70156, 139.77183], "icon": "♻️", "hours": "Lun–vie 11:00–21:00" },
+      { "name": "Arcades GiGO y Taito HEY (ritmo, disparos y retro)", "coords": [35.69905, 139.77084], "icon": "🕹️" },
+      {
+        "name": "Taito Station Akihabara (GITADORA, Taiko, cabinas Gundam)",
+        "coords": [35.70024, 139.77174],
+        "icon": "🕹️",
+        "hours": "~10:00–23:30 (confirmalo)"
+      },
       { "name": "Tienda Mandarake Complex", "coords": [35.70035, 139.77053], "hours": "12:00–20:00" },
       { "name": "Calle Kappabashi (utensilios de cocina)", "coords": [35.71306, 139.7885], "hours": "Tiendas ~9:00–17:00" },
       {
@@ -2929,11 +2936,12 @@
         "hours": "Mirador 10:00–22:00 (última entrada 21:00) · Solamachi 10:00–21:00"
       }
     ],
-    "budget": "$101",
+    "budget": "$110",
     "isTransit": false,
     "activitiesDay": [
       { "text": "Jardín Koishikawa Kōrakuen", "price": { "amount": 300, "currency": "JPY", "approx": true } },
       "Akihabara: Akizuki, Sengoku, Yodobashi, Suruga-ya y Mandarake",
+      { "text": "Arcades: GITADORA, Taiko no Tatsujin, disparos y cabinas Gundam", "price": { "amount": 1500, "currency": "JPY", "approx": true } },
       "Reloj Citizen y figuras grandes, si todavía las querés",
       "Calle Kappabashi"
     ],
