@@ -2174,21 +2174,22 @@
   },
   {
     "date": "2026-11-27",
-    "label": "Del Fuji al mar: Ito, en la península de Izu",
+    "label": "Fuji-Q de paseo y del Fuji al mar: Ito, en la península de Izu",
     "location": "Ito",
     "category": "Logística",
-    "notes": "Según Google Maps (8 nov): bus Mishima-Kawaguchiko Liner 9:20 desde la estación Kawaguchiko → Kawana 12:05 (2h46, ~¥3,480 en total). Otras salidas: 10:19, 10:54 y 11:19. La base es Kawana, dos paradas de Izukyu al sur de Ito. El check-in es sin recepción y solo de 16:00 a 22:00: andá primero a Kawana a dejar la mochila y después bajá a cenar a Ito. Silencio de 22:00 a 7:00",
+    "notes": "Bus RESERVADO: Mishima-Kawaguchiko Liner de las 16:10 desde la parada Fuji-Q Highland (en la entrada del parque) → Mishima 17:30, asiento con QR en el mail de Fujiyama Connect (¥2,500 web). Los de más temprano estaban agotados. A la mañana, Fuji-Q Highland de paseo: la entrada es gratis y se pasea sin subir a los juegos (9:00–18:00; la rueda de la fortuna está cerrada por obras). La mochila va a un locker de la entrada. Desde Mishima: JR a Atami, JR Ito Line a Ito e Izukyu a Kawana, llegada ~18:45. La base es Kawana, dos paradas de Izukyu al sur de Ito. El check-in es sin recepción y solo de 16:00 a 22:00: andá primero a Kawana a dejar la mochila y después bajá a cenar a Ito. Silencio de 22:00 a 7:00",
     "weekday": "Vie",
     "food": "Pescado seco (himono) y sushi de Ito",
     "transport": [
       {
         "mode": "bus",
         "line": "Mishima-Kawaguchiko Liner (Fujikyu)",
-        "from": "Kawaguchiko",
+        "from": "Fuji-Q Highland",
         "to": "Estación de Mishima",
-        "duration": "~1h30–2h",
-        "cost": { "amount": 2500, "currency": "JPY", "approx": true },
-        "pay": ["suica", "efectivo"]
+        "duration": "1h20",
+        "cost": { "amount": 2500, "currency": "JPY" },
+        "pay": ["boleto"],
+        "note": "Reservado: sale 16:10, llega 17:30 a la salida norte de Mishima. Mostrá el QR del mail al subir"
       },
       { "mode": "tren", "line": "JR Tokaido Line", "from": "Mishima", "to": "Atami", "duration": "~15min", "pay": ["boleto"] },
       {
@@ -2220,22 +2221,28 @@
     "checkIn": "16:00–22:00",
     "checkOut": "hasta 11:00",
     "pois": [
+      {
+        "name": "Fuji-Q Highland (paseo, entrada gratis)",
+        "coords": [35.4868, 138.7795],
+        "icon": "🎢",
+        "hours": "9:00–18:00 · entrada gratis, juegos aparte · bus a Mishima 16:10 desde la entrada"
+      },
       { "name": "Paseo del río Matsukawa", "coords": [34.97041, 139.0958] },
       { "name": "Tokaikan (ryokan histórico)", "coords": [34.97169, 139.09706], "hours": "9:00–21:00 · cierra el 1.er y 3.er martes" }
     ],
     "budget": "$101",
     "isTransit": false,
     "activitiesDay": [
-      "Fuji desde el bus, por última vez de cerca",
-      "Check-in en Kawana (antes de las 22:00)",
-      "Paseo por el río Matsukawa",
-      "Pueblo onsen de Ito"
+      "Fuji-Q Highland de paseo, sin juegos: las montañas rusas con el Fuji de fondo",
+      "Lisa y Gaspard Town (rincón parisino del parque, gratis)",
+      "Bus de las 16:10 a Mishima: el Fuji por última vez de cerca",
+      "Check-in en Kawana (antes de las 22:00)"
     ],
-    "activitiesNight": ["Baños públicos de Ito (sotoyu)", "Cena de pescado en Ito", "Tren de vuelta a Kawana (confirmá el último)", "Descanso"],
+    "activitiesNight": ["Cena de pescado en Ito", "Paseo nocturno por el río Matsukawa", "Tren de vuelta a Kawana (confirmá el último)", "Descanso"],
     "morning": {
       "wake": "8:00",
-      "leave": "8:50",
-      "why": "Con la mochila: bus de 9:20 desde la estación Kawaguchiko. Llegás a Kawana 12:05; el check-in es desde las 16:00"
+      "leave": "9:00",
+      "why": "Fuji-Q abre a las 9:00 y queda al lado de la cápsula. La mochila va al locker; el bus reservado sale 16:10 desde la entrada del parque"
     }
   },
   {
