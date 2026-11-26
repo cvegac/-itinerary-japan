@@ -27,6 +27,7 @@ import NotesView from "@/components/NotesView";
 import AgendaView from "@/components/AgendaView";
 import InviteBanner from "@/components/InviteBanner";
 import { useSharedNotes } from "@/lib/use-shared-notes";
+import { PullIndicator, usePullToRefresh } from "@/lib/use-pull-to-refresh";
 import ListModal, { type ListTarget } from "@/components/ListModal";
 
 const TripMap = lazy(() => import("@/components/TripMap"));
@@ -132,6 +133,7 @@ export default function TripApp({ tripData }: Props) {
     </MapLayersMenu>
   );
   const [snap, setSnap] = useState<Snap>("half");
+  const pullPage = usePullToRefresh(() => window.location.reload());
   const [focusedPoi, setFocusedPoi] = useState<{ index: number; nonce: number } | null>(null);
   const [status, setStatus] = useState<TripStatus | null>(null);
   const [mapFullscreen, setMapFullscreen] = useState(false);
@@ -489,7 +491,9 @@ export default function TripApp({ tripData }: Props) {
             <main
               className="absolute inset-x-0 z-20 overflow-y-auto bg-bg"
               style={{ top: 0, bottom: NAV_HEIGHT, paddingTop: TOP_INSET }}
+              {...pullPage.bind}
             >
+              <PullIndicator pull={pullPage.pull} />
               {summaryPage}
             </main>
           )}

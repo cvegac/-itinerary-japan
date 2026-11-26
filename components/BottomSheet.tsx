@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { nearestSnap, type Snap } from "@/lib/trip-time";
+import { PullIndicator, usePullToRefresh } from "@/lib/use-pull-to-refresh";
 
 type Props = {
   snap: Snap;
@@ -12,11 +13,16 @@ type Props = {
   /** Parte fija de arriba: se arrastra para subir o bajar la hoja */
   header: React.ReactNode;
   children: React.ReactNode;
+  /** Tirar hacia abajo con el contenido arriba de todo (por defecto, recarga la página) */
+  onRefresh?: () => void;
 };
 
+const reload = () => window.location.reload();
+
 /** Hoja deslizable desde abajo con tres alturas, como en Google Maps */
-export default function BottomSheet({ snap, heights, bottomOffset, onSnapChange, header, children }: Props) {
+export default function BottomSheet({ snap, heights, bottomOffset, onSnapChange, header, children, onRefresh = reload }: Props) {
   const [dragHeight, setDragHeight] = useState<number | null>(null);
+  const { pull, bind } = usePullToRefresh(onRefresh);
   const drag = useRef<{ startY: number; startHeight: number; moved: boolean } | null>(null);
 
   const height = dragHeight ?? heights[snap];
@@ -68,7 +74,10 @@ export default function BottomSheet({ snap, heights, bottomOffset, onSnapChange,
         </button>
         {header}
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-3">{children}</div>
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-3" {...bind}>
+        <PullIndicator pull={pull} />
+        {children}
+      </div>
     </section>
   );
 }
