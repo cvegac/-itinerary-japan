@@ -2240,11 +2240,67 @@
   },
   {
     "date": "2026-11-28",
+    "label": "Atami: arces del jardín Baien + santuario Kinomiya",
+    "location": "Atami",
+    "category": "Naturaleza",
+    "notes": "Se pasó al sábado por la lluvia: el pronóstico daba lluvia fuerte (100 %) y con paraguas Atami se banca; el Museo MOA es bajo techo y los sábados abre. Festival de arces de Atami Baien del 14 nov al 6 dic de 2026, entrada gratis según Japan Travel: de los últimos arces de Japón. Los trenes de Kawana a Atami paran en Kinomiya (directo, ~35 min). El jardín queda a ~10 min a pie de la estación Kinomiya y el santuario a ~3",
+    "weekday": "Sáb",
+    "food": "Himono (pescado seco a la parrilla) y onsen manju en Atami",
+    "transport": [
+      {
+        "mode": "tren",
+        "line": "Izukyu + JR Ito Line (directo)",
+        "from": "Kawana",
+        "to": "Kinomiya",
+        "via": ["Ito"],
+        "duration": "~35min",
+        "cost": { "amount": 800, "currency": "JPY", "approx": true },
+        "pay": ["suica"]
+      },
+      { "mode": "caminar", "from": "Kinomiya", "to": "Estación de Atami", "duration": "~20min", "note": "Pasando por el centro; o 1 parada de tren" },
+      {
+        "mode": "tren",
+        "line": "JR Ito Line + Izukyu (directo)",
+        "from": "Atami",
+        "to": "Kawana",
+        "via": ["Ito"],
+        "duration": "~40min",
+        "cost": { "amount": 850, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "vuelta": true
+      }
+    ],
+    "accommodation": "Villa FUN Kawana (habitación triple, baño compartido)",
+    "lodgingPlace": "Kawana, Ito",
+    "zona": "Mismo hospedaje en Kawana",
+    "accommodationCoords": [34.9517, 139.1302],
+    "lodgingCost": 41.67,
+    "lodgingJa": { "name": "Villa FUN Kawana", "address": "静岡県伊東市川奈1334-7", "phone": "+81 557-52-3222" },
+    "checkIn": "16:00–22:00",
+    "checkOut": "hasta 11:00",
+    "pois": [
+      { "name": "Jardín Atami Baien (festival de arces)", "coords": [35.09827, 139.05896], "hours": "Abierto siempre · festival de arces hasta el 6/12" },
+      { "name": "Santuario Kinomiya (alcanforero de 2.000 años)", "coords": [35.1001, 139.06788], "hours": "Recinto abierto siempre · sellos ~9:00–17:00" },
+      { "name": "Museo MOA (vista a la bahía de Sagami)", "coords": [35.10926, 139.07533], "hours": "9:30–16:30 (entrada hasta 16:00) · cerrado los jueves" }
+    ],
+    "budget": "$87",
+    "isTransit": false,
+    "activitiesDay": [
+      "Jardín Atami Baien: 380 arces, arroyo y puentecitos (gratis)",
+      "Santuario Kinomiya y su alcanforero sagrado de más de 2.000 años",
+      "Opcional: Museo MOA y su vista a la bahía (~7 min en bus desde la estación de Atami)",
+      "Paseo por la costa de Atami"
+    ],
+    "activitiesNight": ["Vuelta a Kawana", "Último onsen en Ito, de paso", "Cena tranquila", "Preparar la mochila para Tokio"],
+    "morning": { "wake": "8:15", "leave": "9:00", "why": "Día tranquilo. El Museo MOA deja entrar hasta las 16:00" }
+  },
+  {
+    "date": "2026-11-29",
     "label": "Costa de lava de Jogasaki + monte Omuro",
     "location": "Izu",
     "category": "Naturaleza",
-    "notes": "Acantilados de lava volcánica sobre el Pacífico. El sendero costero va del faro hacia Izu-Kogen. Después, el monte Omuro: un volcán redondo con telesilla y un sendero alrededor del cráter",
-    "weekday": "Sáb",
+    "notes": "Se pasó al domingo porque viene seco (el sábado llueve fuerte y las rocas de lava mojadas resbalan). Los domingos el horario del bus al Omuro puede ser otro: confirmalo en la parada de Izu-Kogen. Acantilados de lava volcánica sobre el Pacífico. El sendero costero va del faro hacia Izu-Kogen. Después, el monte Omuro: un volcán redondo con telesilla y un sendero alrededor del cráter",
+    "weekday": "Dom",
     "food": "Kinmedai (besugo rojo) de Izu",
     "transport": [
       {
@@ -2324,86 +2380,9 @@
     "keepOrderReason": "El sendero costero va de norte a sur hasta Izu-Kogen; después bus al Omuro y al lago Ippeki",
     "morning": { "wake": "7:45", "leave": "8:30", "why": "Sendero de Jogasaki a la mañana y bus de 12:44 al Omuro. La telesilla sube hasta ~16:15" },
     "trailReports": [
-      {
-        "label": "Guía 2026: Jogasaki, puente colgante y faro",
-        "url": "https://shizuoka-press.com/jogasaki-kaigan-kadowaki-tsuribashi-guide/"
-      },
+      { "label": "Guía 2026: Jogasaki, puente colgante y faro", "url": "https://shizuoka-press.com/jogasaki-kaigan-kadowaki-tsuribashi-guide/" },
       { "label": "YAMAP: mapa y diarios del sendero costero Picnical", "url": "https://yamap.com/maps/8492" }
     ]
-  },
-  {
-    "date": "2026-11-29",
-    "label": "Atami: arces del jardín Baien + santuario Kinomiya",
-    "location": "Atami",
-    "category": "Naturaleza",
-    "notes": "Festival de arces de Atami Baien del 14 nov al 6 dic de 2026, entrada gratis según Japan Travel: de los últimos arces de Japón. Los trenes de Kawana a Atami paran en Kinomiya (directo, ~35 min). El jardín queda a ~10 min a pie de la estación Kinomiya y el santuario a ~3",
-    "weekday": "Dom",
-    "food": "Himono (pescado seco a la parrilla) y onsen manju en Atami",
-    "transport": [
-      {
-        "mode": "tren",
-        "line": "Izukyu + JR Ito Line (directo)",
-        "from": "Kawana",
-        "to": "Kinomiya",
-        "via": ["Ito"],
-        "duration": "~35min",
-        "cost": { "amount": 800, "currency": "JPY", "approx": true },
-        "pay": ["suica"]
-      },
-      {
-        "mode": "caminar",
-        "from": "Kinomiya",
-        "to": "Estación de Atami",
-        "duration": "~20min",
-        "note": "Pasando por el centro; o 1 parada de tren"
-      },
-      {
-        "mode": "tren",
-        "line": "JR Ito Line + Izukyu (directo)",
-        "from": "Atami",
-        "to": "Kawana",
-        "via": ["Ito"],
-        "duration": "~40min",
-        "cost": { "amount": 850, "currency": "JPY", "approx": true },
-        "pay": ["suica"],
-        "vuelta": true
-      }
-    ],
-    "accommodation": "Villa FUN Kawana (habitación triple, baño compartido)",
-    "lodgingPlace": "Kawana, Ito",
-    "zona": "Mismo hospedaje en Kawana",
-    "accommodationCoords": [34.9517, 139.1302],
-    "lodgingCost": 41.67,
-    "lodgingJa": { "name": "Villa FUN Kawana", "address": "静岡県伊東市川奈1334-7", "phone": "+81 557-52-3222" },
-    "checkIn": "16:00–22:00",
-    "checkOut": "hasta 11:00",
-    "pois": [
-      {
-        "name": "Jardín Atami Baien (festival de arces)",
-        "coords": [35.09827, 139.05896],
-        "hours": "Abierto siempre · festival de arces hasta el 6/12"
-      },
-      {
-        "name": "Santuario Kinomiya (alcanforero de 2.000 años)",
-        "coords": [35.1001, 139.06788],
-        "hours": "Recinto abierto siempre · sellos ~9:00–17:00"
-      },
-      {
-        "name": "Museo MOA (vista a la bahía de Sagami)",
-        "coords": [35.10926, 139.07533],
-        "hours": "9:30–16:30 (entrada hasta 16:00) · cerrado los jueves"
-      }
-    ],
-    "budget": "$87",
-    "isTransit": false,
-    "activitiesDay": [
-      "Jardín Atami Baien: 380 arces, arroyo y puentecitos (gratis)",
-      "Santuario Kinomiya y su alcanforero sagrado de más de 2.000 años",
-      "Opcional: Museo MOA y su vista a la bahía (~7 min en bus desde la estación de Atami)",
-      "Paseo por la costa de Atami"
-    ],
-    "activitiesNight": ["Vuelta a Kawana", "Último onsen en Ito, de paso", "Cena tranquila", "Preparar la mochila para Tokio"],
-    "morning": { "wake": "8:15", "leave": "9:00", "why": "Día tranquilo. El Museo MOA deja entrar hasta las 16:00" }
   },
   {
     "date": "2026-11-30",
