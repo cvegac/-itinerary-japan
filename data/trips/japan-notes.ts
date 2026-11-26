@@ -4,12 +4,6 @@ import type { TripNotes } from "@/types/Trip";
 export const NOTES: TripNotes = {
   tasks: [
     {
-      id: "reserva-shibuya-sky",
-      text: "Reservar Shibuya Sky para el 30 nov (franja ~15:40)",
-      detail: "Para ver el atardecer (16:28) y quedarte de noche. Online sale ~¥300 más barato que en ventanilla",
-      date: "2026-11-10",
-    },
-    {
       id: "reserva-teamlab",
       text: "Reservar teamLab Planets para el 1 dic (franja ~14:30)",
       detail: "Precio dinámico, desde ~¥3,600. Conviene sacarla 1–2 semanas antes",
@@ -152,15 +146,6 @@ export const NOTES: TripNotes = {
       detail: "Online en la web de JR East, con descuento si comprás antes, o en la estación de Ito ese día",
       date: "2026-11-30",
       url: "https://ekitan.com/es/article/odoriko",
-    },
-    {
-      id: "shibuya-sky",
-      text: "Reservar Shibuya Sky al atardecer (3 dic)",
-      detail:
-        "Los boletos salen ~2 semanas antes, a las 00:00 de Japón, y los del atardecer se agotan en minutos: entrá apenas abra. Turno ~15:30–16:00 (el sol se pone ~16:30), ~¥3,400 desde las 15:00",
-      date: "2026-12-03",
-      from: "2026-11-19",
-      url: "https://www.shibuya-scramble-square.com/sky/",
     },
     {
       id: "skyliner",

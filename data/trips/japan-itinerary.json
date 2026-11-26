@@ -2407,10 +2407,10 @@
   },
   {
     "date": "2026-11-30",
-    "label": "Vuelta a Tokio: ginkgos de Gaien, Harajuku y Shibuya de noche",
+    "label": "Vuelta a Tokio: ginkgos de Gaien, Harajuku, atardecer gratis en Shinjuku y Shibuya de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. El minpaku abre a las 16:00 y cierra el check-in a las 00:00: dejá la valija en los lockers de Nippori y hacé el check-in a la vuelta. Shibuya Sky va con reserva (la franja del atardecer se agota; online sale ¥300 más barato). Meiji Jingū cierra al atardecer: si querés entrar, hacelo antes de Takeshita, ~15:00. Ropa: Harajuku/Cat Street para marcas y vintage; en Shibuya Uniqlo, GU, Parco y Shibuya 109. Guardá los tickets y la ropa sin usar para el tax-free en Narita (ver el tema «Compras sin impuesto»)",
+    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. El minpaku abre a las 16:00 y cierra el check-in a las 00:00: dejá la valija en los lockers de Nippori y hacé el check-in a la vuelta. Shibuya Sky quedó agotado para el atardecer: en su lugar, el mirador GRATIS del Gobierno Metropolitano de Tokio (piso 45, 202 m, sin reserva). Llegá ~15:45 porque hay 20–30 min de fila; el sol se pone a las 16:28 hacia el oeste, del lado del Fuji. Ese lunes abren los 2 miradores: el Norte hasta las 17:30 y el Sur hasta las 22:00 (última entrada 21:30). Después, Yamanote a Shibuya. Meiji Jingū cierra al atardecer: si querés entrar, hacelo antes de Takeshita, ~15:00. Ropa: Harajuku/Cat Street para marcas y vintage; en Shibuya Uniqlo, GU, Parco y Shibuya 109. Guardá los tickets y la ropa sin usar para el tax-free en Narita (ver el tema «Compras sin impuesto»)",
     "weekday": "Lun",
     "food": "Ramen en Shibuya (Ichiran o Afuri)",
     "transport": [
@@ -2456,6 +2456,26 @@
       {
         "mode": "tren",
         "line": "JR Yamanote",
+        "from": "Harajuku",
+        "to": "Shinjuku",
+        "duration": "~5min",
+        "cost": { "amount": 150, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Salí de Harajuku ~15:20: de la salida oeste de Shinjuku al mirador son ~10 min a pie"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
+        "from": "Shinjuku",
+        "to": "Shibuya",
+        "duration": "~7min",
+        "cost": { "amount": 170, "currency": "JPY", "approx": true },
+        "pay": ["suica"],
+        "note": "Después del atardecer, a Shibuya de noche"
+      },
+      {
+        "mode": "tren",
+        "line": "JR Yamanote",
         "from": "Shibuya",
         "to": "Nippori",
         "duration": "~30min",
@@ -2476,33 +2496,24 @@
     "pois": [
       { "name": "Avenida de ginkgos de Jingu Gaien (entrada por Aoyama-dori)", "coords": [35.67131, 139.72064] },
       { "name": "Calle Takeshita (Harajuku)", "coords": [35.67116, 139.70496], "hours": "Tiendas ~11:00–20:00" },
+      { "name": "Cat Street (Omotesando): ropa de diseño y vintage", "coords": [35.6655, 139.7045], "icon": "👕", "hours": "Tiendas ~11:00–20:00" },
       {
-        "name": "Cat Street (Omotesando): ropa de diseño y vintage",
-        "coords": [35.6655, 139.7045],
-        "icon": "👕",
-        "hours": "Tiendas ~11:00–20:00"
-      },
-      {
-        "name": "Mirador Shibuya Sky (Scramble Square)",
-        "coords": [35.65829, 139.70226],
-        "hours": "Con reserva: franja de ~15:40 para ver el atardecer (16:28) y quedarte de noche"
+        "name": "Mirador gratis del Gobierno Metropolitano (Shinjuku, piso 45)",
+        "coords": [35.68963, 139.69209],
+        "icon": "🌇",
+        "hours": "Gratis, sin reserva · Sur 9:30–22:00 (entrada hasta 21:30) · Norte hasta 17:30 · atardecer 16:28"
       },
       { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
-      {
-        "name": "Shibuya Parco (Nintendo Tokyo, Pokémon Center, Jump Shop)",
-        "coords": [35.66193, 139.69875],
-        "hours": "11:00–21:00",
-        "icon": "🎮"
-      },
+      { "name": "Shibuya Parco (Nintendo Tokyo, Pokémon Center, Jump Shop)", "coords": [35.66193, 139.69875], "hours": "11:00–21:00", "icon": "🎮" },
       { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true, "hours": "Abierta las 24 h" }
     ],
-    "budget": "$136",
+    "budget": "$123",
     "isTransit": false,
     "activitiesDay": [
       "Avenida de ginkgos amarillos de Jingu Gaien (Icho Namiki)",
       "Calle Takeshita y Omotesando caminando",
       "Ropa: Cat Street, y en Shibuya Uniqlo, GU y Parco",
-      { "text": "Shibuya Sky al atardecer (con reserva)", "price": { "amount": 2500, "currency": "JPY", "approx": true } }
+      "Atardecer gratis en el mirador del Gobierno Metropolitano (Shinjuku)"
     ],
     "activitiesNight": [
       "Cruce de Shibuya y Center Gai",
@@ -2511,7 +2522,7 @@
       "Check-in en Nippori (hasta las 00:00)"
     ],
     "keepOrder": true,
-    "keepOrderReason": "el orden va con el atardecer en Shibuya Sky",
+    "keepOrderReason": "el orden va con el atardecer en el mirador del Gobierno Metropolitano (16:28)",
     "morning": { "wake": "9:15", "leave": "10:20", "why": "Odoriko de 10:40 → Nippori 13:06; valija a los lockers y a Gaien" }
   },
   {
