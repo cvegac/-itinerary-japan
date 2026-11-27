@@ -2496,8 +2496,7 @@
         "hours": "Gratis, sin reserva · Sur 9:30–22:00 (entrada hasta 21:30) · Norte hasta 17:30 · atardecer 16:28"
       },
       { "name": "Cruce de Shibuya", "coords": [35.6595, 139.7005], "icon": "🚦" },
-      { "name": "Shibuya Parco (Nintendo Tokyo, Pokémon Center, Jump Shop)", "coords": [35.66193, 139.69875], "hours": "11:00–21:00", "icon": "🎮" },
-      { "name": "Tienda MEGA Don Quijote Shibuya", "coords": [35.66045, 139.69784], "night": true, "hours": "Abierta las 24 h" }
+      { "name": "Shibuya Parco (Nintendo Tokyo, Pokémon Center, Jump Shop)", "coords": [35.66193, 139.69875], "hours": "11:00–21:00", "icon": "🎮" }
     ],
     "budget": "$123",
     "isTransit": false,
@@ -2508,12 +2507,7 @@
       "Kiddy Land: miniaturas a escala y cajitas sorpresa",
       "Atardecer gratis en el mirador del Gobierno Metropolitano (Shinjuku)"
     ],
-    "activitiesNight": [
-      "Cruce de Shibuya y Center Gai",
-      "Nintendo Tokyo y Pokémon Center en Parco",
-      "MEGA Don Quijote",
-      "Check-in en Nippori (hasta las 00:00)"
-    ],
+    "activitiesNight": ["Cruce de Shibuya y Center Gai", "Nintendo Tokyo y Pokémon Center en Parco", "Check-in en Nippori (hasta las 00:00)"],
     "keepOrder": true,
     "keepOrderReason": "el orden va con el atardecer en el mirador del Gobierno Metropolitano (16:28)",
     "morning": { "wake": "9:15", "leave": "10:20", "why": "Odoriko de 10:40 → Nippori 13:06; valija a los lockers y a Gaien" }
