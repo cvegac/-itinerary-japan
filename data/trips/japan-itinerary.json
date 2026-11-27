@@ -2396,7 +2396,7 @@
     "label": "Vuelta a Tokio: ginkgos de Gaien, Harajuku, atardecer gratis en Shinjuku y Shibuya de noche",
     "location": "Tokio",
     "category": "Ciudad",
-    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. El minpaku abre a las 16:00 y cierra el check-in a las 00:00: dejá la valija en los lockers de Nippori y hacé el check-in a la vuelta. Shibuya Sky quedó agotado para el atardecer: en su lugar, el mirador GRATIS del Gobierno Metropolitano de Tokio (piso 45, 202 m, sin reserva). Llegá ~15:45 porque hay 20–30 min de fila; el sol se pone a las 16:28 hacia el oeste, del lado del Fuji. Ese lunes abren los 2 miradores: el Norte hasta las 17:30 y el Sur hasta las 22:00 (última entrada 21:30). Después, Yamanote a Shibuya. Meiji Jingū cierra al atardecer: si querés entrar, hacelo antes de Takeshita, ~15:00. Ropa: Harajuku/Cat Street para marcas y vintage; en Shibuya Uniqlo, GU, Parco y Shibuya 109. Guardá los tickets y la ropa sin usar para el tax-free en Narita (ver el tema «Compras sin impuesto»)",
+    "notes": "Según Google Maps (8 nov): Odoriko saliendo de Kawana 10:40 → Nippori 13:06. Más rápido: shinkansen desde Atami, 10:03 → 12:06. El minpaku abre a las 16:00 y cierra el check-in a las 00:00: dejá la valija en los lockers de Nippori y hacé el check-in a la vuelta. Shibuya Sky quedó agotado para el atardecer: en su lugar, el mirador GRATIS del Gobierno Metropolitano de Tokio (piso 45, 202 m, sin reserva). Llegá ~15:45 porque hay 20–30 min de fila; el sol se pone a las 16:28 hacia el oeste, del lado del Fuji. Ese lunes abren los 2 miradores: el Norte hasta las 17:30 y el Sur hasta las 22:00 (última entrada 21:30). Después, Yamanote a Shibuya. Meiji Jingū cierra al atardecer: si querés entrar, hacelo antes de Takeshita, ~15:00. Kiddy Land, sobre Omotesando a 2 min del metro Meiji-jingumae, son varios pisos de juguetes: miniaturas a escala (Re-Ment) y cajitas sorpresa (blind box), ~¥600–900 cada una; ponete un tope. Ropa: Harajuku/Cat Street para marcas y vintage; en Shibuya Uniqlo, GU, Parco y Shibuya 109. Guardá los tickets y la ropa sin usar para el tax-free en Narita (ver el tema «Compras sin impuesto»)",
     "weekday": "Lun",
     "food": "Ramen en Shibuya (Ichiran o Afuri)",
     "transport": [
@@ -2484,6 +2484,12 @@
       { "name": "Calle Takeshita (Harajuku)", "coords": [35.67116, 139.70496], "hours": "Tiendas ~11:00–20:00" },
       { "name": "Cat Street (Omotesando): ropa de diseño y vintage", "coords": [35.6655, 139.7045], "icon": "👕", "hours": "Tiendas ~11:00–20:00" },
       {
+        "name": "Kiddy Land Harajuku: miniaturas y blind boxes",
+        "coords": [35.66847, 139.70584],
+        "icon": "🧸",
+        "hours": "~11:00–20:00 (confirmá: algunas guías dicen hasta las 21:00)"
+      },
+      {
         "name": "Mirador gratis del Gobierno Metropolitano (Shinjuku, piso 45)",
         "coords": [35.68963, 139.69209],
         "icon": "🌇",
@@ -2499,6 +2505,7 @@
       "Avenida de ginkgos amarillos de Jingu Gaien (Icho Namiki)",
       "Calle Takeshita y Omotesando caminando",
       "Ropa: Cat Street, y en Shibuya Uniqlo, GU y Parco",
+      "Kiddy Land: miniaturas a escala y cajitas sorpresa",
       "Atardecer gratis en el mirador del Gobierno Metropolitano (Shinjuku)"
     ],
     "activitiesNight": [
