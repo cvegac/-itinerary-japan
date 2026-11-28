@@ -24,7 +24,7 @@ import { orderedPois, poiSignature, type DayRoutes, type Line } from "@/lib/rout
 import { poiIcon } from "@/lib/poi-icons";
 import { MAP_STYLE, TERRAIN_HIRES_MAX_ZOOM, TERRAIN_MAX_ZOOM, TERRAIN_TILES } from "@/lib/map-sources";
 import { hasHiResRelief } from "@/lib/map-download";
-import { DIRECTION_STYLE, TRANSIT_STYLE, transitDirection, type TransitLine } from "@/lib/transit";
+import { DIRECTION_STYLE, ORDER_LINE_COLOR, TRANSIT_STYLE, WALK_STYLE, transitDirection, type TransitLine } from "@/lib/transit";
 
 export type MapMode = "day" | "week" | "full";
 /** En el modo día: todo, solo los tramos de tren y bus, o solo los lugares y el recorrido */
@@ -617,11 +617,11 @@ export default function TripMap({
     const dayRoute = r
       ? r.legs.map((leg) =>
           leg.line
-            ? lngLatFeature(leg.line, { color, dashed: false })
-            : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color, dashed: true })
+            ? lngLatFeature(leg.line, { color: WALK_STYLE.color, dashed: false })
+            : lineFeature([coordsOf(leg.from), coordsOf(leg.to)], { color: ORDER_LINE_COLOR, dashed: true })
         )
       : pois.length > 1
-        ? [lineFeature(pois.map((p) => p.coords), { color, dashed: true })]
+        ? [lineFeature(pois.map((p) => p.coords), { color: ORDER_LINE_COLOR, dashed: true })]
         : [];
     dayFeaturesRef.current = [
       ...(showTransit ? [...transitFeatures(transit, dayLayer === "transit"), ...transfer] : []),

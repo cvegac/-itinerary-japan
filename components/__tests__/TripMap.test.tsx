@@ -150,7 +150,7 @@ vi.mock("maplibre-gl", () => fake.module);
 import TripMap, { type MapMode } from "@/components/TripMap";
 import { poiSignature, type DayRoutes } from "@/lib/route-plan";
 import { toLngLat } from "@/lib/map-geo";
-import { DIRECTION_STYLE, TRANSIT_STYLE, type TransitLine } from "@/lib/transit";
+import { DIRECTION_STYLE, TRANSIT_STYLE, WALK_STYLE, type TransitLine } from "@/lib/transit";
 
 beforeAll(() => {
   globalThis.ResizeObserver ??= class {
@@ -235,6 +235,15 @@ describe("TripMap con rutas", () => {
     expect(features[0].properties.dashed).toBe(false);
     expect(features[2].properties.dashed).toBe(true);
     expect(features[2].geometry.coordinates).toEqual([toLngLat(pois[0].coords), toLngLat(pois[1].coords)]);
+  });
+
+  it("lo que se camina va siempre en naranja, sea la semana que sea", async () => {
+    await renderRouted();
+    const features = fake.state.routes.at(-1)!.features as { properties: { color: string; dashed: boolean } }[];
+    const walked = features.filter((f) => !f.properties.dashed);
+    expect(walked).toHaveLength(2);
+    expect(walked.every((f) => f.properties.color === WALK_STYLE.color)).toBe(true);
+    expect(features[2].properties.color).not.toBe(WALK_STYLE.color);
   });
 
   it("un sendero sin mapear va como recta punteada (no se inventa un camino)", async () => {

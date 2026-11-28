@@ -114,6 +114,11 @@ export const TRANSIT_STYLE: Record<TransitKind, { color: string; dashed: boolean
   flight: { color: "#475569", dashed: true, label: "Vuelo" },
 };
 
+/** Lo que se camina (o se pedalea) va siempre en naranja, sea la semana que sea;
+ *  las rectas punteadas que solo marcan el orden de visita van en gris */
+export const WALK_STYLE = { color: "#f97316", label: "A pie" } as const;
+export const ORDER_LINE_COLOR = "#94a3b8";
+
 export type TransitDirection = "ida" | "vuelta";
 
 /** Un tramo es de vuelta solo si el itinerario lo marca (`vuelta: true`) */
